@@ -66,6 +66,24 @@ export const U = {
 };
 
 // ---------------------------------------------------------------------------
+// Brand
+// ---------------------------------------------------------------------------
+// The CCJT mark. Tries the SVG first (sharp at any size, tiny file), falls back
+// to the PNG, and hides itself entirely if neither loads, so a missing asset
+// never shows a broken-image icon.
+//
+// ONE height, because the mark sits in the same place at the same size on every
+// screen. A logo that moves or resizes between screens reads as decoration; one
+// that never moves reads as a signature.
+export const LOGO = {
+  path: "./ccjt-logo.svg",
+  fallbackPath: "./ccjt-logo.png",
+  alt: "CCJT",
+  height: 52,          // desktop. The mobile size is set in CSS (.ts-site-logo img)
+  url: "https://ccjtkalamazoo.org",
+};
+
+// ---------------------------------------------------------------------------
 // Stylesheet
 // ---------------------------------------------------------------------------
 const STYLE_ID = "kyr-styles";
@@ -249,6 +267,9 @@ export const CSS_TEXT = `
     .ts-scenario-outcomes { grid-template-columns:1fr !important; }
     .ts-phrase-quote { font-size:26px !important; }
     .ts-pow { font-size:44px !important; }
+    /* the persistent CCJT mark shrinks and tucks tighter into the corner on phones */
+    .ts-site-logo { left:8px !important; bottom:8px !important; padding:4px !important; }
+    .ts-site-logo img { height:36px !important; }
   }
   @media (max-width: 380px) {
     .ts-start-title { font-size:48px !important; }
