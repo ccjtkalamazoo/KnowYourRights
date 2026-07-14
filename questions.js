@@ -777,7 +777,6 @@ export const QUESTIONS = {
 
 export const R = {
   presenter: "",
-  logo: { path: "./ccjt-logo.svg", fallbackPath: "./ccjt-logo.png", alt: "CCJT", height: 40 },
   title: "KNOW YOUR RIGHTS",
   hero: {
     headline: "Fifteen questions about your rights.",
