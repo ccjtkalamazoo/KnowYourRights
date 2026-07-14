@@ -8,7 +8,7 @@
 // solid offset shadows (U.sm/md/lg) that make elements feel stamped onto the page.
 // Buttons physically press: they slide INTO their shadow on click.
 
-import { c, u, C, U, useState, useMemo } from "./theme.js";
+import { c, u, C, U, LOGO, useState, useMemo } from "./theme.js";
 
 // ---------------------------------------------------------------------------
 // Shell : the page frame every screen sits inside.
@@ -16,7 +16,7 @@ import { c, u, C, U, useState, useMemo } from "./theme.js";
 // Owns the warm background wash, the two soft corner glows, the full-screen
 // flash on a right/wrong answer, and the mute toggle. screenShake is applied to
 // the whole subtree when an answer is wrong.
-export function Shell({ children, muted, setMuted, screenFlash, screenShake, hideSoundButton }) {
+export function Shell({ children, muted, setMuted, screenFlash, screenShake, hideSoundButton, hideLogo, onLogoClick }) {
   return c.jsxs("div", {
     style: { fontFamily: C.body, minHeight: "100vh", width: "100%", background: `radial-gradient(ellipse at 50% -10%, ${u.bgWarm} 0%, ${u.bg} 70%)`, color: u.text, position: "relative", overflow: "hidden", fontSize: 16 },
     children: [
@@ -28,8 +28,56 @@ export function Shell({ children, muted, setMuted, screenFlash, screenShake, hid
         style: { position: "absolute", top: 18, right: 18, zIndex: 60, background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 11, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm },
         children: muted ? "\u266A OFF" : "\u266A ON"
       }),
+      !hideLogo && c.jsx(SiteLogo, { onClick: onLogoClick }),
       c.jsx("div", { style: { position: "relative", zIndex: 1, animation: screenShake ? "ts-screen-shake 0.5s" : "none" }, children })
     ]
+  });
+}
+
+// ---------------------------------------------------------------------------
+// SiteLogo : the persistent CCJT mark, bottom-left.
+// ---------------------------------------------------------------------------
+// position:fixed, so it floats above the layout and costs zero layout space.
+// That is what lets it appear on every screen without ever creating scroll,
+// which matters because the game screens are locked to the viewport height.
+//
+// It is deliberately NOT a plain link. Tapping it opens a confirmation first,
+// because a kid mid-question who accidentally brushes the logo should not get
+// yanked off the site and lose their run.
+//
+// Hidden on the review-card screens (hideLogo), which are the densest screens in
+// the game and the ones where a stray tap would cost the most.
+export function SiteLogo({ onClick }) {
+  const [hover, setHover] = useState(false);
+  return c.jsx("button", {
+    onClick,
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    "aria-label": "About CCJT (opens ccjtkalamazoo.org)",
+    className: "ts-site-logo",
+    style: {
+      position: "fixed", left: 18, bottom: 18, zIndex: 60,
+      background: "transparent", border: "none", padding: 6,
+      cursor: "pointer", lineHeight: 0,
+      opacity: hover ? 1 : 0.82,
+      transform: hover ? "translateY(-2px)" : "translateY(0)",
+      transition: "opacity 0.15s, transform 0.15s",
+    },
+    children: c.jsx("img", {
+      src: LOGO.path,
+      alt: LOGO.alt,
+      onError: (e) => {
+        // Try the PNG, then give up quietly rather than showing a broken image.
+        const el = e.currentTarget;
+        if (LOGO.fallbackPath && !el.dataset.triedFallback) {
+          el.dataset.triedFallback = "1";
+          el.src = LOGO.fallbackPath;
+        } else {
+          el.style.display = "none";
+        }
+      },
+      style: { height: LOGO.height, width: "auto", display: "block" }
+    })
   });
 }
 
