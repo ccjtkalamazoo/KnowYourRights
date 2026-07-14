@@ -17,7 +17,7 @@
 // 1.5s early, 3s mid, 5s late, and a full 7s on Q15. That silence is most of
 // what makes locking in an answer feel like a decision.
 
-import { c, u, C, U, useState, useEffect, useRef, injectStyles } from "./theme.js";
+import { c, u, C, U, LOGO, useState, useEffect, useRef, injectStyles } from "./theme.js";
 import { R } from "./questions.js";
 import {
   LADDER, LADDER_TIERS, LIFELINE_PRICES, musicStageFor,
@@ -51,6 +51,9 @@ export function App() {
   const [pendingLifeline, setPendingLifeline] = useState(null);
   const [shopOpen, setShopOpen] = useState(false);
   const [homeConfirm, setHomeConfirm] = useState(false);
+  // Tapping the CCJT mark asks before leaving. Losing a run to a stray tap would
+  // be a bad trade for a link.
+  const [logoConfirm, setLogoConfirm] = useState(false);
   const [skipConfirm, setSkipConfirm] = useState(false);
   const [skipConfirmed, setSkipConfirmed] = useState(false);
   const [points, setPoints] = useState(0);
@@ -308,6 +311,17 @@ export function App() {
   const cancelHome = () => { sfx.current.click(); setHomeConfirm(false); };
   const confirmHome = () => { sfx.current.click(); setHomeConfirm(false); music.current.stop(); resetState(); setPhase("start"); };
 
+  // The CCJT mark: ask first, then open the site in a NEW tab so the player's
+  // run is never destroyed by following the link. noopener/noreferrer is standard
+  // hygiene for any target=_blank.
+  const askLogo = () => { sfx.current.modalOpen(); setLogoConfirm(true); };
+  const cancelLogo = () => { sfx.current.click(); setLogoConfirm(false); };
+  const confirmLogo = () => {
+    sfx.current.click();
+    setLogoConfirm(false);
+    try { window.open(LOGO.url, "_blank", "noopener,noreferrer"); } catch {}
+  };
+
   // after the big win celebration: take the money (end) or keep going (bonus round)
   const winTakeMoney = () => { sfx.current.click(); music.current.stop(); setPhase("won"); };
   const winKeepGoing = () => { sfx.current.click(); enterEndless(); };
@@ -316,29 +330,47 @@ export function App() {
   const walkPrev = () => { sfx.current.click(); if (walkStep > 0) setWalkStep(walkStep - 1); };
   const walkSkip = () => { sfx.current.click(); startGame(); };
 
+  // The CCJT mark sits bottom-left on EVERY screen, this one included. One
+  // position, always, so it reads as a persistent maker's mark rather than
+  // something that moves around.
   if (phase === "start")
-    return c.jsx(Shell, { muted, setMuted, children: c.jsx(StartScreen, { onPlay: goWalkthrough, bestRun }) });
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(StartScreen, { onPlay: goWalkthrough, bestRun }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
 
   if (phase === "walkthrough")
-    return c.jsx(Shell, { muted, setMuted, children: c.jsx(WalkScreen, { step: walkStep, total: R.walkthrough.length, screen: R.walkthrough[walkStep], onNext: walkNext, onPrev: walkPrev, onSkip: walkSkip, isLast: walkStep === R.walkthrough.length - 1, canPrev: walkStep > 0 }) });
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(WalkScreen, { step: walkStep, total: R.walkthrough.length, screen: R.walkthrough[walkStep], onNext: walkNext, onPrev: walkPrev, onSkip: walkSkip, isLast: walkStep === R.walkthrough.length - 1, canPrev: walkStep > 0 }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
 
   if (phase === "winbig")
-    return c.jsx(Shell, { muted, setMuted, hideSoundButton: true, children: c.jsx(WinBigScreen, {
-      prize: LADDER[LADDER.length - 1].prize, usage, pointsSpent, pointsLeft: points,
-      sfx: sfx.current, onTakeMoney: winTakeMoney, onKeepGoing: winKeepGoing
-    }) });
+    return c.jsxs(Shell, { muted, setMuted, hideSoundButton: true, onLogoClick: askLogo, children: [
+      c.jsx(WinBigScreen, {
+        prize: LADDER[LADDER.length - 1].prize, usage, pointsSpent, pointsLeft: points,
+        sfx: sfx.current, onTakeMoney: winTakeMoney, onKeepGoing: winKeepGoing
+      }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
 
   if (phase === "gameover" || phase === "won") {
     const completedIdx = phase === "won" ? level : level - 1;
-    return c.jsx(Shell, { muted, setMuted, children: c.jsx(EndScreen, {
-      phase, missedAtLevel: phase === "gameover" ? level : null, finalPrize, bestRun, streak,
-      isEndless, completedIdx, missedQuestion: phase === "gameover" ? currentQ : null,
-      onPlayAgain: playAgain, onHome: () => { resetState(); setPhase("start"); }
-    }) });
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(EndScreen, {
+        phase, missedAtLevel: phase === "gameover" ? level : null, finalPrize, bestRun, streak,
+        isEndless, completedIdx, missedQuestion: phase === "gameover" ? currentQ : null,
+        onPlayAgain: playAgain, onHome: () => { resetState(); setPhase("start"); }
+      }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
   }
 
+  // Review cards: the logo is deliberately hidden. These are the densest screens
+  // in the game and the teaching moments; a corner mark would be noise, and a
+  // stray tap here would cost the most.
   if (phase === "revealing") {
-    return c.jsxs(Shell, { muted, setMuted, screenFlash, screenShake, hideSoundButton: true, children: [
+    return c.jsxs(Shell, { muted, setMuted, screenFlash, screenShake, hideSoundButton: true, hideLogo: true, children: [
       c.jsx(RevealScreen, {
         question: currentQ, level, isEndless, streak, rung,
         revealCorrect, selectedIdx: selected, muted, setMuted, points,
@@ -354,7 +386,7 @@ export function App() {
   }
 
   // playing or locking
-  return c.jsxs(Shell, { muted, setMuted, screenFlash, screenShake, hideSoundButton: true, children: [
+  return c.jsxs(Shell, { muted, setMuted, screenFlash, screenShake, hideSoundButton: true, onLogoClick: askLogo, children: [
     c.jsx(QuestionScreen, {
       question: currentQ, level, rung, difficulty, stage, streak, selectedIdx: selected,
       locked, revealCorrect, revealWrong, showFloating, phase, removedAnswers, juryResults,
@@ -372,8 +404,23 @@ export function App() {
       available: lifelines[pendingLifeline], points, price: LIFELINE_PRICES[pendingLifeline],
       onConfirm: confirmLifeline, onCancel: cancelLifeline
     }),
-    homeConfirm && c.jsx(ConfirmModal, { title: R.homeConfirm.title, body: R.homeConfirm.body, primaryLabel: R.homeConfirm.leaveLabel, secondaryLabel: R.homeConfirm.stayLabel, primaryVariant: "accent", onPrimary: confirmHome, onSecondary: cancelHome })
+    homeConfirm && c.jsx(ConfirmModal, { title: R.homeConfirm.title, body: R.homeConfirm.body, primaryLabel: R.homeConfirm.leaveLabel, secondaryLabel: R.homeConfirm.stayLabel, primaryVariant: "accent", onPrimary: confirmHome, onSecondary: cancelHome }),
+    logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
   ] });
+}
+
+// The "are you sure" for the CCJT mark. Opens in a new tab on confirm, so even
+// saying yes never destroys the run in progress.
+function LogoConfirm({ onGo, onCancel }) {
+  return c.jsx(ConfirmModal, {
+    title: "Leave the game?",
+    body: "This opens ccjtkalamazoo.org in a new tab. Your game will stay open here.",
+    primaryLabel: "Go to site",
+    secondaryLabel: "Stay here",
+    primaryVariant: "primary",
+    onPrimary: onGo,
+    onSecondary: onCancel
+  });
 }
 
 // ===========================================================================
@@ -386,7 +433,6 @@ function StartScreen({ onPlay, bestRun }) {
     className: "ts-start-screen",
     style: { minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 24px", textAlign: "center" },
     children: [
-      R.logo && c.jsx("img", { src: R.logo.path, alt: R.logo.alt, onError: (n) => { if (R.logo.fallbackPath && !n.currentTarget.dataset.triedFallback) { n.currentTarget.dataset.triedFallback = "1"; n.currentTarget.src = R.logo.fallbackPath; } else n.currentTarget.style.display = "none"; }, style: { height: R.logo.height, maxWidth: "80%", objectFit: "contain", marginBottom: 32 } }),
       R.presenter,
       c.jsx("h1", { className: "ts-start-title", style: { fontFamily: C.display, fontSize: "clamp(56px, 12vw, 140px)", lineHeight: 0.9, letterSpacing: "-0.01em", margin: 0, color: u.text, textShadow: `6px 6px 0 ${u.brand}`, maxWidth: "15ch" }, children: R.title }),
       c.jsxs("p", { style: { fontFamily: C.body, fontSize: 22, fontWeight: 700, color: u.text, maxWidth: 620, margin: "48px 0 12px", lineHeight: 1.4 }, children: [R.hero.headline, c.jsx("br", {}), c.jsx("span", { style: { color: u.brand }, children: R.hero.headlineAccent })] }),
