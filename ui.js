@@ -66,6 +66,11 @@ export function SiteLogo({ onClick }) {
     children: c.jsx("img", {
       src: LOGO.path,
       alt: LOGO.alt,
+      // NOTE: the height is set in CSS (.ts-site-logo img), NOT inline. An inline
+      // height would take precedence over the class, and the mobile media query
+      // would then be fighting it. Keeping size purely in CSS means desktop and
+      // mobile sizes live side by side in theme.js and neither can shadow the other.
+      className: "ts-site-logo-img",
       onError: (e) => {
         // Try the PNG, then give up quietly rather than showing a broken image.
         const el = e.currentTarget;
@@ -76,7 +81,7 @@ export function SiteLogo({ onClick }) {
           el.style.display = "none";
         }
       },
-      style: { height: LOGO.height, width: "auto", display: "block" }
+      style: { width: "auto", display: "block" }
     })
   });
 }
