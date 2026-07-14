@@ -223,12 +223,29 @@ export const CSS_TEXT = `
 
   /* ---- the persistent CCJT mark, bottom-left on every screen ---- */
   /* Size lives here, not inline on the element, so the mobile override below
-     cannot be shadowed by an inline style. Change these two numbers to resize. */
+     cannot be shadowed by an inline style. Change these two numbers to resize.
+
+     --logo-clear is the vertical space the mark occupies in the corner (its
+     height plus its offset and a breathing gap). Any screen whose content could
+     reach the bottom-left reserves this much room, so nothing ever overlaps it.
+     Change the logo size and this number together. */
+  :root { --logo-clear: 196px; }
   .ts-site-logo-img { height:160px; }
 
   /* ---- mobile ( <600px ) ---- */
   @media (max-width: 600px) {
-    .ts-game-screen { padding:8px 10px 10px !important; gap:8px !important; height:100vh !important; height:100dvh !important; min-height:100vh !important; min-height:100dvh !important; max-height:100vh !important; max-height:100dvh !important; box-sizing:border-box !important; overflow:hidden !important; }
+    /* The mark is smaller on phones so it does not crowd the question screen.
+       --logo-clear shrinks with it, and every screen below reserves space from
+       this ONE variable, so the size and the clearance can never drift apart.
+       Resize the logo: change both numbers here, together. */
+    :root { --logo-clear: 128px; }
+    .ts-site-logo { left:8px !important; bottom:8px !important; padding:4px !important; }
+    .ts-site-logo-img { height:100px !important; }
+
+    /* The game screen is the tightest: locked to the viewport with the answer grid
+       and the lifelines bar competing for space. It reserves logo clearance at the
+       bottom so the action bar can never end up underneath the mark. */
+    .ts-game-screen { padding:8px 10px var(--logo-clear) !important; gap:8px !important; height:100vh !important; height:100dvh !important; min-height:100vh !important; min-height:100dvh !important; max-height:100vh !important; max-height:100dvh !important; box-sizing:border-box !important; overflow:hidden !important; }
     .ts-game-main { gap:8px !important; flex:1 !important; min-height:0 !important; }
     .ts-answer-grid { grid-template-columns:1fr !important; gap:8px !important; }
     .ts-answer-btn { min-height:50px !important; padding:11px 14px !important; font-size:14.5px !important; }
@@ -241,8 +258,8 @@ export const CSS_TEXT = `
     .ts-q-header { font-size:18px !important; }
     .ts-q-header-total { font-size:12px !important; }
     .ts-sound-btn { padding:6px 10px !important; font-size:10px !important; }
-    .ts-walk-screen { padding:12px 14px !important; height:100vh !important; height:100dvh !important; max-height:100dvh !important; overflow:hidden !important; box-sizing:border-box !important; }
-    .ts-walk-card { padding:26px 22px 24px !important; min-height:0 !important; max-height:calc(100dvh - 70px) !important; overflow:hidden !important; }
+    .ts-walk-screen { padding:12px 14px calc(var(--logo-clear) - 40px) !important; height:100vh !important; height:100dvh !important; max-height:100dvh !important; overflow:hidden !important; box-sizing:border-box !important; }
+    .ts-walk-card { padding:26px 22px 24px !important; min-height:0 !important; max-height:calc(100dvh - var(--logo-clear)) !important; overflow:hidden !important; }
     .ts-walk-title { font-size:30px !important; }
     .ts-walk-answer-mini { grid-template-columns:1fr !important; max-width:220px !important; }
     .ts-walk-ladder-mini > div { min-width:160px !important; padding:7px 14px !important; gap:10px !important; }
@@ -250,14 +267,14 @@ export const CSS_TEXT = `
     .ts-modal-card h3 { font-size:22px !important; }
     .ts-shop-panel { padding:16px 16px 14px !important; max-height:92dvh !important; }
     .ts-shop-panel p { font-size:12px !important; margin-bottom:10px !important; }
-    .ts-end-screen { padding:40px 18px 60px !important; }
+    .ts-end-screen { padding:40px 18px var(--logo-clear) !important; }
     .ts-end-headline { font-size:64px !important; }
     .ts-end-prize { padding:22px 20px !important; min-width:0 !important; width:100% !important; max-width:300px !important; box-sizing:border-box !important; }
     .ts-end-prize-amount { font-size:56px !important; }
     .ts-end-actions { flex-direction:column !important; align-items:stretch !important; width:100% !important; max-width:280px !important; }
     .ts-end-actions button { width:100% !important; }
     .ts-missed-card { padding:20px 20px !important; }
-    .ts-start-screen { padding:40px 20px !important; }
+    .ts-start-screen { padding:40px 20px var(--logo-clear) !important; }
     .ts-start-title { font-size:56px !important; text-shadow:4px 4px 0 ${u.brand} !important; }
     .ts-lifelines-row { gap:6px !important; flex-wrap:wrap !important; }
     .ts-lifeline-btn { min-width:64px !important; padding:8px 12px !important; font-size:14px !important; }
@@ -274,12 +291,11 @@ export const CSS_TEXT = `
     .ts-scenario-outcomes { grid-template-columns:1fr !important; }
     .ts-phrase-quote { font-size:26px !important; }
     .ts-pow { font-size:44px !important; }
-    /* the persistent CCJT mark: smaller on phones so it does not crowd the
-       question screen, which is locked to the viewport with no scrolling */
-    .ts-site-logo { left:8px !important; bottom:8px !important; padding:4px !important; }
-    .ts-site-logo-img { height:100px !important; }
   }
   @media (max-width: 380px) {
+    /* Smallest phones: the mark steps down again, and the clearance follows it. */
+    :root { --logo-clear: 100px; }
+    .ts-site-logo-img { height:76px !important; }
     .ts-start-title { font-size:48px !important; }
     .ts-end-headline { font-size:54px !important; }
     .ts-end-prize-amount { font-size:46px !important; }
