@@ -79,7 +79,9 @@ export const LOGO = {
   path: "./ccjt-logo.svg",
   fallbackPath: "./ccjt-logo.png",
   alt: "CCJT",
-  height: 52,          // desktop. The mobile size is set in CSS (.ts-site-logo img)
+  // NOTE: the size is NOT here. It lives in CSS (.ts-site-logo-img), because an
+  // inline height would beat the mobile media query and the two would fight.
+  // Search "ts-site-logo-img" below; desktop and mobile sizes sit together there.
   url: "https://ccjtkalamazoo.org",
 };
 
@@ -219,6 +221,11 @@ export const CSS_TEXT = `
     background-size: 10px 10px;
   }
 
+  /* ---- the persistent CCJT mark, bottom-left on every screen ---- */
+  /* Size lives here, not inline on the element, so the mobile override below
+     cannot be shadowed by an inline style. Change these two numbers to resize. */
+  .ts-site-logo-img { height:160px; }
+
   /* ---- mobile ( <600px ) ---- */
   @media (max-width: 600px) {
     .ts-game-screen { padding:8px 10px 10px !important; gap:8px !important; height:100vh !important; height:100dvh !important; min-height:100vh !important; min-height:100dvh !important; max-height:100vh !important; max-height:100dvh !important; box-sizing:border-box !important; overflow:hidden !important; }
@@ -267,9 +274,10 @@ export const CSS_TEXT = `
     .ts-scenario-outcomes { grid-template-columns:1fr !important; }
     .ts-phrase-quote { font-size:26px !important; }
     .ts-pow { font-size:44px !important; }
-    /* the persistent CCJT mark shrinks and tucks tighter into the corner on phones */
+    /* the persistent CCJT mark: smaller on phones so it does not crowd the
+       question screen, which is locked to the viewport with no scrolling */
     .ts-site-logo { left:8px !important; bottom:8px !important; padding:4px !important; }
-    .ts-site-logo img { height:36px !important; }
+    .ts-site-logo-img { height:100px !important; }
   }
   @media (max-width: 380px) {
     .ts-start-title { font-size:48px !important; }
