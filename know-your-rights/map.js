@@ -23,10 +23,34 @@
 // COMING SOON.
 //
 // The one live entry is ALL RIGHTS, which plays the existing 15-question run
-// (5 easy, 5 medium, 5 hard) exactly as before. It is deliberately NOT one of
-// the eight districts: labeling 72 untagged questions as "THE CORNER" would
-// create a data lie that has to be undone later when the questions actually get
-// tagged.
+// exactly as before. It is deliberately NOT one of the eight districts:
+// labeling 72 untagged questions as "THE STOP" would create a data lie that has
+// to be undone later when the questions actually get tagged.
+//
+// ---------------------------------------------------------------------------
+// THE RULES THE CONTENT IS BEING WRITTEN AGAINST
+// ---------------------------------------------------------------------------
+//   * 30 questions in a chapter's bank, 15 dealt per quiz.
+//   * 5 to 7 chapters per district. All eight currently sit at 6.
+//   * Chapters are SEQUENTIAL inside a district: clear chapter 1 to open 2.
+//     Districts themselves are free-choice. That is why chapter order is a
+//     content constraint, not just navigation: a chapter may rely on everything
+//     before it and must assume nothing after it.
+//   * Difficulty tiers are being dropped. Every question in a chapter is
+//     eligible for every rung. That change lands in questions.js and rules.js,
+//     not here, but it is why the ladder and the SKIP lifeline both need
+//     revisiting.
+//
+// Districts 1 through 3 (JUVENILE, THE STOP, THE ARREST) are the authoring
+// priority. The remaining five are ordered but not scheduled.
+//
+// Ordering note: the first six are roughly chronological through the system.
+// THE BYSTANDER and JUVENILE are off-arc; JUVENILE leads anyway because it is
+// what applies to the player today.
+//
+// Not yet owned by any district: searches. They currently sit as chapters
+// inside THE STOP, THE ARREST, and THE BYSTANDER. The Fourth Amendment is deep
+// enough to carry its own district and is the likeliest ninth.
 //
 // WHEN THE CONTENT LANDS, the changes are:
 //   1. Tag each question in questions.js with a districtId + chapterId.
@@ -46,52 +70,108 @@ import { Button } from "./ui.js";
 // library dependency.
 export const DISTRICTS = [
   {
-    id: "school", name: "THE SCHOOL", live: false,
-    blurb: "Lockers, backpacks, phones, the office.",
-    icon: "M20,44 L50,26 L80,44 L80,70 L20,70 Z M44,70 L44,54 L56,54 L56,70",
-    chapters: ["THE LOCKER", "YOUR PHONE", "THE OFFICE", "THE HALLWAY", "THE RESOURCE OFFICER"]
+    id: "juvenile", name: "JUVENILE", live: false,
+    blurb: "What is different because you are under 17, and what changes when you are not.",
+    icon: "M50,20 C58,20 64,26 64,34 C64,42 58,48 50,48 C42,48 36,42 36,34 C36,26 42,20 50,20 M26,78 C26,62 37,54 50,54 C63,54 74,62 74,78",
+    chapters: [
+      "WHAT IS DIFFERENT RIGHT NOW",
+      "AT SCHOOL",
+      "PARENTS AND NOTIFICATION",
+      "JUVENILE COURT AND DETENTION",
+      "CHARGED AS AN ADULT",
+      "TURNING 17 AND YOUR RECORD"
+    ]
   },
   {
-    id: "porch", name: "THE PORCH", live: false,
-    blurb: "A knock at the door. Warrants and consent.",
-    icon: "M18,46 L50,22 L82,46 M26,46 L26,72 L74,72 L74,46 M42,72 L42,52 L58,52 L58,72",
-    chapters: ["THE KNOCK", "THE WARRANT", "SAYING NO", "WHO CAN CONSENT", "HOT PURSUIT", "AFTER THEY LEAVE"]
-  },
-  {
-    id: "downtown", name: "DOWNTOWN", live: false,
-    blurb: "Filming, protesting, being in public.",
-    icon: "M22,72 L22,30 L44,30 L44,72 M52,72 L52,18 L74,18 L74,72 M28,40 L38,40 M28,52 L38,52 M58,30 L68,30 M58,44 L68,44",
-    chapters: ["RECORDING POLICE", "THE PROTEST", "DISPERSAL ORDERS", "PRESS AND BYSTANDERS", "AFTER THE ARREST"]
-  },
-  {
-    id: "road", name: "THE ROAD", live: false,
-    blurb: "Pulled over. License, searches, consent.",
-    icon: "M16,66 L84,66 M16,52 L28,52 M40,52 L60,52 M72,52 L84,52 M30,38 L44,26 L62,26 L70,38 L70,48 L30,48 Z",
-    chapters: ["PULLED OVER", "STEP OUT", "SEARCH MY CAR", "PASSENGERS", "THE K9", "THE TICKET"]
-  },
-  {
-    id: "corner", name: "THE CORNER", live: false,
-    blurb: "Stopped on the street. Do you give your name?",
+    id: "stop", name: "THE STOP", live: false,
+    blurb: "Stopped on the street. Are you being held, and what do you have to give?",
     icon: "M50,20 L50,74 M50,20 C62,20 70,28 70,38 C70,48 62,54 50,54 M26,74 L74,74",
-    chapters: ["THE STOP", "AM I FREE TO GO", "YOUR NAME", "THE PAT DOWN", "THE QUESTIONS", "YOUR POCKETS", "WALKING AWAY"]
+    chapters: [
+      "AM I FREE TO GO",
+      "REASONABLE SUSPICION",
+      "WHAT YOU MUST GIVE",
+      "THE PAT DOWN",
+      "HOW LONG IT LASTS",
+      "WHEN IT BECOMES AN ARREST"
+    ]
   },
   {
-    id: "station", name: "THE STATION", live: false,
-    blurb: "Arrest, booking, Miranda, a phone call.",
-    icon: "M50,20 L76,30 L76,50 C76,64 64,74 50,78 C36,74 24,64 24,50 L24,30 Z M40,48 L47,56 L62,40",
-    chapters: ["THE ARREST", "MIRANDA", "THE INTERVIEW", "YOUR CALL", "BOOKING", "THE LAWYER", "GETTING OUT"]
+    id: "arrest", name: "THE ARREST", live: false,
+    blurb: "The handcuffs change everything. What is different the moment they go on.",
+    icon: "M28,34 C38,34 46,42 46,52 C46,62 38,70 28,70 C18,70 10,62 10,52 C10,42 18,34 28,34 M72,34 C82,34 90,42 90,52 C90,62 82,70 72,70 C62,70 54,62 54,52 C54,42 62,34 72,34 M28,44 C32,44 36,48 36,52 C36,56 32,60 28,60 M72,44 C68,44 64,48 64,52 C64,56 68,60 72,60 M46,52 L54,52",
+    chapters: [
+      "PROBABLE CAUSE",
+      "WHAT CHANGES NOW",
+      "SEARCH INCIDENT TO ARREST",
+      "USE OF FORCE",
+      "YOUR PROPERTY",
+      "THE FIRST HOURS"
+    ]
+  },
+  {
+    id: "saying", name: "WHAT YOU SAY", live: false,
+    blurb: "Silence, counsel, and why the words have to be out loud.",
+    icon: "M22,28 L78,28 L78,60 L44,60 L30,72 L30,60 L22,60 Z M38,40 L62,40 M38,50 L54,50",
+    chapters: [
+      "INVOKING SILENCE",
+      "ASKING FOR A LAWYER",
+      "WHEN MIRANDA APPLIES",
+      "CUSTODY VS CONVERSATION",
+      "WHO IS ASKING",
+      "WHY TALKING RARELY HELPS"
+    ]
+  },
+  {
+    id: "bystander", name: "THE BYSTANDER", live: false,
+    blurb: "When it is happening to someone else. Filming, helping, being a passenger.",
+    icon: "M34,30 C41,30 46,35 46,42 C46,49 41,54 34,54 C27,54 22,49 22,42 C22,35 27,30 34,30 M14,80 C14,66 22,58 34,58 C46,58 54,66 54,80 M68,38 C74,38 79,43 79,49 C79,55 74,60 68,60 M60,80 C60,70 63,64 70,64 C79,64 84,71 84,80",
+    chapters: [
+      "WATCHING AND RECORDING",
+      "BEING A PASSENGER",
+      "BEING A WITNESS",
+      "HELPING SOMEONE ARRESTED",
+      "FINDING AND SUPPORTING THEM",
+      "WHEN IT IS AT YOUR HOUSE"
+    ]
+  },
+  {
+    id: "jail", name: "JAIL", live: false,
+    blurb: "Booking, the phone call, visits, and what pretrial detention actually is.",
+    icon: "M20,22 L80,22 L80,78 L20,78 Z M35,22 L35,78 M50,22 L50,78 M65,22 L65,78",
+    chapters: [
+      "BOOKING",
+      "YOUR PHONE CALL",
+      "VISITATION AND MAIL",
+      "MEDICAL AND GRIEVANCES",
+      "MONEY AND TELECOM",
+      "WHAT PRETRIAL DETENTION IS"
+    ]
   },
   {
     id: "court", name: "THE COURTHOUSE", live: false,
-    blurb: "Arraignment, bail, having a lawyer.",
+    blurb: "Arraignment, bail, the public defender, and the plea.",
     icon: "M50,18 L50,72 M28,32 L72,32 M34,32 L34,64 M50,32 L50,64 M66,32 L66,64 M22,72 L78,72 M28,26 L72,26 L50,14 Z",
-    chapters: ["ARRAIGNMENT", "BAIL", "THE PUBLIC DEFENDER", "THE PLEA", "YOUR HEARING", "THE RECORD"]
+    chapters: [
+      "ARRAIGNMENT",
+      "BAIL AND PRETRIAL RELEASE",
+      "THE PUBLIC DEFENDER",
+      "THE PLEA",
+      "YOUR HEARING",
+      "VERDICT AND SENTENCING"
+    ]
   },
   {
-    id: "commons", name: "THE COMMONS", live: false,
-    blurb: "Complaints, records, pushing back.",
-    icon: "M50,74 L50,44 M50,44 C36,44 26,34 26,22 C40,22 50,32 50,44 M50,44 C64,44 74,34 74,22 C60,22 50,32 50,44 M32,74 L68,74",
-    chapters: ["THE COMPLAINT", "BODY CAMERA", "PUBLIC RECORDS", "THE REVIEW BOARD", "EXPUNGEMENT"]
+    id: "after", name: "AFTER THE CHARGE", live: false,
+    blurb: "Probation, fines, your record, and what follows you afterward.",
+    icon: "M28,18 L64,18 L74,30 L74,80 L28,80 Z M64,18 L64,30 L74,30 M38,44 L64,44 M38,56 L64,56 M38,68 L54,68",
+    chapters: [
+      "PROBATION AND PAROLE",
+      "FINES AND FEES",
+      "YOUR RECORD",
+      "EXPUNGEMENT",
+      "COLLATERAL CONSEQUENCES",
+      "GETTING HELP"
+    ]
   }
 ];
 
