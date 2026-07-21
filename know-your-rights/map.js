@@ -63,6 +63,105 @@ import { c, u, C, U, useState } from "./theme.js";
 import { Button } from "./ui.js";
 
 // ---------------------------------------------------------------------------
+// Icon palette
+// ---------------------------------------------------------------------------
+// The district icons are small two-colour scenes, not single-stroke glyphs.
+// They use the game's own tokens so a skin swap in theme.js carries through.
+// GSOFT is the pale disc each scene sits on; GBRIGHT is the one element the eye
+// should land on (the lit thing, the gold thing); PAPER is everything else.
+const INK = u.outline;
+const PAPER = u.surface;
+const GSOFT = u.mustardSoft;
+const GBRIGHT = u.brandBright;
+const GOLD = u.brand;
+const TERRA = u.terra;
+
+export const ICONS = {
+  juvenile: () => [
+    c.jsx("circle", { cx: 50, cy: 48, r: 38, fill: GSOFT }, 0),
+    c.jsx("path", { d: "M36,30 C30,42 28,56 30,70", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round" }, 1),
+    c.jsx("path", { d: "M64,30 C70,42 72,56 70,70", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round" }, 2),
+    c.jsx("path", { d: "M26,44 C26,30 36,22 50,22 C64,22 74,30 74,44 L74,76 C74,82 70,86 64,86 L36,86 C30,86 26,82 26,76 Z", fill: GBRIGHT, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 3),
+    c.jsx("path", { d: "M26,48 C26,34 36,26 50,26 C64,26 74,34 74,48 Z", fill: PAPER, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 4),
+    c.jsx("rect", { x: 44, y: 44, width: 12, height: 10, rx: 2, fill: PAPER, stroke: INK, strokeWidth: 3.6 }, 5),
+    c.jsx("path", { d: "M34,62 L66,62 L66,76 C66,79 64,80 62,80 L38,80 C36,80 34,79 34,76 Z", fill: PAPER, stroke: INK, strokeWidth: 4, strokeLinejoin: "round" }, 6),
+    c.jsx("path", { d: "M42,22 C42,16 58,16 58,22", fill: "none", stroke: INK, strokeWidth: 4 }, 7)
+  ],
+  stop: () => [
+    c.jsx("circle", { cx: 50, cy: 46, r: 37, fill: GSOFT }, 0),
+    c.jsx("path", { d: "M6,74 L94,74", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round", strokeLinejoin: "round" }, 1),
+    c.jsx("path", { d: "M10,66 L10,52 C10,48 14,46 20,46 L26,34 C28,30 32,28 38,28 L64,28 C70,28 74,30 76,34 L82,46 C88,46 90,48 90,52 L90,66 Z", fill: PAPER, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 2),
+    c.jsx("path", { d: "M32,46 L36,34 L48,34 L48,46 Z", fill: GSOFT, stroke: INK, strokeWidth: 3.4, strokeLinejoin: "round" }, 3),
+    c.jsx("path", { d: "M54,46 L54,34 L64,34 L70,46 Z", fill: GSOFT, stroke: INK, strokeWidth: 3.4, strokeLinejoin: "round" }, 4),
+    c.jsx("rect", { x: 38, y: 18, width: 24, height: 10, rx: 3, fill: PAPER, stroke: INK, strokeWidth: 3.6 }, 5),
+    c.jsx("rect", { x: 40, y: 20, width: 9, height: 6, rx: 2, fill: TERRA }, 6),
+    c.jsx("rect", { x: 51, y: 20, width: 9, height: 6, rx: 2, fill: GBRIGHT }, 7),
+    c.jsx("circle", { cx: 28, cy: 66, r: 10, fill: PAPER, stroke: INK, strokeWidth: 4.5 }, 8),
+    c.jsx("circle", { cx: 72, cy: 66, r: 10, fill: PAPER, stroke: INK, strokeWidth: 4.5 }, 9),
+    c.jsx("circle", { cx: 28, cy: 66, r: 3, fill: INK }, 10),
+    c.jsx("circle", { cx: 72, cy: 66, r: 3, fill: INK }, 11)
+  ],
+  arrest: () => [
+    c.jsx("circle", { cx: 50, cy: 48, r: 38, fill: GSOFT }, 0),
+    c.jsx("ellipse", { cx: 27, cy: 52, rx: 19, ry: 21, fill: GBRIGHT, stroke: INK, strokeWidth: 5 }, 1),
+    c.jsx("ellipse", { cx: 27, cy: 52, rx: 9, ry: 11, fill: PAPER, stroke: INK, strokeWidth: 4 }, 2),
+    c.jsx("ellipse", { cx: 73, cy: 52, rx: 19, ry: 21, fill: GBRIGHT, stroke: INK, strokeWidth: 5 }, 3),
+    c.jsx("ellipse", { cx: 73, cy: 52, rx: 9, ry: 11, fill: PAPER, stroke: INK, strokeWidth: 4 }, 4),
+    c.jsx("circle", { cx: 43, cy: 52, r: 5, fill: "none", stroke: INK, strokeWidth: 4 }, 5),
+    c.jsx("circle", { cx: 57, cy: 52, r: 5, fill: "none", stroke: INK, strokeWidth: 4 }, 6),
+    c.jsx("path", { d: "M20,31 C24,25 34,25 38,31", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round" }, 7),
+    c.jsx("path", { d: "M62,31 C66,25 76,25 80,31", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round" }, 8)
+  ],
+  saying: () => [
+    c.jsx("circle", { cx: 50, cy: 48, r: 38, fill: GSOFT }, 0),
+    c.jsx("path", { d: "M10,18 L58,18 L58,48 L34,48 L22,60 L22,48 L10,48 Z", fill: PAPER, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 1),
+    c.jsx("path", { d: "M20,28 L48,28 M20,38 L38,38", fill: "none", stroke: INK, strokeWidth: 3.2, strokeLinecap: "round", strokeLinejoin: "round" }, 2),
+    c.jsx("path", { d: "M44,44 L92,44 L92,74 L60,74 L50,86 L50,74 L44,74 Z", fill: GBRIGHT, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 3),
+    c.jsx("path", { d: "M56,54 L82,54 M56,64 L74,64", stroke: PAPER, strokeWidth: 3.4, strokeLinecap: "round" }, 4)
+  ],
+  bystander: () => [
+    c.jsx("circle", { cx: 50, cy: 46, r: 37, fill: GSOFT }, 0),
+    c.jsx("circle", { cx: 32, cy: 26, r: 6, fill: GOLD, opacity: 0.5 }, 1),
+    c.jsx("path", { d: "M24,50 C24,38 27,32 32,32 C37,32 40,38 40,50 Z", fill: GOLD, opacity: 0.5 }, 2),
+    c.jsx("circle", { cx: 52, cy: 26, r: 6, fill: GOLD, opacity: 0.5 }, 3),
+    c.jsx("path", { d: "M44,50 C44,38 47,32 52,32 C57,32 60,38 60,50 Z", fill: GOLD, opacity: 0.5 }, 4),
+    c.jsx("circle", { cx: 34, cy: 52, r: 11, fill: PAPER, stroke: INK, strokeWidth: 4.5 }, 5),
+    c.jsx("path", { d: "M18,88 C18,72 25,64 34,64 C43,64 50,72 50,88 Z", fill: PAPER, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 6),
+    c.jsx("rect", { x: 60, y: 44, width: 20, height: 30, rx: 4, fill: GBRIGHT, stroke: INK, strokeWidth: 4 }, 7),
+    c.jsx("path", { d: "M50,72 L60,64", fill: "none", stroke: INK, strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round" }, 8)
+  ],
+  jail: () => [
+    c.jsx("rect", { x: 12, y: 12, width: 76, height: 76, rx: 4, fill: GSOFT }, 0),
+    c.jsx("rect", { x: 18, y: 16, width: 64, height: 68, fill: GBRIGHT, stroke: INK, strokeWidth: 4.5 }, 1),
+    c.jsx("path", { d: "M31,16 L31,84 M44,16 L44,84 M57,16 L57,84 M70,16 L70,84", stroke: INK, strokeWidth: 5 }, 2),
+    c.jsx("path", { d: "M18,28 L82,28 M18,72 L82,72", stroke: INK, strokeWidth: 5 }, 3),
+    c.jsx("rect", { x: 18, y: 16, width: 64, height: 68, fill: "none", stroke: INK, strokeWidth: 5 }, 4),
+    c.jsx("path", { d: "M8,88 L92,88", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round", strokeLinejoin: "round" }, 5)
+  ],
+  court: () => [
+    c.jsx("circle", { cx: 50, cy: 44, r: 38, fill: GSOFT }, 0),
+    c.jsx("path", { d: "M8,84 L92,84 M14,76 L86,76 M20,68 L80,68", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round", strokeLinejoin: "round" }, 1),
+    c.jsx("path", { d: "M30,68 L30,36 M50,68 L50,36 M70,68 L70,36", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round", strokeLinejoin: "round" }, 2),
+    c.jsx("path", { d: "M18,36 L82,36 L50,14 Z", fill: GBRIGHT, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 3)
+  ],
+  after: () => [
+    c.jsx("circle", { cx: 50, cy: 46, r: 37, fill: GSOFT }, 0),
+    c.jsx("circle", { cx: 66, cy: 32, r: 19, fill: GBRIGHT, stroke: INK, strokeWidth: 4 }, 1),
+    c.jsx("path", { d: "M66,22 L66,32 L74,36", stroke: INK, strokeWidth: 4, strokeLinecap: "round", fill: "none" }, 2),
+    c.jsx("path", { d: "M18,84 L64,84 L64,44 L46,44 L18,52 Z", fill: PAPER, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 3),
+    c.jsx("path", { d: "M24,74 L56,74 M24,64 L56,64", fill: "none", stroke: INK, strokeWidth: 3.2, strokeLinecap: "round", strokeLinejoin: "round" }, 4),
+    c.jsx("path", { d: "M14,88 L86,88", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round", strokeLinejoin: "round" }, 5)
+  ],
+  allrights: () => [
+    c.jsx("circle", { cx: 50, cy: 48, r: 38, fill: GSOFT }, 0),
+    c.jsx("path", { d: "M50,14 L80,26 L80,52 C80,70 66,82 50,86 C34,82 20,70 20,52 L20,26 Z", fill: GBRIGHT, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 1),
+    c.jsx("path", { d: "M37,50 L46,60 L64,38", fill: "none", stroke: PAPER, strokeWidth: 6, strokeLinecap: "round", strokeLinejoin: "round" }, 2)
+  ]
+
+};
+
+
+// ---------------------------------------------------------------------------
 // The districts. Content roadmap.
 // ---------------------------------------------------------------------------
 // `icon` is an SVG path drawn on a 100x92 viewBox: single stroke, no fill. Line
@@ -72,7 +171,7 @@ export const DISTRICTS = [
   {
     id: "juvenile", name: "JUVENILE", live: false,
     blurb: "What is different because you are under 17, and what changes when you are not.",
-    icon: "M50,20 C58,20 64,26 64,34 C64,42 58,48 50,48 C42,48 36,42 36,34 C36,26 42,20 50,20 M26,78 C26,62 37,54 50,54 C63,54 74,62 74,78",
+    icon: ICONS.juvenile,
     chapters: [
       "WHAT IS DIFFERENT RIGHT NOW",
       "AT SCHOOL",
@@ -85,7 +184,7 @@ export const DISTRICTS = [
   {
     id: "stop", name: "THE STOP", live: false,
     blurb: "Stopped on the street. Are you being held, and what do you have to give?",
-    icon: "M50,20 L50,74 M50,20 C62,20 70,28 70,38 C70,48 62,54 50,54 M26,74 L74,74",
+    icon: ICONS.stop,
     chapters: [
       "AM I FREE TO GO",
       "REASONABLE SUSPICION",
@@ -98,7 +197,7 @@ export const DISTRICTS = [
   {
     id: "arrest", name: "THE ARREST", live: false,
     blurb: "The handcuffs change everything. What is different the moment they go on.",
-    icon: "M28,34 C38,34 46,42 46,52 C46,62 38,70 28,70 C18,70 10,62 10,52 C10,42 18,34 28,34 M72,34 C82,34 90,42 90,52 C90,62 82,70 72,70 C62,70 54,62 54,52 C54,42 62,34 72,34 M28,44 C32,44 36,48 36,52 C36,56 32,60 28,60 M72,44 C68,44 64,48 64,52 C64,56 68,60 72,60 M46,52 L54,52",
+    icon: ICONS.arrest,
     chapters: [
       "PROBABLE CAUSE",
       "WHAT CHANGES NOW",
@@ -111,7 +210,7 @@ export const DISTRICTS = [
   {
     id: "saying", name: "WHAT YOU SAY", live: false,
     blurb: "Silence, counsel, and why the words have to be out loud.",
-    icon: "M22,28 L78,28 L78,60 L44,60 L30,72 L30,60 L22,60 Z M38,40 L62,40 M38,50 L54,50",
+    icon: ICONS.saying,
     chapters: [
       "INVOKING SILENCE",
       "ASKING FOR A LAWYER",
@@ -124,7 +223,7 @@ export const DISTRICTS = [
   {
     id: "bystander", name: "THE BYSTANDER", live: false,
     blurb: "When it is happening to someone else. Filming, helping, being a passenger.",
-    icon: "M34,30 C41,30 46,35 46,42 C46,49 41,54 34,54 C27,54 22,49 22,42 C22,35 27,30 34,30 M14,80 C14,66 22,58 34,58 C46,58 54,66 54,80 M68,38 C74,38 79,43 79,49 C79,55 74,60 68,60 M60,80 C60,70 63,64 70,64 C79,64 84,71 84,80",
+    icon: ICONS.bystander,
     chapters: [
       "WATCHING AND RECORDING",
       "BEING A PASSENGER",
@@ -137,7 +236,7 @@ export const DISTRICTS = [
   {
     id: "jail", name: "JAIL", live: false,
     blurb: "Booking, the phone call, visits, and what pretrial detention actually is.",
-    icon: "M20,22 L80,22 L80,78 L20,78 Z M35,22 L35,78 M50,22 L50,78 M65,22 L65,78",
+    icon: ICONS.jail,
     chapters: [
       "BOOKING",
       "YOUR PHONE CALL",
@@ -150,7 +249,7 @@ export const DISTRICTS = [
   {
     id: "court", name: "THE COURTHOUSE", live: false,
     blurb: "Arraignment, bail, the public defender, and the plea.",
-    icon: "M50,18 L50,72 M28,32 L72,32 M34,32 L34,64 M50,32 L50,64 M66,32 L66,64 M22,72 L78,72 M28,26 L72,26 L50,14 Z",
+    icon: ICONS.court,
     chapters: [
       "ARRAIGNMENT",
       "BAIL AND PRETRIAL RELEASE",
@@ -163,7 +262,7 @@ export const DISTRICTS = [
   {
     id: "after", name: "AFTER THE CHARGE", live: false,
     blurb: "Probation, fines, your record, and what follows you afterward.",
-    icon: "M28,18 L64,18 L74,30 L74,80 L28,80 Z M64,18 L64,30 L74,30 M38,44 L64,44 M38,56 L64,56 M38,68 L54,68",
+    icon: ICONS.after,
     chapters: [
       "PROBATION AND PAROLE",
       "FINES AND FEES",
@@ -180,7 +279,7 @@ export const DISTRICTS = [
 export const FULL_DECK = {
   id: "all", name: "ALL RIGHTS",
   blurb: "Fifteen questions pulled from everything we have so far.",
-  icon: "M50,16 L78,28 L78,52 C78,68 66,78 50,82 C34,78 22,68 22,52 L22,28 Z M50,34 L50,58 M50,64 L50,66"
+  icon: ICONS.allrights,
 };
 
 const TOTAL_CHAPTERS = DISTRICTS.reduce((n, d) => n + d.chapters.length, 0);
@@ -221,20 +320,19 @@ function DistrictCard({ district, onPlay }) {
       // Motif band
       c.jsxs("div", {
         style: {
-          position: "relative", height: 88,
+          position: "relative", height: 96,
           background: live ? u.brandSofter : u.bgWarm,
           borderBottom: `2px solid ${live ? u.outline : u.borderLight}`,
           display: "flex", alignItems: "center", justifyContent: "center"
         },
         children: [
           c.jsx("svg", {
-            viewBox: "0 0 100 92", width: 68, height: 62, "aria-hidden": true,
-            children: c.jsx("path", {
-              d: district.icon, fill: "none",
-              stroke: live ? u.outline : u.textMuted,
-              strokeWidth: 3.6, strokeLinecap: "round", strokeLinejoin: "round",
-              opacity: live ? 0.9 : 0.45
-            })
+            viewBox: "0 0 100 100", width: 68, height: 68, "aria-hidden": true,
+            // The icons carry their own fills, so a coming-soon card cannot be
+            // muted by swapping a stroke colour the way a single-path glyph
+            // could. Desaturating the whole group is what dims them instead.
+            style: live ? undefined : { filter: "grayscale(0.75)", opacity: 0.55 },
+            children: district.icon()
           }),
           !live && c.jsx("div", {
             style: {
@@ -348,12 +446,9 @@ export function MapScreen({ onPlayFullDeck, onHome }) {
           },
           children: [
             c.jsx("svg", {
-              viewBox: "0 0 100 92", width: 54, height: 50, "aria-hidden": true,
+              viewBox: "0 0 100 100", width: 60, height: 60, "aria-hidden": true,
               style: { flexShrink: 0 },
-              children: c.jsx("path", {
-                d: FULL_DECK.icon, fill: "none", stroke: u.outline,
-                strokeWidth: 3.6, strokeLinecap: "round", strokeLinejoin: "round"
-              })
+              children: FULL_DECK.icon()
             }),
             c.jsxs("div", { style: { flex: "1 1 260px", minWidth: 0 }, children: [
               c.jsxs("div", {
