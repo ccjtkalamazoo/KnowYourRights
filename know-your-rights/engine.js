@@ -26,12 +26,13 @@ import {
 } from "./rules.js";
 import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
+import { MapScreen } from "./map.js";
 
 // ===========================================================================
 // App : all game state lives here.
 // ===========================================================================
 export function App() {
-  const [phase, setPhase] = useState("start"); // start|walkthrough|playing|locking|revealing|gameover|won
+  const [phase, setPhase] = useState("start"); // start|walkthrough|map|playing|locking|revealing|gameover|won
   const [walkStep, setWalkStep] = useState(0);
   const [deck, setDeck] = useState([]);
   const [level, setLevel] = useState(0);
@@ -116,7 +117,11 @@ export function App() {
   };
 
   const goWalkthrough = () => { initAudio(); sfx.current.click(); setWalkStep(0); setPhase("walkthrough"); };
-  const playAgain = () => { initAudio(); sfx.current.click(); startGame(); };
+  // The map is the launcher. The walkthrough hands off to it instead of straight
+  // into a run, and every end screen returns here rather than to the start.
+  // resetState() first so a run's leftovers never survive into the next one.
+  const goMap = () => { initAudio(); sfx.current.click(); music.current.stop(); resetState(); setPhase("map"); };
+  const playAgain = () => { initAudio(); sfx.current.click(); goMap(); };
   const startGame = () => {
     resetState();
     setDeck(buildDeck());
@@ -304,12 +309,13 @@ export function App() {
   const doSkip = () => { sfx.current.click(); setSkipConfirm(false); setSkipConfirmed(true); advance(); };
 
   const askHome = () => {
-    if (phase === "start" || phase === "gameover" || phase === "won" || phase === "winbig") return;
+    // Screens with no run in progress: nothing to lose, so no confirmation.
+    if (phase === "start" || phase === "map" || phase === "gameover" || phase === "won" || phase === "winbig") return;
     sfx.current.modalOpen();
     setHomeConfirm(true);
   };
   const cancelHome = () => { sfx.current.click(); setHomeConfirm(false); };
-  const confirmHome = () => { sfx.current.click(); setHomeConfirm(false); music.current.stop(); resetState(); setPhase("start"); };
+  const confirmHome = () => { setHomeConfirm(false); goMap(); };
 
   // The CCJT mark: ask first, then open the site in a NEW tab so the player's
   // run is never destroyed by following the link. noopener/noreferrer is standard
@@ -326,9 +332,9 @@ export function App() {
   const winTakeMoney = () => { sfx.current.click(); music.current.stop(); setPhase("won"); };
   const winKeepGoing = () => { sfx.current.click(); enterEndless(); };
 
-  const walkNext = () => { sfx.current.click(); if (walkStep < R.walkthrough.length - 1) setWalkStep(walkStep + 1); else startGame(); };
+  const walkNext = () => { sfx.current.click(); if (walkStep < R.walkthrough.length - 1) setWalkStep(walkStep + 1); else goMap(); };
   const walkPrev = () => { sfx.current.click(); if (walkStep > 0) setWalkStep(walkStep - 1); };
-  const walkSkip = () => { sfx.current.click(); startGame(); };
+  const walkSkip = () => { sfx.current.click(); goMap(); };
 
   // The CCJT mark sits bottom-left on EVERY screen, this one included. One
   // position, always, so it reads as a persistent maker's mark rather than
@@ -342,6 +348,12 @@ export function App() {
   if (phase === "walkthrough")
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
       c.jsx(WalkScreen, { step: walkStep, total: R.walkthrough.length, screen: R.walkthrough[walkStep], onNext: walkNext, onPrev: walkPrev, onSkip: walkSkip, isLast: walkStep === R.walkthrough.length - 1, canPrev: walkStep > 0 }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
+
+  if (phase === "map")
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(MapScreen, { onPlayFullDeck: startGame, onHome: () => { resetState(); setPhase("start"); } }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
 
@@ -360,7 +372,7 @@ export function App() {
       c.jsx(EndScreen, {
         phase, missedAtLevel: phase === "gameover" ? level : null, finalPrize, bestRun, streak,
         isEndless, completedIdx, missedQuestion: phase === "gameover" ? currentQ : null,
-        onPlayAgain: playAgain, onHome: () => { resetState(); setPhase("start"); }
+        onPlayAgain: playAgain, onHome: goMap
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
