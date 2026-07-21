@@ -10,7 +10,7 @@
 //   audio.js      the two procedural sound engines
 //   ui.js         shared components (Button, Shell, ConfirmModal, ...)
 //   engine.js     the quiz screens and the state machine
-//   map.js        (coming) the district map
+//   map.js        the district map (shell: one live entry, eight coming soon)
 //   state.js      (coming) session progress and unlocks
 //
 // Load order does not matter; ES modules resolve their own dependency graph.
