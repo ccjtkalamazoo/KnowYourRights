@@ -309,6 +309,16 @@ export const CSS_TEXT = `
   @media (max-width: 920px) {
     .ts-ladder { display:none !important; }
     .ts-game-layout { flex-direction:column !important; }
+    /* The map is the one screen that may scroll: eight districts cannot fit a
+       phone viewport, and panning a roadmap is not the same thing as scrolling
+       a question. The no-scroll rule is about the quiz. */
+    .kyr-map-grid { grid-template-columns:repeat(3, 1fr) !important; }
+  }
+  @media (max-width: 700px) {
+    .kyr-map-grid { grid-template-columns:repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 400px) {
+    .kyr-map-grid { grid-template-columns:1fr !important; }
   }
 `;
 
