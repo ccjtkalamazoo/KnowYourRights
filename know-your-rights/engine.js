@@ -753,9 +753,9 @@ function ShopButton({ lifelines, points, shieldArmed, disabled, onClick }) {
 function ShopPanel({ lifelines, points, prices, shieldArmed, onPick, onClose }) {
   const order = ["fifty", "poll", "hint", "shield", "skip"];
   const purchaseOnly = { shield: true, skip: true }; // never start free; always cost points
-  return c.jsx(Backdrop, { children: c.jsxs("div", {
+  return c.jsx(Backdrop, { onClose, children: c.jsxs("div", {
     className: "ts-shop-panel",
-    style: { background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg, padding: "22px 24px 20px", maxWidth: 480, width: "100%", maxHeight: "90dvh", overflowY: "auto", animation: "ts-modal-in 0.18s ease-out" },
+    style: { background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg, padding: "22px 24px 20px", maxWidth: 480, width: "100%", maxHeight: "90dvh", overflowY: "auto", overscrollBehavior: "contain", WebkitOverflowScrolling: "touch", touchAction: "pan-y", animation: "ts-modal-in 0.18s ease-out" },
     children: [
       c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }, children: [
         c.jsx("h3", { style: { fontFamily: C.display, fontSize: 26, letterSpacing: 0, margin: 0, color: u.text }, children: "LIFELINES" }),
@@ -1088,7 +1088,7 @@ function ComicCard({ cardIndex, meta, dir, firstView, question, revealCorrect, s
   const anim = firstView
     ? "ts-card-flip-in 0.5s cubic-bezier(.2,.7,.2,1) both"
     : (dir >= 0 ? "ts-card-slide-left 0.28s ease-out both" : "ts-card-slide-right 0.28s ease-out both");
-  return c.jsx("div", { style: { flex: 1, minHeight: 0, perspective: 1400, display: "flex" }, children:
+  return c.jsx("div", { className: "ts-comic-flip-wrap", style: { flex: 1, minHeight: 0, perspective: 1400, display: "flex" }, children:
     c.jsxs("div", { className: "ts-comic-card", style: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0, background: u.surfaceHigh, border: `3px solid ${u.outline}`, borderRadius: 12, boxShadow: U.lg, overflow: "hidden", transformStyle: "preserve-3d", animation: anim }, children: [
       // header band
       c.jsxs("div", { className: "ts-comic-header", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 20px", background: u.brand, color: u.textOnDark, borderBottom: `3px solid ${u.outline}`, fontFamily: C.display, fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: 1, flexShrink: 0 }, children: [
