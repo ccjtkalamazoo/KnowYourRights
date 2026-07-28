@@ -260,7 +260,7 @@ export const CSS_TEXT = `
     .ts-answer-btn-letter { width:30px !important; height:30px !important; min-width:30px !important; font-size:15px !important; }
     .ts-question-card { padding:22px 20px !important; }
     .ts-question-card p { font-size:16px !important; }
-    .ts-stat-points { padding:14px 10px !important; }
+    .ts-shop-btn { padding:12px 8px !important; }
     .ts-stat-money { padding:14px 14px !important; }
     .ts-progress-dots { gap:3px !important; }
     .ts-q-header { font-size:18px !important; }
@@ -292,17 +292,25 @@ export const CSS_TEXT = `
     /* The card was flex:1 + overflow hidden to fill a locked viewport. On mobile
        it now grows to its content and the page scrolls, so the review cards
        (law, phrase, scenario) are never clipped on a small screen. */
+    /* min-width:0 down the flex chain is what lets the card shrink to fit the
+       screen. A flex child defaults to min-width:auto and refuses to go below
+       its content's natural width, which is what pushed the card off the right
+       edge. overflow:hidden is safe here because the card and its body are both
+       flex:0 0 auto, so the card's height is its content's height and there is
+       nothing to clip vertically. It also keeps the rounded corners clean. */
     .ts-comic-card { flex:0 0 auto !important; min-height:0 !important; min-width:0 !important; width:100% !important; max-width:100% !important; overflow:hidden !important; transform-style:flat !important; animation:ts-fade-in 0.35s ease-out !important; }
-    /* min-width:0 is the fix for the card running off the right edge. A flex
-       child defaults to min-width:auto and refuses to shrink below its content,
-       so a wide inner element pushed the whole card past the screen. Force it to
-       fit, and make inner content wrap instead of overflowing. */
-    .ts-comic-card * { min-width:0 !important; max-width:100% !important; }
+    .ts-comic-card > * { min-width:0 !important; }
     .ts-comic-flip-wrap { flex:0 0 auto !important; display:block !important; perspective:none !important; width:100% !important; max-width:100% !important; min-width:0 !important; }
-    .ts-comic-body { flex:0 0 auto !important; overflow:visible !important; justify-content:flex-start !important; }
-    .ts-comic-body p, .ts-comic-body span, .ts-comic-body div { overflow-wrap:anywhere !important; }
+    /* The body grows to its content and the PAGE scrolls. It used to be an inner
+       auto-scroll sized to a locked viewport, which trapped content in an area
+       you could not reach with large text (the "star I cannot redeem"). */
+    .ts-comic-body { flex:0 0 auto !important; min-width:0 !important; overflow:visible !important; justify-content:flex-start !important; padding:16px 16px !important; font-size:14px !important; }
+    /* A long unbroken string (a case citation, a URL) would still force width. */
+    .ts-comic-body, .ts-comic-body * { overflow-wrap:anywhere !important; }
     .ts-comic-header { font-size:26px !important; padding:12px 16px !important; }
-    .ts-comic-body { padding:16px 16px !important; font-size:14px !important; }
+    /* The faces used min-height:100% to centre content in a viewport-tall card.
+       The card is content-sized on mobile now, so that just leaves dead space. */
+    .ts-face-fill { min-height:0 !important; }
     .ts-scenario-panels { grid-template-columns:1fr !important; }
     .ts-scenario-outcomes { grid-template-columns:1fr !important; }
     .ts-phrase-quote { font-size:26px !important; }
