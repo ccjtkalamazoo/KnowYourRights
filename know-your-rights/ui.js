@@ -45,7 +45,7 @@ export function Shell({ children, muted, setMuted, screenFlash, screenShake, hid
       screenFlash && c.jsx("div", { "aria-hidden": true, style: { position: "fixed", inset: 0, background: screenFlash === "warm" ? "#fde9c8" : "#f7d8cc", opacity: 0, pointerEvents: "none", zIndex: 100, animation: `${screenFlash === "warm" ? "ts-flash-warm" : "ts-flash-red"} 0.6s ease-out forwards` } }),
       !hideSoundButton && c.jsx("button", {
         onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound",
-        style: { position: "fixed", top: "max(env(safe-area-inset-top), 8px)", right: 18, zIndex: 60, background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 11, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm, WebkitTapHighlightColor: "transparent" },
+        style: { position: "absolute", top: "max(env(safe-area-inset-top), 8px)", right: 18, zIndex: 60, background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 11, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm, WebkitTapHighlightColor: "transparent" },
         children: muted ? "\u266A OFF" : "\u266A ON"
       }),
       // The content grows to fill, pushing the logo to the bottom of the flow.
