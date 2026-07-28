@@ -182,8 +182,12 @@ export function Button({ onClick, children, variant = "primary", size = "md", di
 // ---------------------------------------------------------------------------
 // Backdrop + ConfirmModal : every dialog in the game.
 // ---------------------------------------------------------------------------
-export function Backdrop({ children }) {
-  return c.jsx("div", { style: { position: "fixed", inset: 0, background: "rgba(42, 31, 18, 0.55)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 90, padding: 24, animation: "ts-backdrop-in 0.15s ease-out" }, children });
+export function Backdrop({ children, onClose }) {
+  return c.jsx("div", {
+    onClick: onClose ? (e) => { if (e.target === e.currentTarget) onClose(); } : undefined,
+    style: { position: "fixed", inset: 0, background: "rgba(42, 31, 18, 0.55)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 90, padding: 24, animation: "ts-backdrop-in 0.15s ease-out", overscrollBehavior: "contain", touchAction: "none" },
+    children
+  });
 }
 
 export function ConfirmModal({ title, body, primaryLabel, secondaryLabel, primaryVariant = "primary", onPrimary, onSecondary, header }) {
