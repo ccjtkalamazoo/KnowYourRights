@@ -18,18 +18,39 @@ import { c, u, C, U, LOGO, useState, useMemo } from "./theme.js";
 // the whole subtree when an answer is wrong.
 export function Shell({ children, muted, setMuted, screenFlash, screenShake, hideSoundButton, hideLogo, onLogoClick }) {
   return c.jsxs("div", {
-    style: { fontFamily: C.body, minHeight: "100vh", width: "100%", background: `radial-gradient(ellipse at 50% -10%, ${u.bgWarm} 0%, ${u.bg} 70%)`, color: u.text, position: "relative", overflow: "hidden", fontSize: 16 },
+    className: "ts-shell",
+    style: {
+      fontFamily: C.body, width: "100%",
+      // dvh, not vh: dvh tracks the *visible* viewport as Safari's toolbars slide
+      // in and out, so content is never hidden behind them. min-height (not
+      // height) lets a tall screen grow and scroll instead of clipping.
+      minHeight: "100vh", minHeight: "100dvh",
+      background: `radial-gradient(ellipse at 50% -10%, ${u.bgWarm} 0%, ${u.bg} 70%)`,
+      color: u.text, position: "relative",
+      // overflow was hidden, which is what made content collide instead of
+      // scroll. Let the page scroll when it needs to.
+      overflowX: "hidden", fontSize: 16,
+      display: "flex", flexDirection: "column",
+      // Safari safe-area buffers: keeps content clear of the notch, the home
+      // indicator, and the toolbars. The max() guarantees a minimum buffer even
+      // where there is no inset.
+      paddingTop: "max(env(safe-area-inset-top), 8px)",
+      paddingBottom: "max(env(safe-area-inset-bottom), 8px)",
+      paddingLeft: "env(safe-area-inset-left)",
+      paddingRight: "env(safe-area-inset-right)"
+    },
     children: [
-      c.jsx("div", { "aria-hidden": true, style: { position: "absolute", top: "60%", left: "-10%", width: "40%", height: "40%", background: `radial-gradient(ellipse, ${u.brandSofter} 0%, transparent 70%)`, filter: "blur(60px)", pointerEvents: "none" } }),
-      c.jsx("div", { "aria-hidden": true, style: { position: "absolute", top: "50%", right: "-10%", width: "40%", height: "40%", background: "radial-gradient(ellipse, #f7e0d8 0%, transparent 70%)", filter: "blur(60px)", pointerEvents: "none" } }),
+      c.jsx("div", { "aria-hidden": true, style: { position: "fixed", top: "60%", left: "-10%", width: "40%", height: "40%", background: `radial-gradient(ellipse, ${u.brandSofter} 0%, transparent 70%)`, filter: "blur(60px)", pointerEvents: "none", zIndex: 0 } }),
+      c.jsx("div", { "aria-hidden": true, style: { position: "fixed", top: "50%", right: "-10%", width: "40%", height: "40%", background: "radial-gradient(ellipse, #f7e0d8 0%, transparent 70%)", filter: "blur(60px)", pointerEvents: "none", zIndex: 0 } }),
       screenFlash && c.jsx("div", { "aria-hidden": true, style: { position: "fixed", inset: 0, background: screenFlash === "warm" ? "#fde9c8" : "#f7d8cc", opacity: 0, pointerEvents: "none", zIndex: 100, animation: `${screenFlash === "warm" ? "ts-flash-warm" : "ts-flash-red"} 0.6s ease-out forwards` } }),
       !hideSoundButton && c.jsx("button", {
         onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound",
-        style: { position: "absolute", top: 18, right: 18, zIndex: 60, background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 11, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm },
+        style: { position: "fixed", top: "max(env(safe-area-inset-top), 8px)", right: 18, zIndex: 60, background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 11, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm, WebkitTapHighlightColor: "transparent" },
         children: muted ? "\u266A OFF" : "\u266A ON"
       }),
-      !hideLogo && c.jsx(SiteLogo, { onClick: onLogoClick }),
-      c.jsx("div", { style: { position: "relative", zIndex: 1, animation: screenShake ? "ts-screen-shake 0.5s" : "none" }, children })
+      // The content grows to fill, pushing the logo to the bottom of the flow.
+      c.jsx("div", { style: { position: "relative", zIndex: 1, flex: "1 0 auto", display: "flex", flexDirection: "column", animation: screenShake ? "ts-screen-shake 0.5s" : "none" }, children }),
+      !hideLogo && c.jsx(SiteLogo, { onClick: onLogoClick })
     ]
   });
 }
@@ -56,9 +77,17 @@ export function SiteLogo({ onClick }) {
     "aria-label": "About CCJT (opens ccjtkalamazoo.org)",
     className: "ts-site-logo",
     style: {
-      position: "fixed", left: 18, bottom: 18, zIndex: 60,
+      // In the document flow, bottom-left, so it sits BELOW content and can
+      // never overlap it. On a tall screen it shows without scrolling; on a
+      // short one you scroll to it. Was position:fixed, which floated over
+      // content and caused the overlap on phones.
+      display: "block", marginTop: "auto", alignSelf: "flex-start",
       background: "transparent", border: "none", padding: 6,
       cursor: "pointer", lineHeight: 0,
+      // Kills the dark box iOS Safari paints behind a tapped button. This is the
+      // "black square on mobile only" — it never shows on desktop because desktop
+      // has no tap highlight.
+      WebkitTapHighlightColor: "transparent",
       opacity: hover ? 1 : 0.82,
       transform: hover ? "translateY(-2px)" : "translateY(0)",
       transition: "opacity 0.15s, transform 0.15s",
