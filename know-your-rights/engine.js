@@ -20,9 +20,9 @@
 import { c, u, C, U, LOGO, useState, useEffect, useRef, injectStyles } from "./theme.js";
 import { R } from "./questions.js";
 import {
-  LADDER, LADDER_TIERS, LIFELINE_PRICES, musicStageFor,
+  LADDER, LIFELINE_PRICES, musicStageFor,
   fmtMoney, fmtMoneyShort, shuffle, buildDeck, shuffleOptions,
-  buildEndlessDeck, simulateJury
+  buildEndlessDeck, simulateJury, allQuestions
 } from "./rules.js";
 import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
@@ -139,7 +139,6 @@ export function App() {
 
   const currentQ = deck[level];
   const rung = LADDER[level] || { level: level + 1, prize: LADDER[LADDER.length - 1].prize };
-  const difficulty = (currentQ && currentQ.difficulty) || LADDER_TIERS[level] || "hard";
   const stage = isEndless ? 3 : musicStageFor(level);
 
   const enterEndless = () => {
@@ -237,23 +236,23 @@ export function App() {
   const requestLifeline = (k) => { if (phase !== "playing") return; setShopOpen(false); sfx.current.modalOpen(); setPendingLifeline(k); };
   const cancelLifeline = () => { sfx.current.click(); setPendingLifeline(null); };
 
-  // swap the current question for another of the same difficulty not in this run's deck.
-  // returns true if a swap happened. with a thin bank this can be false; guarded in confirmLifeline.
+  // Swap the current question for another one not already in this run's deck.
+  // This used to match the old question's difficulty tier; tiers are gone, so it
+  // is any unseen question. Returns true if a swap happened. With a thin bank
+  // this can be false, which confirmLifeline guards against.
   const skipQuestion = () => {
-    const diff = (currentQ && currentQ.difficulty) || LADDER_TIERS[level] || "hard";
     const seenQs = new Set(deck.map((q) => q.q));
-    const poolRaw = (R.questions[diff] || []).filter((q) => !seenQs.has(q.q));
+    const poolRaw = allQuestions().filter((q) => !seenQs.has(q.q));
     if (poolRaw.length === 0) return false;
-    const picked = shuffleOptions({ ...shuffle(poolRaw)[0], difficulty: diff });
+    const picked = shuffleOptions({ ...shuffle(poolRaw)[0] });
     setDeck((prev) => { const copy = prev.slice(); copy[level] = picked; return copy; });
     setSelected(null); setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
     return true;
   };
-  // is a same-tier swap currently available? (used to avoid charging skip for a no-op)
+  // Is a swap currently available? Used so SKIP is not charged for a no-op.
   const canSkipNow = () => {
-    const diff = (currentQ && currentQ.difficulty) || LADDER_TIERS[level] || "hard";
     const seenQs = new Set(deck.map((q) => q.q));
-    return (R.questions[diff] || []).some((q) => !seenQs.has(q.q));
+    return allQuestions().some((q) => !seenQs.has(q.q));
   };
 
   const applyLifeline = (k) => {
@@ -265,7 +264,7 @@ export function App() {
       if (selected !== null && toRemove.includes(selected)) setSelected(null);
     } else if (k === "poll") {
       sfx.current.lifeline();
-      setJuryResults(simulateJury(currentQ.correct, removedAnswers, difficulty));
+      setJuryResults(simulateJury(currentQ.correct, removedAnswers));
     } else if (k === "hint") {
       sfx.current.lifeline();
       setHintShown(true);
@@ -408,7 +407,7 @@ export function App() {
   // playing or locking
   return c.jsxs(Shell, { muted, setMuted, screenFlash, screenShake, hideSoundButton: true, onLogoClick: askLogo, children: [
     c.jsx(QuestionScreen, {
-      question: currentQ, level, rung, difficulty, stage, streak, selectedIdx: selected,
+      question: currentQ, level, rung, stage, streak, selectedIdx: selected,
       locked, revealCorrect, revealWrong, showFloating, phase, removedAnswers, juryResults,
       hintShown, lifelines, muted, setMuted, isEndless, points, shieldArmed,
       onSelect, onLockIn, onNext: advance, onHome: askHome, onRequestLifeline: requestLifeline,
@@ -570,19 +569,27 @@ function FitText({ children, max = 40, min = 16, style }) {
   const spanRef = useRef(null);
   const [size, setSize] = useState(max);
   useEffect(() => {
-    setSize(max); // reset to max whenever the text changes, then shrink to fit
-  }, [children, max]);
-  useEffect(() => {
     const box = boxRef.current, span = spanRef.current;
     if (!box || !span) return;
-    let s = size;
-    // shrink until it fits or we hit the floor
-    while (s > min && span.scrollWidth > box.clientWidth) {
-      s -= 1;
+    // Measure from the top every time: start at max, step down until it fits.
+    // Writing span.style directly is the measuring mechanism; setSize then makes
+    // the result stick across re-renders. Deps are the things that change the
+    // fit, so this runs once per change rather than on every render.
+    const fit = () => {
+      let s = max;
       span.style.fontSize = s + "px";
-    }
-    if (s !== size) setSize(s);
-  });
+      while (s > min && span.scrollWidth > box.clientWidth) {
+        s -= 1;
+        span.style.fontSize = s + "px";
+      }
+      setSize(s);
+    };
+    fit();
+    // Rotating the phone changes the box width, so refit on resize.
+    if (typeof window === "undefined") return;
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [children, max, min]);
   return c.jsx("div", {
     ref: boxRef,
     style: { width: "100%", display: "flex", justifyContent: "center", overflow: "hidden" },
@@ -595,7 +602,7 @@ function FitText({ children, max = 40, min = 16, style }) {
 }
 
 function QuestionScreen(props) {
-  const { question, level, rung, difficulty, stage, streak, selectedIdx, locked, revealCorrect,
+  const { question, level, rung, stage, streak, selectedIdx, locked, revealCorrect,
     revealWrong, showFloating, phase, removedAnswers, juryResults, hintShown, lifelines, muted,
     setMuted, isEndless, points, shieldArmed, onSelect, onLockIn, onNext, onHome, onRequestLifeline,
     onOpenShop, onEnterEndless } = props;
@@ -1165,7 +1172,7 @@ function FaceVerdict({ question, revealCorrect, selectedIdx, rightLetter }) {
 }
 
 function FaceInfo({ question }) {
-  return c.jsx("div", { style: { display: "flex", alignItems: "center", minHeight: "100%" }, children:
+  return c.jsx("div", { className: "ts-face-fill", style: { display: "flex", alignItems: "center", minHeight: "100%" }, children:
     c.jsx("div", { style: { background: u.mustardSoft, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "18px 20px", boxShadow: U.sm }, children:
       c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(15px, 2.2vw, 18px)", lineHeight: 1.6, color: u.text, margin: 0, fontWeight: 500 }, children: question.principle || "" })
     })
@@ -1174,7 +1181,7 @@ function FaceInfo({ question }) {
 
 function FacePhrase({ question }) {
   const kp = question.keyPhrase || { quote: "", gloss: "" };
-  return c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", minHeight: "100%", gap: 16 }, children: [
+  return c.jsxs("div", { className: "ts-face-fill", style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", minHeight: "100%", gap: 16 }, children: [
     c.jsx("div", { className: "ts-phrase-quote", style: { fontFamily: C.display, fontSize: "clamp(28px, 5.5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.01em", color: u.text, textShadow: `2px 2px 0 ${u.brandBright}`, animation: "ts-phrase-in 0.6s cubic-bezier(.2,.8,.2,1.2) both", maxWidth: "16ch" }, children: kp.quote }),
     kp.gloss && c.jsx("p", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.55, color: u.textDim, margin: 0, fontWeight: 500, maxWidth: 460 }, children: kp.gloss })
   ] });
