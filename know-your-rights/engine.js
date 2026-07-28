@@ -460,14 +460,18 @@ function StartScreen({ onPlay, bestRun }) {
 function WalkScreen({ step, total, screen, onNext, onPrev, onSkip, isLast, canPrev }) {
   return c.jsxs("div", {
     className: "ts-walk-screen",
-    style: { minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" },
+    style: { minHeight: "100vh", minHeight: "100dvh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" },
     children: [
       c.jsxs("div", {
         className: "ts-walk-card",
-        style: { maxWidth: 640, width: "100%", minHeight: 620, background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg, padding: "36px 40px 32px", textAlign: "center", animation: "ts-fade-in 0.35s ease-out", display: "flex", flexDirection: "column", boxSizing: "border-box" },
+        // No fixed min-height: with large text or zoom, a fixed height pushed
+        // content and the Next button out of reach. The card now grows to its
+        // content and the page scrolls if needed, so the button is always
+        // reachable at any text size.
+        style: { maxWidth: 640, width: "100%", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg, padding: "36px 40px 32px", textAlign: "center", animation: "ts-fade-in 0.35s ease-out", display: "flex", flexDirection: "column", boxSizing: "border-box" },
         children: [
           c.jsxs("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 3, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", marginBottom: 20, flexShrink: 0 }, children: [R.walkthroughStepPrefix, " ", step + 1, " of ", total] }),
-          c.jsxs("div", { style: { flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", minHeight: 0 }, children: [
+          c.jsxs("div", { style: { display: "flex", flexDirection: "column", justifyContent: "center" }, children: [
             c.jsx("h2", { className: "ts-walk-title", style: { fontFamily: C.display, fontSize: "clamp(36px, 6vw, 56px)", lineHeight: 0.95, letterSpacing: "-0.01em", margin: 0, color: u.text, textShadow: `4px 4px 0 ${u.brand}` }, children: screen.title }),
             c.jsx("div", { style: { margin: "32px 0 28px", display: "flex", justifyContent: "center" }, children: c.jsx(WalkArt, { screen }) }),
             c.jsx("p", { style: { fontFamily: C.body, fontSize: 16, color: u.textDim, lineHeight: 1.7, fontWeight: 500, margin: "0 auto", maxWidth: 500 }, children: screen.body })
@@ -605,14 +609,11 @@ function QuestionScreen(props) {
           })
         ] }),
 
-        // Row 2: Points (1/3, left) and Money-or-Streak (2/3, right), as two
-        // separate boxes. Money auto-scales so six figures always fit its box.
+        // Row 2: the Points box IS the shop (tap to open), 1/3 left. Money 2/3
+        // right. Putting the shop on the points box is logical (points are what
+        // you spend) and removes a separate control from the bottom.
         c.jsxs("div", { className: "ts-stat-row", style: { display: "flex", gap: 12, alignItems: "stretch" }, children: [
-          c.jsxs("div", { className: "ts-stat-points", style: { flex: "1 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 10px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
-            c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: "Points" }),
-            c.jsx("div", { style: { fontFamily: C.display, fontSize: 26, letterSpacing: 0, color: u.brand, lineHeight: 1 }, children: points }),
-            c.jsx("div", { style: { fontFamily: C.mono, fontSize: 8, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textAlign: "center" }, children: "SPEND IN SHOP" })
-          ] }),
+          c.jsx(ShopButton, { lifelines, points, shieldArmed, disabled: locked, onClick: onOpenShop }),
           c.jsxs("div", { className: "ts-stat-money", style: { flex: "2 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 16px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
             c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: isEndless ? "Streak" : "Worth" }),
             c.jsx(FitText, {
@@ -637,12 +638,9 @@ function QuestionScreen(props) {
           isCorrect: i === question.correct, isSelectedAnswer: selectedIdx === i, revealCorrect, revealWrong,
           removed: removedAnswers.includes(i), juryPct: juryResults ? juryResults[i] : null, stage, onClick: () => onSelect(i)
         }, i)) }),
-        c.jsxs("div", { className: "ts-action-bar", style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 14, flexWrap: "wrap" }, children: [
-          c.jsx("div", { className: "ts-lifelines-row", style: { display: "flex", gap: 10 }, children:
-            c.jsx(ShopButton, { lifelines, points, shieldArmed, disabled: locked, onClick: onOpenShop })
-          }),
+        c.jsx("div", { className: "ts-action-bar", style: { display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 14 }, children:
           c.jsx("div", { className: "ts-action-bar-right", style: { display: "flex", gap: 12 }, children: c.jsx(Button, { variant: "primary", size: "md", disabled: selectedIdx === null || locked, onClick: onLockIn, children: "Lock It In" }) })
-        ] })
+        })
       ] }),
       c.jsxs("div", { className: "ts-ladder-col", style: { display: "flex", flexDirection: "column", gap: 12 }, children: [
         c.jsx("button", {
@@ -699,68 +697,51 @@ function AnswerButton(props) {
 // The button that opens the lifeline shop. Filled brand color so it stands out
 // from the rest of the UI; shows how many lifelines are ready and your points.
 // ---------------------------------------------------------------------------
-// ShopButton : the terra "SHOP" pill.
+// ShopButton : the shop, living as the left box of the stat row.
 // ---------------------------------------------------------------------------
-// Deliberately unlike an answer button: pill shape (answers are rectangles),
-// terra fill (answers are cream, and never terra in any state), icon-forward.
-// It carries the two things a player needs to decide whether to open it: points
-// on hand and how many lifelines are ready. Hierarchy on the action bar reads
-// answers (neutral) -> Lock It In (gold, primary) -> Shop (terra, secondary).
+// Sits where the Points readout used to, because points are what you spend here.
+// Terra fill so it reads as a tappable tool, distinct from the neutral Money box
+// beside it and from the cream answer buttons below. Shows points on hand and
+// how many lifelines are ready, the two things you need to decide to open it.
 function ShopButton({ lifelines, points, shieldArmed, disabled, onClick }) {
   const [hover, setHover] = useState(false);
   const ready = Object.values(lifelines).filter(Boolean).length;
   const off = disabled;
-  const shadow = off ? "none" : hover ? "1px 1px 0 " + u.outline : U.md;
-  const transform = off ? "none" : hover ? "translate(1px, 1px)" : "translate(0, 0)";
+  const active = !off && hover;
   return c.jsxs("button", {
     onClick: off ? undefined : onClick, disabled: off,
     onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false),
     className: "ts-shop-btn",
     "aria-label": `Open shop. ${points} points, ${ready} lifelines ready.`,
     style: {
-      position: "relative", display: "inline-flex", alignItems: "center", gap: 11,
-      background: off ? u.surface : u.terra, border: `3px solid ${u.outline}`,
-      padding: "9px 18px", borderRadius: 26, cursor: off ? "not-allowed" : "pointer",
-      opacity: off ? 0.5 : 1, boxShadow: shadow, transform,
-      transition: "box-shadow 0.1s, transform 0.1s", WebkitTapHighlightColor: "transparent"
+      flex: "1 1 0", minWidth: 0, display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center", gap: 2,
+      padding: "10px 8px", background: off ? u.surface : u.terra,
+      border: `2px solid ${u.outline}`, borderRadius: 10,
+      boxShadow: off ? "none" : active ? U.sm : U.md,
+      transform: active ? "translate(1px,1px)" : "translate(0,0)",
+      transition: "transform 0.1s, box-shadow 0.1s",
+      cursor: off ? "not-allowed" : "pointer", opacity: off ? 0.55 : 1,
+      position: "relative", WebkitTapHighlightColor: "transparent"
     },
     children: [
-      // shopping-bag icon, inline SVG so it needs no icon dependency
-      c.jsx("svg", {
-        width: 22, height: 22, viewBox: "0 0 24 24", fill: "none",
-        stroke: off ? u.terra : u.textOnDark, strokeWidth: 2.4,
-        strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true,
-        style: { flexShrink: 0 },
-        children: [
-          c.jsx("path", { d: "M4 8 L20 8 L18.5 22 L5.5 22 Z" }, 0),
-          c.jsx("path", { d: "M8 8 C8 3 16 3 16 8" }, 1)
-        ]
-      }),
-      c.jsxs("span", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 1, lineHeight: 1 }, children: [
-        c.jsx("span", {
-          style: {
-            fontFamily: C.display, fontSize: 16, letterSpacing: 1.5,
-            color: off ? u.terra : u.textOnDark
-          },
-          children: "SHOP"
+      c.jsxs("span", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+        c.jsx("svg", {
+          width: 17, height: 17, viewBox: "0 0 24 24", fill: "none",
+          stroke: off ? u.textMuted : u.textOnDark, strokeWidth: 2.4,
+          strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true,
+          children: [
+            c.jsx("path", { d: "M4 8 L20 8 L18.5 22 L5.5 22 Z" }, 0),
+            c.jsx("path", { d: "M8 8 C8 3 16 3 16 8" }, 1)
+          ]
         }),
-        c.jsxs("span", {
-          style: {
-            fontFamily: C.mono, fontSize: 9, fontWeight: 700, letterSpacing: 0.4,
-            color: off ? u.textMuted : "rgba(251,246,236,0.85)"
-          },
-          children: [String(points), " PTS \u00b7 ", String(ready), " READY"]
-        })
+        c.jsx("span", { style: { fontFamily: C.display, fontSize: 16, letterSpacing: 1.5, color: off ? u.textMuted : u.textOnDark }, children: "SHOP" })
       ] }),
+      c.jsxs("span", { style: { fontFamily: C.mono, fontSize: 9, fontWeight: 700, letterSpacing: 0.4, color: off ? u.textMuted : "rgba(251,246,236,0.9)" }, children: [String(points), " PTS \u00b7 ", String(ready), " READY"] }),
       shieldArmed && c.jsx("span", {
         title: "Shield armed",
-        style: {
-          display: "flex", alignItems: "center", gap: 3, fontFamily: C.mono,
-          fontSize: 9, fontWeight: 700, letterSpacing: 0.5, color: u.textOnDark,
-          background: u.green, border: `2px solid ${u.outline}`, borderRadius: 6,
-          padding: "2px 6px"
-        },
-        children: [c.jsx(LifeIcon, { name: "shield", size: 11, color: u.textOnDark }), "ARMED"]
+        style: { position: "absolute", top: 5, right: 5, display: "flex", alignItems: "center", gap: 2, fontFamily: C.mono, fontSize: 8, fontWeight: 700, color: u.textOnDark, background: u.green, border: `2px solid ${u.outline}`, borderRadius: 5, padding: "1px 4px" },
+        children: [c.jsx(LifeIcon, { name: "shield", size: 9, color: u.textOnDark }), "ON"]
       })
     ]
   });
