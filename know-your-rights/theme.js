@@ -291,7 +291,10 @@ export const CSS_TEXT = `
     .ts-music-btn, .ts-home-btn { max-width:none !important; flex:1 !important; }
     /* comic reveal mobile */
     .ts-reveal-screen { padding:10px 12px 24px !important; min-height:0 !important; }
-    .ts-comic-card { min-height:0 !important; }
+    /* The card was flex:1 + overflow hidden to fill a locked viewport. On mobile
+       it now grows to its content and the page scrolls, so the review cards
+       (law, phrase, scenario) are never clipped on a small screen. */
+    .ts-comic-card { flex:0 0 auto !important; min-height:0 !important; overflow:visible !important; }
     .ts-comic-header { font-size:26px !important; padding:12px 16px !important; }
     .ts-comic-body { padding:16px 16px !important; font-size:14px !important; }
     .ts-scenario-panels { grid-template-columns:1fr !important; }
