@@ -548,6 +548,40 @@ function LifelineModal({ lifelineKey, remainingAfter, available, points, price, 
 // ---------------------------------------------------------------------------
 // The question screen
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// FitText : shrinks its font-size until the text fits the container width.
+// ---------------------------------------------------------------------------
+// Used for the money/streak readout so "$1,000,000" and "$100" both sit inside
+// the same box without ever overflowing. Starts at `max`, steps down to `min`.
+function FitText({ children, max = 40, min = 16, style }) {
+  const boxRef = useRef(null);
+  const spanRef = useRef(null);
+  const [size, setSize] = useState(max);
+  useEffect(() => {
+    setSize(max); // reset to max whenever the text changes, then shrink to fit
+  }, [children, max]);
+  useEffect(() => {
+    const box = boxRef.current, span = spanRef.current;
+    if (!box || !span) return;
+    let s = size;
+    // shrink until it fits or we hit the floor
+    while (s > min && span.scrollWidth > box.clientWidth) {
+      s -= 1;
+      span.style.fontSize = s + "px";
+    }
+    if (s !== size) setSize(s);
+  });
+  return c.jsx("div", {
+    ref: boxRef,
+    style: { width: "100%", display: "flex", justifyContent: "center", overflow: "hidden" },
+    children: c.jsx("span", {
+      ref: spanRef,
+      style: { ...style, fontSize: size, whiteSpace: "nowrap" },
+      children
+    })
+  });
+}
+
 function QuestionScreen(props) {
   const { question, level, rung, difficulty, stage, streak, selectedIdx, locked, revealCorrect,
     revealWrong, showFloating, phase, removedAnswers, juryResults, hintShown, lifelines, muted,
@@ -558,34 +592,42 @@ function QuestionScreen(props) {
     className: "ts-game-layout ts-game-screen",
     children: [
       c.jsxs("div", { className: "ts-game-main", style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 22 }, children: [
-        c.jsxs("div", { className: "ts-top-bar", style: { display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }, children: [
-          c.jsx(Button, { variant: "secondary", size: "sm", onClick: onHome, style: { fontSize: 12 }, children: R.homeButton }),
-          c.jsxs("div", { className: "ts-hud", style: { flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 18, flexWrap: "wrap", padding: "14px 22px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md, minWidth: 260 }, children: [
-            // Streak: only shown in endless mode, where the money is frozen and streak is the live score.
-            isEndless && c.jsxs("div", { children: [
-              c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, marginBottom: 4, fontWeight: 700, textTransform: "uppercase" }, children: "Streak" }),
-              c.jsx("div", { style: { fontFamily: C.display, fontSize: 22, letterSpacing: 0, color: streak > 0 ? u.terra : u.textMuted, lineHeight: 1, animation: streak > 0 ? "ts-streak-pop 0.5s ease-out" : "none" }, children: streak }, "streak-" + streak)
-            ] }),
-            c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }, children: [
-              c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: "Points" }),
-              c.jsx("div", { style: { fontFamily: C.display, fontSize: 22, letterSpacing: 0, color: u.brand, lineHeight: 1 }, children: points }),
-              c.jsx("div", { style: { fontFamily: C.mono, fontSize: 8, letterSpacing: 1, color: u.textMuted, fontWeight: 700 }, children: "SPEND ON LIFELINES" })
-            ] }),
-            // Worth: only shown in the main 15, where the climbing prize is the stakes. Hidden in endless (money is maxed and inert).
-            !isEndless && c.jsxs("div", { style: { textAlign: "right" }, children: [
-              c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }, children: "Worth" }),
-              c.jsx("div", { className: "ts-hud-worth", style: { fontFamily: C.display, fontSize: "clamp(24px, 3.4vw, 34px)", color: u.brand, letterSpacing: "-0.01em", lineHeight: 1 }, children: fmtMoney(rung.prize) })
-            ] })
+        // Row 1: Home (left) and Music (right), each capped so they do not
+        // stretch on desktop. This is the ONLY mute control on the quiz screen;
+        // the Shell's floating one is hidden here (hideSoundButton) to avoid two.
+        c.jsxs("div", { className: "ts-top-bar", style: { display: "flex", alignItems: "stretch", gap: 12 }, children: [
+          c.jsx(Button, { variant: "secondary", size: "sm", onClick: onHome, className: "ts-home-btn", style: { fontSize: 13 }, children: R.homeButton }),
+          c.jsx("button", {
+            onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound",
+            className: "ts-music-btn ts-music-inline",
+            style: { flex: 1, background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontFamily: C.mono, fontSize: 13, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm, WebkitTapHighlightColor: "transparent" },
+            children: muted ? "\u266A MUSIC OFF" : "\u266A MUSIC ON"
+          })
+        ] }),
+
+        // Row 2: Points (1/3, left) and Money-or-Streak (2/3, right), as two
+        // separate boxes. Money auto-scales so six figures always fit its box.
+        c.jsxs("div", { className: "ts-stat-row", style: { display: "flex", gap: 12, alignItems: "stretch" }, children: [
+          c.jsxs("div", { className: "ts-stat-points", style: { flex: "1 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 10px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
+            c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: "Points" }),
+            c.jsx("div", { style: { fontFamily: C.display, fontSize: 26, letterSpacing: 0, color: u.brand, lineHeight: 1 }, children: points }),
+            c.jsx("div", { style: { fontFamily: C.mono, fontSize: 8, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textAlign: "center" }, children: "SPEND IN SHOP" })
           ] }),
-          c.jsx("button", { onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound", className: "ts-sound-btn", style: { background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 12px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 11, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm, flexShrink: 0, alignSelf: "stretch" }, children: muted ? "\u266A OFF" : "\u266A ON" })
+          c.jsxs("div", { className: "ts-stat-money", style: { flex: "2 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 16px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
+            c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: isEndless ? "Streak" : "Worth" }),
+            c.jsx(FitText, {
+              max: 44, min: 18,
+              style: { fontFamily: C.display, color: isEndless ? (streak > 0 ? u.terra : u.textMuted) : u.brand, letterSpacing: "-0.01em", lineHeight: 1 },
+              children: isEndless ? String(streak) : fmtMoney(rung.prize)
+            })
+          ] })
         ] }),
         c.jsx(ProgressDots, { level, revealCorrect, revealWrong, isEndless }),
-        c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 12, flexWrap: "wrap" }, children: [
+        c.jsx("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 12, flexWrap: "wrap" }, children:
           c.jsx("div", { className: "ts-q-header", style: { fontFamily: C.display, fontSize: 28, letterSpacing: "-0.01em", color: u.text, lineHeight: 1 }, children: isEndless
             ? c.jsxs(c.Fragment, { children: [R.endlessMode.headerLabel, " Q", String(level + 1).padStart(2, "0")] })
-            : c.jsxs(c.Fragment, { children: ["QUESTION ", String(level + 1).padStart(2, "0"), " ", c.jsx("span", { className: "ts-q-header-total", style: { color: u.textMuted, fontSize: 18 }, children: "/ 15" })] }) }),
-          c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.text, textTransform: "uppercase", fontWeight: 700, padding: "5px 12px", background: u.mustardSoft, border: `2px solid ${u.outline}`, borderRadius: 6, boxShadow: U.sm }, children: difficulty })
-        ] }),
+            : c.jsxs(c.Fragment, { children: ["QUESTION ", String(level + 1).padStart(2, "0"), " ", c.jsx("span", { className: "ts-q-header-total", style: { color: u.textMuted, fontSize: 18 }, children: "/ 15" })] }) })
+        }),
         c.jsxs("div", { className: "ts-question-card", style: { position: "relative", background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${u.brand}`, padding: "32px 36px", borderRadius: 10, animation: revealWrong ? "ts-wrong-shake-card 0.5s ease-out" : "ts-fade-in 0.4s ease-out", boxShadow: U.md }, children: [
           c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.45, fontWeight: 600, margin: 0, color: u.text }, children: question.q }),
           hintShown && c.jsxs("div", { style: { marginTop: 22, padding: "14px 18px", background: u.blueBg, border: `2px solid ${u.blue}`, borderRadius: 6, fontFamily: C.body, fontSize: 14, color: u.blue, fontStyle: "italic", lineHeight: 1.6, animation: "ts-fade-in 0.4s", fontWeight: 500 }, children: [c.jsx("span", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.blue, fontWeight: 700, fontStyle: "normal", marginRight: 10, textTransform: "uppercase" }, children: R.lifelines.hint.inGameLabel }), question.hint] })
@@ -602,7 +644,15 @@ function QuestionScreen(props) {
           c.jsx("div", { className: "ts-action-bar-right", style: { display: "flex", gap: 12 }, children: c.jsx(Button, { variant: "primary", size: "md", disabled: selectedIdx === null || locked, onClick: onLockIn, children: "Lock It In" }) })
         ] })
       ] }),
-      c.jsx(Ladder, { currentLevel: level, isEndless, streak }),
+      c.jsxs("div", { className: "ts-ladder-col", style: { display: "flex", flexDirection: "column", gap: 12 }, children: [
+        c.jsx("button", {
+          onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound",
+          className: "ts-music-btn ts-music-ladder",
+          style: { background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontFamily: C.mono, fontSize: 12, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm, WebkitTapHighlightColor: "transparent", alignSelf: "flex-end" },
+          children: muted ? "\u266A MUSIC OFF" : "\u266A MUSIC ON"
+        }),
+        c.jsx(Ladder, { currentLevel: level, isEndless, streak })
+      ] }),
       revealCorrect && c.jsx(Confetti, { intensity: stage >= 3 ? "high" : stage >= 2 ? "med" : "low" })
     ]
   });
@@ -648,6 +698,14 @@ function AnswerButton(props) {
 
 // The button that opens the lifeline shop. Filled brand color so it stands out
 // from the rest of the UI; shows how many lifelines are ready and your points.
+// ---------------------------------------------------------------------------
+// ShopButton : the terra "SHOP" pill.
+// ---------------------------------------------------------------------------
+// Deliberately unlike an answer button: pill shape (answers are rectangles),
+// terra fill (answers are cream, and never terra in any state), icon-forward.
+// It carries the two things a player needs to decide whether to open it: points
+// on hand and how many lifelines are ready. Hierarchy on the action bar reads
+// answers (neutral) -> Lock It In (gold, primary) -> Shop (terra, secondary).
 function ShopButton({ lifelines, points, shieldArmed, disabled, onClick }) {
   const [hover, setHover] = useState(false);
   const ready = Object.values(lifelines).filter(Boolean).length;
@@ -657,17 +715,53 @@ function ShopButton({ lifelines, points, shieldArmed, disabled, onClick }) {
   return c.jsxs("button", {
     onClick: off ? undefined : onClick, disabled: off,
     onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false),
-    className: "ts-lifeline-btn",
-    style: { position: "relative", display: "flex", alignItems: "center", gap: 10, background: off ? u.surface : u.brand, border: `3px solid ${u.outline}`, padding: "10px 18px", borderRadius: 12, cursor: off ? "not-allowed" : "pointer", opacity: off ? 0.5 : 1, boxShadow: shadow, transform, transition: "box-shadow 0.1s, transform 0.1s" },
+    className: "ts-shop-btn",
+    "aria-label": `Open shop. ${points} points, ${ready} lifelines ready.`,
+    style: {
+      position: "relative", display: "inline-flex", alignItems: "center", gap: 11,
+      background: off ? u.surface : u.terra, border: `3px solid ${u.outline}`,
+      padding: "9px 18px", borderRadius: 26, cursor: off ? "not-allowed" : "pointer",
+      opacity: off ? 0.5 : 1, boxShadow: shadow, transform,
+      transition: "box-shadow 0.1s, transform 0.1s", WebkitTapHighlightColor: "transparent"
+    },
     children: [
-      c.jsx("span", { style: { display: "flex", alignItems: "center", justifyContent: "center", color: off ? u.brand : u.textOnDark }, children: c.jsx(LifeIcon, { name: "shield", size: 20 }) }),
-      c.jsx("span", { style: { fontFamily: C.display, fontSize: 17, letterSpacing: 1.5, color: off ? u.brand : u.textOnDark }, children: "LIFELINES" }),
-      shieldArmed && c.jsx("span", { title: "Shield armed", style: { display: "flex", alignItems: "center", gap: 4, fontFamily: C.mono, fontSize: 10, fontWeight: 700, letterSpacing: 0.5, color: u.textOnDark, background: u.green, border: `2px solid ${u.outline}`, borderRadius: 6, padding: "2px 7px" }, children: [c.jsx(LifeIcon, { name: "shield", size: 12, color: u.textOnDark }), "ARMED"] }),
-      c.jsxs("span", { style: { display: "flex", alignItems: "center", gap: 7, background: off ? "transparent" : "rgba(255,255,255,0.18)", borderRadius: 8, padding: "3px 9px" }, children: [
-        c.jsxs("span", { style: { fontFamily: C.mono, fontSize: 10, fontWeight: 700, letterSpacing: 0.5, color: off ? u.textMuted : u.textOnDark, textTransform: "uppercase" }, children: [ready, " ready"] }),
-        c.jsx("span", { style: { width: 1, height: 14, background: off ? u.borderLight : "rgba(255,255,255,0.4)" } }),
-        c.jsxs("span", { style: { fontFamily: C.mono, fontSize: 10, fontWeight: 700, letterSpacing: 0.5, color: off ? u.brand : u.textOnDark }, children: [points, " PTS"] })
-      ] })
+      // shopping-bag icon, inline SVG so it needs no icon dependency
+      c.jsx("svg", {
+        width: 22, height: 22, viewBox: "0 0 24 24", fill: "none",
+        stroke: off ? u.terra : u.textOnDark, strokeWidth: 2.4,
+        strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true,
+        style: { flexShrink: 0 },
+        children: [
+          c.jsx("path", { d: "M4 8 L20 8 L18.5 22 L5.5 22 Z" }, 0),
+          c.jsx("path", { d: "M8 8 C8 3 16 3 16 8" }, 1)
+        ]
+      }),
+      c.jsxs("span", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 1, lineHeight: 1 }, children: [
+        c.jsx("span", {
+          style: {
+            fontFamily: C.display, fontSize: 16, letterSpacing: 1.5,
+            color: off ? u.terra : u.textOnDark
+          },
+          children: "SHOP"
+        }),
+        c.jsxs("span", {
+          style: {
+            fontFamily: C.mono, fontSize: 9, fontWeight: 700, letterSpacing: 0.4,
+            color: off ? u.textMuted : "rgba(251,246,236,0.85)"
+          },
+          children: [String(points), " PTS \u00b7 ", String(ready), " READY"]
+        })
+      ] }),
+      shieldArmed && c.jsx("span", {
+        title: "Shield armed",
+        style: {
+          display: "flex", alignItems: "center", gap: 3, fontFamily: C.mono,
+          fontSize: 9, fontWeight: 700, letterSpacing: 0.5, color: u.textOnDark,
+          background: u.green, border: `2px solid ${u.outline}`, borderRadius: 6,
+          padding: "2px 6px"
+        },
+        children: [c.jsx(LifeIcon, { name: "shield", size: 11, color: u.textOnDark }), "ARMED"]
+      })
     ]
   });
 }
