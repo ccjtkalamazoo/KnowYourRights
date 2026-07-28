@@ -292,17 +292,15 @@ export const CSS_TEXT = `
     /* The card was flex:1 + overflow hidden to fill a locked viewport. On mobile
        it now grows to its content and the page scrolls, so the review cards
        (law, phrase, scenario) are never clipped on a small screen. */
-    .ts-comic-card { flex:0 0 auto !important; min-height:0 !important; overflow:visible !important; transform-style:flat !important; animation:ts-fade-in 0.35s ease-out !important; }
-    /* The flip wrapper was flex:1 in a locked column, which on mobile squeezed
-       the 3D card to a fraction of the width (only the left half showed). Let it
-       be a normal full-width block so the whole card renders. */
-    .ts-comic-flip-wrap { flex:0 0 auto !important; display:block !important; perspective:none !important; width:100% !important; }
-    /* Flatten the 3D on mobile: preserve-3d + a rotateY flip is what clipped the
-       card to half. The consolidated .ts-comic-card rule above uses a fade. */
-    /* The body was an inner auto-scroll sized to a locked viewport. With large
-       text that trapped content in a tiny scroll area you could not reach (the
-       "star I cannot redeem"). On mobile it grows and the PAGE scrolls instead. */
+    .ts-comic-card { flex:0 0 auto !important; min-height:0 !important; min-width:0 !important; width:100% !important; max-width:100% !important; overflow:hidden !important; transform-style:flat !important; animation:ts-fade-in 0.35s ease-out !important; }
+    /* min-width:0 is the fix for the card running off the right edge. A flex
+       child defaults to min-width:auto and refuses to shrink below its content,
+       so a wide inner element pushed the whole card past the screen. Force it to
+       fit, and make inner content wrap instead of overflowing. */
+    .ts-comic-card * { min-width:0 !important; max-width:100% !important; }
+    .ts-comic-flip-wrap { flex:0 0 auto !important; display:block !important; perspective:none !important; width:100% !important; max-width:100% !important; min-width:0 !important; }
     .ts-comic-body { flex:0 0 auto !important; overflow:visible !important; justify-content:flex-start !important; }
+    .ts-comic-body p, .ts-comic-body span, .ts-comic-body div { overflow-wrap:anywhere !important; }
     .ts-comic-header { font-size:26px !important; padding:12px 16px !important; }
     .ts-comic-body { padding:16px 16px !important; font-size:14px !important; }
     .ts-scenario-panels { grid-template-columns:1fr !important; }
