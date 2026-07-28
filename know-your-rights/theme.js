@@ -283,9 +283,7 @@ export const CSS_TEXT = `
     .ts-missed-card { padding:20px 20px !important; }
     .ts-start-screen { padding:40px 20px 24px !important; }
     .ts-start-title { font-size:56px !important; text-shadow:4px 4px 0 ${u.brand} !important; }
-    .ts-action-bar { gap:10px !important; flex-direction:column !important; align-items:stretch !important; }
-    .ts-lifelines-row { display:flex !important; }
-    .ts-shop-btn { width:100% !important; justify-content:center !important; }
+    .ts-action-bar { gap:10px !important; }
     .ts-action-bar-right { width:100% !important; }
     .ts-action-bar-right button { width:100% !important; }
     .ts-music-btn, .ts-home-btn { max-width:none !important; flex:1 !important; }
@@ -295,6 +293,10 @@ export const CSS_TEXT = `
        it now grows to its content and the page scrolls, so the review cards
        (law, phrase, scenario) are never clipped on a small screen. */
     .ts-comic-card { flex:0 0 auto !important; min-height:0 !important; overflow:visible !important; }
+    /* The body was an inner auto-scroll sized to a locked viewport. With large
+       text that trapped content in a tiny scroll area you could not reach (the
+       "star I cannot redeem"). On mobile it grows and the PAGE scrolls instead. */
+    .ts-comic-body { flex:0 0 auto !important; overflow:visible !important; justify-content:flex-start !important; }
     .ts-comic-header { font-size:26px !important; padding:12px 16px !important; }
     .ts-comic-body { padding:16px 16px !important; font-size:14px !important; }
     .ts-scenario-panels { grid-template-columns:1fr !important; }
