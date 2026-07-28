@@ -61,6 +61,7 @@
 
 import { c, u, C, U, useState } from "./theme.js";
 import { Button } from "./ui.js";
+import { STATUS, newSession, chapterStatus, districtStatus, completion } from "./state.js";
 
 // ---------------------------------------------------------------------------
 // Icon palette
@@ -173,12 +174,12 @@ export const DISTRICTS = [
     blurb: "What is different because you are under 17, and what changes when you are not.",
     icon: ICONS.juvenile,
     chapters: [
-      "WHAT IS DIFFERENT RIGHT NOW",
-      "AT SCHOOL",
-      "PARENTS AND NOTIFICATION",
-      "JUVENILE COURT AND DETENTION",
-      "CHARGED AS AN ADULT",
-      "TURNING 17 AND YOUR RECORD"
+      { id: "juvenile.01", name: "WHAT IS DIFFERENT RIGHT NOW" },
+      { id: "juvenile.02", name: "AT SCHOOL" },
+      { id: "juvenile.03", name: "PARENTS AND NOTIFICATION" },
+      { id: "juvenile.04", name: "JUVENILE COURT AND DETENTION" },
+      { id: "juvenile.05", name: "CHARGED AS AN ADULT" },
+      { id: "juvenile.06", name: "TURNING 17 AND YOUR RECORD" }
     ]
   },
   {
@@ -186,12 +187,12 @@ export const DISTRICTS = [
     blurb: "Stopped on the street. Are you being held, and what do you have to give?",
     icon: ICONS.stop,
     chapters: [
-      "AM I FREE TO GO",
-      "REASONABLE SUSPICION",
-      "WHAT YOU MUST GIVE",
-      "THE PAT DOWN",
-      "HOW LONG IT LASTS",
-      "WHEN IT BECOMES AN ARREST"
+      { id: "stop.01", name: "AM I FREE TO GO" },
+      { id: "stop.02", name: "REASONABLE SUSPICION" },
+      { id: "stop.03", name: "WHAT YOU MUST GIVE" },
+      { id: "stop.04", name: "THE PAT DOWN" },
+      { id: "stop.05", name: "HOW LONG IT LASTS" },
+      { id: "stop.06", name: "WHEN IT BECOMES AN ARREST" }
     ]
   },
   {
@@ -199,12 +200,12 @@ export const DISTRICTS = [
     blurb: "The handcuffs change everything. What is different the moment they go on.",
     icon: ICONS.arrest,
     chapters: [
-      "PROBABLE CAUSE",
-      "WHAT CHANGES NOW",
-      "SEARCH INCIDENT TO ARREST",
-      "USE OF FORCE",
-      "YOUR PROPERTY",
-      "THE FIRST HOURS"
+      { id: "arrest.01", name: "PROBABLE CAUSE" },
+      { id: "arrest.02", name: "WHAT CHANGES NOW" },
+      { id: "arrest.03", name: "SEARCH INCIDENT TO ARREST" },
+      { id: "arrest.04", name: "USE OF FORCE" },
+      { id: "arrest.05", name: "YOUR PROPERTY" },
+      { id: "arrest.06", name: "THE FIRST HOURS" }
     ]
   },
   {
@@ -212,12 +213,12 @@ export const DISTRICTS = [
     blurb: "Silence, counsel, and why the words have to be out loud.",
     icon: ICONS.saying,
     chapters: [
-      "INVOKING SILENCE",
-      "ASKING FOR A LAWYER",
-      "WHEN MIRANDA APPLIES",
-      "CUSTODY VS CONVERSATION",
-      "WHO IS ASKING",
-      "WHY TALKING RARELY HELPS"
+      { id: "saying.01", name: "INVOKING SILENCE" },
+      { id: "saying.02", name: "ASKING FOR A LAWYER" },
+      { id: "saying.03", name: "WHEN MIRANDA APPLIES" },
+      { id: "saying.04", name: "CUSTODY VS CONVERSATION" },
+      { id: "saying.05", name: "WHO IS ASKING" },
+      { id: "saying.06", name: "WHY TALKING RARELY HELPS" }
     ]
   },
   {
@@ -225,12 +226,12 @@ export const DISTRICTS = [
     blurb: "When it is happening to someone else. Filming, helping, being a passenger.",
     icon: ICONS.bystander,
     chapters: [
-      "WATCHING AND RECORDING",
-      "BEING A PASSENGER",
-      "BEING A WITNESS",
-      "HELPING SOMEONE ARRESTED",
-      "FINDING AND SUPPORTING THEM",
-      "WHEN IT IS AT YOUR HOUSE"
+      { id: "bystander.01", name: "WATCHING AND RECORDING" },
+      { id: "bystander.02", name: "BEING A PASSENGER" },
+      { id: "bystander.03", name: "BEING A WITNESS" },
+      { id: "bystander.04", name: "HELPING SOMEONE ARRESTED" },
+      { id: "bystander.05", name: "FINDING AND SUPPORTING THEM" },
+      { id: "bystander.06", name: "WHEN IT IS AT YOUR HOUSE" }
     ]
   },
   {
@@ -238,12 +239,12 @@ export const DISTRICTS = [
     blurb: "Booking, the phone call, visits, and what pretrial detention actually is.",
     icon: ICONS.jail,
     chapters: [
-      "BOOKING",
-      "YOUR PHONE CALL",
-      "VISITATION AND MAIL",
-      "MEDICAL AND GRIEVANCES",
-      "MONEY AND TELECOM",
-      "WHAT PRETRIAL DETENTION IS"
+      { id: "jail.01", name: "BOOKING" },
+      { id: "jail.02", name: "YOUR PHONE CALL" },
+      { id: "jail.03", name: "VISITATION AND MAIL" },
+      { id: "jail.04", name: "MEDICAL AND GRIEVANCES" },
+      { id: "jail.05", name: "MONEY AND TELECOM" },
+      { id: "jail.06", name: "WHAT PRETRIAL DETENTION IS" }
     ]
   },
   {
@@ -251,12 +252,12 @@ export const DISTRICTS = [
     blurb: "Arraignment, bail, the public defender, and the plea.",
     icon: ICONS.court,
     chapters: [
-      "ARRAIGNMENT",
-      "BAIL AND PRETRIAL RELEASE",
-      "THE PUBLIC DEFENDER",
-      "THE PLEA",
-      "YOUR HEARING",
-      "VERDICT AND SENTENCING"
+      { id: "court.01", name: "ARRAIGNMENT" },
+      { id: "court.02", name: "BAIL AND PRETRIAL RELEASE" },
+      { id: "court.03", name: "THE PUBLIC DEFENDER" },
+      { id: "court.04", name: "THE PLEA" },
+      { id: "court.05", name: "YOUR HEARING" },
+      { id: "court.06", name: "VERDICT AND SENTENCING" }
     ]
   },
   {
@@ -264,12 +265,12 @@ export const DISTRICTS = [
     blurb: "Probation, fines, your record, and what follows you afterward.",
     icon: ICONS.after,
     chapters: [
-      "PROBATION AND PAROLE",
-      "FINES AND FEES",
-      "YOUR RECORD",
-      "EXPUNGEMENT",
-      "COLLATERAL CONSEQUENCES",
-      "GETTING HELP"
+      { id: "after.01", name: "PROBATION AND PAROLE" },
+      { id: "after.02", name: "FINES AND FEES" },
+      { id: "after.03", name: "YOUR RECORD" },
+      { id: "after.04", name: "EXPUNGEMENT" },
+      { id: "after.05", name: "COLLATERAL CONSEQUENCES" },
+      { id: "after.06", name: "GETTING HELP" }
     ]
   }
 ];
@@ -284,37 +285,73 @@ export const FULL_DECK = {
 
 const TOTAL_CHAPTERS = DISTRICTS.reduce((n, d) => n + d.chapters.length, 0);
 
+// A fresh, empty session. Progress is never persisted (see state.js), so the map
+// reads from a new session every mount: today that means the tutorial is not
+// cleared and every district reads LOCKED. When a district goes live and the
+// session model is wired through, the same code lights up automatically.
+const SESSION = newSession();
+
+// Palette for the four chapter states. Segment fill + border per state.
+function stateColors(status) {
+  switch (status) {
+    case STATUS.CLEARED:     return { fill: u.brand,       border: u.outline, text: u.textOnDark };
+    case STATUS.IN_PROGRESS: return { fill: u.mustard,     border: u.outline, text: u.text };
+    case STATUS.OPEN:        return { fill: u.surface,     border: u.brand,   text: u.brand };   // "next up"
+    default:                 return { fill: u.surfaceWarm, border: u.borderLight, text: u.textMuted }; // locked
+  }
+}
+
+// ---------------------------------------------------------------------------
+// ChapterBar : the row of segments under a district name, one per chapter.
+// ---------------------------------------------------------------------------
+// Fills with gold as chapters clear. While a district is coming-soon every
+// segment reads locked, which is honest: it shows the shape of what is coming.
+function ChapterBar({ district }) {
+  return c.jsx("div", {
+    style: { display: "flex", gap: 3, marginTop: 10 },
+    children: district.chapters.map((ch, i) => {
+      const st = stateColors(chapterStatus(SESSION, district, i));
+      return c.jsx("span", {
+        style: {
+          flex: 1, height: 10, borderRadius: 2,
+          background: st.fill, border: `2px solid ${st.border}`
+        }
+      }, ch.id);
+    })
+  });
+}
+
 // ---------------------------------------------------------------------------
 // DistrictCard
 // ---------------------------------------------------------------------------
-// Printed-paper card: ink border, hard offset shadow, motif band on top. Live
-// cards are full contrast and press into their shadow on hover. Coming-soon
-// cards are washed back and never move, so "not yet" is legible before you read
-// a word.
-function DistrictCard({ district, onPlay }) {
-  const [hover, setHover] = useState(false);
+// Printed-paper card: ink border, hard offset shadow, scene icon on top, then a
+// chapter segment bar and an X/Y count. Selecting a card (hover on desktop, tap
+// on touch) raises it AND surfaces its chapter list in the panel below the grid,
+// so the same interaction works with or without a pointer.
+function DistrictCard({ district, selected, onSelect, onPlay }) {
   const live = district.live;
-  const active = live && hover;
+  const dc = district.chapters.filter(
+    (_, i) => chapterStatus(SESSION, district, i) === STATUS.CLEARED
+  ).length;
+  const total = district.chapters.length;
+  const active = selected;
 
   return c.jsxs("button", {
-    onClick: live ? onPlay : undefined,
-    onMouseEnter: () => setHover(true),
-    onMouseLeave: () => setHover(false),
-    disabled: !live,
+    onClick: () => { onSelect(district.id); if (live && onPlay) onPlay(); },
+    onMouseEnter: () => onSelect(district.id),
     "aria-label": live
       ? `Play ${district.name}. ${district.blurb}`
-      : `${district.name}, coming soon. ${district.chapters.length} chapters planned.`,
+      : `${district.name}, coming soon. ${total} chapters planned. ${district.blurb}`,
     style: {
       textAlign: "left", padding: 0, font: "inherit",
       background: live ? u.surface : u.surfaceWarm,
-      border: `2px solid ${live ? u.outline : u.borderLight}`,
+      border: `2px solid ${live || active ? u.outline : u.borderLight}`,
       borderRadius: 10,
-      boxShadow: live ? (active ? U.md : U.lg) : "none",
-      transform: active ? "translate(2px, 2px)" : "translate(0, 0)",
-      transition: "transform 0.08s, box-shadow 0.08s",
-      cursor: live ? "pointer" : "default",
-      overflow: "hidden", position: "relative",
-      opacity: live ? 1 : 0.72
+      boxShadow: active ? U.lg : (live ? U.md : "none"),
+      transform: active ? "translate(-2px, -2px)" : "translate(0, 0)",
+      transition: "transform 0.1s cubic-bezier(.34,1.3,.64,1), box-shadow 0.1s",
+      cursor: "pointer", overflow: "hidden", position: "relative",
+      opacity: live ? 1 : 0.82
     },
     children: [
       // Motif band
@@ -322,16 +359,13 @@ function DistrictCard({ district, onPlay }) {
         style: {
           position: "relative", height: 96,
           background: live ? u.brandSofter : u.bgWarm,
-          borderBottom: `2px solid ${live ? u.outline : u.borderLight}`,
+          borderBottom: `2px solid ${live || active ? u.outline : u.borderLight}`,
           display: "flex", alignItems: "center", justifyContent: "center"
         },
         children: [
           c.jsx("svg", {
-            viewBox: "0 0 100 100", width: 68, height: 68, "aria-hidden": true,
-            // The icons carry their own fills, so a coming-soon card cannot be
-            // muted by swapping a stroke colour the way a single-path glyph
-            // could. Desaturating the whole group is what dims them instead.
-            style: live ? undefined : { filter: "grayscale(0.75)", opacity: 0.55 },
+            viewBox: "0 0 100 100", width: 62, height: 62, "aria-hidden": true,
+            style: live ? undefined : { filter: "grayscale(0.75)", opacity: 0.6 },
             children: district.icon()
           }),
           !live && c.jsx("div", {
@@ -357,20 +391,28 @@ function DistrictCard({ district, onPlay }) {
             },
             children: district.name
           }),
-          c.jsx("div", {
+          c.jsx(ChapterBar, { district }),
+          c.jsxs("div", {
             style: {
-              fontFamily: C.body, fontSize: 11.5, lineHeight: 1.45,
-              color: u.textMuted, marginTop: 5, minHeight: 33
+              display: "flex", justifyContent: "space-between",
+              alignItems: "baseline", marginTop: 9
             },
-            children: district.blurb
-          }),
-          c.jsx("div", {
-            style: {
-              fontFamily: C.mono, fontSize: 9, letterSpacing: 1.1,
-              color: live ? u.brand : u.textMuted, marginTop: 8,
-              fontWeight: live ? 700 : 400
-            },
-            children: live ? "PLAY \u2192" : `${district.chapters.length} CHAPTERS PLANNED`
+            children: [
+              c.jsxs("span", {
+                style: {
+                  fontFamily: C.mono, fontSize: 9, letterSpacing: 1.1,
+                  color: u.textMuted
+                },
+                children: [String(total), " CHAPTERS"]
+              }),
+              c.jsxs("span", {
+                style: {
+                  fontFamily: C.mono, fontSize: 12, fontWeight: 700,
+                  letterSpacing: 1, color: dc >= total && total ? u.brand : u.text
+                },
+                children: [String(dc), " / ", String(total)]
+              })
+            ]
           })
         ]
       })
@@ -379,13 +421,114 @@ function DistrictCard({ district, onPlay }) {
 }
 
 // ---------------------------------------------------------------------------
+// ChapterPanel : the detail strip below the grid.
+// ---------------------------------------------------------------------------
+// Shows the selected district's blurb and every chapter as a state-coloured tag.
+// Driven by selection, which is set on hover (desktop) or tap (touch), so it is
+// not a hover-only feature that dies on phones.
+function ChapterPanel({ district }) {
+  return c.jsx("div", {
+    style: {
+      marginTop: 20, background: u.surface, border: `2px solid ${u.outline}`,
+      borderRadius: 10, padding: "14px 16px", boxShadow: U.md, minHeight: 92
+    },
+    children: district
+      ? c.jsxs("div", { children: [
+          c.jsxs("div", {
+            style: {
+              display: "flex", justifyContent: "space-between",
+              alignItems: "baseline", gap: 14, flexWrap: "wrap"
+            },
+            children: [
+              c.jsx("div", {
+                style: { fontFamily: C.display, fontSize: 17, color: u.text },
+                children: district.name
+              }),
+              c.jsxs("div", {
+                style: {
+                  fontFamily: C.mono, fontSize: 10, letterSpacing: 1.2, color: u.brand
+                },
+                children: [String(district.chapters.length), " CHAPTERS"]
+              })
+            ]
+          }),
+          c.jsx("div", {
+            style: {
+              fontFamily: C.body, fontSize: 13, color: u.textDim, marginTop: 4
+            },
+            children: district.blurb
+          }),
+          c.jsx("div", {
+            style: { display: "flex", gap: 6, marginTop: 12, flexWrap: "wrap" },
+            children: district.chapters.map((ch, i) => {
+              const st = stateColors(chapterStatus(SESSION, district, i));
+              return c.jsxs("span", {
+                style: {
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  fontFamily: C.mono, fontSize: 9, letterSpacing: 0.8,
+                  background: st.fill, color: st.text,
+                  border: `2px solid ${st.border}`, borderRadius: 5,
+                  padding: "4px 8px"
+                },
+                children: [
+                  c.jsxs("span", {
+                    style: { opacity: 0.7, fontWeight: 700 },
+                    children: [String(i + 1).padStart(2, "0")]
+                  }),
+                  ch.name
+                ]
+              }, ch.id);
+            })
+          })
+        ] })
+      : c.jsx("div", {
+          style: {
+            fontFamily: C.mono, fontSize: 11, letterSpacing: 1.2,
+            color: u.textMuted, paddingTop: 14
+          },
+          children: "SELECT A DISTRICT TO SEE ITS CHAPTERS"
+        })
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Legend : what the segment colours mean.
+// ---------------------------------------------------------------------------
+function Legend() {
+  const items = [
+    ["CLEARED", u.brand, u.outline],
+    ["IN PROGRESS", u.mustard, u.outline],
+    ["NEXT UP", u.surface, u.brand],
+    ["LOCKED", u.surfaceWarm, u.borderLight]
+  ];
+  return c.jsx("div", {
+    style: {
+      display: "flex", gap: 18, marginTop: 14, flexWrap: "wrap",
+      fontFamily: C.mono, fontSize: 9, letterSpacing: 1.3, color: u.textMuted
+    },
+    children: items.map(([label, fill, border]) => c.jsxs("span", {
+      style: { display: "inline-flex", alignItems: "center", gap: 6 },
+      children: [
+        c.jsx("span", {
+          style: {
+            width: 10, height: 10, borderRadius: 2,
+            background: fill, border: `2px solid ${border}`
+          }
+        }),
+        label
+      ]
+    }, label))
+  });
+}
+
+// ---------------------------------------------------------------------------
 // MapScreen
 // ---------------------------------------------------------------------------
-// The launcher. Sits between the walkthrough and the quiz.
-//
-//   onPlayFullDeck : start the existing 15-question run
-//   onHome         : back to the start screen
 export function MapScreen({ onPlayFullDeck, onHome }) {
+  const [selected, setSelected] = useState(null);
+  const clearedChapters = Math.round(completion(SESSION, DISTRICTS) * TOTAL_CHAPTERS);
+  const selectedDistrict = DISTRICTS.find((d) => d.id === selected) || null;
+
   return c.jsx("div", {
     style: {
       minHeight: "100vh", display: "flex", alignItems: "center",
@@ -422,21 +565,24 @@ export function MapScreen({ onPlayFullDeck, onHome }) {
               children: [
                 c.jsx("div", {
                   style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1.6, color: u.brand },
-                  children: "DISTRICTS IN THE WORKS"
+                  children: "CHAPTERS CLEARED"
                 }),
                 c.jsxs("div", {
                   style: { fontFamily: C.mono, fontSize: 20, fontWeight: 700, color: u.text },
-                  children: [String(DISTRICTS.length), c.jsx("span", {
-                    style: { color: u.textMuted, fontSize: 13 },
-                    children: ` \u00b7 ${TOTAL_CHAPTERS} CHAPTERS`
-                  })]
+                  children: [
+                    String(clearedChapters),
+                    c.jsxs("span", {
+                      style: { color: u.textMuted, fontSize: 13 },
+                      children: [" / ", String(TOTAL_CHAPTERS)]
+                    })
+                  ]
                 })
               ]
             })
           ]
         }),
 
-        // The live entry, on its own row so it is not mistaken for a district
+        // Live entry
         c.jsxs("div", {
           style: {
             background: u.surface, border: `2px solid ${u.outline}`,
@@ -446,7 +592,7 @@ export function MapScreen({ onPlayFullDeck, onHome }) {
           },
           children: [
             c.jsx("svg", {
-              viewBox: "0 0 100 100", width: 60, height: 60, "aria-hidden": true,
+              viewBox: "0 0 100 100", width: 56, height: 56, "aria-hidden": true,
               style: { flexShrink: 0 },
               children: FULL_DECK.icon()
             }),
@@ -508,14 +654,24 @@ export function MapScreen({ onPlayFullDeck, onHome }) {
         c.jsx("div", {
           className: "kyr-map-grid",
           style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 },
-          children: DISTRICTS.map((d) => c.jsx(DistrictCard, { district: d }, d.id))
+          children: DISTRICTS.map((d) => c.jsx(DistrictCard, {
+            district: d,
+            selected: selected === d.id,
+            onSelect: setSelected
+          }, d.id))
         }),
+
+        // Chapter detail panel (hover on desktop, tap on touch)
+        c.jsx(ChapterPanel, { district: selectedDistrict }),
+
+        // Legend
+        c.jsx(Legend, {}),
 
         // Footer note + home
         c.jsxs("div", {
           style: {
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            gap: 16, flexWrap: "wrap", marginTop: 26
+            gap: 16, flexWrap: "wrap", marginTop: 22
           },
           children: [
             c.jsx("div", {
