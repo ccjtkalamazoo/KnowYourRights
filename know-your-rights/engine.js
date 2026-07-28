@@ -970,7 +970,7 @@ function RevealScreen(props) {
   if (step === "verdict") {
     return c.jsxs("div", {
       className: "ts-reveal-screen",
-      style: { minHeight: "100vh", height: "100vh", maxHeight: "100vh", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 18px", boxSizing: "border-box", overflow: "hidden" },
+      style: { minHeight: "100vh", minHeight: "100dvh", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 18px", boxSizing: "border-box" },
       children: [
         c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }, children: [
           c.jsx(Button, { onClick: onHome, variant: "secondary", size: "sm", style: { fontSize: 12 }, children: R.homeButton }),
@@ -1018,7 +1018,7 @@ function RevealScreen(props) {
 
   return c.jsxs("div", {
     className: "ts-reveal-screen",
-    style: { minHeight: "100vh", height: "100vh", maxHeight: "100vh", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 12px", boxSizing: "border-box", overflow: "hidden" },
+    style: { minHeight: "100vh", minHeight: "100dvh", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 12px", boxSizing: "border-box" },
     children: [
       // top bar: home, question count, compact points readout, mute
       c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexShrink: 0, marginBottom: 10 }, children: [
