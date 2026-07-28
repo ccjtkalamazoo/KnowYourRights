@@ -78,6 +78,14 @@ export function App() {
   // a rewrite.
   useEffect(() => { injectStyles(); }, []);
 
+  // Reset scroll to the top on every screen change. In a single-page app the
+  // page never reloads, so the browser keeps the old scroll position and you
+  // land mid-page after clicking Continue. Keyed on phase (screen), walkStep
+  // (walkthrough pages), and level (each question) so every navigation resets.
+  useEffect(() => {
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  }, [phase, walkStep, level]);
+
   useEffect(() => {
     sfx.current.setMuted(muted);
     music.current.setMuted(muted);
@@ -854,6 +862,12 @@ function RevealScreen(props) {
   const burstTimer = useRef(null);
 
   const CARD_COUNT = R.cardMeta.length; // 3
+
+  // Back to the top when switching review cards, so a long card does not leave
+  // you scrolled down when the next one appears.
+  useEffect(() => {
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  }, [current]);
   const DWELL_MS = 2000;
   const scoring = revealCorrect; // only correct answers earn points
   const earnedCount = claimed.filter(Boolean).length; // points actually redeemed
