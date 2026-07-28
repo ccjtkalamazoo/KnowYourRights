@@ -6,8 +6,8 @@
 // without touching React.
 //
 // This is where the chapter/district system will eventually plug in: today
-// buildDeck() deals from difficulty tiers, and a chapter version would deal from
-// a chapter's pool instead. The engine wouldn't have to change.
+// buildDeck() deals 15 at random from the whole bank, and a chapter version
+// would deal 15 from that chapter's 30 instead. The engine wouldn't change.
 
 import { R } from "./questions.js";
 
@@ -24,9 +24,6 @@ export const LADDER = [
   { level: 13, prize: 25e4 }, { level: 14, prize: 5e5 }, { level: 15, prize: 1e6 }
 ];
 
-
-// Which difficulty tier each rung pulls from. 5 easy, 5 medium, 5 hard.
-export const LADDER_TIERS = ["easy", "easy", "easy", "easy", "easy", "medium", "medium", "medium", "medium", "medium", "hard", "hard", "hard", "hard", "hard"];
 
 // Lifeline prices, in points earned from reading review cards.
 // Skip is cheapest (least powerful), Shield is dearest (survives a wrong answer).
@@ -56,17 +53,19 @@ export const shuffle = (e) => {
   return t;
 };
 
-// Deals a fresh 15-question run: 5 random from each tier, in ladder order.
-// Every run is a different deck, which is why the game is replayable at all.
-export const buildDeck = () => {
-  const e = { easy: shuffle(R.questions.easy), medium: shuffle(R.questions.medium), hard: shuffle(R.questions.hard), expert: shuffle(R.questions.expert) };
-  const t = { easy: 0, medium: 0, hard: 0, expert: 0 };
-  return LADDER_TIERS.map((n) => {
-    const r = e[n][t[n]];
-    t[n] += 1;
-    return shuffleOptions({ ...r, difficulty: n });
-  });
-};
+// Every question in the bank as one flat pool. The bank is still stored in
+// tier-named buckets (easy/medium/hard/expert) purely because that is the shape
+// questions.js has today; nothing reads those names as a difficulty any more.
+// When content moves to per-chapter JSON this becomes the chapter loader.
+export const allQuestions = () =>
+  ["easy", "medium", "hard", "expert"].flatMap((k) => R.questions[k] || []);
+
+// Deals a fresh 15-question run: 15 at random from the whole bank.
+// There are no difficulty tiers. Who is to say what a given person finds easy,
+// so a run is a random draw and the tension comes from the streak, not from a
+// curve someone else decided. Every run is a different deck, which is what
+// makes the game replayable.
+export const buildDeck = () => shuffle(allQuestions()).slice(0, 15).map(shuffleOptions);
 
 // Randomizes which slot (A/B/C/D) the correct answer lands in.
 // Source data always puts the correct answer at index 0 so authors don't have to
@@ -85,11 +84,8 @@ export const shuffleOptions = (e) => {
 export const buildEndlessDeck = (e) => {
   const t = new Set(e.map((i) => i.q));
   const n = [], r = [];
-  ["easy", "medium", "hard", "expert"].forEach((i) => {
-    (R.questions[i] || []).forEach((l) => {
-      const s = { ...l, difficulty: i };
-      if (t.has(l.q)) r.push(s); else n.push(s);
-    });
+  allQuestions().forEach((l) => {
+    if (t.has(l.q)) r.push(l); else n.push(l);
   });
   const o = n.length > 0 ? n : r;
   return shuffle(o.map((i) => shuffleOptions(i)));
@@ -98,17 +94,18 @@ export const buildEndlessDeck = (e) => {
 // ---------------------------------------------------------------------------
 // The JURY lifeline
 // ---------------------------------------------------------------------------
-// Simulates a poll of other students. It is NOT real data (yet). The correct
-// answer always keeps a plurality, but the margin narrows on harder questions,
-// so the crowd is helpful without being an oracle.
+// Simulates a poll of other students. It is NOT real data. The correct answer
+// always keeps a plurality, so the crowd is helpful without being an oracle.
 //
-// When the backend lands, this is the function that gets replaced by real
-// aggregate answer data, and the JURY lifeline becomes a genuine "here is what
-// people actually believe" readout.
-export const simulateJury = (e, t = [], n = "medium") => {
-  // e = correct index, t = removed indices, n = difficulty
+// The margin used to widen or narrow by difficulty tier. Difficulty is gone, so
+// this is a single fixed base. That makes the fake poll less interesting, which
+// is fine: it is a placeholder. When the backend lands this function is replaced
+// by real aggregate answer data and JURY becomes a genuine "here is what people
+// actually believe" readout, keyed per question rather than guessed.
+export const simulateJury = (e, t = []) => {
+  // e = correct index, t = removed indices
   // Build a plausible audience poll where the correct answer keeps the plurality.
-  const base = { easy: 72, medium: 58, hard: 46, expert: 38 }[n] || 50;
+  const base = 58;
   const result = [0, 0, 0, 0];
   const wrong = [0, 1, 2, 3].filter((v) => v !== e && !t.includes(v));
 
