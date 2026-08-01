@@ -226,6 +226,20 @@ export const CSS_TEXT = `
      shadowed by an inline style. The mark now sits at the bottom of the page
      flow (see Shell), so it never overlaps content and needs no clearance
      padding. These heights are just the mark's own size per breakpoint. */
+  /* Privacy link, bottom-right, opposite the mark. Quiet by default so it does
+     not compete with gameplay, but present on every screen because data is
+     recorded during play, not only on the landing page. */
+  .ts-privacy-link {
+    font-family:${C.mono}; font-size:11px; font-weight:700; letter-spacing:1.6px;
+    text-transform:uppercase; color:${u.textMuted}; text-decoration:none;
+    border-bottom:2px solid ${u.borderLight}; padding:2px 0 3px;
+    margin:0 4px 14px 0; align-self:flex-end; flex-shrink:0;
+    -webkit-tap-highlight-color:transparent; transition:color .12s, border-color .12s;
+  }
+  .ts-privacy-link:hover, .ts-privacy-link:focus-visible {
+    color:${u.brand}; border-bottom-color:${u.brand};
+  }
+
   .ts-site-logo { margin-left: 8px; }
   .ts-site-logo-img { height:120px; width:auto; background:transparent; }
 
