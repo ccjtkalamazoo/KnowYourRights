@@ -75,7 +75,9 @@ export const shuffleOptions = (e) => {
   const n = t.map((i) => e.options[i]);
   const r = t.indexOf(e.correct);
   const o = e.optionExplanations ? t.map((i) => e.optionExplanations[i]) : null;
-  return { ...e, options: n, correct: r, optionExplanations: o };
+  // order[displayIndex] = authored index. Events report options by their
+  // AUTHORED identity (stable across shuffles); this is the map back to it.
+  return { ...e, options: n, correct: r, optionExplanations: o, order: t };
 };
 
 // Builds the endless/bonus deck after a Q15 win: every question NOT already seen
