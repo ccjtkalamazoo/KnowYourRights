@@ -20,8 +20,10 @@
 
 export const SCHEMA_VERSION = 1;
 
-// The ingest Worker URL. null = collection off, events dropped at flush time.
-const ENDPOINT = null;
+// The ingest Worker URL. Set to null to turn collection off: events still flow
+// through every code path (so the instrumentation stays exercised) but flush()
+// drops the batch instead of sending it.
+const ENDPOINT = "https://kyr-ingest.ccjtkalamazoo.workers.dev/";
 
 // Flush when the buffer reaches this many events, or on the interval, or on
 // pagehide, whichever comes first. Batching is what keeps a classroom to a
@@ -239,5 +241,14 @@ if (typeof window !== "undefined") {
     },
     session: () => (_debug() || {}).id || "none",
     raw: () => (_debug() || {}).buffered || [],
+    // Force a send now instead of waiting for the buffer to fill or the
+    // interval to fire. Testing only; the game never calls this.
+    send: async () => {
+      const n = (_debug() || { buffered: [] }).buffered.length;
+      if (!ENDPOINT) return "Collection is off (ENDPOINT is null).";
+      if (n === 0) return "Nothing buffered. Play a question first.";
+      flush();
+      return "Sent " + n + " event(s). Check the Network tab or your D1 table.";
+    },
   };
 }
