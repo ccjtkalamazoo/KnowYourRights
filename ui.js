@@ -50,7 +50,24 @@ export function Shell({ children, muted, setMuted, screenFlash, screenShake, hid
       }),
       // The content grows to fill, pushing the logo to the bottom of the flow.
       c.jsx("div", { style: { position: "relative", zIndex: 1, flex: "1 0 auto", display: "flex", flexDirection: "column", animation: screenShake ? "ts-screen-shake 0.5s" : "none" }, children }),
-      !hideLogo && c.jsx(SiteLogo, { onClick: onLogoClick })
+      // Footer row, in the document flow below the content so it can never
+      // overlap. The privacy link sits on every screen because data is recorded
+      // during gameplay, not just on the landing page.
+      c.jsxs("div", {
+        className: "ts-footer-row",
+        style: {
+          display: "flex", alignItems: "flex-end", justifyContent: "space-between",
+          gap: 12, marginTop: "auto", paddingTop: 8, position: "relative", zIndex: 1
+        },
+        children: [
+          hideLogo ? c.jsx("span", {}) : c.jsx(SiteLogo, { onClick: onLogoClick }),
+          c.jsx("a", {
+            href: "privacy.html",
+            className: "ts-privacy-link",
+            children: "Privacy"
+          })
+        ]
+      })
     ]
   });
 }
@@ -81,7 +98,7 @@ export function SiteLogo({ onClick }) {
       // never overlap it. On a tall screen it shows without scrolling; on a
       // short one you scroll to it. Was position:fixed, which floated over
       // content and caused the overlap on phones.
-      display: "block", marginTop: "auto", alignSelf: "flex-start",
+      display: "block",
       background: "transparent", border: "none", padding: 6,
       cursor: "pointer", lineHeight: 0,
       // Kills the dark box iOS Safari paints behind a tapped button. This is the
