@@ -25,6 +25,7 @@ import {
   buildEndlessDeck, simulateJury, allQuestions
 } from "./rules.js";
 import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.js";
+import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
 
@@ -76,7 +77,10 @@ export function App() {
   // Fonts + stylesheet go into <head> once, on mount. The actual CSS lives in
   // theme.js, which is what makes a future skin system a token swap rather than
   // a rewrite.
-  useEffect(() => { injectStyles(); }, []);
+  useEffect(() => {
+    injectStyles();
+    EV.beginSession({ soundOn: !muted });
+  }, []);
 
   // Reset scroll to the top on every screen change. In a single-page app the
   // page never reloads, so the browser keeps the old scroll position and you
@@ -85,6 +89,14 @@ export function App() {
   useEffect(() => {
     if (typeof window !== "undefined") window.scrollTo(0, 0);
   }, [phase, walkStep, level]);
+
+  // Per-question measurement (events.js). Reset each time a question is shown.
+  const qMeter = useRef({ exposure: 1, shownAt: 0, firstSelectAt: null, changes: 0, lifelines: [] });
+  useEffect(() => {
+    if (phase !== "playing" || !currentQ) return;
+    const exposure = EV.trackQuestionShown(currentQ, level);
+    qMeter.current = { exposure, shownAt: performance.now(), firstSelectAt: null, changes: 0, lifelines: [] };
+  }, [phase, level]);
 
   useEffect(() => {
     sfx.current.setMuted(muted);
@@ -128,11 +140,13 @@ export function App() {
   // The map is the launcher. The walkthrough hands off to it instead of straight
   // into a run, and every end screen returns here rather than to the start.
   // resetState() first so a run's leftovers never survive into the next one.
-  const goMap = () => { initAudio(); sfx.current.click(); music.current.stop(); resetState(); setPhase("map"); };
+  const goMap = () => { initAudio(); sfx.current.click(); music.current.stop(); if (phase === "playing" || phase === "revealing" || phase === "locking") { EV.trackRunEnd("abandoned", { level, mode: isEndless ? "endless" : "ladder" }); EV.flush(); } EV.trackNav("map"); resetState(); setPhase("map"); };
   const playAgain = () => { initAudio(); sfx.current.click(); goMap(); };
   const startGame = () => {
     resetState();
-    setDeck(buildDeck());
+    const d = buildDeck();
+    setDeck(d);
+    EV.trackModeStart("ladder", d);
     setPhase("playing");
     setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
   };
@@ -144,6 +158,7 @@ export function App() {
   const enterEndless = () => {
     sfx.current.click();
     const extra = buildEndlessDeck(deck);
+    EV.trackModeStart("endless", extra);
     setFinalPrize(LADDER[LADDER.length - 1].prize);
     setBestRun((b) => Math.max(b, LADDER[LADDER.length - 1].prize));
     setDeck([...deck, ...extra]);
@@ -158,11 +173,28 @@ export function App() {
     if (phase !== "playing") return;
     if (removedAnswers.includes(idx)) return;
     sfx.current.select();
+    const m = qMeter.current;
+    if (m.firstSelectAt === null) m.firstSelectAt = performance.now();
+    else if (idx !== selected) m.changes += 1;
     setSelected(idx);
   };
 
   const onLockIn = () => {
     if (selected === null) return;
+    {
+      const m = qMeter.current;
+      const t = performance.now();
+      EV.trackAnswer(currentQ, {
+        authoredIndex: currentQ.order ? currentQ.order[selected] : selected,
+        correct: selected === currentQ.correct,
+        exposure: m.exposure,
+        msToFirstSelect: m.firstSelectAt === null ? null : Math.round(m.firstSelectAt - m.shownAt),
+        msToLock: Math.round(t - m.shownAt),
+        selectionChanges: m.changes,
+        lifelinesUsed: m.lifelines.slice(),
+        removedAuthoredIndices: currentQ.order ? removedAnswers.map((i) => currentQ.order[i]) : removedAnswers,
+      });
+    }
     const s = stage;
     sfx.current.lockIn(s);
     sfx.current.duck(0.4, 200);
@@ -208,16 +240,18 @@ export function App() {
 
   const advance = () => {
     sfx.current.click();
-    if (revealWrong) { music.current.stop(); setPhase("gameover"); return; }
+    if (revealWrong) { music.current.stop(); EV.trackRunEnd("lost", { level, mode: isEndless ? "endless" : "ladder" }); EV.flush(); setPhase("gameover"); return; }
     if (!isEndless && level === LADDER.length - 1) {
       setFinalPrize(LADDER[level].prize);
       setBestRun((v) => Math.max(v, LADDER[level].prize));
+      EV.trackRunEnd("won", { level, mode: "ladder" }); EV.flush();
       setPhase("winbig");
       music.current.duck(0.12, 400);
       return;
     }
     const next = level + 1;
     if (isEndless && next >= deck.length) {
+      EV.trackRunEnd("won", { level, mode: "endless" }); EV.flush();
       setPhase("won");
       setTimeout(() => sfx.current.win(), 200);
       setTimeout(() => music.current.stop(), 200);
@@ -284,6 +318,8 @@ export function App() {
     // skip with nothing to swap to: don't charge, don't consume (thin-bank safety)
     if (k === "skip" && !canSkipNow()) { sfx.current.click(); return; }
     const bumpUsage = () => setUsage((s) => ({ ...s, [k]: s[k] + 1 }));
+    qMeter.current.lifelines.push(k);
+    EV.trackLifeline(currentQ, k, { purchased: !lifelines[k] });
     if (lifelines[k]) {
       // free use of a starting lifeline (only fifty/poll/hint start available)
       applyLifeline(k);
@@ -313,7 +349,7 @@ export function App() {
     setSkipConfirm(true);
   };
   const cancelSkip = () => { sfx.current.click(); setSkipConfirm(false); };
-  const doSkip = () => { sfx.current.click(); setSkipConfirm(false); setSkipConfirmed(true); advance(); };
+  const doSkip = () => { sfx.current.click(); EV.trackReviewCard(currentQ, -1, { skipped: true }); setSkipConfirm(false); setSkipConfirmed(true); advance(); };
 
   const askHome = () => {
     // Screens with no run in progress: nothing to lose, so no confirmation.
@@ -336,7 +372,7 @@ export function App() {
   };
 
   // after the big win celebration: take the money (end) or keep going (bonus round)
-  const winTakeMoney = () => { sfx.current.click(); music.current.stop(); setPhase("won"); };
+  const winTakeMoney = () => { sfx.current.click(); music.current.stop(); EV.trackRunEnd("walked", { level, mode: "endless" }); EV.flush(); setPhase("won"); };
   const winKeepGoing = () => { sfx.current.click(); enterEndless(); };
 
   const walkNext = () => { sfx.current.click(); if (walkStep < R.walkthrough.length - 1) setWalkStep(walkStep + 1); else goMap(); };
@@ -871,9 +907,11 @@ function RevealScreen(props) {
   const CARD_COUNT = R.cardMeta.length; // 3
 
   // Back to the top when switching review cards, so a long card does not leave
-  // you scrolled down when the next one appears.
+  // you scrolled down when the next one appears. Also the per-card dwell anchor.
+  const cardShownAt = useRef(performance.now());
   useEffect(() => {
     if (typeof window !== "undefined") window.scrollTo(0, 0);
+    cardShownAt.current = performance.now();
   }, [current]);
   const DWELL_MS = 2000;
   const scoring = revealCorrect; // only correct answers earn points
@@ -901,6 +939,7 @@ function RevealScreen(props) {
   // is independent of navigation, so advancing never depends on it.
   const claimPoint = (idx) => {
     if (!scoring || claimed[idx]) return false;
+    EV.trackReviewCard(question, idx, { dwellMs: Math.round(performance.now() - cardShownAt.current), redeemed: true });
     const copy = claimed.slice();
     copy[idx] = true;
     const claimedCount = copy.filter(Boolean).length;
