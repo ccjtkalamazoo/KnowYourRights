@@ -221,3 +221,23 @@ export function trackNav(where) {
 export function _debug() {
   return session ? { id: session.id, buffered: session.buffer.slice(), exposures: new Map(session.exposures) } : null;
 }
+
+// Exposed on window deliberately. Anyone can open the console and see exactly
+// what this game records about them, which is the honest version of a privacy
+// claim: not "trust us", but "look for yourself". Nothing here is sensitive,
+// it is the visitor's own anonymous session buffer.
+if (typeof window !== "undefined") {
+  window.KYR_EVENTS = {
+    dump: () => {
+      const d = _debug();
+      if (!d) return "No session yet.";
+      console.table(d.buffered.map((e) => ({
+        seq: e.seq, type: e.type, qid: e.qid || "", oid: e.oid || "",
+        correct: e.correct ?? "", exposure: e.exposure ?? "", ms: e.at,
+      })));
+      return d.buffered;
+    },
+    session: () => (_debug() || {}).id || "none",
+    raw: () => (_debug() || {}).buffered || [],
+  };
+}
