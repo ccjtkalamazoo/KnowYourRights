@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · Know Your Rights · CCJT</title>
+<meta name="description" content="What the Know Your Rights game records, what it never records, how long it is kept, and how it is protected.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f4ede0; --bg-warm:#f8f1e3; --surface:#fbf6ec; --surface-warm:#f0e5cf;
+    --ink:#2a1f12; --border-light:#d6c9b0;
+    --brand:#b36d00; --brand-soft:#fde9c8; --terra:#c64a2e; --mustard-soft:#f6e8b8;
+    --dim:#5a4a35; --muted:#8a7a60; --on-dark:#fbf6ec;
+    --display:'Archivo Black','Helvetica Neue',Impact,sans-serif;
+    --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono','Courier New',monospace;
+    --shadow-sm:3px 3px 0 var(--ink);
+    --shadow-md:5px 5px 0 var(--ink);
+  }
+
+  *,*::before,*::after { box-sizing:border-box; }
+
+  body {
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--body);
+    font-size:16px; line-height:1.65;
+    padding:max(env(safe-area-inset-top),24px) max(env(safe-area-inset-right),16px)
+            max(env(safe-area-inset-bottom),48px) max(env(safe-area-inset-left),16px);
+  }
+
+  .wrap { max-width:720px; margin:0 auto; }
+
+  a { color:var(--brand); text-decoration:underline; text-underline-offset:3px; }
+  a:focus-visible, button:focus-visible {
+    outline:3px solid var(--terra); outline-offset:3px;
+  }
+
+  /* ---- masthead ---- */
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:3px;
+    text-transform:uppercase; color:var(--brand); margin:0 0 8px;
+  }
+  h1 {
+    font-family:var(--display); font-size:clamp(30px,8vw,52px); line-height:0.98;
+    letter-spacing:-0.01em; margin:0 0 14px; text-shadow:4px 4px 0 var(--brand);
+  }
+  .standfirst {
+    font-size:clamp(15px,3.6vw,18px); line-height:1.6; color:var(--dim);
+    margin:0 0 34px; max-width:56ch;
+  }
+
+  /* ---- paper cards ---- */
+  .card {
+    background:var(--surface); border:2px solid var(--ink); border-radius:12px;
+    box-shadow:var(--shadow-md); padding:clamp(18px,5vw,30px); margin:0 0 26px;
+  }
+  .card--quiet { background:var(--bg-warm); }
+
+  h2 {
+    font-family:var(--display); font-size:clamp(19px,4.6vw,26px); line-height:1.1;
+    margin:0 0 6px; letter-spacing:-0.005em;
+  }
+  .card > p:first-of-type { margin-top:10px; }
+  p { margin:0 0 14px; }
+  p:last-child { margin-bottom:0; }
+
+  .label {
+    font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--muted); margin:0 0 10px;
+  }
+
+  /* ---- the absence list: the page's one loud element ----
+     Most privacy pages bury what is not collected. Here it is the biggest
+     thing on the page, struck through, because it is the most informative
+     part and the game is about reading your rights plainly. */
+  .never { background:var(--mustard-soft); border-color:var(--ink); }
+  .never h2 { color:var(--ink); }
+  .never ul { list-style:none; margin:16px 0 0; padding:0; }
+  .never li {
+    position:relative; padding:9px 0 9px 34px;
+    font-size:clamp(15px,3.8vw,17px); font-weight:500;
+    border-bottom:1px dashed var(--border-light);
+  }
+  .never li:last-child { border-bottom:0; }
+  .never li::before {
+    content:"\00d7"; position:absolute; left:4px; top:50%;
+    transform:translateY(-50%);
+    font-family:var(--mono); font-size:20px; font-weight:700; color:var(--terra);
+    line-height:1;
+  }
+  .never li span {
+    text-decoration:line-through; text-decoration-color:var(--terra);
+    text-decoration-thickness:2px; color:var(--dim);
+  }
+
+  /* ---- plain lists ---- */
+  ul.plain { margin:12px 0 0; padding-left:22px; }
+  ul.plain li { margin:0 0 8px; }
+  ul.plain li:last-child { margin-bottom:0; }
+
+  ol.plain { margin:12px 0 0; padding-left:22px; }
+  ol.plain li { margin:0 0 10px; }
+
+  .keep {
+    display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 0; padding:0;
+    list-style:none;
+  }
+  .keep li {
+    flex:1 1 220px; background:var(--surface-warm); border:2px solid var(--ink);
+    border-radius:9px; padding:14px 16px;
+  }
+  .keep .dur {
+    font-family:var(--display); font-size:20px; color:var(--brand);
+    display:block; margin-bottom:2px;
+  }
+  .keep .what { font-size:14px; color:var(--dim); }
+
+  .note {
+    border-left:4px solid var(--terra); background:var(--surface);
+    padding:12px 16px; margin:18px 0 0; font-size:15px; color:var(--dim);
+  }
+
+  footer {
+    margin-top:36px; padding-top:20px; border-top:2px solid var(--border-light);
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:12px 22px; align-items:center;
+    justify-content:space-between;
+  }
+  .backlink {
+    font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; display:inline-block; margin-bottom:26px;
+    background:var(--surface); border:2px solid var(--ink); border-radius:8px;
+    padding:8px 14px; box-shadow:var(--shadow-sm); text-decoration:none;
+    color:var(--ink);
+  }
+  .backlink:hover { transform:translate(1px,1px); box-shadow:2px 2px 0 var(--ink); }
+
+  @media (prefers-reduced-motion:reduce) {
+    * { transition:none !important; animation:none !important; }
+    .backlink:hover { transform:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="backlink" href="/">&#8592; Back to the game</a>
+
+  <p class="eyebrow">Know Your Rights &middot; CCJT</p>
+  <h1>PRIVACY</h1>
+  <p class="standfirst">
+    This game does not know who you are. There is no account, no login, and
+    nothing to fill in. It records which answers people choose so we can find
+    out which rights are most often misunderstood, and it does that without
+    collecting anything that identifies you.
+  </p>
+
+  <!-- SIGNATURE: the absence list, deliberately the loudest thing here -->
+  <section class="card never">
+    <p class="label">Not collected. Ever.</p>
+    <h2>What this game never records</h2>
+    <ul>
+      <li><span>Your name, email, address, or phone number</span></li>
+      <li><span>Any account or login, because there isn't one</span></li>
+      <li><span>Your IP address</span></li>
+      <li><span>A device ID, cookie, or fingerprint</span></li>
+      <li><span>Your location</span></li>
+      <li><span>Anything you type, because there is nowhere to type</span></li>
+      <li><span>The date or time of day you played</span></li>
+      <li><span>Any link between one visit and the next</span></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <p class="label">Section 1</p>
+    <h2>What it does record</h2>
+    <p>
+      When you play, the game creates a random session number. It is generated
+      the moment you start, is never stored on your device, and disappears when
+      you leave. Attached to that number, it records:
+    </p>
+    <ul class="plain">
+      <li>Which question appeared</li>
+      <li>Which answer you chose, and whether it was correct</li>
+      <li>How many times you have seen that question in this session</li>
+      <li>How long you spent, measured as a length of time rather than a clock reading</li>
+      <li>Whether you changed your answer before locking it in</li>
+      <li>Which lifelines you used, and in what order</li>
+      <li>Whether you read the review cards, and for how long</li>
+      <li>Where you stopped, if you left partway through</li>
+      <li>Whether your screen is phone-sized, tablet-sized, or larger</li>
+      <li>Whether sound was on or off</li>
+    </ul>
+    <p style="margin-top:14px">
+      Our server adds one more thing: the month. Not the day, not the time.
+      Just the month, so that old records can be found and deleted on schedule.
+    </p>
+  </section>
+
+  <section class="card">
+    <p class="label">Section 2</p>
+    <h2>Why we record it</h2>
+    <p>
+      The session number and the answers attached to it are used only to run and
+      improve this game. Specifically:
+    </p>
+    <ol class="plain">
+      <li>
+        <strong>To find out which rights are misunderstood.</strong> If most
+        players believe police must read Miranda rights at the moment of arrest,
+        that is a gap worth teaching to, and the only way to see it is to count
+        answers.
+      </li>
+      <li>
+        <strong>To check the game works.</strong> Whether people get stuck on a
+        confusing question, whether something breaks on small screens, whether
+        anyone finishes.
+      </li>
+      <li>
+        <strong>To share what we learn,</strong> as group totals only. A finding
+        like "38% of players thought X" contains no session numbers and no
+        individuals. Nothing is published unless at least 100 people have
+        answered that question.
+      </li>
+    </ol>
+    <div class="note">
+      The session number is never used to contact anyone, to build a profile of
+      anyone, or for advertising of any kind. This game carries no ads and sells
+      nothing. CCJT does not sell, rent, or trade any of this data.
+    </div>
+  </section>
+
+  <section class="card card--quiet">
+    <p class="label">Section 3</p>
+    <h2>How long it is kept</h2>
+    <p>
+      These records are kept for as long as they are useful. Nothing in them
+      identifies a person: there is no name, no device identifier, and no way
+      to connect one visit to another, so a record from three years ago says
+      exactly as little about who you are as one from today.
+    </p>
+    <p>
+      What they do hold is which answers people chose, and that becomes
+      <em>more</em> useful with age. Whether understanding of these rights
+      improves over a decade is a question you can only answer by keeping the
+      earlier years to compare against.
+    </p>
+    <ul class="keep">
+      <li>
+        <span class="dur">Kept</span>
+        <span class="what">Answer records, which carry only a session number that was discarded when you closed the game</span>
+      </li>
+      <li>
+        <span class="dur">Kept</span>
+        <span class="what">Group totals, which describe no individual at all</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="card card--quiet">
+    <p class="label">Section 4</p>
+    <h2>How it is protected</h2>
+    <p>
+      The strongest protection here is what was never collected. There is no
+      name to leak, no address to expose, and no way to work backward from a
+      record to a person. Beyond that:
+    </p>
+    <ul class="plain">
+      <li>
+        Records are held in a private database controlled by CCJT. There is no
+        public way to read them.
+      </li>
+      <li>
+        The address that receives game data accepts new records only from this
+        game's own website, and cannot be used to read anything back.
+      </li>
+      <li>
+        Access to the account holding the data is limited to the CCJT team and
+        protected by two-factor authentication.
+      </li>
+      <li>
+        Published findings are group totals only, and are withheld entirely for
+        any question answered fewer than 100 times, so that no small group can
+        be singled out.
+      </li>
+    </ul>
+    <p style="margin-top:14px">
+      The CCJT team is responsible for this program, for reviewing these risks
+      at least once a year, and for updating this page when practices change.
+    </p>
+  </section>
+
+  <section class="card">
+    <p class="label">Section 5</p>
+    <h2>Questions, or a request</h2>
+    <p>
+      If you have a question about any of this, or need to review a data
+      agreement before using the game, write to
+      <a href="mailto:ccjtkalamazoo@gmail.com">ccjtkalamazoo@gmail.com</a>.
+    </p>
+    <p>
+      You can see exactly what your own session has recorded at any time: open
+      your browser's developer console while playing and run
+      <code style="font-family:var(--mono);background:var(--surface-warm);padding:2px 6px;border-radius:4px;font-size:14px">KYR_EVENTS.dump()</code>.
+      It prints the full list. We would rather show you than ask you to take our
+      word for it.
+    </p>
+  </section>
+
+  <footer>
+    <span>Campaign for Criminal Justice Transparency</span>
+    <span>Last updated 1 August 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
