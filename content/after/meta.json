@@ -1,0 +1,44 @@
+{
+  "districtId": "after",
+  "name": "AFTER THE CHARGE",
+  "blurb": "Probation, fines, your record, and what follows you afterward.",
+  "live": false,
+  "chapters": [
+    {
+      "id": "after.01",
+      "name": "PROBATION AND PAROLE",
+      "file": "01-probation-and-parole.json",
+      "live": false
+    },
+    {
+      "id": "after.02",
+      "name": "FINES AND FEES",
+      "file": "02-fines-and-fees.json",
+      "live": false
+    },
+    {
+      "id": "after.03",
+      "name": "YOUR RECORD",
+      "file": "03-your-record.json",
+      "live": false
+    },
+    {
+      "id": "after.04",
+      "name": "EXPUNGEMENT",
+      "file": "04-expungement.json",
+      "live": false
+    },
+    {
+      "id": "after.05",
+      "name": "COLLATERAL CONSEQUENCES",
+      "file": "05-collateral-consequences.json",
+      "live": false
+    },
+    {
+      "id": "after.06",
+      "name": "GETTING HELP",
+      "file": "06-getting-help.json",
+      "live": false
+    }
+  ]
+}
