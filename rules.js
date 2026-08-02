@@ -9,7 +9,6 @@
 // buildDeck() deals 15 at random from the whole bank, and a chapter version
 // would deal 15 from that chapter's 30 instead. The engine wouldn't change.
 
-import { R } from "./questions.js";
 
 // ---------------------------------------------------------------------------
 // The ladder
@@ -53,44 +52,47 @@ export const shuffle = (e) => {
   return t;
 };
 
-// Every question in the bank as one flat pool. The bank is still stored in
-// tier-named buckets (easy/medium/hard/expert) purely because that is the shape
-// questions.js has today; nothing reads those names as a difficulty any more.
-// When content moves to per-chapter JSON this becomes the chapter loader.
-export const allQuestions = () =>
-  ["easy", "medium", "hard", "expert"].flatMap((k) => R.questions[k] || []);
-
-// Deals a fresh 15-question run: 15 at random from the whole bank.
+// Deals a fresh 15-question run from a chapter's 30.
 // There are no difficulty tiers. Who is to say what a given person finds easy,
 // so a run is a random draw and the tension comes from the streak, not from a
-// curve someone else decided. Every run is a different deck, which is what
-// makes the game replayable.
-export const buildDeck = () => shuffle(allQuestions()).slice(0, 15).map(shuffleOptions);
+// curve someone else decided. Fifteen of thirty means every run is a different
+// deck, which is what makes a chapter worth replaying.
+export const buildDeck = (chapter) =>
+  shuffle(chapter.questions).slice(0, 15).map(shuffleOptions);
 
 // Randomizes which slot (A/B/C/D) the correct answer lands in.
 // Source data always puts the correct answer at index 0 so authors don't have to
 // think about placement; this is what makes that safe.
 export const shuffleOptions = (e) => {
   const t = shuffle([0, 1, 2, 3]);
-  const n = t.map((i) => e.options[i]);
-  const r = t.indexOf(e.correct);
-  const o = e.optionExplanations ? t.map((i) => e.optionExplanations[i]) : null;
-  // order[displayIndex] = authored index. Events report options by their
-  // AUTHORED identity (stable across shuffles); this is the map back to it.
-  return { ...e, options: n, correct: r, optionExplanations: o, order: t };
+  const pick = (arr) => (arr ? t.map((i) => arr[i]) : null);
+  // Every per-option array is permuted by the SAME order, so text, explanation,
+  // permanent id, and misconception code stay attached to each other.
+  // order[displayIndex] = authored index, which is how events report a choice
+  // by its authored identity rather than where it happened to appear.
+  return {
+    ...e,
+    options: pick(e.options),
+    correct: t.indexOf(e.correct),
+    optionExplanations: pick(e.optionExplanations),
+    optionIds: pick(e.optionIds),
+    misconceptions: pick(e.misconceptions),
+    order: t
+  };
 };
 
-// Builds the endless/bonus deck after a Q15 win: every question NOT already seen
-// this run, shuffled. If somehow all have been seen, it falls back to the full
-// bank so the bonus round still has something to serve.
-export const buildEndlessDeck = (e) => {
-  const t = new Set(e.map((i) => i.q));
-  const n = [], r = [];
-  allQuestions().forEach((l) => {
-    if (t.has(l.q)) r.push(l); else n.push(l);
+// Builds the endless/bonus deck after a Q15 win: every question in the chapter
+// NOT already dealt this run, shuffled. With 30 in a chapter and 15 dealt, that
+// is the other 15. If somehow all were seen, it falls back to the whole chapter
+// so the bonus round still has something to serve.
+export const buildEndlessDeck = (seen, chapter) => {
+  const dealt = new Set(seen.map((q) => q.id || q.q));
+  const fresh = [], repeats = [];
+  (chapter ? chapter.questions : []).forEach((q) => {
+    if (dealt.has(q.id || q.q)) repeats.push(q); else fresh.push(q);
   });
-  const o = n.length > 0 ? n : r;
-  return shuffle(o.map((i) => shuffleOptions(i)));
+  const pool = fresh.length > 0 ? fresh : repeats;
+  return shuffle(pool.map(shuffleOptions));
 };
 
 // ---------------------------------------------------------------------------
