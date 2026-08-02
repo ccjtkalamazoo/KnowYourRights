@@ -48,11 +48,12 @@ export function questionId(q) {
   return "legacy:" + h.toString(36);
 }
 
-// Option identity: real content gives options permanent letter ids. The legacy
-// bank identifies an option by its index in the AUTHORED order (correct always
-// authored first), which is stable across the display shuffle because engine
-// hooks report the authored index, not the shuffled position.
+// Option identity: authored content gives every option a permanent id
+// (stop.03.007.a) that survives rewording and the display shuffle. Those ride
+// through on the question as optionIds. The legacy fallback derives one from
+// the question id plus the authored position.
 export function optionId(q, authoredIndex) {
+  if (q.optionIds && q.optionIds[authoredIndex]) return q.optionIds[authoredIndex];
   const qid = questionId(q);
   return qid + "." + "abcd"[authoredIndex];
 }
@@ -159,12 +160,12 @@ export function flush(useBeacon = false) {
 // Gameplay helpers (the vocabulary engine.js speaks)
 // ---------------------------------------------------------------------------
 
-export function trackModeStart(mode, deck) {
+export function trackModeStart(mode, deck, context = {}) {
   if (!session) return;
   session.mode = mode;
   // The dealt deck IS the received/not-received record: these question ids were
-  // served this run; everything else in the bank was not.
-  track("deck_dealt", { mode, questionIds: deck.map(questionId) });
+  // served this run; everything else in the chapter was not.
+  track("deck_dealt", { mode, ...context, questionIds: deck.map(questionId) });
 }
 
 // Called when a question is shown. Returns the exposure number (1st, 2nd, 3rd
