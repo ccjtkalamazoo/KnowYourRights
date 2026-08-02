@@ -37,7 +37,7 @@
 //     content constraint, not just navigation: a chapter may rely on everything
 //     before it and must assume nothing after it.
 //   * Difficulty tiers are being dropped. Every question in a chapter is
-//     eligible for every rung. That change lands in questions.js and rules.js,
+//     eligible for every rung. That change lands in content/ and rules.js,
 //     not here, but it is why the ladder and the SKIP lifeline both need
 //     revisiting.
 //
@@ -52,16 +52,17 @@
 // inside THE STOP, THE ARREST, and THE BYSTANDER. The Fourth Amendment is deep
 // enough to carry its own district and is the likeliest ninth.
 //
-// WHEN THE CONTENT LANDS, the changes are:
-//   1. Tag each question in questions.js with a districtId + chapterId.
-//   2. Add buildChapterDeck(chapterId) to rules.js alongside buildDeck().
-//   3. Flip a district's `live` flag to true here and pass it an onPlay.
-//   4. Wire state.js in so cleared chapters drive the card fill states.
-// Nothing else in this file has to change.
+// TO PUT A CHAPTER LIVE, nothing in this file changes:
+//   1. Write content/<district>/NN-<slug>.json against the schema.
+//   2. Get it attorney reviewed and fill in reviewedBy / reviewedAt.
+//   3. Set that chapter's "live": true in the district's meta.json, and the
+//      district's own "live": true once you want it reachable.
+// The map reads all of that at runtime.
 
-import { c, u, C, U, useState } from "./theme.js";
+import { c, u, C, U, useState, useEffect } from "./theme.js";
 import { Button } from "./ui.js";
 import { STATUS, newSession, chapterStatus, districtStatus, completion } from "./state.js";
+import { loadDistricts } from "./content.js";
 
 // ---------------------------------------------------------------------------
 // Icon palette
@@ -163,132 +164,23 @@ export const ICONS = {
 
 
 // ---------------------------------------------------------------------------
-// The districts. Content roadmap.
+// Districts come from content/, not from this file.
 // ---------------------------------------------------------------------------
-// `icon` is an SVG path drawn on a 100x92 viewBox: single stroke, no fill. Line
-// art rather than glyphs, so it matches the printed-paper look and adds no icon
-// library dependency.
-export const DISTRICTS = [
-  {
-    id: "juvenile", name: "JUVENILE", live: false,
-    blurb: "What is different because you are under 17, and what changes when you are not.",
-    icon: ICONS.juvenile,
-    chapters: [
-      { id: "juvenile.01", name: "WHAT IS DIFFERENT RIGHT NOW" },
-      { id: "juvenile.02", name: "AT SCHOOL" },
-      { id: "juvenile.03", name: "PARENTS AND NOTIFICATION" },
-      { id: "juvenile.04", name: "JUVENILE COURT AND DETENTION" },
-      { id: "juvenile.05", name: "CHARGED AS AN ADULT" },
-      { id: "juvenile.06", name: "TURNING 17 AND YOUR RECORD" }
-    ]
-  },
-  {
-    id: "stop", name: "THE STOP", live: false,
-    blurb: "Stopped on the street. Are you being held, and what do you have to give?",
-    icon: ICONS.stop,
-    chapters: [
-      { id: "stop.01", name: "AM I FREE TO GO" },
-      { id: "stop.02", name: "REASONABLE SUSPICION" },
-      { id: "stop.03", name: "WHAT YOU MUST GIVE" },
-      { id: "stop.04", name: "THE PAT DOWN" },
-      { id: "stop.05", name: "HOW LONG IT LASTS" },
-      { id: "stop.06", name: "WHEN IT BECOMES AN ARREST" }
-    ]
-  },
-  {
-    id: "arrest", name: "THE ARREST", live: false,
-    blurb: "The handcuffs change everything. What is different the moment they go on.",
-    icon: ICONS.arrest,
-    chapters: [
-      { id: "arrest.01", name: "PROBABLE CAUSE" },
-      { id: "arrest.02", name: "WHAT CHANGES NOW" },
-      { id: "arrest.03", name: "SEARCH INCIDENT TO ARREST" },
-      { id: "arrest.04", name: "USE OF FORCE" },
-      { id: "arrest.05", name: "YOUR PROPERTY" },
-      { id: "arrest.06", name: "THE FIRST HOURS" }
-    ]
-  },
-  {
-    id: "saying", name: "WHAT YOU SAY", live: false,
-    blurb: "Silence, counsel, and why the words have to be out loud.",
-    icon: ICONS.saying,
-    chapters: [
-      { id: "saying.01", name: "INVOKING SILENCE" },
-      { id: "saying.02", name: "ASKING FOR A LAWYER" },
-      { id: "saying.03", name: "WHEN MIRANDA APPLIES" },
-      { id: "saying.04", name: "CUSTODY VS CONVERSATION" },
-      { id: "saying.05", name: "WHO IS ASKING" },
-      { id: "saying.06", name: "WHY TALKING RARELY HELPS" }
-    ]
-  },
-  {
-    id: "bystander", name: "THE BYSTANDER", live: false,
-    blurb: "When it is happening to someone else. Filming, helping, being a passenger.",
-    icon: ICONS.bystander,
-    chapters: [
-      { id: "bystander.01", name: "WATCHING AND RECORDING" },
-      { id: "bystander.02", name: "BEING A PASSENGER" },
-      { id: "bystander.03", name: "BEING A WITNESS" },
-      { id: "bystander.04", name: "HELPING SOMEONE ARRESTED" },
-      { id: "bystander.05", name: "FINDING AND SUPPORTING THEM" },
-      { id: "bystander.06", name: "WHEN IT IS AT YOUR HOUSE" }
-    ]
-  },
-  {
-    id: "jail", name: "JAIL", live: false,
-    blurb: "Booking, the phone call, visits, and what pretrial detention actually is.",
-    icon: ICONS.jail,
-    chapters: [
-      { id: "jail.01", name: "BOOKING" },
-      { id: "jail.02", name: "YOUR PHONE CALL" },
-      { id: "jail.03", name: "VISITATION AND MAIL" },
-      { id: "jail.04", name: "MEDICAL AND GRIEVANCES" },
-      { id: "jail.05", name: "MONEY AND TELECOM" },
-      { id: "jail.06", name: "WHAT PRETRIAL DETENTION IS" }
-    ]
-  },
-  {
-    id: "court", name: "THE COURTHOUSE", live: false,
-    blurb: "Arraignment, bail, the public defender, and the plea.",
-    icon: ICONS.court,
-    chapters: [
-      { id: "court.01", name: "ARRAIGNMENT" },
-      { id: "court.02", name: "BAIL AND PRETRIAL RELEASE" },
-      { id: "court.03", name: "THE PUBLIC DEFENDER" },
-      { id: "court.04", name: "THE PLEA" },
-      { id: "court.05", name: "YOUR HEARING" },
-      { id: "court.06", name: "VERDICT AND SENTENCING" }
-    ]
-  },
-  {
-    id: "after", name: "AFTER THE CHARGE", live: false,
-    blurb: "Probation, fines, your record, and what follows you afterward.",
-    icon: ICONS.after,
-    chapters: [
-      { id: "after.01", name: "PROBATION AND PAROLE" },
-      { id: "after.02", name: "FINES AND FEES" },
-      { id: "after.03", name: "YOUR RECORD" },
-      { id: "after.04", name: "EXPUNGEMENT" },
-      { id: "after.05", name: "COLLATERAL CONSEQUENCES" },
-      { id: "after.06", name: "GETTING HELP" }
-    ]
-  }
-];
-
-// The one playable entry. Not a district: it deals from the whole bank by
-// difficulty, which is what the game does today.
-export const FULL_DECK = {
-  id: "all", name: "ALL RIGHTS",
-  blurb: "Fifteen questions pulled from everything we have so far.",
-  icon: ICONS.allrights,
+// Names, blurbs, and chapter lists live in content/<district>/meta.json so that
+// adding a ninth district is adding a folder, not editing a component. What
+// stays here is the artwork: an icon is a component, and components do not
+// belong in JSON. ICON_FOR joins the two by district id.
+const ICON_FOR = {
+  juvenile: ICONS.juvenile,
+  stop: ICONS.stop,
+  arrest: ICONS.arrest,
+  saying: ICONS.saying,
+  bystander: ICONS.bystander,
+  jail: ICONS.jail,
+  court: ICONS.court,
+  after: ICONS.after,
 };
 
-const TOTAL_CHAPTERS = DISTRICTS.reduce((n, d) => n + d.chapters.length, 0);
-
-// A fresh, empty session. Progress is never persisted (see state.js), so the map
-// reads from a new session every mount: today that means the tutorial is not
-// cleared and every district reads LOCKED. When a district goes live and the
-// session model is wired through, the same code lights up automatically.
 const SESSION = newSession();
 
 // Palette for the four chapter states. Segment fill + border per state.
@@ -328,7 +220,7 @@ function ChapterBar({ district }) {
 // chapter segment bar and an X/Y count. Selecting a card (hover on desktop, tap
 // on touch) raises it AND surfaces its chapter list in the panel below the grid,
 // so the same interaction works with or without a pointer.
-function DistrictCard({ district, selected, onSelect, onPlay }) {
+function DistrictCard({ district, selected, onSelect }) {
   const live = district.live;
   const dc = district.chapters.filter(
     (_, i) => chapterStatus(SESSION, district, i) === STATUS.CLEARED
@@ -337,10 +229,12 @@ function DistrictCard({ district, selected, onSelect, onPlay }) {
   const active = selected;
 
   return c.jsxs("button", {
-    onClick: () => { onSelect(district.id); if (live && onPlay) onPlay(); },
+    // Selecting a district does not start a run. It reveals that district's
+    // chapters in the panel below, and a chapter is what you actually play.
+    onClick: () => onSelect(district.id),
     onMouseEnter: () => onSelect(district.id),
     "aria-label": live
-      ? `Play ${district.name}. ${district.blurb}`
+      ? `${district.name}. ${total} chapters. Show chapters.`
       : `${district.name}, coming soon. ${total} chapters planned. ${district.blurb}`,
     style: {
       textAlign: "left", padding: 0, font: "inherit",
@@ -423,10 +317,14 @@ function DistrictCard({ district, selected, onSelect, onPlay }) {
 // ---------------------------------------------------------------------------
 // ChapterPanel : the detail strip below the grid.
 // ---------------------------------------------------------------------------
-// Shows the selected district's blurb and every chapter as a state-coloured tag.
-// Driven by selection, which is set on hover (desktop) or tap (touch), so it is
-// not a hover-only feature that dies on phones.
-function ChapterPanel({ district }) {
+// Shows the selected district's blurb and its chapters. Driven by selection,
+// which is set on hover (desktop) or tap (touch), so it is not a hover-only
+// feature that dies on phones.
+//
+// This is also where a chapter is CHOSEN. A district is not itself playable:
+// it holds up to six chapters and you play one of them, so the chapter tags
+// are buttons once a chapter is live and plain tags while it is not.
+function ChapterPanel({ district, onPlayChapter }) {
   return c.jsx("div", {
     style: {
       marginTop: 20, background: u.surface, border: `2px solid ${u.outline}`,
@@ -462,22 +360,32 @@ function ChapterPanel({ district }) {
             style: { display: "flex", gap: 6, marginTop: 12, flexWrap: "wrap" },
             children: district.chapters.map((ch, i) => {
               const st = stateColors(chapterStatus(SESSION, district, i));
-              return c.jsxs("span", {
-                style: {
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                  fontFamily: C.mono, fontSize: 9, letterSpacing: 0.8,
-                  background: st.fill, color: st.text,
-                  border: `2px solid ${st.border}`, borderRadius: 5,
-                  padding: "4px 8px"
-                },
-                children: [
-                  c.jsxs("span", {
-                    style: { opacity: 0.7, fontWeight: 700 },
-                    children: [String(i + 1).padStart(2, "0")]
-                  }),
-                  ch.name
-                ]
-              }, ch.id);
+              const playable = ch.live;
+              const inner = [
+                c.jsx("span", {
+                  style: { opacity: 0.7, fontWeight: 700 },
+                  children: String(i + 1).padStart(2, "0")
+                }, "n"),
+                ch.name
+              ];
+              const style = {
+                display: "inline-flex", alignItems: "center", gap: 6,
+                fontFamily: C.mono, fontSize: 9, letterSpacing: 0.8,
+                background: st.fill, color: st.text,
+                border: `2px solid ${st.border}`, borderRadius: 5,
+                padding: "4px 8px", textAlign: "left"
+              };
+              return playable
+                ? c.jsx("button", {
+                    onClick: () => onPlayChapter && onPlayChapter(district, ch),
+                    style: {
+                      ...style, cursor: "pointer", boxShadow: U.sm,
+                      WebkitTapHighlightColor: "transparent"
+                    },
+                    "aria-label": `Play ${ch.name}`,
+                    children: inner
+                  }, ch.id)
+                : c.jsx("span", { style, children: inner }, ch.id);
             })
           })
         ] })
@@ -524,170 +432,175 @@ function Legend() {
 // ---------------------------------------------------------------------------
 // MapScreen
 // ---------------------------------------------------------------------------
-export function MapScreen({ onPlayFullDeck, onHome }) {
+// Districts are fetched from content/ on mount. Three states: loading, failed,
+// loaded. The failure state matters more than it looks: content now arrives
+// over the network, so "the file is missing or malformed" is a thing a player
+// can actually hit, and a blank screen would be the worst possible answer.
+export function MapScreen({ onPlayChapter, onHome }) {
+  const [districts, setDistricts] = useState(null);
+  const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
-  const clearedChapters = Math.round(completion(SESSION, DISTRICTS) * TOTAL_CHAPTERS);
-  const selectedDistrict = DISTRICTS.find((d) => d.id === selected) || null;
 
-  return c.jsx("div", {
+  useEffect(() => {
+    let alive = true;
+    loadDistricts()
+      .then((list) => { if (alive) setDistricts(list.map(withIcon)); })
+      .catch((e) => { if (alive) setError(e.message || String(e)); });
+    return () => { alive = false; };
+  }, []);
+
+  const shell = (children) => c.jsx("div", {
     style: {
       minHeight: "100vh", display: "flex", alignItems: "center",
       justifyContent: "center", padding: "48px 24px 78px"
     },
-    children: c.jsxs("div", {
-      style: { width: "100%", maxWidth: 940 },
-      children: [
-        // Header
-        c.jsxs("div", {
-          style: {
-            display: "flex", alignItems: "flex-end", justifyContent: "space-between",
-            gap: 20, flexWrap: "wrap", marginBottom: 26
-          },
-          children: [
-            c.jsxs("div", { children: [
-              c.jsx("div", {
-                style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 3, color: u.brand },
-                children: "CHOOSE WHERE TO START"
-              }),
-              c.jsx("h1", {
-                style: {
-                  fontFamily: C.display, fontSize: 40, letterSpacing: -0.5,
-                  color: u.text, margin: "6px 0 0", lineHeight: 1.05
-                },
-                children: "THE MAP"
-              })
-            ] }),
-            c.jsxs("div", {
-              style: {
-                background: u.surface, border: `2px solid ${u.outline}`,
-                borderRadius: 10, padding: "8px 16px", boxShadow: U.sm, textAlign: "center"
-              },
-              children: [
-                c.jsx("div", {
-                  style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1.6, color: u.brand },
-                  children: "CHAPTERS CLEARED"
-                }),
-                c.jsxs("div", {
-                  style: { fontFamily: C.mono, fontSize: 20, fontWeight: 700, color: u.text },
-                  children: [
-                    String(clearedChapters),
-                    c.jsxs("span", {
-                      style: { color: u.textMuted, fontSize: 13 },
-                      children: [" / ", String(TOTAL_CHAPTERS)]
-                    })
-                  ]
-                })
-              ]
-            })
-          ]
-        }),
+    children: c.jsx("div", { style: { width: "100%", maxWidth: 940 }, children })
+  });
 
-        // Live entry
-        c.jsxs("div", {
-          style: {
-            background: u.surface, border: `2px solid ${u.outline}`,
-            borderRadius: 12, boxShadow: U.lg, padding: "18px 22px",
-            display: "flex", alignItems: "center", gap: 20,
-            flexWrap: "wrap", marginBottom: 30
-          },
-          children: [
-            c.jsx("svg", {
-              viewBox: "0 0 100 100", width: 56, height: 56, "aria-hidden": true,
-              style: { flexShrink: 0 },
-              children: FULL_DECK.icon()
+  if (error) {
+    return shell(c.jsxs("div", {
+      style: {
+        background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12,
+        boxShadow: U.md, padding: "24px 26px", textAlign: "center"
+      },
+      children: [
+        c.jsx("div", {
+          style: { fontFamily: C.display, fontSize: 22, color: u.text, marginBottom: 8 },
+          children: "THE MAP DID NOT LOAD"
+        }),
+        c.jsx("div", {
+          style: { fontFamily: C.body, fontSize: 14, color: u.textDim, marginBottom: 18 },
+          children: "Something went wrong fetching the districts. Check your connection and try again."
+        }),
+        c.jsx(Button, { onClick: onHome, variant: "secondary", size: "sm", children: "\u2190 Home" })
+      ]
+    }));
+  }
+
+  if (!districts) {
+    return shell(c.jsx("div", {
+      style: {
+        fontFamily: C.mono, fontSize: 12, letterSpacing: 2, color: u.textMuted,
+        textAlign: "center", padding: "40px 0"
+      },
+      children: "LOADING THE MAP\u2026"
+    }));
+  }
+
+  const totalChapters = districts.reduce((n, d) => n + d.chapters.length, 0);
+  const clearedChapters = Math.round(completion(SESSION, districts) * totalChapters);
+  const selectedDistrict = districts.find((d) => d.id === selected) || null;
+  const anyLive = districts.some((d) => d.live);
+
+  return shell(c.jsxs("div", {
+    children: [
+      // Header
+      c.jsxs("div", {
+        style: {
+          display: "flex", alignItems: "flex-end", justifyContent: "space-between",
+          gap: 20, flexWrap: "wrap", marginBottom: 26
+        },
+        children: [
+          c.jsxs("div", { children: [
+            c.jsx("div", {
+              style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 3, color: u.brand },
+              children: "CHOOSE WHERE TO START"
             }),
-            c.jsxs("div", { style: { flex: "1 1 260px", minWidth: 0 }, children: [
+            c.jsx("h1", {
+              style: {
+                fontFamily: C.display, fontSize: 40, letterSpacing: -0.5,
+                color: u.text, margin: "6px 0 0", lineHeight: 1.05
+              },
+              children: "THE MAP"
+            })
+          ] }),
+          c.jsxs("div", {
+            style: {
+              background: u.surface, border: `2px solid ${u.outline}`,
+              borderRadius: 10, padding: "8px 16px", boxShadow: U.sm, textAlign: "center"
+            },
+            children: [
+              c.jsx("div", {
+                style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1.6, color: u.brand },
+                children: "CHAPTERS CLEARED"
+              }),
               c.jsxs("div", {
-                style: { display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" },
+                style: { fontFamily: C.mono, fontSize: 20, fontWeight: 700, color: u.text },
                 children: [
-                  c.jsx("span", {
-                    style: {
-                      fontFamily: C.display, fontSize: 22, letterSpacing: 1,
-                      color: u.text, textTransform: "uppercase"
-                    },
-                    children: FULL_DECK.name
-                  }),
-                  c.jsx("span", {
-                    style: {
-                      fontFamily: C.mono, fontSize: 8.5, fontWeight: 700, letterSpacing: 1.2,
-                      background: u.brand, color: u.textOnDark,
-                      border: `2px solid ${u.outline}`, borderRadius: 5, padding: "2px 7px"
-                    },
-                    children: "OPEN NOW"
+                  String(clearedChapters),
+                  c.jsxs("span", {
+                    style: { color: u.textMuted, fontSize: 13 },
+                    children: [" / ", String(totalChapters)]
                   })
                 ]
-              }),
-              c.jsx("div", {
-                style: {
-                  fontFamily: C.body, fontSize: 13.5, lineHeight: 1.55,
-                  color: u.textDim, marginTop: 5
-                },
-                children: FULL_DECK.blurb
               })
-            ] }),
-            c.jsx(Button, {
-              onClick: onPlayFullDeck, variant: "primary", size: "md",
-              style: { flexShrink: 0 }, children: "Play"
-            })
-          ]
-        }),
+            ]
+          })
+        ]
+      }),
 
-        // Roadmap divider
-        c.jsxs("div", {
-          style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 14 },
-          children: [
-            c.jsx("span", {
-              style: {
-                fontFamily: C.mono, fontSize: 10, letterSpacing: 2.4,
-                color: u.textMuted, whiteSpace: "nowrap"
-              },
-              children: "DISTRICTS COMING SOON"
-            }),
-            c.jsx("span", {
-              "aria-hidden": true,
-              style: { flex: 1, height: 2, background: u.borderLight, borderRadius: 1 }
-            })
-          ]
-        }),
+      // Roadmap divider. Wording follows the content: while nothing is live it
+      // says so plainly rather than implying the map is playable.
+      c.jsxs("div", {
+        style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 14 },
+        children: [
+          c.jsx("span", {
+            style: {
+              fontFamily: C.mono, fontSize: 10, letterSpacing: 2.4,
+              color: u.textMuted, whiteSpace: "nowrap"
+            },
+            children: anyLive ? "PICK A DISTRICT" : "QUESTIONS BEING WRITTEN"
+          }),
+          c.jsx("span", {
+            "aria-hidden": true,
+            style: { flex: 1, height: 2, background: u.borderLight, borderRadius: 1 }
+          })
+        ]
+      }),
 
-        // District grid
-        c.jsx("div", {
-          className: "kyr-map-grid",
-          style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 },
-          children: DISTRICTS.map((d) => c.jsx(DistrictCard, {
-            district: d,
-            selected: selected === d.id,
-            onSelect: setSelected
-          }, d.id))
-        }),
+      // District grid
+      c.jsx("div", {
+        className: "kyr-map-grid",
+        style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 },
+        children: districts.map((d) => c.jsx(DistrictCard, {
+          district: d,
+          selected: selected === d.id,
+          onSelect: setSelected
+        }, d.id))
+      }),
 
-        // Chapter detail panel (hover on desktop, tap on touch)
-        c.jsx(ChapterPanel, { district: selectedDistrict }),
+      // Chapter detail panel: also where a chapter is chosen.
+      c.jsx(ChapterPanel, { district: selectedDistrict, onPlayChapter }),
 
-        // Legend
-        c.jsx(Legend, {}),
+      c.jsx(Legend, {}),
 
-        // Footer note + home
-        c.jsxs("div", {
-          style: {
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            gap: 16, flexWrap: "wrap", marginTop: 22
-          },
-          children: [
-            c.jsx("div", {
-              style: {
-                fontFamily: C.body, fontSize: 12.5, lineHeight: 1.6,
-                color: u.textMuted, maxWidth: 520
-              },
-              children: "Each district is a place where rights actually come up. The questions for these are being written and attorney reviewed now."
-            }),
-            c.jsx(Button, {
-              onClick: onHome, variant: "ghost", size: "sm",
-              style: { fontSize: 13 }, children: "\u2190 Home"
-            })
-          ]
-        })
-      ]
-    })
-  });
+      // Footer note + home
+      c.jsxs("div", {
+        style: {
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          gap: 16, flexWrap: "wrap", marginTop: 22
+        },
+        children: [
+          c.jsx("div", {
+            style: {
+              fontFamily: C.body, fontSize: 12.5, lineHeight: 1.6,
+              color: u.textMuted, maxWidth: 520
+            },
+            children: anyLive
+              ? "Each district is a moment where rights come up. Pick a chapter to play it."
+              : "Each district is a moment where rights come up. The questions for these are being written and attorney reviewed now."
+          }),
+          c.jsx(Button, {
+            onClick: onHome, variant: "ghost", size: "sm",
+            style: { fontSize: 13 }, children: "\u2190 Home"
+          })
+        ]
+      })
+    ]
+  }));
+}
+
+// Attach the icon component for a district loaded from JSON.
+function withIcon(d) {
+  return { ...d, icon: ICON_FOR[d.id] || ICONS.allrights };
 }
