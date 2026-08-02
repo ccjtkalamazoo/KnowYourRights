@@ -65,6 +65,19 @@ export const R = {
     { key: "phrase", label: "REMEMBER THIS", icon: "\u201C \u201D" },
     { key: "reallife", label: "IN REAL LIFE", icon: "\uD83D\uDCAC" }
   ],
+  // Shown once per session, on the pre-round screen, above that chapter's own
+  // safety note. Session-scoped because nothing is ever stored on the device.
+  disclaimer: {
+    title: "BEFORE YOU START",
+    lines: [
+      "This game teaches how rights generally work. It is not legal advice.",
+      "Laws change, and some rules are different from state to state.",
+      "If something real is happening to you, talk to a lawyer about your own situation."
+    ],
+    button: "Got it"
+  },
+  safetyHeading: "GETTING HOME SAFE COMES FIRST",
+  roundStart: "Start the round \u2192",
   verdictContinue: "See what it means \u2192",
   verdictContinueWrong: "Learn why \u2192"
 };
