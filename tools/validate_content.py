@@ -145,7 +145,8 @@ def main():
 
     chapters = sorted(
         p for p in CONTENT.rglob("*.json")
-        if "schema" not in p.parts and p.name != "meta.json"
+        if "schema" not in p.parts
+        and p.name not in ("meta.json", "index.json")
     )
 
     if not chapters:
