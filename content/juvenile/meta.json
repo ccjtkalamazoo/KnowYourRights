@@ -1,43 +1,49 @@
 {
   "districtId": "juvenile",
   "name": "JUVENILE",
-  "blurb": "What is different because you are under 17, and what changes when you are not.",
+  "blurb": "What is different because you are under 18, and what changes when you are not.",
   "live": false,
   "chapters": [
     {
       "id": "juvenile.01",
-      "name": "WHAT IS DIFFERENT RIGHT NOW",
-      "file": "01-what-is-different-right-now.json",
+      "name": "USING YOUR RIGHTS",
+      "file": "01-using-your-rights.json",
       "live": false
     },
     {
       "id": "juvenile.02",
-      "name": "AT SCHOOL",
-      "file": "02-at-school.json",
+      "name": "AT SCHOOL: SEARCHES",
+      "file": "02-at-school-searches.json",
       "live": false
     },
     {
       "id": "juvenile.03",
-      "name": "PARENTS AND NOTIFICATION",
-      "file": "03-parents-and-notification.json",
+      "name": "AT SCHOOL: SPEECH AND DISCIPLINE",
+      "file": "03-at-school-speech-and-discipline.json",
       "live": false
     },
     {
       "id": "juvenile.04",
-      "name": "JUVENILE COURT AND DETENTION",
-      "file": "04-juvenile-court-and-detention.json",
+      "name": "DIFFERENT BECAUSE OF YOUR AGE",
+      "file": "04-different-because-of-your-age.json",
       "live": false
     },
     {
       "id": "juvenile.05",
-      "name": "CHARGED AS AN ADULT",
-      "file": "05-charged-as-an-adult.json",
+      "name": "JUVENILE COURT AND DETENTION",
+      "file": "05-juvenile-court-and-detention.json",
       "live": false
     },
     {
       "id": "juvenile.06",
-      "name": "TURNING 17 AND YOUR RECORD",
-      "file": "06-turning-17-and-your-record.json",
+      "name": "CHARGED AS AN ADULT",
+      "file": "06-charged-as-an-adult.json",
+      "live": false
+    },
+    {
+      "id": "juvenile.07",
+      "name": "YOUR RECORD AND AFTER",
+      "file": "07-your-record-and-after.json",
       "live": false
     }
   ]
