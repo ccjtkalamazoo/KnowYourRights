@@ -27,6 +27,15 @@
       "maxLength": 40,
       "description": "Display name, e.g. AM I FREE TO GO"
     },
+    "safetyNote": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 400,
+      "not": {
+        "pattern": "\\u2014"
+      },
+      "description": "Shown once on the screen before a round starts, not on every question. Chapter specific: the risk of using a right on a sidewalk is different from the risk at school."
+    },
     "reviewedBy": {
       "type": [
         "string",
