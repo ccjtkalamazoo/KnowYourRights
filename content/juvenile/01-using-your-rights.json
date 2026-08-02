@@ -2,6 +2,7 @@
   "chapterId": "juvenile.01",
   "districtId": "juvenile",
   "name": "USING YOUR RIGHTS",
+  "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
   "reviewedBy": null,
   "reviewedAt": null,
   "questions": [
@@ -41,7 +42,6 @@
       ],
       "hint": "Rights are like a light switch. Does this one turn on by itself, or do you have to flip it?",
       "principle": "Here is the strange part of this right: staying silent is not enough to use your right to stay silent. You have to say it out loud. The Supreme Court decided this in a case called Berghuis v. Thompkins in 2010. A man named Van Chester Thompkins sat through almost three hours of questions and said almost nothing. Near the end, an officer asked if he prayed to God for forgiveness for the shooting. He said \"yes.\" That one word helped convict him, because he never said he was using his right. Once you clearly say you are staying silent, the questions about the case have to stop. The words turn the right on. Silence alone does not.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I am using my right to remain silent.",
         "gloss": "Say it clearly, then stop talking. These words are what make the questions stop."
@@ -113,7 +113,6 @@
       ],
       "hint": "One of these is a question, one is a guess, and one is a request. Which one leaves nothing to interpret?",
       "principle": "Asking for a lawyer only works if you say it clearly. In 1994 the Supreme Court decided a case called Davis v. United States. A man being questioned said \"Maybe I should talk to a lawyer.\" The agents did not stop. They were not even required to ask him what he meant. He kept talking, and what he said was used against him. Later he said clearly that he wanted a lawyer, and only then did questioning stop. The rule is that a maybe, a question, or a hint does not count. Say it flat: \"I want a lawyer.\" Then stop talking and wait.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I want a lawyer. Not maybe. Not I think.",
         "gloss": "Say it flat. A hedge does not count."
@@ -185,7 +184,6 @@
       ],
       "hint": "Is something being unfair the same as it being against the rules?",
       "principle": "Police are allowed to lie to you while questioning you. They can say a friend confessed, that they have video, or that your fingerprints are on something, even when none of it is true. Courts have allowed this for a long time. Being told that someone else already talked is common during questioning, and it is convincing because it makes talking feel pointless. Here is what matters: none of it changes what you should do. If you have said you are staying silent and you want a lawyer, that is still the answer. A lie cannot be used against you. Your response to it can.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Whatever they say they have, my answer is the same.",
         "gloss": "A lie cannot hurt you. What you say back can."
@@ -257,7 +255,6 @@
       ],
       "hint": "Think about whether this is a door that locks behind you, or one you can walk back through.",
       "principle": "You can stop talking at any time, even if you have already been answering for a while. There is no point where you have talked so much that stopping stops mattering. This matters because of how questioning usually goes. Almost nobody refuses from the very first second. People answer a few easy questions, then a few more, and by the time it turns serious they feel locked in. You are not locked in. Say that you are done answering and that you want a lawyer, and the questions have to stop. What you already said still counts, but you can stop it from getting worse.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I am done answering questions. I want a lawyer.",
         "gloss": "You can say this at minute one or minute forty. It works the same."
@@ -329,7 +326,6 @@
       ],
       "hint": "Two different people, two different jobs. Which one is trained to protect you legally?",
       "principle": "Asking for a parent and asking for a lawyer are not the same request, and only one of them makes questioning stop. This is one of the most common mistakes young people make, because asking for a parent is the natural thing to do. Your parent may be called, and having them there can help. But a parent is not a lawyer, cannot give legal advice, and cannot turn your rights on for you. It also works the other way: your parent cannot give up your rights for you either. Those rights are yours. If you want the questions to stop, the words that do it are \"I want a lawyer.\" You can ask for both.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I want my mom, and I want a lawyer.",
         "gloss": "Ask for both. Only one of them stops the questions."
@@ -401,7 +397,6 @@
       ],
       "hint": "Who decides what counts as evidence, the person talking to you or a court?",
       "principle": "Off the record is not a real thing when you talk to police. No rule makes a talk disappear because someone called it casual. An officer can write down what you said later. They can also tell a court about it from memory. It does not matter if you signed anything. Studies found that about half of people thought off the record talk could not be used. About a quarter thought a statement had to be signed to count. Both are wrong. If you are talking to police, you are on the record.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "There is no off the record.",
         "gloss": "Written down or not, it all counts."
@@ -473,7 +468,6 @@
       ],
       "hint": "Your friend is being offered a trade. Who actually has the power to deliver the thing being offered?",
       "principle": "Tell us and you can go home is a hard thing to hear. It is also one of the least reliable. The officer asking you does not decide if you get charged. Other people make that call later. Talking almost never speeds things up. It often adds to the case against you. More than nine out of ten young people give up their rights when asked. A big reason is that they think talking is the fast way out. Asking for a lawyer does not promise you go home. It does put someone on your side in the room first.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Ask for a lawyer, then stop talking.",
         "gloss": "This is the right answer whether you did something or not."
@@ -545,7 +539,6 @@
       ],
       "hint": "You want to know one thing: can you walk away? Which of these asks that directly?",
       "principle": "Most conversations with police are ordinary. Officers talk to people all day for reasons that have nothing to do with suspicion, and there is nothing wrong with a normal conversation. But sometimes you cannot tell whether you are chatting or being held, and the two start exactly the same way. One question sorts it out: \"Am I free to leave?\" You can also ask \"Am I being detained?\" They mean the same thing. If the answer is yes, you can go. If the answer is no, you are being held, and that is the moment when staying silent and asking for a lawyer matter most. Asking is polite and it is not an admission of anything.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Am I free to leave?",
         "gloss": "Or \"Am I being detained?\" Same question. The answer tells you which situation you are in."
@@ -617,7 +610,6 @@
       ],
       "hint": "The warning is attached to one specific thing. Is it the arrest, or the questions?",
       "principle": "A lot of people believe that if police do not read your rights, the case disappears. That is not how it works. The warning is tied to questioning someone who is in custody, not to the moment of arrest. Officers can arrest you without saying a word, and the arrest is still valid. If they later question you in custody without the warning, your answers may not be usable, but other evidence usually still is. It also does not protect things you say on your own without being asked. Waiting for the warning is not a plan. Saying you want a lawyer works whether or not anyone read you anything.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "No warning does not mean no case.",
         "gloss": "Say you want a lawyer either way. That part always works."
@@ -685,7 +677,6 @@
       ],
       "hint": "Your right covers the questions you get asked. Does it matter whose name is in the question?",
       "principle": "Your right to stay quiet covers every question. It is not just about questions about you. If an officer asks about a friend, or about something you saw, you can say no. That is harder than it sounds. Answering feels safe when you are not the one in trouble. But people remember things wrong all the time. A wrong detail can cause real problems for someone else. And a talk that starts about someone else can turn toward you. You can say you do not want to answer, about anyone.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I don't want to answer questions about anyone.",
         "gloss": "Your rights cover questions about other people too, not just about you."
@@ -757,7 +748,6 @@
       ],
       "hint": "Is this a right you get at a certain birthday, or one you already have?",
       "principle": "These rights are not something you get when you turn eighteen. A fourteen-year-old has the same right to stay silent and the same right to a lawyer as an adult. Age changes some things in the legal system, but not whether these two rights exist. Courts have also recognized that age matters in a second way: how old you are can affect whether a judge later decides you were being held, because a young person may feel far less free to walk away than an adult would. That works in your favor. It does not make the rights wait until you are older.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I'm using my right to remain silent, same as anyone.",
         "gloss": "Age does not turn these on or off."
@@ -829,7 +819,6 @@
       ],
       "hint": "Which of these turns a right into something you have to buy?",
       "principle": "You do not need money to get a lawyer. If your family cannot pay, the court gives you one. That is true in juvenile cases too. The Supreme Court decided this in a case called In re Gault in 1967. Before that, juvenile courts often ran with no lawyer at all. Now young people get one, plus notice of the charges and a chance to question witnesses. Money is not the gate. Ask first and let the court work out who pays.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I can't pay, and I still want a lawyer.",
         "gloss": "Money is not the gate. Ask and let the court sort it out."
@@ -901,7 +890,6 @@
       ],
       "hint": "These rights are attached to a person. Which person?",
       "principle": "Your rights belong to you, not to your parents. A parent can be there and can help. But they cannot give up your right to stay quiet for you. That surprises people. Parents make almost every other choice for a kid. It works both ways too. Your parent cannot make you talk. And you do not need their okay to ask for a lawyer. If a parent says yes for you and you do not want to answer, say so yourself.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I still don't want to answer questions.",
         "gloss": "Your rights are yours. Nobody else can spend them."
@@ -973,7 +961,6 @@
       ],
       "hint": "Whose rights are they? Can somebody else spend them for you?",
       "principle": "Your rights belong to you alone. If a friend decides to explain everything, that is their choice and their statement. It does not cancel your right to stay silent, and it does not make your silence look like an admission. This comes up constantly in groups, because once one person starts talking it feels strange to be the only one who does not. Two separate accounts of the same night rarely match perfectly, and the small differences can matter more than anything either person meant to say. You can stay quiet and still be a good friend.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "My friend's choice is not my choice.",
         "gloss": "Your rights are yours. Nobody else can spend them."
@@ -1049,7 +1036,6 @@
       ],
       "hint": "One thing stops right away. A lot of other things keep moving.",
       "principle": "Here is the honest version, because not knowing is a big reason people never ask. When you clearly say you want a lawyer, questions about the case have to stop. That is the part that happens right away. What does not happen is everything else. You are not automatically released, a lawyer does not appear in seconds, and the case does not end. You might still be held while decisions get made by other people. That can feel like asking did not work. It did work. The point of asking is not to end the day faster. It is to make sure nothing else gets added to the case while you wait.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I want a lawyer.",
         "gloss": "The questions stop. Everything else takes the time it takes."
@@ -1117,7 +1103,6 @@
       ],
       "hint": "Who is the one person in this situation whose job is to advise you?",
       "principle": "Parents want this over with, and that is love, not bad advice from a bad person. But a parent is not a lawyer, and \"just explain it\" is the most common piece of well meant advice that makes a case worse. You can respect your parent and still wait for a lawyer. Saying so out loud is not disrespect. It also helps to tell your parent why: not because you did something, but because a statement cannot be taken back and a lawyer is the person who knows what is safe to say.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I want to talk to a lawyer first.",
         "gloss": "You can love your parents and still wait."
@@ -1189,7 +1174,6 @@
       ],
       "hint": "Does the form the words take change what they are?",
       "principle": "Writing it down is not a safer way to talk. A written statement is still a statement. In some ways it is stronger, because it is in your own words and your own handwriting. Signing it does not matter. Neither does typing it or texting it. People feel better about writing because they pick the words. But the words are the part that gets used. If you decided not to answer questions, that covers writing too.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I'm not writing a statement either.",
         "gloss": "Saying it and writing it are the same thing."
@@ -1261,7 +1245,6 @@
       ],
       "hint": "The question is about the phone, not about what you say into it.",
       "principle": "Phone calls from a jail are almost always recorded. Those recordings can be used later. This surprises people. Calling a friend feels private in a way a small room does not. It is not. A notice usually plays at the start, but people stop hearing it. There is one exception. Calls with your lawyer are meant to be private. Treat every other call as one someone may hear. If you want to talk about what happened, save it for your lawyer.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I can't get into it on this phone.",
         "gloss": "Only lawyer calls are private."
@@ -1333,7 +1316,6 @@
       ],
       "hint": "The question is not what an officer must do. It is what a judge decides a situation felt like.",
       "principle": "The Supreme Court decided a case called J.D.B. v. North Carolina. It says your age counts when a judge decides if you were being held. The reason is simple. A fourteen-year-old with adults in charge all around may feel stuck. A grown adult in the same spot might just walk away. Michigan courts use this too, including at school. It helps you, because more situations can count as being held. But it does not decide anything in the moment. Asking if you are free to leave still does.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Am I being detained?",
         "gloss": "Same question as free to leave. Either one works."
@@ -1405,7 +1387,6 @@
       ],
       "hint": "Which answer stays true no matter what really happened?",
       "principle": "Not knowing is a full answer. Memory is shaky about the things officers ask about. Times, order, and who was where are the hardest to get right. A detail you give to be helpful can be wrong. A wrong detail is hard to take back once it is written down. Other people may build on it. Saying you are not sure cannot be proven wrong, because you did not claim anything. It also does not make you look guilty. Not guessing is not the same as not helping.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I'm not sure, and I don't want to guess.",
         "gloss": "Not knowing is an answer. Guessing is a statement."
@@ -1477,7 +1458,6 @@
       ],
       "hint": "It is about how the moment would feel, not about a word or an object.",
       "principle": "\"In custody\" does not mean handcuffs, and it does not mean being at a station. It means a reasonable person in your situation would not feel free to end things and walk away. A judge decides that later by looking at everything: where you were, how many officers, how long, what was said. It matters because custody plus questioning is what triggers the warning. There is one part that helps you: courts have said a young person's age counts in this, because a fifteen-year-old may feel much less free to leave than an adult would in the same spot. You do not have to work this out yourself. Ask if you are free to leave.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Am I free to leave, or am I being detained?",
         "gloss": "You do not have to figure out custody. Just ask."
@@ -1545,7 +1525,6 @@
       ],
       "hint": "Does the building someone works in change what they are?",
       "principle": "A school resource officer is a police officer who works at a school. That is easy to forget. You see them every day and they may be friendly, which is a good thing. But when they ask about something that could become a case, your rights work the same. School discipline and a court case are two different tracks. One talk can feed both. It is not rude to say you want a lawyer or a parent first. You can be polite and still not answer.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Can I call my parents first?",
         "gloss": "Being at school does not change who you are talking to."
@@ -1617,7 +1596,6 @@
       ],
       "hint": "Two different things: what you must do with your body, and what you must say.",
       "principle": "A traffic stop is about the driver and the driving. As a passenger, you may have to stay while it happens. An officer can tell you to stay in the car or step out. Do what they say. In some states you may also have to give your name. Giving your name is not the same as being interviewed. You do not have to answer anything past that. People mix those two up all the time. You can follow every order, give your name, and still not answer questions.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I'll do what you ask. I'm not answering questions.",
         "gloss": "Follow instructions with your body. Keep your rights with your words."
@@ -1689,7 +1667,6 @@
       ],
       "hint": "There are two choices here. Opening a door is one. Answering is the other.",
       "principle": "You usually do not have to open your door for police. They need a warrant or another legal reason to come in. You also do not have to answer questions through the door. Two things people miss. A talk at the door counts the same as any other talk. And stepping outside can change things. If you are home alone and under eighteen, it is fine to say you want to wait for a parent. That is not refusing to help. It is asking for the adult who should be there.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I'd rather wait until my parents are home.",
         "gloss": "A closed door is an answer. So is not answering."
@@ -1761,7 +1738,6 @@
       ],
       "hint": "There are two places to fight this. Which one has a judge in it?",
       "principle": "Being right about a stop and winning right now are two different things. If a stop was not proper, a judge sorts that out later. A lawyer can argue to keep evidence out. What almost never works is fighting about it on the street. It can add charges that did not exist a minute ago. It can also make a short stop long. The best thing you can do is stay calm, do what you are told, say you are not answering, and remember details. Your objection is worth more later.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I'll sort this out later, with a lawyer.",
         "gloss": "Win it in court, not on the street."
@@ -1829,7 +1805,6 @@
       ],
       "hint": "Two different systems can care about the same talk.",
       "principle": "School rules and a court case are two systems. One talk can reach both. A vice principal asking what happened is usually about school rules. Saying no can lead to school consequences like detention. That is real. Also real: a staff member can be asked later what you told them. If it could become a case, ask to talk to your parents and a lawyer first. That is fair, even at school. You can be polite about everything except the details.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Can I talk to my parents before I answer?",
         "gloss": "School rules and a court case are two systems. One conversation can reach both."
@@ -1901,7 +1876,6 @@
       ],
       "hint": "What is the least dramatic thing that keeps working?",
       "principle": "Saying it once is enough under the law. In real life, people get asked again anyway. Sometimes in different words. Sometimes after a break. The best answer is to repeat yourself calmly. That is not rude and it does not weaken you. What weakens you is answering one more question because you are worn down. That one answer can count as choosing to talk again. Saying the same words the same way also removes any argument later.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Same answer, every time.",
         "gloss": "Repeat it calmly. That is the whole technique."
@@ -1973,7 +1947,6 @@
       ],
       "hint": "Look at who is offering the deal and ask whether they own the thing being offered.",
       "principle": "\"Just one more question and you can go\" is a hard thing to hear when you want to go home. Here is why it is not a trade worth taking. The officer in the room does not decide whether charges get filed, and often does not decide when you leave. Those decisions belong to other people, later. Meanwhile the answer you give is permanent. Research shows the wish to get out of the room is one of the biggest reasons young people give up their rights. Wanting to go home is completely normal. It is just not something you can buy with an answer.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Not one more question.",
         "gloss": "Not a short one either."
@@ -2045,7 +2018,6 @@
       ],
       "hint": "Is a lawyer there to end the day, or to protect what happens next?",
       "principle": "A lawyer is not a magic word. Knowing what they do makes it easier to ask. Their job is to tell you what is safe to say. They make sure the rules are followed. They speak for you later. They are also the only person you can talk to with real privacy. Not a friend, not a group chat, not a recorded call. What they are not is a fast way home. They do not end the case on the spot. Asking for one is not admitting anything.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I'd rather wait for my lawyer.",
         "gloss": "Their job starts before court, not at it."
@@ -2113,7 +2085,6 @@
       ],
       "hint": "Find out where you stand, then say the words, then stop.",
       "principle": "Put it together and it is short. First, find out where you stand: \"Am I free to leave?\" If yes, you can go. If no, say the words out loud: \"I am using my right to remain silent. I want a lawyer.\" Then stop talking, and repeat it calmly if the questions keep coming. Do what you are told with your body the whole time. That is the entire thing. It works at fourteen and at forty, on a sidewalk, in a car, at school, or at a station. You do not need to know legal terms or figure out whether you are in custody. You need three sentences and the patience to repeat them.",
-      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Am I free to leave? I am using my right to remain silent. I want a lawyer.",
         "gloss": "Three sentences, in that order. That is the whole plan."
