@@ -5,7 +5,8 @@
 // pulls in. Keeping this file tiny means the app's wiring is visible at a glance:
 //
 //   theme.js      design tokens, the React runtime, the stylesheet
-//   questions.js  the question bank + all user-facing copy
+//   copy.js       all user-facing copy
+//   content.js    loads districts and chapters from content/ at runtime
 //   rules.js      the ladder, deck building, lifeline prices, jury simulation
 //   audio.js      the two procedural sound engines
 //   ui.js         shared components (Button, Shell, ConfirmModal, ...)
