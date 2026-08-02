@@ -34,8 +34,9 @@ import { loadChapter } from "./content.js";
 // App : all game state lives here.
 // ===========================================================================
 export function App() {
-  const [phase, setPhase] = useState("start"); // start|walkthrough|map|loading|loaderror|playing|locking|revealing|gameover|won
+  const [phase, setPhase] = useState("start"); // start|walkthrough|map|loading|loaderror|preround|playing|locking|revealing|gameover|won
   const [chapter, setChapter] = useState(null);   // the loaded chapter being played
+  const [seenDisclaimer, setSeenDisclaimer] = useState(false); // once per session, never stored
   const [loadError, setLoadError] = useState(null);
   const [walkStep, setWalkStep] = useState(0);
   const [deck, setDeck] = useState([]);
@@ -160,8 +161,10 @@ export function App() {
       setChapter(ch);
       setDeck(d);
       EV.trackModeStart("chapter", d, { chapterId: ch.id, districtId: district.id });
-      setPhase("playing");
-      setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
+      // Pre-round screen first. The safety note is shown once here rather than
+      // under every question: a player sees 15 questions per run, and a warning
+      // repeated 15 times is a warning people learn to skip.
+      setPhase("preround");
     } catch (err) {
       setLoadError(err.message || String(err));
       setPhase("loaderror");
@@ -391,6 +394,14 @@ export function App() {
   };
 
   // after the big win celebration: take the money (end) or keep going (bonus round)
+  const beginRound = () => {
+    sfx.current.click();
+    setSeenDisclaimer(true);
+    EV.trackNav("round_start");
+    setPhase("playing");
+    setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
+  };
+
   const winTakeMoney = () => { sfx.current.click(); music.current.stop(); EV.trackRunEnd("walked", { level, mode: "endless" }); EV.flush(); setPhase("won"); };
   const winKeepGoing = () => { sfx.current.click(); enterEndless(); };
 
@@ -401,6 +412,62 @@ export function App() {
   // The CCJT mark sits bottom-left on EVERY screen, this one included. One
   // position, always, so it reads as a persistent maker's mark rather than
   // something that moves around.
+  // Pre-round screen: the chapter's safety note every time, plus the general
+  // disclaimer the first time this session. Deliberately short and with no
+  // forced delay, because a timer teaches people to look away while they wait.
+  if (phase === "preround")
+    return c.jsx(Shell, { muted, setMuted, onLogoClick: askLogo,
+      children: c.jsx("div", {
+        style: { minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 20px" },
+        children: c.jsxs("div", { style: { width: "100%", maxWidth: 560 }, children: [
+          c.jsx("div", {
+            style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2.4, color: u.brand, marginBottom: 6 },
+            children: chapter ? chapter.name : ""
+          }),
+          !seenDisclaimer && c.jsxs("div", {
+            style: {
+              background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12,
+              boxShadow: U.md, padding: "18px 20px", marginBottom: 14
+            },
+            children: [
+              c.jsx("div", {
+                style: { fontFamily: C.display, fontSize: 17, color: u.text, marginBottom: 8 },
+                children: R.disclaimer.title
+              }),
+              ...R.disclaimer.lines.map((l, i) => c.jsx("p", {
+                style: { fontFamily: C.body, fontSize: 14, lineHeight: 1.55, color: u.textDim, margin: "0 0 6px" },
+                children: l
+              }, i))
+            ]
+          }),
+          chapter && chapter.safetyNote && c.jsxs("div", {
+            style: {
+              display: "flex", gap: 12, alignItems: "flex-start",
+              background: u.terraSoft, border: `2px solid ${u.terra}`,
+              borderRadius: 12, padding: "16px 18px", boxShadow: U.sm
+            },
+            children: [
+              c.jsx("span", { "aria-hidden": true, style: { fontSize: 20, lineHeight: 1.2, flexShrink: 0 }, children: "\u26A0" }),
+              c.jsxs("div", { children: [
+                c.jsx("div", {
+                  style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.terra, fontWeight: 700, marginBottom: 5 },
+                  children: R.safetyHeading
+                }),
+                c.jsx("p", {
+                  style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.55, color: u.text, margin: 0, fontWeight: 500 },
+                  children: chapter.safetyNote
+                })
+              ] })
+            ]
+          }),
+          c.jsx("div", {
+            style: { display: "flex", justifyContent: "center", marginTop: 20 },
+            children: c.jsx(Button, { onClick: beginRound, variant: "primary", children: R.roundStart })
+          })
+        ] })
+      })
+    });
+
   if (phase === "loading")
     return c.jsx(Shell, { muted, setMuted, onLogoClick: askLogo,
       children: c.jsx("div", {
