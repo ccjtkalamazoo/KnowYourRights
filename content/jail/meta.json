@@ -1,0 +1,44 @@
+{
+  "districtId": "jail",
+  "name": "JAIL",
+  "blurb": "Booking, the phone call, visits, and what pretrial detention actually is.",
+  "live": false,
+  "chapters": [
+    {
+      "id": "jail.01",
+      "name": "BOOKING",
+      "file": "01-booking.json",
+      "live": false
+    },
+    {
+      "id": "jail.02",
+      "name": "YOUR PHONE CALL",
+      "file": "02-your-phone-call.json",
+      "live": false
+    },
+    {
+      "id": "jail.03",
+      "name": "VISITATION AND MAIL",
+      "file": "03-visitation-and-mail.json",
+      "live": false
+    },
+    {
+      "id": "jail.04",
+      "name": "MEDICAL AND GRIEVANCES",
+      "file": "04-medical-and-grievances.json",
+      "live": false
+    },
+    {
+      "id": "jail.05",
+      "name": "MONEY AND TELECOM",
+      "file": "05-money-and-telecom.json",
+      "live": false
+    },
+    {
+      "id": "jail.06",
+      "name": "WHAT PRETRIAL DETENTION IS",
+      "file": "06-what-pretrial-detention-is.json",
+      "live": false
+    }
+  ]
+}
