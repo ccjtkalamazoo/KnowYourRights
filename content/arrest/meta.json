@@ -1,0 +1,44 @@
+{
+  "districtId": "arrest",
+  "name": "THE ARREST",
+  "blurb": "The handcuffs change everything. What is different the moment they go on.",
+  "live": false,
+  "chapters": [
+    {
+      "id": "arrest.01",
+      "name": "PROBABLE CAUSE",
+      "file": "01-probable-cause.json",
+      "live": false
+    },
+    {
+      "id": "arrest.02",
+      "name": "WHAT CHANGES NOW",
+      "file": "02-what-changes-now.json",
+      "live": false
+    },
+    {
+      "id": "arrest.03",
+      "name": "SEARCH INCIDENT TO ARREST",
+      "file": "03-search-incident-to-arrest.json",
+      "live": false
+    },
+    {
+      "id": "arrest.04",
+      "name": "USE OF FORCE",
+      "file": "04-use-of-force.json",
+      "live": false
+    },
+    {
+      "id": "arrest.05",
+      "name": "YOUR PROPERTY",
+      "file": "05-your-property.json",
+      "live": false
+    },
+    {
+      "id": "arrest.06",
+      "name": "THE FIRST HOURS",
+      "file": "06-the-first-hours.json",
+      "live": false
+    }
+  ]
+}
