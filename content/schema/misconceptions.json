@@ -1,5 +1,5 @@
 {
-  "$comment": "Codes name a false BELIEF, not a topic. Add codes here before using them in a chapter; a code not listed fails validation. Extracted initially from the original 72-question bank.",
+  "$comment": "Codes name a false BELIEF, not a topic. Add codes here before using them in a chapter; a code not listed fails validation. Extracted initially from the original 72-question bank. Codes carry review checkpoints, not hopes: refusal_implies_guilt merges into nothing_to_hide unless it reaches three uses by the end of chapter 2; police_need_proof_to_say_it, innocence_makes_talking_safe, rights_cover_only_me and guessing_is_harmless are single-use retags from chapter 1 and get the same call at the end of JUVENILE.",
   "codes": {
     "silence_is_automatic": "Going quiet counts as invoking the right to remain silent (Berghuis v. Thompkins says it does not).",
     "partial_answers_are_safe": "Answering small questions but not big ones is a safe middle ground.",
@@ -9,8 +9,8 @@
     "no_money_no_lawyer": "You only get a lawyer if you can pay for one.",
     "miranda_at_arrest": "The Miranda warning is required the moment you are arrested.",
     "booking_needs_miranda": "Routine booking questions count as interrogation.",
-    "nothing_to_hide": "Refusing a search implies you have something to hide.",
-    "refusal_implies_guilt": "Saying no to a search can be used against you as evidence of guilt.",
+    "nothing_to_hide": "Refusing a search implies you have something to hide. How a refusal looks in the moment, to the person in front of you.",
+    "refusal_implies_guilt": "Saying no can be used against you later as evidence of guilt. What a refusal can be used for afterward, not how it looks at the time.",
     "police_can_always_search": "A request to search is really a command.",
     "partial_consent_is_safe": "Agreeing to a limited look keeps the search limited.",
     "opening_it_yourself_is_different": "Showing them yourself is not the same as consenting.",
@@ -36,6 +36,24 @@
     "must_be_on_own_property": "You can only record from your own property.",
     "any_dispersal_order_is_lawful": "Any order to stop or disperse is lawful.",
     "private_recording_is_always_ok": "Keeping a recording private makes it legal.",
-    "adult_age_is_17": "Michigan treats 17-year-olds as adults (changed October 1, 2021)."
+    "adult_age_is_17": "Michigan treats 17-year-olds as adults (changed October 1, 2021).",
+    "rumor_is_enough": "A name passed along, with nothing behind it, is by itself a good enough reason to search you.",
+    "group_suspicion_covers_everyone": "Suspicion about a group lets staff search every person in it.",
+    "search_has_no_limits": "A good reason to start a search lets staff look anywhere, in anything.",
+    "finding_something_makes_it_legal": "Whatever turned up proves the search was allowed.",
+    "school_owns_what_you_bring": "Anything you carry onto school grounds is school property and can be searched at will.",
+    "my_lock_makes_it_private": "Your own lock, or a locker fee you paid, makes the locker yours.",
+    "the_lot_is_off_campus": "A car parked at school gets the same protection as a car parked on the street.",
+    "passcode_must_be_given": "When staff take your phone, you have to unlock it for them.",
+    "deleting_it_ends_it": "Deleting a photo or a message puts it out of reach.",
+    "suspicionless_checks_need_a_reason": "Dog sweeps, metal detectors, and team drug testing each need a reason aimed at you personally.",
+    "saying_no_stops_it_at_school": "Refusing consent stops a school search the way it can stop a police search.",
+    "saying_nothing_is_agreeing": "Letting a search happen without objecting counts as agreeing to it.",
+    "school_findings_stay_at_school": "What school staff find cannot reach police or a court case.",
+    "bad_search_undoes_discipline": "If the search was improper, the school punishment goes away too.",
+    "police_need_proof_to_say_it": "Police cannot claim to have a confession or evidence unless they really do.",
+    "innocence_makes_talking_safe": "If you did nothing wrong, talking cannot hurt you.",
+    "rights_cover_only_me": "The right to remain silent only covers questions about yourself.",
+    "guessing_is_harmless": "Giving your best guess is safe as long as you are trying to tell the truth."
   }
 }
