@@ -4,7 +4,12 @@
   "title": "Know Your Rights chapter",
   "description": "One chapter: 30 questions. See docs/CONTENT.md for the authoring rules behind these constraints.",
   "type": "object",
-  "required": ["chapterId", "districtId", "name", "questions"],
+  "required": [
+    "chapterId",
+    "districtId",
+    "name",
+    "questions"
+  ],
   "additionalProperties": false,
   "properties": {
     "chapterId": {
@@ -23,11 +28,17 @@
       "description": "Display name, e.g. AM I FREE TO GO"
     },
     "reviewedBy": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Attorney who cleared this chapter. Null until reviewed. A chapter cannot ship with this null."
     },
     "reviewedAt": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "format": "date",
       "description": "YYYY-MM-DD"
     },
@@ -36,14 +47,24 @@
       "minItems": 30,
       "maxItems": 30,
       "description": "Exactly 30. The game deals 15 at random.",
-      "items": { "$ref": "#/$defs/question" }
+      "items": {
+        "$ref": "#/$defs/question"
+      }
     }
   },
-
   "$defs": {
     "question": {
       "type": "object",
-      "required": ["id", "version", "q", "options", "hint", "principle", "keyPhrase", "scenario"],
+      "required": [
+        "id",
+        "version",
+        "q",
+        "options",
+        "hint",
+        "principle",
+        "keyPhrase",
+        "scenario"
+      ],
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -60,7 +81,9 @@
           "type": "string",
           "minLength": 10,
           "maxLength": 220,
-          "not": { "pattern": "\\u2014" },
+          "not": {
+            "pattern": "\\u2014"
+          },
           "description": "The question. No em dashes."
         },
         "options": {
@@ -68,51 +91,77 @@
           "minItems": 4,
           "maxItems": 4,
           "description": "Exactly four. Index 0 is ALWAYS the correct answer; the game shuffles display order.",
-          "items": { "$ref": "#/$defs/option" }
+          "items": {
+            "$ref": "#/$defs/option"
+          }
         },
         "hint": {
           "type": "string",
           "minLength": 10,
           "maxLength": 260,
-          "not": { "pattern": "\\u2014" },
+          "not": {
+            "pattern": "\\u2014"
+          },
           "description": "What COUNSEL shows. Points at the reasoning, not the answer."
         },
         "principle": {
           "type": "string",
           "minLength": 40,
           "maxLength": 700,
-          "not": { "pattern": "\\u2014" },
+          "not": {
+            "pattern": "\\u2014"
+          },
           "description": "The law in plain language. Lead with the rule, then the case."
+        },
+        "safetyNote": {
+          "type": "string",
+          "minLength": 40,
+          "maxLength": 400,
+          "not": {
+            "pattern": "\\u2014"
+          },
+          "description": "Optional. Safety framing shown under the law on card 1, styled as a warning rather than law. Use where knowing a right and safely using it can come apart: getting home safe outranks winning the moment."
         },
         "keyPhrase": {
           "type": "object",
-          "required": ["quote", "gloss"],
+          "required": [
+            "quote",
+            "gloss"
+          ],
           "additionalProperties": false,
           "properties": {
             "quote": {
               "type": "string",
               "minLength": 4,
               "maxLength": 120,
-              "not": { "pattern": "\\u2014" },
+              "not": {
+                "pattern": "\\u2014"
+              },
               "description": "The words to say out loud. Short enough to recall under stress."
             },
             "gloss": {
               "type": "string",
               "minLength": 4,
               "maxLength": 160,
-              "not": { "pattern": "\\u2014" }
+              "not": {
+                "pattern": "\\u2014"
+              }
             }
           }
         },
         "scenario": {
           "type": "object",
-          "required": ["setup"],
+          "required": [
+            "setup"
+          ],
           "additionalProperties": true,
           "properties": {
             "setup": {
               "type": "string",
               "minLength": 15,
-              "not": { "pattern": "\\u2014" },
+              "not": {
+                "pattern": "\\u2014"
+              },
               "description": "A concrete situation. Specific beats abstract."
             }
           }
@@ -124,10 +173,13 @@
         }
       }
     },
-
     "option": {
       "type": "object",
-      "required": ["id", "text", "isCorrect"],
+      "required": [
+        "id",
+        "text",
+        "isCorrect"
+      ],
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -139,37 +191,72 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 180,
-          "not": { "pattern": "\\u2014" }
+          "not": {
+            "pattern": "\\u2014"
+          }
         },
-        "isCorrect": { "type": "boolean" },
+        "isCorrect": {
+          "type": "boolean"
+        },
         "explanation": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "maxLength": 500,
           "description": "Null for the correct option, required for every wrong one. This is where most of the teaching happens."
         },
         "misconceptionCode": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^[a-z][a-z0-9_]*$",
           "description": "Names the false belief this distractor tests. Null for the correct option, required for every wrong one. Must exist in misconceptions.json."
         }
       },
       "allOf": [
         {
-          "if": { "properties": { "isCorrect": { "const": false } } },
-          "then": {
-            "required": ["explanation", "misconceptionCode"],
+          "if": {
             "properties": {
-              "explanation": { "type": "string", "minLength": 15 },
-              "misconceptionCode": { "type": "string", "minLength": 3 }
+              "isCorrect": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "explanation",
+              "misconceptionCode"
+            ],
+            "properties": {
+              "explanation": {
+                "type": "string",
+                "minLength": 15
+              },
+              "misconceptionCode": {
+                "type": "string",
+                "minLength": 3
+              }
             }
           }
         },
         {
-          "if": { "properties": { "isCorrect": { "const": true } } },
+          "if": {
+            "properties": {
+              "isCorrect": {
+                "const": true
+              }
+            }
+          },
           "then": {
             "properties": {
-              "explanation": { "type": "null" },
-              "misconceptionCode": { "type": "null" }
+              "explanation": {
+                "type": "null"
+              },
+              "misconceptionCode": {
+                "type": "null"
+              }
             }
           }
         }
