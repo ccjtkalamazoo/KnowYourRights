@@ -37,7 +37,7 @@
           "text": "Stay quiet, but only if you really did nothing wrong. Going silent when you were there makes you look guilty.",
           "isCorrect": false,
           "explanation": "Using your right cannot be used against you. A prosecutor is not allowed to tell a jury that staying silent means you did it. Innocent people use this right all the time, because talking is how you accidentally say something wrong even when you did nothing.",
-          "misconceptionCode": "refusal_implies_guilt"
+          "misconceptionCode": "nothing_to_hide"
         }
       ],
       "hint": "Rights are like a light switch. Does this one turn on by itself, or do you have to flip it?",
@@ -172,7 +172,7 @@
           "text": "They can only say it if your friend actually said it.",
           "isCorrect": false,
           "explanation": "They do not need proof, because they do not need it to be true. It can work whether or not anyone actually talked.",
-          "misconceptionCode": "nothing_to_hide"
+          "misconceptionCode": "police_need_proof_to_say_it"
         },
         {
           "id": "juvenile.01.003.d",
@@ -449,7 +449,7 @@
           "text": "\"Just tell the truth, you didn't do anything wrong so it'll be fine.\"",
           "isCorrect": false,
           "explanation": "Being innocent does not make talking safe. People who did nothing wrong still say things that get used against them, because they are scared, guessing, or trying to be helpful.",
-          "misconceptionCode": "nothing_to_hide"
+          "misconceptionCode": "innocence_makes_talking_safe"
         },
         {
           "id": "juvenile.01.007.c",
@@ -658,7 +658,7 @@
           "text": "Yes. Your rights only cover questions about yourself.",
           "isCorrect": false,
           "explanation": "The right to stay silent covers every question, not just questions about you. It does not matter who the question is about.",
-          "misconceptionCode": "nothing_to_hide"
+          "misconceptionCode": "rights_cover_only_me"
         },
         {
           "id": "juvenile.01.010.c",
@@ -672,7 +672,7 @@
           "text": "No, but refusing makes you look like you are hiding something.",
           "isCorrect": false,
           "explanation": "Choosing not to answer cannot be used against you. Saying you are not sure is also better than guessing, because a wrong detail said confidently can cause real problems for someone else.",
-          "misconceptionCode": "refusal_implies_guilt"
+          "misconceptionCode": "nothing_to_hide"
         }
       ],
       "hint": "Your right covers the questions you get asked. Does it matter whose name is in the question?",
@@ -942,7 +942,7 @@
           "text": "Yes. Once one of you explains, staying quiet looks worse.",
           "isCorrect": false,
           "explanation": "Choosing not to answer cannot be used against you, whatever anyone standing next to you decides to do.",
-          "misconceptionCode": "refusal_implies_guilt"
+          "misconceptionCode": "nothing_to_hide"
         },
         {
           "id": "juvenile.01.014.c",
@@ -1375,7 +1375,7 @@
           "text": "\"Nine.\"",
           "isCorrect": false,
           "explanation": "Saying it flat makes a shaky memory sound sure. Other people may then treat it as fact.",
-          "misconceptionCode": "nothing_to_hide"
+          "misconceptionCode": "guessing_is_harmless"
         },
         {
           "id": "juvenile.01.020.d",
