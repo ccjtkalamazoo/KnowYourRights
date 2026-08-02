@@ -1,0 +1,81 @@
+{
+  "chapterId": "juvenile.01",
+  "districtId": "juvenile",
+  "name": "USING YOUR RIGHTS",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "questions": [
+    {
+      "id": "juvenile.01.001",
+      "version": 1,
+      "q": "What is the best way to use your right to remain silent?",
+      "options": [
+        {
+          "id": "juvenile.01.001.a",
+          "text": "Say the words out loud: \"I am using my right to remain silent.\" Then stay quiet.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.001.b",
+          "text": "Just stay quiet. Not answering is the same thing as using the right.",
+          "isCorrect": false,
+          "explanation": "This feels true but it is not. The Supreme Court says staying quiet by itself does not turn the right on. You have to say it. If you only stay quiet, police can keep asking questions for hours, and if you crack and answer even one, that answer counts.",
+          "misconceptionCode": "silence_is_automatic"
+        },
+        {
+          "id": "juvenile.01.001.c",
+          "text": "Answer the easy questions and skip the ones that could get you in trouble.",
+          "isCorrect": false,
+          "explanation": "There are no easy questions. Everything you say can be used, including the answers that feel harmless. Answering some questions also keeps the conversation going, and it can look like you chose to talk.",
+          "misconceptionCode": "partial_answers_are_safe"
+        },
+        {
+          "id": "juvenile.01.001.d",
+          "text": "Stay quiet, but only if you really did nothing wrong. Going silent when you were there makes you look guilty.",
+          "isCorrect": false,
+          "explanation": "Using your right cannot be used against you. A prosecutor is not allowed to tell a jury that staying silent means you did it. Innocent people use this right all the time, because talking is how you accidentally say something wrong even when you did nothing.",
+          "misconceptionCode": "refusal_implies_guilt"
+        }
+      ],
+      "hint": "Rights are like a light switch. Does this one turn on by itself, or do you have to flip it?",
+      "principle": "Here is the strange part of this right: staying silent is not enough to use your right to stay silent. You have to say it out loud. The Supreme Court decided this in a case called Berghuis v. Thompkins in 2010. A man named Van Chester Thompkins sat through almost three hours of questions and said almost nothing. Near the end, an officer asked if he prayed to God for forgiveness for the shooting. He said \"yes.\" That one word helped convict him, because he never said he was using his right. Once you clearly say you are staying silent, the questions about the case have to stop. The words turn the right on. Silence alone does not.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I am using my right to remain silent.",
+        "gloss": "Say it clearly, then stop talking. These words are what make the questions stop."
+      },
+      "scenario": {
+        "setup": "You are on the sidewalk outside the park. An officer walks up.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Were you at the park earlier? I just need to know who was there."
+          },
+          {
+            "label": "YOU",
+            "text": "I am using my right to remain silent."
+          },
+          {
+            "label": "OFFICER",
+            "text": "I am not accusing you. Just tell me who else was around."
+          },
+          {
+            "label": "YOU",
+            "text": "I am using my right to remain silent. I want a lawyer."
+          },
+          {
+            "label": "YES",
+            "text": "You said the words and repeated them. Questions about the case have to stop. Nothing you said can hurt you, because you never said anything about the case."
+          },
+          {
+            "label": "NO",
+            "text": "You stayed quiet but never said the words. He keeps asking for an hour. You finally say \"I was there but I didn't do anything.\" That sentence puts you at the park, and it counts."
+          }
+        ],
+        "note": "Saying it twice is not rude. Officers are trained to keep asking, and repeating it is how you show you meant it."
+      }
+    }
+  ]
+}
