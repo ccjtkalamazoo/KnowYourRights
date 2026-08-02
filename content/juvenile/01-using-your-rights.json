@@ -76,6 +76,294 @@
         ],
         "note": "Saying it twice is not rude. Officers are trained to keep asking, and repeating it is how you show you meant it."
       }
+    },
+    {
+      "id": "juvenile.01.002",
+      "version": 1,
+      "q": "Which of these actually turns on your right to a lawyer?",
+      "options": [
+        {
+          "id": "juvenile.01.002.a",
+          "text": "\"I want a lawyer.\"",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.002.b",
+          "text": "\"Maybe I should talk to a lawyer?\"",
+          "isCorrect": false,
+          "explanation": "A maybe is not a request. The Supreme Court decided that a hedge like this does not count, and police do not even have to stop and ask what you meant. They can keep questioning you.",
+          "misconceptionCode": "unclear_request_counts"
+        },
+        {
+          "id": "juvenile.01.002.c",
+          "text": "Nothing, because you cannot pay for a lawyer.",
+          "isCorrect": false,
+          "explanation": "You get a lawyer for free if your family cannot afford one. That is true in juvenile court too. Ask first and let the court sort out who pays.",
+          "misconceptionCode": "no_money_no_lawyer"
+        },
+        {
+          "id": "juvenile.01.002.d",
+          "text": "Ask for a lawyer, then keep answering questions while you wait.",
+          "isCorrect": false,
+          "explanation": "Asking for a lawyer only helps if you also stop talking. Once you ask, questioning has to stop, but if you keep talking anyway, those answers still count.",
+          "misconceptionCode": "partial_answers_are_safe"
+        }
+      ],
+      "hint": "One of these is a question, one is a guess, and one is a request. Which one leaves nothing to interpret?",
+      "principle": "Asking for a lawyer only works if you say it clearly. In 1994 the Supreme Court decided a case called Davis v. United States. A man being questioned said \"Maybe I should talk to a lawyer.\" The agents did not stop. They were not even required to ask him what he meant. He kept talking, and what he said was used against him. Later he said clearly that he wanted a lawyer, and only then did questioning stop. The rule is that a maybe, a question, or a hint does not count. Say it flat: \"I want a lawyer.\" Then stop talking and wait.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I want a lawyer.",
+        "gloss": "Four words, no maybe. Say it plain and then stop talking."
+      },
+      "scenario": {
+        "setup": "You are in a small room at the station. You are nervous and not sure what to say.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "So walk me through your night."
+          },
+          {
+            "label": "YOU",
+            "text": "Maybe I should talk to a lawyer?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "That's up to you. So anyway, where were you around nine?"
+          },
+          {
+            "label": "YOU",
+            "text": "I want a lawyer. I am not answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "The second time, there was nothing to guess about. Questions have to stop."
+          },
+          {
+            "label": "NO",
+            "text": "You only ever said maybe. That is not clear enough, so the officer keeps going, and everything you say next counts."
+          }
+        ],
+        "note": "Do not soften it. This is the one moment where being blunt protects you."
+      }
+    },
+    {
+      "id": "juvenile.01.003",
+      "version": 1,
+      "q": "An officer tells you your friend already confessed and blamed you. Is that allowed?",
+      "options": [
+        {
+          "id": "juvenile.01.003.a",
+          "text": "Yes. Police are allowed to lie about evidence to get you to talk.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.003.b",
+          "text": "No. Police have to tell the truth during questioning.",
+          "isCorrect": false,
+          "explanation": "Courts have allowed police to lie about evidence for a long time. They can say they have your fingerprints, a video, or a confession that does not exist. It is legal, and it works.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.01.003.c",
+          "text": "Only if they have proof your friend really said it.",
+          "isCorrect": false,
+          "explanation": "They do not need proof, because they do not need it to be true. The whole point of the tactic is that it works whether or not anyone actually talked.",
+          "misconceptionCode": "nothing_to_hide"
+        },
+        {
+          "id": "juvenile.01.003.d",
+          "text": "Yes, but if they lie, anything you say afterward gets thrown out.",
+          "isCorrect": false,
+          "explanation": "A statement you give after being lied to usually still counts. That is what makes this dangerous. The lie is legal and your answer is still evidence.",
+          "misconceptionCode": "being_right_helps_now"
+        }
+      ],
+      "hint": "Ask yourself who is protected by the rule, and whether \"that's not fair\" and \"that's not allowed\" are the same thing.",
+      "principle": "Police are allowed to lie to you while questioning you. They can say a friend confessed, that they have video, or that your fingerprints are on something, even when none of it is true. Courts have allowed this for a long time. Saying \"your friend already told us\" is one of the most common tactics there is, because it makes people think talking is pointless. Here is what matters: none of it changes what you should do. If you have said you are staying silent and you want a lawyer, that is still the answer. A lie cannot be used against you. Your response to it can.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I am still not answering questions.",
+        "gloss": "Whatever they say they have, your answer does not change."
+      },
+      "scenario": {
+        "setup": "You already said you were staying silent. The officer comes back into the room holding a folder.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Your buddy already told us the whole thing. He says it was your idea."
+          },
+          {
+            "label": "YOU",
+            "text": "I am still not answering questions."
+          },
+          {
+            "label": "OFFICER",
+            "text": "He's helping himself right now. This is your last chance to tell your side."
+          },
+          {
+            "label": "YOU",
+            "text": "I am still not answering questions. I want a lawyer."
+          },
+          {
+            "label": "YES",
+            "text": "You never find out whether the friend said anything, and it does not matter. Nothing new came from you."
+          },
+          {
+            "label": "NO",
+            "text": "You say \"it wasn't my idea, he's the one who wanted to.\" You have just put yourself there and confirmed it happened."
+          }
+        ],
+        "note": "There is usually no deadline like that. Your side is something your lawyer helps you tell later, when you have had time to think."
+      }
+    },
+    {
+      "id": "juvenile.01.004",
+      "version": 1,
+      "q": "You have been answering an officer's questions for ten minutes. Can you stop now?",
+      "options": [
+        {
+          "id": "juvenile.01.004.a",
+          "text": "Yes. You can stop at any point, even in the middle of a conversation.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.004.b",
+          "text": "No. Once you start answering, you have to finish the conversation.",
+          "isCorrect": false,
+          "explanation": "There is no rule that makes you finish. You can stop at any moment. The answers you already gave still count, but everything after you stop is protected.",
+          "misconceptionCode": "silence_is_automatic"
+        },
+        {
+          "id": "juvenile.01.004.c",
+          "text": "Only if you have not said anything important yet.",
+          "isCorrect": false,
+          "explanation": "It does not matter what you already said. Stopping is always available, and it is more useful the deeper in you are, not less.",
+          "misconceptionCode": "partial_answers_are_safe"
+        },
+        {
+          "id": "juvenile.01.004.d",
+          "text": "Yes, but the officer has to agree to stop first.",
+          "isCorrect": false,
+          "explanation": "You do not need permission. Once you clearly say you are done and want a lawyer, questioning has to stop.",
+          "misconceptionCode": "unclear_request_counts"
+        }
+      ],
+      "hint": "Think about whether this is a door that locks behind you, or one you can walk back through.",
+      "principle": "You can stop talking at any time, even if you have already been answering for a while. There is no point where you have talked so much that stopping stops mattering. This matters because of how questioning usually goes. Almost nobody refuses from the very first second. People answer a few easy questions, then a few more, and by the time it turns serious they feel locked in. You are not locked in. Say that you are done answering and that you want a lawyer, and the questions have to stop. What you already said still counts, but you can stop it from getting worse.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I am done answering questions. I want a lawyer.",
+        "gloss": "You can say this at minute one or minute forty. It works the same."
+      },
+      "scenario": {
+        "setup": "You have been talking for ten minutes. It started friendly. The questions just got sharper.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "So you were at the store around six. Who was with you?"
+          },
+          {
+            "label": "YOU",
+            "text": "I am done answering questions. I want a lawyer."
+          },
+          {
+            "label": "OFFICER",
+            "text": "You've been talking this whole time. Why stop now?"
+          },
+          {
+            "label": "YOU",
+            "text": "I am done answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "The last ten minutes still count, but the next hour never happens. That is the part that usually does the damage."
+          },
+          {
+            "label": "NO",
+            "text": "You answer the harder questions too. Those are the ones most likely to be used as evidence, and they are the ones you could have skipped."
+          }
+        ],
+        "note": "Feeling rude is not a legal problem. You are allowed to stop a conversation you agreed to start."
+      }
+    },
+    {
+      "id": "juvenile.01.005",
+      "version": 1,
+      "q": "You are being questioned and you ask for your mom. Does that stop the questioning?",
+      "options": [
+        {
+          "id": "juvenile.01.005.a",
+          "text": "No. Asking for a parent is not the same as asking for a lawyer.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.005.b",
+          "text": "Yes. Asking for a parent works the same as asking for a lawyer.",
+          "isCorrect": false,
+          "explanation": "They are different requests. Asking for a lawyer is what makes questioning stop. Asking for a parent might get your parent called, but on its own it does not turn your rights on.",
+          "misconceptionCode": "unclear_request_counts"
+        },
+        {
+          "id": "juvenile.01.005.c",
+          "text": "Yes, because police cannot question anyone under 18 without a parent there.",
+          "isCorrect": false,
+          "explanation": "There is no rule that a parent has to be in the room. A parent may be notified, but questioning can happen without one present.",
+          "misconceptionCode": "silence_is_automatic"
+        },
+        {
+          "id": "juvenile.01.005.d",
+          "text": "No, and once a parent arrives they can decide whether you talk.",
+          "isCorrect": false,
+          "explanation": "The rights are yours, not your parent's. A parent cannot give up your right to stay silent for you, and they cannot make you talk.",
+          "misconceptionCode": "my_side_helps"
+        }
+      ],
+      "hint": "Two different people, two different jobs. Which one is trained to protect you legally?",
+      "principle": "Asking for a parent and asking for a lawyer are not the same request, and only one of them makes questioning stop. This is one of the most common mistakes young people make, because asking for a parent is the natural thing to do. Your parent may be called, and having them there can help. But a parent is not a lawyer, cannot give legal advice, and cannot turn your rights on for you. It also works the other way: your parent cannot give up your rights for you either. Those rights are yours. If you want the questions to stop, the words that do it are \"I want a lawyer.\" You can ask for both.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I want my mom, and I want a lawyer.",
+        "gloss": "Ask for both. Only one of them stops the questions."
+      },
+      "scenario": {
+        "setup": "You are sixteen, in a room at the station, and you want your mom.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "Can you call my mom?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "We'll get to that. First, tell me about the car."
+          },
+          {
+            "label": "YOU",
+            "text": "I want my mom, and I want a lawyer. I am not answering questions."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Okay."
+          },
+          {
+            "label": "YES",
+            "text": "The lawyer request is what stops the questions. The parent request still gets your mom involved."
+          },
+          {
+            "label": "NO",
+            "text": "Questioning can continue while you wait, and answers you give in that time count."
+          }
+        ],
+        "note": "Even after a parent arrives, the rights are still yours. If your parent tells you to just explain, you can still say you want a lawyer."
+      }
     }
   ]
 }
