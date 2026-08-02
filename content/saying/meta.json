@@ -1,0 +1,44 @@
+{
+  "districtId": "saying",
+  "name": "WHAT YOU SAY",
+  "blurb": "Silence, counsel, and why the words have to be out loud.",
+  "live": false,
+  "chapters": [
+    {
+      "id": "saying.01",
+      "name": "INVOKING SILENCE",
+      "file": "01-invoking-silence.json",
+      "live": false
+    },
+    {
+      "id": "saying.02",
+      "name": "ASKING FOR A LAWYER",
+      "file": "02-asking-for-a-lawyer.json",
+      "live": false
+    },
+    {
+      "id": "saying.03",
+      "name": "WHEN MIRANDA APPLIES",
+      "file": "03-when-miranda-applies.json",
+      "live": false
+    },
+    {
+      "id": "saying.04",
+      "name": "CUSTODY VS CONVERSATION",
+      "file": "04-custody-vs-conversation.json",
+      "live": false
+    },
+    {
+      "id": "saying.05",
+      "name": "WHO IS ASKING",
+      "file": "05-who-is-asking.json",
+      "live": false
+    },
+    {
+      "id": "saying.06",
+      "name": "WHY TALKING RARELY HELPS",
+      "file": "06-why-talking-rarely-helps.json",
+      "live": false
+    }
+  ]
+}
