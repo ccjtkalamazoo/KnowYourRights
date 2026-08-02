@@ -1274,9 +1274,29 @@ function FaceVerdict({ question, revealCorrect, selectedIdx, rightLetter }) {
 
 function FaceInfo({ question }) {
   return c.jsx("div", { className: "ts-face-fill", style: { display: "flex", alignItems: "center", minHeight: "100%" }, children:
-    c.jsx("div", { style: { background: u.mustardSoft, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "18px 20px", boxShadow: U.sm }, children:
-      c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(15px, 2.2vw, 18px)", lineHeight: 1.6, color: u.text, margin: 0, fontWeight: 500 }, children: question.principle || "" })
-    })
+    c.jsxs("div", { style: { width: "100%" }, children: [
+      c.jsx("div", { style: { background: u.mustardSoft, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "18px 20px", boxShadow: U.sm }, children:
+        c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(15px, 2.2vw, 18px)", lineHeight: 1.6, color: u.text, margin: 0, fontWeight: 500 }, children: question.principle || "" })
+      }),
+      // Safety note sits UNDER the law and is styled in terra, not mustard, so a
+      // reader can see at a glance that it is not more law. Knowing a right and
+      // safely using it are different things, and the second one outranks the
+      // first in the moment.
+      question.safetyNote && c.jsxs("div", {
+        style: {
+          display: "flex", gap: 10, alignItems: "flex-start", marginTop: 12,
+          background: u.terraSoft, border: `2px solid ${u.terra}`,
+          borderRadius: 8, padding: "12px 14px"
+        },
+        children: [
+          c.jsx("span", { "aria-hidden": true, style: { fontSize: 16, lineHeight: 1.3, flexShrink: 0 }, children: "\u26A0" }),
+          c.jsxs("div", { children: [
+            c.jsx("div", { style: { fontFamily: C.mono, fontSize: 9.5, letterSpacing: 1.4, color: u.terra, fontWeight: 700, marginBottom: 3 }, children: "GETTING HOME SAFE COMES FIRST" }),
+            c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(13px, 1.9vw, 15px)", lineHeight: 1.5, color: u.text, margin: 0, fontWeight: 500 }, children: question.safetyNote })
+          ] })
+        ]
+      })
+    ] })
   });
 }
 
@@ -1295,11 +1315,24 @@ function FaceRealLife({ question }) {
   const outcomes = lines.filter((l) => /YES|NO/i.test(l.label));
   const exchange = lines.filter((l) => !/YES|NO/i.test(l.label));
   const isYou = (label) => /^YOU/i.test(label);
+  // Speakers are not always you and an officer. Teen scenarios involve friends,
+  // parents, and school staff, and every one of them was rendering with a police
+  // icon because the old rule was "you, or else officer".
+  const speakerFor = (label) => {
+    const L = String(label).toUpperCase();
+    if (/^YOU/.test(L)) return { icon: "\uD83E\uDDD1", bg: u.brandBright };
+    if (/OFFICER|POLICE|DEPUTY|TROOPER|SRO/.test(L)) return { icon: "\uD83D\uDC6E", bg: u.blue };
+    if (/MOM|DAD|PARENT|GUARDIAN|AUNT|UNCLE|GRANDMA|GRANDPA/.test(L)) return { icon: "\uD83D\uDC64", bg: u.mustard };
+    if (/FRIEND|COUSIN|BROTHER|SISTER|SIBLING/.test(L)) return { icon: "\uD83D\uDCAC", bg: u.mustard };
+    if (/TEACHER|PRINCIPAL|COACH|STAFF|DEAN|COUNSELOR/.test(L)) return { icon: "\uD83C\uDFEB", bg: u.surfaceWarm };
+    if (/LAWYER|ATTORNEY|JUDGE/.test(L)) return { icon: "\u2696", bg: u.surfaceWarm };
+    return { icon: "\uD83D\uDCAC", bg: u.surfaceWarm };
+  };
   return c.jsxs("div", { children: [
     sc.setup && c.jsx("div", { style: { fontFamily: C.body, fontStyle: "italic", fontWeight: 700, fontSize: 15, color: u.text, marginBottom: 14, lineHeight: 1.45, borderLeft: `4px solid ${u.brand}`, paddingLeft: 12 }, children: sc.setup }),
     c.jsx("div", { className: "ts-scenario-panels", style: { display: "grid", gridTemplateColumns: exchange.length > 1 ? "1fr 1fr" : "1fr", gap: 12, marginBottom: outcomes.length ? 14 : 0 }, children: exchange.map((l, i) => c.jsxs("div", { style: { background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, padding: "12px 14px", boxShadow: U.sm, animation: `ts-bubble-in 0.4s ease-out ${i * 0.08}s both` }, children: [
       c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
-        c.jsx("div", { style: { width: 30, height: 30, borderRadius: "50%", background: isYou(l.label) ? u.brandBright : u.blue, border: `2px solid ${u.outline}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, flexShrink: 0 }, children: isYou(l.label) ? "\uD83E\uDDD1" : "\uD83D\uDC6E" }),
+        c.jsx("div", { style: { width: 30, height: 30, borderRadius: "50%", background: speakerFor(l.label).bg, border: `2px solid ${u.outline}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, flexShrink: 0 }, children: speakerFor(l.label).icon }),
         c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: l.label })
       ] }),
       c.jsx("div", { style: { fontFamily: C.body, fontSize: 14.5, lineHeight: 1.4, color: u.text, fontWeight: 600, background: isYou(l.label) ? u.brandSoft : u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "8px 12px" }, children: l.text })
