@@ -720,6 +720,366 @@
         ],
         "note": "You are allowed to not know, and you are allowed to not say. Neither one is lying."
       }
+    },
+    {
+      "id": "juvenile.01.011",
+      "version": 1,
+      "q": "An officer tells you \"you're a minor, so you have to answer my questions.\" Is that correct?",
+      "options": [
+        {
+          "id": "juvenile.01.011.a",
+          "text": "No. The right to stay silent applies at any age.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.011.b",
+          "text": "Yes. Minors have to answer until a parent gets there.",
+          "isCorrect": false,
+          "explanation": "There is no rule that makes minors answer. The right to stay silent does not wait for a parent to arrive.",
+          "misconceptionCode": "silence_is_automatic"
+        },
+        {
+          "id": "juvenile.01.011.c",
+          "text": "Yes, but only for basic questions like where you live.",
+          "isCorrect": false,
+          "explanation": "Being a minor does not create a category of questions you are required to answer.",
+          "misconceptionCode": "must_always_give_name"
+        },
+        {
+          "id": "juvenile.01.011.d",
+          "text": "No, but it becomes true once you are actually arrested.",
+          "isCorrect": false,
+          "explanation": "It works the other way. Once you are in custody, the right to stay silent matters more, not less.",
+          "misconceptionCode": "miranda_at_arrest"
+        }
+      ],
+      "hint": "Is this a right you get at a certain birthday, or one you already have?",
+      "principle": "These rights are not something you get when you turn eighteen. A fourteen-year-old has the same right to stay silent and the same right to a lawyer as an adult. Age changes some things in the legal system, but not whether these two rights exist. Courts have also recognized that age matters in a second way: how old you are can affect whether a judge later decides you were being held, because a young person may feel far less free to walk away than an adult would. That works in your favor. It does not make the rights wait until you are older.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I am using my right to remain silent.",
+        "gloss": "The same words work at fourteen as at forty."
+      },
+      "scenario": {
+        "setup": "You are at the bus stop after practice. An officer walks up.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "You're a minor, so you need to answer me."
+          },
+          {
+            "label": "YOU",
+            "text": "I am using my right to remain silent."
+          },
+          {
+            "label": "OFFICER",
+            "text": "I can call your parents."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I am still not answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "The rights work. Your age did not cancel them."
+          },
+          {
+            "label": "NO",
+            "text": "You answer everything thinking you had no choice, when you did."
+          }
+        ],
+        "note": "Calling your parents is fine and often a good thing. It does not change your answer."
+      }
+    },
+    {
+      "id": "juvenile.01.012",
+      "version": 1,
+      "q": "Your family cannot afford a lawyer. What does that mean for you?",
+      "options": [
+        {
+          "id": "juvenile.01.012.a",
+          "text": "Nothing. You get a lawyer for free if your family cannot pay.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.012.b",
+          "text": "You have to answer questions until your family can hire someone.",
+          "isCorrect": false,
+          "explanation": "You never have to answer questions while waiting for anything. Asking for a lawyer works right now, whatever your family's situation.",
+          "misconceptionCode": "no_money_no_lawyer"
+        },
+        {
+          "id": "juvenile.01.012.c",
+          "text": "You get a lawyer only if you are charged with something serious.",
+          "isCorrect": false,
+          "explanation": "The right to a lawyer in juvenile cases does not depend on how serious the charge is.",
+          "misconceptionCode": "police_can_hold_anyone"
+        },
+        {
+          "id": "juvenile.01.012.d",
+          "text": "You can ask for one, but you will get a bill later.",
+          "isCorrect": false,
+          "explanation": "Worrying about a bill is not a reason to skip asking. Cost is something the court sorts out, not something you decide in the moment.",
+          "misconceptionCode": "unclear_request_counts"
+        }
+      ],
+      "hint": "Which of these turns a right into something you have to buy?",
+      "principle": "You do not need money to get a lawyer. If your family cannot afford one, the court appoints one for you, and that applies in juvenile cases too. The Supreme Court decided in a case called In re Gault in 1967 that young people in delinquency cases have the right to a lawyer, along with notice of the charges and the ability to question witnesses. Before that decision, juvenile courts often ran without any of it. Money is not the gate. Ask for a lawyer first and let the court work out who pays.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I want a lawyer.",
+        "gloss": "You do not need money to say this, and it does not cost you anything to ask."
+      },
+      "scenario": {
+        "setup": "Kitchen table at home. Your mom is worried about what a lawyer costs.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "We can't afford a lawyer right now."
+          },
+          {
+            "label": "YOU",
+            "text": "I think the court gives you one if you can't pay."
+          },
+          {
+            "label": "MOM",
+            "text": "Are you sure?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'm going to ask for one either way."
+          },
+          {
+            "label": "YES",
+            "text": "The court sorts out who pays. That is not your job to figure out first."
+          },
+          {
+            "label": "NO",
+            "text": "Questions may keep coming in the meantime, and answers given while waiting still count."
+          }
+        ],
+        "note": "Ask for a lawyer before anyone figures out the money. Those are separate problems."
+      }
+    },
+    {
+      "id": "juvenile.01.013",
+      "version": 1,
+      "q": "You already answered some questions before you decided to stop. Can you take those answers back?",
+      "options": [
+        {
+          "id": "juvenile.01.013.a",
+          "text": "No. What you already said stays, but you can stop it from growing.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.013.b",
+          "text": "Yes, if you tell the officer you take it back.",
+          "isCorrect": false,
+          "explanation": "There is no undo. Saying you take it back does not remove it from the case.",
+          "misconceptionCode": "being_right_helps_now"
+        },
+        {
+          "id": "juvenile.01.013.c",
+          "text": "Yes, as long as you were not read your rights first.",
+          "isCorrect": false,
+          "explanation": "That may affect whether a court allows a statement, but a lawyer argues that later. It is not something you can undo in the moment.",
+          "misconceptionCode": "miranda_at_arrest"
+        },
+        {
+          "id": "juvenile.01.013.d",
+          "text": "No, and that means there is no point staying silent now.",
+          "isCorrect": false,
+          "explanation": "Stopping still matters a lot. Most of what gets used tends to come later in a conversation, not in the first minute.",
+          "misconceptionCode": "partial_answers_are_safe"
+        }
+      ],
+      "hint": "You cannot rewind. But you can decide what the next hour sounds like.",
+      "principle": "Once you say something to police, you cannot unsay it. \"Used against you\" means it can be written into a report, described in court, and read back to a jury. There is no rule that lets you take it back. That sounds discouraging, but there is a useful side to it. Statements usually get worse over time, not better, because the specific details come out after the easy questions. Stopping partway through protects everything that has not been said yet. A lawyer can argue about whether an earlier statement should be allowed. Nobody can argue away the things you say next.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I am done answering questions.",
+        "gloss": "You cannot rewind, but you can stop."
+      },
+      "scenario": {
+        "setup": "A friend's house. You are telling them what happened yesterday.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "wait so you already told them stuff?"
+          },
+          {
+            "label": "YOU",
+            "text": "yeah, at the start. then I said I was done."
+          },
+          {
+            "label": "FRIEND",
+            "text": "does the first part still count?"
+          },
+          {
+            "label": "YOU",
+            "text": "yeah. but I stopped before the rest."
+          },
+          {
+            "label": "YES",
+            "text": "The earlier answers count, but the longer conversation never happened."
+          },
+          {
+            "label": "NO",
+            "text": "The later answers usually carry more detail, and those are the ones most likely to be used."
+          }
+        ],
+        "note": "Already having talked is a reason to stop now, not a reason to keep going."
+      }
+    },
+    {
+      "id": "juvenile.01.014",
+      "version": 1,
+      "q": "You and two friends are stopped in a parking lot. One friend starts explaining everything. Does that change your rights?",
+      "options": [
+        {
+          "id": "juvenile.01.014.a",
+          "text": "No. Your rights are yours, and what someone else says does not use them up.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.014.b",
+          "text": "Yes. Once one of you explains, staying quiet looks worse.",
+          "isCorrect": false,
+          "explanation": "Choosing not to answer cannot be used against you, whatever anyone standing next to you decides to do.",
+          "misconceptionCode": "refusal_implies_guilt"
+        },
+        {
+          "id": "juvenile.01.014.c",
+          "text": "Yes. If your friend already told the story, there is no point staying quiet.",
+          "isCorrect": false,
+          "explanation": "Their version is their statement. Adding yours gives a second account that can differ in small ways and create new problems.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.01.014.d",
+          "text": "No, but you should correct anything your friend gets wrong.",
+          "isCorrect": false,
+          "explanation": "Correcting the story is still talking about the case. You can decline entirely, even if you think something was said wrong.",
+          "misconceptionCode": "partial_answers_are_safe"
+        }
+      ],
+      "hint": "Whose rights are they? Can somebody else spend them for you?",
+      "principle": "Your rights belong to you alone. If a friend decides to explain everything, that is their choice and their statement. It does not cancel your right to stay silent, and it does not make your silence look like an admission. This comes up constantly in groups, because once one person starts talking it feels strange to be the only one who does not. Two separate accounts of the same night rarely match perfectly, and the small differences can matter more than anything either person meant to say. You can stay quiet and still be a good friend.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I am not answering questions.",
+        "gloss": "What your friend chooses does not change what you choose."
+      },
+      "scenario": {
+        "setup": "A parking lot behind the store. Three of you, one officer.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "We were just walking through, we didn't take anything, we were only here like ten minutes."
+          },
+          {
+            "label": "OFFICER",
+            "text": "And you? Same story?"
+          },
+          {
+            "label": "YOU",
+            "text": "I am not answering questions."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Your friend already explained it."
+          },
+          {
+            "label": "YOU",
+            "text": "I understand. I am still not answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "There is one account, not two, and none of it came from you."
+          },
+          {
+            "label": "NO",
+            "text": "You have now made a statement too, and any detail you add or change becomes its own thing."
+          }
+        ],
+        "note": "Staying quiet is not turning on your friend. It is not adding a second version."
+      }
+    },
+    {
+      "id": "juvenile.01.015",
+      "version": 1,
+      "q": "You say you want a lawyer. What actually happens next?",
+      "options": [
+        {
+          "id": "juvenile.01.015.a",
+          "text": "Questions about the case stop, but you may still be held while things get sorted out.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.015.b",
+          "text": "You get released and go home.",
+          "isCorrect": false,
+          "explanation": "Asking for a lawyer stops the questioning. It does not decide whether you are held or let go, which is a separate decision.",
+          "misconceptionCode": "talking_earns_leniency"
+        },
+        {
+          "id": "juvenile.01.015.c",
+          "text": "A lawyer shows up in the room within a few minutes.",
+          "isCorrect": false,
+          "explanation": "It usually takes longer than that. The important part is that questioning has to stop in the meantime.",
+          "misconceptionCode": "no_money_no_lawyer"
+        },
+        {
+          "id": "juvenile.01.015.d",
+          "text": "Nothing happens unless you have already been charged.",
+          "isCorrect": false,
+          "explanation": "You do not have to wait for charges. Asking works during questioning, which is usually before any charge exists.",
+          "misconceptionCode": "police_can_hold_anyone"
+        }
+      ],
+      "hint": "One thing stops right away. A lot of other things keep moving.",
+      "principle": "Here is the honest version, because not knowing is a big reason people never ask. When you clearly say you want a lawyer, questions about the case have to stop. That is the part that happens right away. What does not happen is everything else. You are not automatically released, a lawyer does not appear in seconds, and the case does not end. You might still be held while decisions get made by other people. That can feel like asking did not work. It did work. The point of asking is not to end the day faster. It is to make sure nothing else gets added to the case while you wait.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I want a lawyer.",
+        "gloss": "The questions stop. Everything else takes the time it takes."
+      },
+      "scenario": {
+        "setup": "A small office at school. An officer and an administrator are both there.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I want a lawyer. I am not answering questions."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Alright. We'll stop there."
+          },
+          {
+            "label": "YOU",
+            "text": "Nothing else is happening. Did that even work?"
+          },
+          {
+            "label": "YES",
+            "text": "It worked. Questioning stopped. The waiting is normal and it is not a sign you did the wrong thing."
+          },
+          {
+            "label": "NO",
+            "text": "You might give up and start talking again because it felt like nothing changed, which undoes the protection you just got."
+          }
+        ],
+        "note": "Asking for a lawyer protects the case, not the schedule."
+      }
     }
   ]
 }
