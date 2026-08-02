@@ -98,14 +98,14 @@
         },
         {
           "id": "juvenile.01.002.c",
-          "text": "Nothing, because you cannot pay for a lawyer.",
+          "text": "\"I'd want a lawyer, but we can't pay for one.\"",
           "isCorrect": false,
           "explanation": "You get a lawyer for free if your family cannot afford one. That is true in juvenile court too. Ask first and let the court sort out who pays.",
           "misconceptionCode": "no_money_no_lawyer"
         },
         {
           "id": "juvenile.01.002.d",
-          "text": "Ask for a lawyer, then keep answering questions while you wait.",
+          "text": "\"I want a lawyer, but I'll keep answering until they get here.\"",
           "isCorrect": false,
           "explanation": "Asking for a lawyer only helps if you also stop talking. Once you ask, questioning has to stop, but if you keep talking anyway, those answers still count.",
           "misconceptionCode": "partial_answers_are_safe"
@@ -115,8 +115,8 @@
       "principle": "Asking for a lawyer only works if you say it clearly. In 1994 the Supreme Court decided a case called Davis v. United States. A man being questioned said \"Maybe I should talk to a lawyer.\" The agents did not stop. They were not even required to ask him what he meant. He kept talking, and what he said was used against him. Later he said clearly that he wanted a lawyer, and only then did questioning stop. The rule is that a maybe, a question, or a hint does not count. Say it flat: \"I want a lawyer.\" Then stop talking and wait.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
-        "quote": "I want a lawyer.",
-        "gloss": "Four words, no maybe. Say it plain and then stop talking."
+        "quote": "I want a lawyer. Not maybe. Not I think.",
+        "gloss": "Say it flat. A hedge does not count."
       },
       "scenario": {
         "setup": "You are in a small room at the station. You are nervous and not sure what to say.",
@@ -152,43 +152,43 @@
     {
       "id": "juvenile.01.003",
       "version": 1,
-      "q": "An officer tells you your friend already confessed and blamed you. Is that allowed?",
+      "q": "An officer tells you your friend already confessed and blamed you. What is true about that?",
       "options": [
         {
           "id": "juvenile.01.003.a",
-          "text": "Yes. Police are allowed to lie about evidence to get you to talk.",
+          "text": "Police are allowed to lie about evidence during questioning.",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
         },
         {
           "id": "juvenile.01.003.b",
-          "text": "No. Police have to tell the truth during questioning.",
+          "text": "Police have to be truthful when they question someone.",
           "isCorrect": false,
           "explanation": "Courts have allowed police to lie about evidence for a long time. They can say they have your fingerprints, a video, or a confession that does not exist. It is legal, and it works.",
           "misconceptionCode": "my_side_helps"
         },
         {
           "id": "juvenile.01.003.c",
-          "text": "Only if they have proof your friend really said it.",
+          "text": "They can only say it if your friend actually said it.",
           "isCorrect": false,
-          "explanation": "They do not need proof, because they do not need it to be true. The whole point of the tactic is that it works whether or not anyone actually talked.",
+          "explanation": "They do not need proof, because they do not need it to be true. It can work whether or not anyone actually talked.",
           "misconceptionCode": "nothing_to_hide"
         },
         {
           "id": "juvenile.01.003.d",
-          "text": "Yes, but if they lie, anything you say afterward gets thrown out.",
+          "text": "They can say it, but anything you say afterward gets thrown out.",
           "isCorrect": false,
           "explanation": "A statement you give after being lied to usually still counts. That is what makes this dangerous. The lie is legal and your answer is still evidence.",
           "misconceptionCode": "being_right_helps_now"
         }
       ],
-      "hint": "Ask yourself who is protected by the rule, and whether \"that's not fair\" and \"that's not allowed\" are the same thing.",
+      "hint": "Is something being unfair the same as it being against the rules?",
       "principle": "Police are allowed to lie to you while questioning you. They can say a friend confessed, that they have video, or that your fingerprints are on something, even when none of it is true. Courts have allowed this for a long time. Being told that someone else already talked is common during questioning, and it is convincing because it makes talking feel pointless. Here is what matters: none of it changes what you should do. If you have said you are staying silent and you want a lawyer, that is still the answer. A lie cannot be used against you. Your response to it can.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
-        "quote": "I am still not answering questions.",
-        "gloss": "Whatever they say they have, your answer does not change."
+        "quote": "Whatever they say they have, my answer is the same.",
+        "gloss": "A lie cannot hurt you. What you say back can."
       },
       "scenario": {
         "setup": "You already said you were staying silent. The officer comes back into the room holding a folder.",
@@ -368,43 +368,43 @@
     {
       "id": "juvenile.01.006",
       "version": 1,
-      "q": "An officer says \"this is off the record, just between us.\" Does that make it safe to talk?",
+      "q": "An officer says \"this is off the record, just between us.\" What does that actually mean for you?",
       "options": [
         {
           "id": "juvenile.01.006.a",
-          "text": "No. There is no such thing as off the record with police.",
+          "text": "It means nothing. There is no such thing as off the record with police.",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
         },
         {
           "id": "juvenile.01.006.b",
-          "text": "Yes. If they say it is off the record, it cannot be used in court.",
+          "text": "It means what you say cannot be used in court.",
           "isCorrect": false,
           "explanation": "There is no off the record rule. An officer saying it does not make it true, and what you say can still be written down, repeated, and used.",
           "misconceptionCode": "talking_at_open_door_is_safe"
         },
         {
           "id": "juvenile.01.006.c",
-          "text": "Yes, as long as nothing is being recorded and nothing is written down.",
+          "text": "It means you are safe as long as nothing is recorded or written down.",
           "isCorrect": false,
           "explanation": "An officer can testify about what you said from memory or from notes made later. A conversation does not have to be recorded to count as evidence.",
           "misconceptionCode": "private_recording_is_always_ok"
         },
         {
           "id": "juvenile.01.006.d",
-          "text": "No, but it is only a problem if you sign something afterward.",
+          "text": "It means it only counts if you sign something afterward.",
           "isCorrect": false,
           "explanation": "Nothing needs to be signed. A statement counts whether you signed it, wrote it, or only said it out loud.",
           "misconceptionCode": "unclear_request_counts"
         }
       ],
-      "hint": "Ask yourself who decides what counts as evidence: the person you are talking to, or a court.",
-      "principle": "Off the record is not a legal thing when you are talking to police. There is no rule that makes a conversation disappear because someone called it casual, unofficial, or just between us. An officer can write down what you said afterward, or testify from memory about it in court. It also does not matter whether you signed anything. Research found that about half of people questioned believed off-the-record comments could not be used against them, and about a quarter thought a statement had to be signed to count. Neither is true. If you are talking to police, you are on the record.",
+      "hint": "Who decides what counts as evidence, the person talking to you or a court?",
+      "principle": "Off the record is not a real thing when you talk to police. No rule makes a talk disappear because someone called it casual. An officer can write down what you said later. They can also tell a court about it from memory. It does not matter if you signed anything. Studies found that about half of people thought off the record talk could not be used. About a quarter thought a statement had to be signed to count. Both are wrong. If you are talking to police, you are on the record.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "There is no off the record.",
-        "gloss": "Every version of the conversation counts, whether it is written down or not."
+        "gloss": "Written down or not, it all counts."
       },
       "scenario": {
         "setup": "The recorder is off and the conversation feels casual.",
@@ -472,7 +472,7 @@
         }
       ],
       "hint": "Your friend is being offered a trade. Who actually has the power to deliver the thing being offered?",
-      "principle": "\"Tell us and you can go home\" is one of the most powerful things a person can hear during questioning, and it is also the least reliable. The officer questioning you does not decide whether charges are filed. That decision belongs to a prosecutor, and later a judge. Talking rarely speeds anything up, and it often adds evidence to the case against you. Research shows that more than nine out of ten young people give up their rights during questioning, and a big reason is exactly this: they think talking is the fastest way out. Asking for a lawyer does not promise you go home, but it puts someone whose job is protecting your rights in the room before you say something you cannot take back.",
+      "principle": "Tell us and you can go home is a hard thing to hear. It is also one of the least reliable. The officer asking you does not decide if you get charged. Other people make that call later. Talking almost never speeds things up. It often adds to the case against you. More than nine out of ten young people give up their rights when asked. A big reason is that they think talking is the fast way out. Asking for a lawyer does not promise you go home. It does put someone on your side in the room first.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "Ask for a lawyer, then stop talking.",
@@ -619,8 +619,8 @@
       "principle": "A lot of people believe that if police do not read your rights, the case disappears. That is not how it works. The warning is tied to questioning someone who is in custody, not to the moment of arrest. Officers can arrest you without saying a word, and the arrest is still valid. If they later question you in custody without the warning, your answers may not be usable, but other evidence usually still is. It also does not protect things you say on your own without being asked. Waiting for the warning is not a plan. Saying you want a lawyer works whether or not anyone read you anything.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
-        "quote": "I want a lawyer.",
-        "gloss": "This works whether or not anyone read you your rights."
+        "quote": "No warning does not mean no case.",
+        "gloss": "Say you want a lawyer either way. That part always works."
       },
       "scenario": {
         "setup": "You are in the back of a patrol car. Nobody has read you anything.",
@@ -666,7 +666,7 @@
           "text": "Yes. Your rights only cover questions about yourself.",
           "isCorrect": false,
           "explanation": "The right to stay silent covers every question, not just questions about you. It does not matter who the question is about.",
-          "misconceptionCode": "partial_answers_are_safe"
+          "misconceptionCode": "nothing_to_hide"
         },
         {
           "id": "juvenile.01.010.c",
@@ -684,7 +684,7 @@
         }
       ],
       "hint": "Your right covers the questions you get asked. Does it matter whose name is in the question?",
-      "principle": "Your right to stay silent covers every question, not only questions about you. If an officer asks about a friend, a sibling, or something you saw, you can decline to answer. This is harder than it sounds, because answering feels harmless when you are not the one in trouble. Two things make it worth thinking about anyway. People often remember things wrong, and a wrong detail said confidently can cause real problems for someone else. And a conversation that starts out about another person can turn toward you. You are allowed to say you do not want to answer, about anyone.",
+      "principle": "Your right to stay quiet covers every question. It is not just about questions about you. If an officer asks about a friend, or about something you saw, you can say no. That is harder than it sounds. Answering feels safe when you are not the one in trouble. But people remember things wrong all the time. A wrong detail can cause real problems for someone else. And a talk that starts about someone else can turn toward you. You can say you do not want to answer, about anyone.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
         "quote": "I don't want to answer questions about anyone.",
@@ -759,8 +759,8 @@
       "principle": "These rights are not something you get when you turn eighteen. A fourteen-year-old has the same right to stay silent and the same right to a lawyer as an adult. Age changes some things in the legal system, but not whether these two rights exist. Courts have also recognized that age matters in a second way: how old you are can affect whether a judge later decides you were being held, because a young person may feel far less free to walk away than an adult would. That works in your favor. It does not make the rights wait until you are older.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
-        "quote": "I am using my right to remain silent.",
-        "gloss": "The same words work at fourteen as at forty."
+        "quote": "I'm using my right to remain silent, same as anyone.",
+        "gloss": "Age does not turn these on or off."
       },
       "scenario": {
         "setup": "You are at the bus stop after practice. An officer walks up.",
@@ -800,7 +800,7 @@
       "options": [
         {
           "id": "juvenile.01.012.a",
-          "text": "Nothing. You get a lawyer for free if your family cannot pay.",
+          "text": "You still get a lawyer, for free, if your family cannot pay.",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
@@ -809,14 +809,14 @@
           "id": "juvenile.01.012.b",
           "text": "You have to answer questions until your family can hire someone.",
           "isCorrect": false,
-          "explanation": "You never have to answer questions while waiting for anything. Asking for a lawyer works right now, whatever your family's situation.",
+          "explanation": "You never have to answer while you wait for anything. Asking for a lawyer works right now, no matter what your family can pay.",
           "misconceptionCode": "no_money_no_lawyer"
         },
         {
           "id": "juvenile.01.012.c",
           "text": "You get a lawyer only if you are charged with something serious.",
           "isCorrect": false,
-          "explanation": "The right to a lawyer in juvenile cases does not depend on how serious the charge is.",
+          "explanation": "How serious the charge is does not change it. In juvenile cases you get a lawyer either way.",
           "misconceptionCode": "police_can_hold_anyone"
         },
         {
@@ -828,11 +828,11 @@
         }
       ],
       "hint": "Which of these turns a right into something you have to buy?",
-      "principle": "You do not need money to get a lawyer. If your family cannot afford one, the court appoints one for you, and that applies in juvenile cases too. The Supreme Court decided in a case called In re Gault in 1967 that young people in delinquency cases have the right to a lawyer, along with notice of the charges and the ability to question witnesses. Before that decision, juvenile courts often ran without any of it. Money is not the gate. Ask for a lawyer first and let the court work out who pays.",
+      "principle": "You do not need money to get a lawyer. If your family cannot pay, the court gives you one. That is true in juvenile cases too. The Supreme Court decided this in a case called In re Gault in 1967. Before that, juvenile courts often ran with no lawyer at all. Now young people get one, plus notice of the charges and a chance to question witnesses. Money is not the gate. Ask first and let the court work out who pays.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
-        "quote": "I want a lawyer.",
-        "gloss": "You do not need money to say this, and it does not cost you anything to ask."
+        "quote": "I can't pay, and I still want a lawyer.",
+        "gloss": "Money is not the gate. Ask and let the court sort it out."
       },
       "scenario": {
         "setup": "Kitchen table at home. Your mom is worried about what a lawyer costs.",
@@ -868,73 +868,73 @@
     {
       "id": "juvenile.01.013",
       "version": 1,
-      "q": "You already answered some questions before you decided to stop. Can you take those answers back?",
+      "q": "Your mom arrives and tells the officer it is fine for you to answer. Whose decision is it?",
       "options": [
         {
           "id": "juvenile.01.013.a",
-          "text": "No. What you already said stays, but you can stop it from growing.",
+          "text": "Yours. A parent cannot give up your rights for you.",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
         },
         {
           "id": "juvenile.01.013.b",
-          "text": "Yes, if you tell the officer you take it back.",
+          "text": "Your mom's, because you are under 18 and she is responsible for you.",
           "isCorrect": false,
-          "explanation": "There is no undo. Saying you take it back does not remove it from the case.",
-          "misconceptionCode": "being_right_helps_now"
+          "explanation": "A parent is responsible for a lot of things, but your right to stay silent is not one of them. It belongs to you.",
+          "misconceptionCode": "adult_age_is_17"
         },
         {
           "id": "juvenile.01.013.c",
-          "text": "Yes, as long as you were not read your rights first.",
+          "text": "The officer's, once a parent has agreed.",
           "isCorrect": false,
-          "explanation": "That may affect whether a court allows a statement, but a lawyer argues that later. It is not something you can undo in the moment.",
-          "misconceptionCode": "miranda_at_arrest"
+          "explanation": "An officer does not decide whether you use your rights. Nobody in the room can turn them off for you.",
+          "misconceptionCode": "police_can_hold_anyone"
         },
         {
           "id": "juvenile.01.013.d",
-          "text": "No, and that means there is no point staying silent now.",
+          "text": "Both of yours together, so you have to agree with her.",
           "isCorrect": false,
-          "explanation": "Stopping still matters a lot. Most of what gets used tends to come later in a conversation, not in the first minute.",
-          "misconceptionCode": "partial_answers_are_safe"
+          "explanation": "You do not need anyone to sign off. You can use your rights even if the adults present want you to talk.",
+          "misconceptionCode": "unclear_request_counts"
         }
       ],
-      "hint": "You cannot rewind. But you can decide what the next hour sounds like.",
-      "principle": "Once you say something to police, you cannot unsay it. \"Used against you\" means it can be written into a report, described in court, and read back to a jury. There is no rule that lets you take it back. That sounds discouraging, but there is a useful side to it. Statements usually get worse over time, not better, because the specific details come out after the easy questions. Stopping partway through protects everything that has not been said yet. A lawyer can argue about whether an earlier statement should be allowed. Nobody can argue away the things you say next.",
+      "hint": "These rights are attached to a person. Which person?",
+      "principle": "Your rights belong to you, not to your parents. A parent can be there and can help. But they cannot give up your right to stay quiet for you. That surprises people. Parents make almost every other choice for a kid. It works both ways too. Your parent cannot make you talk. And you do not need their okay to ask for a lawyer. If a parent says yes for you and you do not want to answer, say so yourself.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
-        "quote": "I am done answering questions.",
-        "gloss": "You cannot rewind, but you can stop."
+        "quote": "I still don't want to answer questions.",
+        "gloss": "Your rights are yours. Nobody else can spend them."
       },
       "scenario": {
-        "setup": "A friend's house. You are telling them what happened yesterday.",
+        "setup": "The station lobby. Your mom just got there and she is trying to help.",
         "lines": [
           {
-            "label": "FRIEND",
-            "text": "wait so you already told them stuff?"
+            "label": "MOM",
+            "text": "He'll talk to you, it's fine, we have nothing to hide."
           },
           {
             "label": "YOU",
-            "text": "yeah, at the start. then I said I was done."
+            "text": "I still don't want to answer questions. I want a lawyer."
           },
           {
-            "label": "FRIEND",
-            "text": "does the first part still count?"
+            "label": "OFFICER",
+            "text": "Your mom says it's alright."
           },
           {
             "label": "YOU",
-            "text": "yeah. but I stopped before the rest."
+            "text": "I understand. I still don't want to answer questions."
           },
           {
             "label": "YES",
-            "text": "The earlier answers count, but the longer conversation never happened."
+            "text": "Your words are the ones that count. The questioning stops on what you said."
           },
           {
             "label": "NO",
-            "text": "The later answers usually carry more detail, and those are the ones most likely to be used."
+            "text": "You answer because an adult said it was fine, and those answers are yours, not hers."
           }
         ],
-        "note": "Already having talked is a reason to stop now, not a reason to keep going."
+        "note": "This is not disobeying your parent. It is the one decision the law says is yours alone."
       }
     },
     {
@@ -968,15 +968,15 @@
           "text": "No, but you should correct anything your friend gets wrong.",
           "isCorrect": false,
           "explanation": "Correcting the story is still talking about the case. You can decline entirely, even if you think something was said wrong.",
-          "misconceptionCode": "partial_answers_are_safe"
+          "misconceptionCode": "being_right_helps_now"
         }
       ],
       "hint": "Whose rights are they? Can somebody else spend them for you?",
       "principle": "Your rights belong to you alone. If a friend decides to explain everything, that is their choice and their statement. It does not cancel your right to stay silent, and it does not make your silence look like an admission. This comes up constantly in groups, because once one person starts talking it feels strange to be the only one who does not. Two separate accounts of the same night rarely match perfectly, and the small differences can matter more than anything either person meant to say. You can stay quiet and still be a good friend.",
       "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
       "keyPhrase": {
-        "quote": "I am not answering questions.",
-        "gloss": "What your friend chooses does not change what you choose."
+        "quote": "My friend's choice is not my choice.",
+        "gloss": "Your rights are yours. Nobody else can spend them."
       },
       "scenario": {
         "setup": "A parking lot behind the store. Three of you, one officer.",
@@ -1020,7 +1020,7 @@
       "options": [
         {
           "id": "juvenile.01.015.a",
-          "text": "Questions about the case stop, but you may still be held while things get sorted out.",
+          "text": "Questions about the case stop, but you may still be held.",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
@@ -1079,6 +1079,1078 @@
           }
         ],
         "note": "Asking for a lawyer protects the case, not the schedule."
+      }
+    },
+    {
+      "id": "juvenile.01.016",
+      "version": 1,
+      "q": "Your dad is upset and tells you to just explain everything so this can be over. What is the best thing to say?",
+      "options": [
+        {
+          "id": "juvenile.01.016.a",
+          "text": "\"I want to talk to a lawyer first.\"",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.016.b",
+          "text": "\"Okay, I'll tell them everything.\"",
+          "isCorrect": false,
+          "explanation": "Explaining because a parent is upset is still explaining. The pressure makes sense. The statement still lasts forever.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.01.016.c",
+          "text": "\"I'll tell them the parts that make me look okay.\"",
+          "isCorrect": false,
+          "explanation": "Half a story is still a statement. The missing parts usually come out later anyway.",
+          "misconceptionCode": "stepping_outside_is_neutral"
+        },
+        {
+          "id": "juvenile.01.016.d",
+          "text": "\"You talk to them for me.\"",
+          "isCorrect": false,
+          "explanation": "A parent cannot answer for you, and what they repeat can become part of the case too.",
+          "misconceptionCode": "roommate_can_consent_to_anything"
+        }
+      ],
+      "hint": "Who is the one person in this situation whose job is to advise you?",
+      "principle": "Parents want this over with, and that is love, not bad advice from a bad person. But a parent is not a lawyer, and \"just explain it\" is the most common piece of well meant advice that makes a case worse. You can respect your parent and still wait for a lawyer. Saying so out loud is not disrespect. It also helps to tell your parent why: not because you did something, but because a statement cannot be taken back and a lawyer is the person who knows what is safe to say.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I want to talk to a lawyer first.",
+        "gloss": "You can love your parents and still wait."
+      },
+      "scenario": {
+        "setup": "Your living room. Your dad is pacing and wants this handled tonight.",
+        "lines": [
+          {
+            "label": "DAD",
+            "text": "Just tell them what happened. You didn't do anything, so say it."
+          },
+          {
+            "label": "YOU",
+            "text": "I want to talk to a lawyer first."
+          },
+          {
+            "label": "DAD",
+            "text": "That makes it look like you did something."
+          },
+          {
+            "label": "YOU",
+            "text": "It doesn't. Everyone gets one. I just don't want to say the wrong thing."
+          },
+          {
+            "label": "YES",
+            "text": "You wait for the person whose job is knowing what is safe to say."
+          },
+          {
+            "label": "NO",
+            "text": "You explain to calm the room down, and that explanation stays in the case."
+          }
+        ],
+        "note": "Your parent is on your side. A lawyer is the one who knows what to do with that."
+      }
+    },
+    {
+      "id": "juvenile.01.017",
+      "version": 1,
+      "q": "An officer hands you a pen and asks you to write it down instead of saying it. What is true about a written statement?",
+      "options": [
+        {
+          "id": "juvenile.01.017.a",
+          "text": "It counts the same as saying it out loud.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.017.b",
+          "text": "It is safer, because you control exactly what it says.",
+          "isCorrect": false,
+          "explanation": "Controlling the wording does not make it less usable. A statement in your own handwriting is often stronger evidence, not weaker.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.01.017.c",
+          "text": "It does not count unless you sign it.",
+          "isCorrect": false,
+          "explanation": "A statement counts whether or not you sign it. The signature is not what makes it real.",
+          "misconceptionCode": "unclear_request_counts"
+        },
+        {
+          "id": "juvenile.01.017.d",
+          "text": "It only counts if they read you your rights first.",
+          "isCorrect": false,
+          "explanation": "What you write can count regardless. Whether a warning was required is something a lawyer sorts out later.",
+          "misconceptionCode": "miranda_at_arrest"
+        }
+      ],
+      "hint": "Does the form the words take change what they are?",
+      "principle": "Writing it down is not a safer way to talk. A written statement is still a statement. In some ways it is stronger, because it is in your own words and your own handwriting. Signing it does not matter. Neither does typing it or texting it. People feel better about writing because they pick the words. But the words are the part that gets used. If you decided not to answer questions, that covers writing too.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I'm not writing a statement either.",
+        "gloss": "Saying it and writing it are the same thing."
+      },
+      "scenario": {
+        "setup": "A room at school. An administrator slides a form across the table.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Just write down your version so we have it on paper."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not writing a statement."
+          },
+          {
+            "label": "STAFF",
+            "text": "It's for your own protection."
+          },
+          {
+            "label": "YOU",
+            "text": "I understand. I still want to talk to a lawyer first."
+          },
+          {
+            "label": "YES",
+            "text": "There is no document with your account on it, and nothing to be read back later."
+          },
+          {
+            "label": "NO",
+            "text": "Your version now exists in your own handwriting, and it cannot be edited or taken back."
+          }
+        ],
+        "note": "A blank page is not an admission. It is just a blank page."
+      }
+    },
+    {
+      "id": "juvenile.01.018",
+      "version": 1,
+      "q": "You are held at a facility and call your friend from the phone there. What is true about that call?",
+      "options": [
+        {
+          "id": "juvenile.01.018.a",
+          "text": "It is generally recorded and could be listened to later.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.018.b",
+          "text": "It is private, since nobody is questioning you.",
+          "isCorrect": false,
+          "explanation": "It is not about who you call. Calls from these places get recorded either way.",
+          "misconceptionCode": "private_recording_is_always_ok"
+        },
+        {
+          "id": "juvenile.01.018.c",
+          "text": "It is private as long as you do not talk about the case directly.",
+          "isCorrect": false,
+          "explanation": "The recording happens no matter what you say. Talking around it still leaves a recording someone can read into.",
+          "misconceptionCode": "holding_phone_means_reading_it"
+        },
+        {
+          "id": "juvenile.01.018.d",
+          "text": "It is recorded, but a recorded call cannot be used as evidence.",
+          "isCorrect": false,
+          "explanation": "Recorded calls have been used as proof in court. Being recorded is what makes them usable.",
+          "misconceptionCode": "talking_at_open_door_is_safe"
+        }
+      ],
+      "hint": "The question is about the phone, not about what you say into it.",
+      "principle": "Phone calls from a jail are almost always recorded. Those recordings can be used later. This surprises people. Calling a friend feels private in a way a small room does not. It is not. A notice usually plays at the start, but people stop hearing it. There is one exception. Calls with your lawyer are meant to be private. Treat every other call as one someone may hear. If you want to talk about what happened, save it for your lawyer.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I can't get into it on this phone.",
+        "gloss": "Only lawyer calls are private."
+      },
+      "scenario": {
+        "setup": "A phone on the wall. Your friend picks up.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "are you okay?? what happened"
+          },
+          {
+            "label": "YOU",
+            "text": "I can't get into it on this phone."
+          },
+          {
+            "label": "FRIEND",
+            "text": "why not"
+          },
+          {
+            "label": "YOU",
+            "text": "it's recorded. I'll tell you later."
+          },
+          {
+            "label": "YES",
+            "text": "The recording exists, but there is nothing on it about the case."
+          },
+          {
+            "label": "NO",
+            "text": "Your account is now a recording that other people can listen to."
+          }
+        ],
+        "note": "Calls with your lawyer are different. Those are meant to be private."
+      }
+    },
+    {
+      "id": "juvenile.01.019",
+      "version": 1,
+      "q": "Courts have said your age matters when deciding if you were being held. Why does that help you?",
+      "options": [
+        {
+          "id": "juvenile.01.019.a",
+          "text": "Because a young person can feel unable to leave in a situation where an adult would not.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.019.b",
+          "text": "Because minors get a warning that adults do not get.",
+          "isCorrect": false,
+          "explanation": "The warning is the same. What differs is how a judge weighs the situation you were in.",
+          "misconceptionCode": "adult_age_is_17"
+        },
+        {
+          "id": "juvenile.01.019.c",
+          "text": "Because statements by minors are never allowed in court.",
+          "isCorrect": false,
+          "explanation": "Statements by young people are used all the time. Age is one factor a judge weighs, not an automatic block.",
+          "misconceptionCode": "miranda_at_arrest"
+        },
+        {
+          "id": "juvenile.01.019.d",
+          "text": "Because officers have to treat minors more gently.",
+          "isCorrect": false,
+          "explanation": "This is about how a judge looks back at the situation later, not about a rule for how officers behave.",
+          "misconceptionCode": "nerves_are_suspicion"
+        }
+      ],
+      "hint": "The question is not what an officer must do. It is what a judge decides a situation felt like.",
+      "principle": "The Supreme Court decided a case called J.D.B. v. North Carolina. It says your age counts when a judge decides if you were being held. The reason is simple. A fourteen-year-old with adults in charge all around may feel stuck. A grown adult in the same spot might just walk away. Michigan courts use this too, including at school. It helps you, because more situations can count as being held. But it does not decide anything in the moment. Asking if you are free to leave still does.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "Am I being detained?",
+        "gloss": "Same question as free to leave. Either one works."
+      },
+      "scenario": {
+        "setup": "Sitting in the back of a friend's car, parked. An officer is at the window with a flashlight.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Everybody stay where you are. I've got some questions."
+          },
+          {
+            "label": "YOU",
+            "text": "Am I free to leave?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "No. Sit tight."
+          },
+          {
+            "label": "YOU",
+            "text": "I am using my right to remain silent. I want a lawyer."
+          },
+          {
+            "label": "YES",
+            "text": "You said the words at the moment it turned into being held."
+          },
+          {
+            "label": "NO",
+            "text": "You answer because nobody said the word custody, and the answers count."
+          }
+        ],
+        "note": "You will not know at the time whether a judge would call it custody. Asking and staying silent works either way."
+      }
+    },
+    {
+      "id": "juvenile.01.020",
+      "version": 1,
+      "q": "An officer asks what time you saw something happen. You think it was around nine but you are not certain. What should you say?",
+      "options": [
+        {
+          "id": "juvenile.01.020.a",
+          "text": "\"I'm not sure, and I don't want to guess.\"",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.020.b",
+          "text": "\"Around nine, I think.\"",
+          "isCorrect": false,
+          "explanation": "A guess sounds like a fact once it is written down. If it was actually seven, that wrong time is now in the file with your name attached.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.01.020.c",
+          "text": "\"Nine.\"",
+          "isCorrect": false,
+          "explanation": "Saying it flat makes a shaky memory sound sure. Other people may then treat it as fact.",
+          "misconceptionCode": "nothing_to_hide"
+        },
+        {
+          "id": "juvenile.01.020.d",
+          "text": "\"I don't know, but it was definitely after dark.\"",
+          "isCorrect": false,
+          "explanation": "Adding a detail is still adding a detail. That new piece can be wrong the same way a time can.",
+          "misconceptionCode": "partial_answers_are_safe"
+        }
+      ],
+      "hint": "Which answer stays true no matter what really happened?",
+      "principle": "Not knowing is a full answer. Memory is shaky about the things officers ask about. Times, order, and who was where are the hardest to get right. A detail you give to be helpful can be wrong. A wrong detail is hard to take back once it is written down. Other people may build on it. Saying you are not sure cannot be proven wrong, because you did not claim anything. It also does not make you look guilty. Not guessing is not the same as not helping.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I'm not sure, and I don't want to guess.",
+        "gloss": "Not knowing is an answer. Guessing is a statement."
+      },
+      "scenario": {
+        "setup": "Outside the gym after a game. An officer is asking about something that happened in the parking lot.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "What time did you see them out there?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not sure, and I don't want to guess."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Roughly. Nine? Ten?"
+          },
+          {
+            "label": "YOU",
+            "text": "I really don't know."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing you said can turn out to be wrong, because you did not claim anything."
+          },
+          {
+            "label": "NO",
+            "text": "You say nine. If it was actually seven, that time is now in the file with your name on it."
+          }
+        ],
+        "note": "Being helpful and being accurate are not always the same thing."
+      }
+    },
+    {
+      "id": "juvenile.01.021",
+      "version": 1,
+      "q": "What does it mean to be \"in custody\" for the purposes of your rights?",
+      "options": [
+        {
+          "id": "juvenile.01.021.a",
+          "text": "That a reasonable person would not feel free to leave.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.021.b",
+          "text": "That you have been handcuffed.",
+          "isCorrect": false,
+          "explanation": "Handcuffs are one sign, but you can be in custody without them and handcuffed without being questioned.",
+          "misconceptionCode": "miranda_at_arrest"
+        },
+        {
+          "id": "juvenile.01.021.c",
+          "text": "That you are inside a police station.",
+          "isCorrect": false,
+          "explanation": "It depends on the situation, not the building. It can happen on a sidewalk, in a car, or at school.",
+          "misconceptionCode": "booking_needs_miranda"
+        },
+        {
+          "id": "juvenile.01.021.d",
+          "text": "That an officer has told you that you are in custody.",
+          "isCorrect": false,
+          "explanation": "There is no announcement. It is decided later by looking at the whole situation.",
+          "misconceptionCode": "police_can_hold_anyone"
+        }
+      ],
+      "hint": "It is about how the moment would feel, not about a word or an object.",
+      "principle": "\"In custody\" does not mean handcuffs, and it does not mean being at a station. It means a reasonable person in your situation would not feel free to end things and walk away. A judge decides that later by looking at everything: where you were, how many officers, how long, what was said. It matters because custody plus questioning is what triggers the warning. There is one part that helps you: courts have said a young person's age counts in this, because a fifteen-year-old may feel much less free to leave than an adult would in the same spot. You do not have to work this out yourself. Ask if you are free to leave.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "Am I free to leave, or am I being detained?",
+        "gloss": "You do not have to figure out custody. Just ask."
+      },
+      "scenario": {
+        "setup": "A hallway at school. Two officers, and the door is shut.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "Am I free to leave?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "Not right now."
+          },
+          {
+            "label": "YOU",
+            "text": "I am using my right to remain silent. I want a lawyer."
+          },
+          {
+            "label": "YES",
+            "text": "You learn where you stand without needing to know any legal terms."
+          },
+          {
+            "label": "NO",
+            "text": "You may assume it is casual because there are no handcuffs, and answer everything."
+          }
+        ],
+        "note": "No handcuffs does not mean free to go. The answer to the question does."
+      }
+    },
+    {
+      "id": "juvenile.01.022",
+      "version": 1,
+      "q": "A school officer pulls you out of class to ask about something that happened off campus. Do your rights apply?",
+      "options": [
+        {
+          "id": "juvenile.01.022.a",
+          "text": "Yes. A school officer is still an officer.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.022.b",
+          "text": "No. Anything said to school staff stays at school.",
+          "isCorrect": false,
+          "explanation": "What you say to a school officer can leave the school and end up in a case.",
+          "misconceptionCode": "sro_is_off_the_record"
+        },
+        {
+          "id": "juvenile.01.022.c",
+          "text": "No, because school rules replace your rights during the school day.",
+          "isCorrect": false,
+          "explanation": "School rules can govern discipline, but they do not remove your right to stay silent or ask for a lawyer.",
+          "misconceptionCode": "school_matches_street"
+        },
+        {
+          "id": "juvenile.01.022.d",
+          "text": "Yes, but only if the officer is in uniform.",
+          "isCorrect": false,
+          "explanation": "A uniform is not what matters. It depends on who they are and what they are doing.",
+          "misconceptionCode": "nerves_are_suspicion"
+        }
+      ],
+      "hint": "Does the building someone works in change what they are?",
+      "principle": "A school resource officer is a police officer who works at a school. That is easy to forget. You see them every day and they may be friendly, which is a good thing. But when they ask about something that could become a case, your rights work the same. School discipline and a court case are two different tracks. One talk can feed both. It is not rude to say you want a lawyer or a parent first. You can be polite and still not answer.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "Can I call my parents first?",
+        "gloss": "Being at school does not change who you are talking to."
+      },
+      "scenario": {
+        "setup": "Pulled out of third hour. A school officer you know by name.",
+        "lines": [
+          {
+            "label": "SRO",
+            "text": "You're not in trouble. I just want to hear your side about Saturday."
+          },
+          {
+            "label": "YOU",
+            "text": "I want to talk to my parents and a lawyer first."
+          },
+          {
+            "label": "SRO",
+            "text": "This is just between us."
+          },
+          {
+            "label": "YOU",
+            "text": "I understand. I'd still like to talk to them first."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing you said travels, because you did not say anything."
+          },
+          {
+            "label": "NO",
+            "text": "What you said can go beyond the school and into a case."
+          }
+        ],
+        "note": "Knowing an officer and being off the record with them are two different things."
+      }
+    },
+    {
+      "id": "juvenile.01.023",
+      "version": 1,
+      "q": "You are a passenger in a car that gets pulled over. What are you actually required to do?",
+      "options": [
+        {
+          "id": "juvenile.01.023.a",
+          "text": "Follow instructions, and possibly give your name, but not answer questions about a case.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.023.b",
+          "text": "Answer everything the officer asks, the same as the driver.",
+          "isCorrect": false,
+          "explanation": "A traffic stop is about the driving. It does not put every passenger under an obligation to answer questions about a case.",
+          "misconceptionCode": "passenger_has_driver_duties"
+        },
+        {
+          "id": "juvenile.01.023.c",
+          "text": "Answer, because you are in someone else's car.",
+          "isCorrect": false,
+          "explanation": "Being a passenger does not give you the driver's responsibilities. Whose car it is does not decide your rights.",
+          "misconceptionCode": "roommate_can_consent_to_anything"
+        },
+        {
+          "id": "juvenile.01.023.d",
+          "text": "Nothing at all, and you can walk away whenever you want.",
+          "isCorrect": false,
+          "explanation": "You may be required to stay while the stop is happening, and officers can tell people to stay in or step out of the car. Not answering is different from leaving.",
+          "misconceptionCode": "can_refuse_to_exit"
+        }
+      ],
+      "hint": "Two different things: what you must do with your body, and what you must say.",
+      "principle": "A traffic stop is about the driver and the driving. As a passenger, you may have to stay while it happens. An officer can tell you to stay in the car or step out. Do what they say. In some states you may also have to give your name. Giving your name is not the same as being interviewed. You do not have to answer anything past that. People mix those two up all the time. You can follow every order, give your name, and still not answer questions.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I'll do what you ask. I'm not answering questions.",
+        "gloss": "Follow instructions with your body. Keep your rights with your words."
+      },
+      "scenario": {
+        "setup": "Passenger seat, late evening. Your friend got pulled over for a taillight.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Where are you two headed?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not answering questions."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Step out of the vehicle please."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I'm still not answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "You cooperate with the stop and nothing about a case comes from you."
+          },
+          {
+            "label": "NO",
+            "text": "You turn a taillight stop into a much bigger problem for yourself."
+          }
+        ],
+        "note": "Doing what you are told and staying silent are not in conflict. Do both."
+      }
+    },
+    {
+      "id": "juvenile.01.024",
+      "version": 1,
+      "q": "Officers knock on your door and ask to come in and talk. Do you have to open it?",
+      "options": [
+        {
+          "id": "juvenile.01.024.a",
+          "text": "No. You can talk through the door or say you would rather not.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.024.b",
+          "text": "Yes. Refusing to open the door is against the law.",
+          "isCorrect": false,
+          "explanation": "You usually do not have to open your door. Police need a warrant or another legal reason to come in.",
+          "misconceptionCode": "must_open_the_door"
+        },
+        {
+          "id": "juvenile.01.024.c",
+          "text": "Yes, but only if a parent is not home.",
+          "isCorrect": false,
+          "explanation": "Whether an adult is home does not create a duty to open the door.",
+          "misconceptionCode": "police_can_always_search"
+        },
+        {
+          "id": "juvenile.01.024.d",
+          "text": "No, but if you open it, anything said is just a friendly conversation.",
+          "isCorrect": false,
+          "explanation": "A conversation at your door is like any other conversation with police. It can be used the same way.",
+          "misconceptionCode": "talking_at_open_door_is_safe"
+        }
+      ],
+      "hint": "There are two choices here. Opening a door is one. Answering is the other.",
+      "principle": "You usually do not have to open your door for police. They need a warrant or another legal reason to come in. You also do not have to answer questions through the door. Two things people miss. A talk at the door counts the same as any other talk. And stepping outside can change things. If you are home alone and under eighteen, it is fine to say you want to wait for a parent. That is not refusing to help. It is asking for the adult who should be there.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I'd rather wait until my parents are home.",
+        "gloss": "A closed door is an answer. So is not answering."
+      },
+      "scenario": {
+        "setup": "Home alone after school. A knock at the front door.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Can we come in and talk for a minute?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'd rather wait until my parents are home."
+          },
+          {
+            "label": "OFFICER",
+            "text": "It'll only take a second."
+          },
+          {
+            "label": "YOU",
+            "text": "I'd still rather wait until they're here."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing happens that a parent is not part of."
+          },
+          {
+            "label": "NO",
+            "text": "A conversation you did not have to have becomes part of the record."
+          }
+        ],
+        "note": "If officers say they have a warrant, do not fight about it at the door. Step aside, stay quiet, and let a lawyer handle it later."
+      }
+    },
+    {
+      "id": "juvenile.01.025",
+      "version": 1,
+      "q": "You are stopped and you are sure the officer has no good reason. What is the best thing to do right now?",
+      "options": [
+        {
+          "id": "juvenile.01.025.a",
+          "text": "Stay calm, follow instructions, and say you are not answering questions.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.025.b",
+          "text": "Explain why the stop is not allowed and refuse to cooperate until they admit it.",
+          "isCorrect": false,
+          "explanation": "The street is not where that gets decided. Arguing it out usually makes the stop longer and can create a new charge.",
+          "misconceptionCode": "being_right_helps_now"
+        },
+        {
+          "id": "juvenile.01.025.c",
+          "text": "Walk away, since an unlawful stop does not count.",
+          "isCorrect": false,
+          "explanation": "Walking away from a stop can be its own crime. That stays true even if the stop was not proper.",
+          "misconceptionCode": "illegal_stop_means_resist"
+        },
+        {
+          "id": "juvenile.01.025.d",
+          "text": "Record it and tell the officer nothing they do counts now.",
+          "isCorrect": false,
+          "explanation": "You may be allowed to record. But saying nothing counts does not make it so, and it tends to heat things up.",
+          "misconceptionCode": "violation_means_self_help"
+        }
+      ],
+      "hint": "There are two places to fight this. Which one has a judge in it?",
+      "principle": "Being right about a stop and winning right now are two different things. If a stop was not proper, a judge sorts that out later. A lawyer can argue to keep evidence out. What almost never works is fighting about it on the street. It can add charges that did not exist a minute ago. It can also make a short stop long. The best thing you can do is stay calm, do what you are told, say you are not answering, and remember details. Your objection is worth more later.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I'll sort this out later, with a lawyer.",
+        "gloss": "Win it in court, not on the street."
+      },
+      "scenario": {
+        "setup": "Stopped while walking home. You do not think there was any reason for it.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "This isn't right. He can't just stop me."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Keep your hands where I can see them."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I'm not answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "The stop ends sooner and your objection is still available later, in a place where it counts."
+          },
+          {
+            "label": "NO",
+            "text": "The stop gets longer, and something new can be added that had nothing to do with why you were stopped."
+          }
+        ],
+        "note": "Being right is worth a lot. It is worth the most in court."
+      }
+    },
+    {
+      "id": "juvenile.01.026",
+      "version": 1,
+      "q": "A vice principal, not an officer, asks you to explain what happened. What is true about that conversation?",
+      "options": [
+        {
+          "id": "juvenile.01.026.a",
+          "text": "It is not a police interview, but what you say can still reach a case.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.026.b",
+          "text": "Nothing you tell school staff can ever be used in court.",
+          "isCorrect": false,
+          "explanation": "School staff can be asked what you told them, and school reports can end up in a case.",
+          "misconceptionCode": "sro_is_off_the_record"
+        },
+        {
+          "id": "juvenile.01.026.c",
+          "text": "It is exactly the same as being questioned by police.",
+          "isCorrect": false,
+          "explanation": "It is not identical. School discipline runs on its own rules, and a warning is not required the way it can be with police.",
+          "misconceptionCode": "school_matches_street"
+        },
+        {
+          "id": "juvenile.01.026.d",
+          "text": "You are required to answer because school rules say to cooperate.",
+          "isCorrect": false,
+          "explanation": "School rules can lead to discipline, but they cannot make you give a statement that could be used against you in a case.",
+          "misconceptionCode": "must_always_give_name"
+        }
+      ],
+      "hint": "Two different systems can care about the same talk.",
+      "principle": "School rules and a court case are two systems. One talk can reach both. A vice principal asking what happened is usually about school rules. Saying no can lead to school consequences like detention. That is real. Also real: a staff member can be asked later what you told them. If it could become a case, ask to talk to your parents and a lawyer first. That is fair, even at school. You can be polite about everything except the details.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "Can I talk to my parents before I answer?",
+        "gloss": "School rules and a court case are two systems. One conversation can reach both."
+      },
+      "scenario": {
+        "setup": "The vice principal's office. No officer, just her and the door closed.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "I just need your side of what happened at lunch."
+          },
+          {
+            "label": "YOU",
+            "text": "Can I talk to my parents before I answer?"
+          },
+          {
+            "label": "STAFF",
+            "text": "This is a school matter, not a police thing."
+          },
+          {
+            "label": "YOU",
+            "text": "I understand. I'd still like to talk to them first."
+          },
+          {
+            "label": "YES",
+            "text": "You may still face school consequences, but nothing you said can travel into a case."
+          },
+          {
+            "label": "NO",
+            "text": "Your account exists, and a staff member can be asked about it later."
+          }
+        ],
+        "note": "Asking for your parents is not refusing to cooperate. Say it politely and stick to it."
+      }
+    },
+    {
+      "id": "juvenile.01.027",
+      "version": 1,
+      "q": "You already said you were not answering questions, but the officer keeps asking. What should you do?",
+      "options": [
+        {
+          "id": "juvenile.01.027.a",
+          "text": "Say it again, calmly, as many times as you need to.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.027.b",
+          "text": "Answer this one, since you already made your point.",
+          "isCorrect": false,
+          "explanation": "One answer restarts the conversation. Everything after it counts, no matter what you said earlier.",
+          "misconceptionCode": "talking_earns_leniency"
+        },
+        {
+          "id": "juvenile.01.027.c",
+          "text": "Say nothing at all now, since you already said it once.",
+          "isCorrect": false,
+          "explanation": "Staying quiet is safer than talking. Saying it out loud again is better, because then nobody can argue you meant something else.",
+          "misconceptionCode": "silence_is_automatic"
+        },
+        {
+          "id": "juvenile.01.027.d",
+          "text": "Tell them they are not allowed to keep asking and that you will report it.",
+          "isCorrect": false,
+          "explanation": "Threats tend to heat things up without helping. Saying the same calm words does more.",
+          "misconceptionCode": "being_right_helps_now"
+        }
+      ],
+      "hint": "What is the least dramatic thing that keeps working?",
+      "principle": "Saying it once is enough under the law. In real life, people get asked again anyway. Sometimes in different words. Sometimes after a break. The best answer is to repeat yourself calmly. That is not rude and it does not weaken you. What weakens you is answering one more question because you are worn down. That one answer can count as choosing to talk again. Saying the same words the same way also removes any argument later.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "Same answer, every time.",
+        "gloss": "Repeat it calmly. That is the whole technique."
+      },
+      "scenario": {
+        "setup": "Twenty minutes in. Same room, same questions in a different order.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Let's try this again. Where were you?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'm still not answering questions."
+          },
+          {
+            "label": "OFFICER",
+            "text": "You know this looks bad, right?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'm still not answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing new comes from you, and there is no argument later about whether you meant it."
+          },
+          {
+            "label": "NO",
+            "text": "That one counts, and it can be treated as deciding to talk again."
+          }
+        ],
+        "note": "Repeating yourself is not being difficult. It is the whole technique."
+      }
+    },
+    {
+      "id": "juvenile.01.028",
+      "version": 1,
+      "q": "An officer says you can go home as soon as you answer one more question. What is the problem with that trade?",
+      "options": [
+        {
+          "id": "juvenile.01.028.a",
+          "text": "The officer questioning you does not decide whether you go home.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.028.b",
+          "text": "There is no problem. One question is not much, and then it is over.",
+          "isCorrect": false,
+          "explanation": "One more question is rarely one more question, and the last answer is often the one that matters most.",
+          "misconceptionCode": "talking_earns_leniency"
+        },
+        {
+          "id": "juvenile.01.028.c",
+          "text": "There is no problem, as long as you keep the answer short.",
+          "isCorrect": false,
+          "explanation": "Short answers still count. A single sentence can place you somewhere or confirm something.",
+          "misconceptionCode": "partial_consent_is_safe"
+        },
+        {
+          "id": "juvenile.01.028.d",
+          "text": "The only problem is that the promise is not in writing.",
+          "isCorrect": false,
+          "explanation": "A promise like that would not bind a prosecutor or a judge anyway, so a written version does not fix anything.",
+          "misconceptionCode": "being_right_helps_now"
+        }
+      ],
+      "hint": "Look at who is offering the deal and ask whether they own the thing being offered.",
+      "principle": "\"Just one more question and you can go\" is a hard thing to hear when you want to go home. Here is why it is not a trade worth taking. The officer in the room does not decide whether charges get filed, and often does not decide when you leave. Those decisions belong to other people, later. Meanwhile the answer you give is permanent. Research shows the wish to get out of the room is one of the biggest reasons young people give up their rights. Wanting to go home is completely normal. It is just not something you can buy with an answer.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "Not one more question.",
+        "gloss": "Not a short one either."
+      },
+      "scenario": {
+        "setup": "Late. You are tired and you want to go home.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "One question and we're done. Were you there or not?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not answering any questions."
+          },
+          {
+            "label": "OFFICER",
+            "text": "That's all I need and you can walk out."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not answering any questions."
+          },
+          {
+            "label": "YES",
+            "text": "Whether you go home gets decided by other people, and nothing was added to the case."
+          },
+          {
+            "label": "NO",
+            "text": "You may not go home anyway, and now the answer exists."
+          }
+        ],
+        "note": "If it really is one question, it will still be there tomorrow with a lawyer next to you."
+      }
+    },
+    {
+      "id": "juvenile.01.029",
+      "version": 1,
+      "q": "You asked for a lawyer and one is coming. What is a lawyer actually there to do?",
+      "options": [
+        {
+          "id": "juvenile.01.029.a",
+          "text": "Give you advice about what to say and make sure the rules are followed.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.029.b",
+          "text": "Prove you are innocent right there in the room.",
+          "isCorrect": false,
+          "explanation": "That is not what happens in a questioning room. A lawyer protects your position now and argues the case later.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.01.029.c",
+          "text": "Speak for you so you can go home faster.",
+          "isCorrect": false,
+          "explanation": "A lawyer is not a shortcut home. Whether you are released is decided separately.",
+          "misconceptionCode": "talking_earns_leniency"
+        },
+        {
+          "id": "juvenile.01.029.d",
+          "text": "Tell the officers they cannot use anything they already have.",
+          "isCorrect": false,
+          "explanation": "A lawyer can argue later that certain evidence should not be allowed, but that is a court argument, not something declared in the room.",
+          "misconceptionCode": "being_right_helps_now"
+        }
+      ],
+      "hint": "Is a lawyer there to end the day, or to protect what happens next?",
+      "principle": "A lawyer is not a magic word. Knowing what they do makes it easier to ask. Their job is to tell you what is safe to say. They make sure the rules are followed. They speak for you later. They are also the only person you can talk to with real privacy. Not a friend, not a group chat, not a recorded call. What they are not is a fast way home. They do not end the case on the spot. Asking for one is not admitting anything.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "I'd rather wait for my lawyer.",
+        "gloss": "Their job starts before court, not at it."
+      },
+      "scenario": {
+        "setup": "Waiting. Your parent is next to you and nobody has said much.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "Do you really need a lawyer? It makes it seem like you did something."
+          },
+          {
+            "label": "YOU",
+            "text": "It doesn't. Everyone gets one."
+          },
+          {
+            "label": "MOM",
+            "text": "Okay. We'll wait then."
+          },
+          {
+            "label": "YES",
+            "text": "You get advice before you say anything, which is the point."
+          },
+          {
+            "label": "NO",
+            "text": "You give up the one protection that works before court."
+          }
+        ],
+        "note": "Asking for a lawyer is not an admission. It is what the process expects you to do."
+      }
+    },
+    {
+      "id": "juvenile.01.030",
+      "version": 1,
+      "q": "An officer stops you and starts asking questions. What is the order that protects you best?",
+      "options": [
+        {
+          "id": "juvenile.01.030.a",
+          "text": "Ask if you are free to leave, then say you are staying silent and want a lawyer.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.01.030.b",
+          "text": "Explain what happened first, then ask for a lawyer if it gets serious.",
+          "isCorrect": false,
+          "explanation": "By the time it feels serious, the explanation already exists. The protection has to come first.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.01.030.c",
+          "text": "Stay completely silent from the start and say nothing at all.",
+          "isCorrect": false,
+          "explanation": "Silence alone does not turn the right on. You have to say you are using it.",
+          "misconceptionCode": "silence_is_automatic"
+        },
+        {
+          "id": "juvenile.01.030.d",
+          "text": "Ask for a lawyer first, then answer anything that seems harmless while you wait.",
+          "isCorrect": false,
+          "explanation": "Asking only works if you also stop talking. Answering while you wait undoes it.",
+          "misconceptionCode": "unclear_request_counts"
+        }
+      ],
+      "hint": "Find out where you stand, then say the words, then stop.",
+      "principle": "Put it together and it is short. First, find out where you stand: \"Am I free to leave?\" If yes, you can go. If no, say the words out loud: \"I am using my right to remain silent. I want a lawyer.\" Then stop talking, and repeat it calmly if the questions keep coming. Do what you are told with your body the whole time. That is the entire thing. It works at fourteen and at forty, on a sidewalk, in a car, at school, or at a station. You do not need to know legal terms or figure out whether you are in custody. You need three sentences and the patience to repeat them.",
+      "safetyNote": "Using this right is legal, but a stop can still get tense. Stay calm, keep your hands where the officer can see them, and do not run or argue. If an officer tells you to do something, do it, and then say your words again. Getting home safe comes first. You fight an unfair stop later, in court, with a lawyer.",
+      "keyPhrase": {
+        "quote": "Am I free to leave? I am using my right to remain silent. I want a lawyer.",
+        "gloss": "Three sentences, in that order. That is the whole plan."
+      },
+      "scenario": {
+        "setup": "Anywhere. A sidewalk, a car, a school hallway. It always looks like this.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "Am I free to leave?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "No, not yet."
+          },
+          {
+            "label": "YOU",
+            "text": "I am using my right to remain silent. I want a lawyer."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Just tell me one thing first."
+          },
+          {
+            "label": "YOU",
+            "text": "I am using my right to remain silent."
+          },
+          {
+            "label": "YES",
+            "text": "You know where you stand, the rights are on, and nothing new comes from you."
+          },
+          {
+            "label": "NO",
+            "text": "You end up explaining first and protecting yourself second, which is backwards."
+          }
+        ],
+        "note": "You will not remember a court case under stress. You can remember three sentences."
       }
     }
   ]
