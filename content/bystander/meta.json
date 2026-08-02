@@ -1,0 +1,44 @@
+{
+  "districtId": "bystander",
+  "name": "THE BYSTANDER",
+  "blurb": "When it is happening to someone else. Filming, helping, being a passenger.",
+  "live": false,
+  "chapters": [
+    {
+      "id": "bystander.01",
+      "name": "WATCHING AND RECORDING",
+      "file": "01-watching-and-recording.json",
+      "live": false
+    },
+    {
+      "id": "bystander.02",
+      "name": "BEING A PASSENGER",
+      "file": "02-being-a-passenger.json",
+      "live": false
+    },
+    {
+      "id": "bystander.03",
+      "name": "BEING A WITNESS",
+      "file": "03-being-a-witness.json",
+      "live": false
+    },
+    {
+      "id": "bystander.04",
+      "name": "HELPING SOMEONE ARRESTED",
+      "file": "04-helping-someone-arrested.json",
+      "live": false
+    },
+    {
+      "id": "bystander.05",
+      "name": "FINDING AND SUPPORTING THEM",
+      "file": "05-finding-and-supporting-them.json",
+      "live": false
+    },
+    {
+      "id": "bystander.06",
+      "name": "WHEN IT IS AT YOUR HOUSE",
+      "file": "06-when-it-is-at-your-house.json",
+      "live": false
+    }
+  ]
+}
