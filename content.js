@@ -71,6 +71,10 @@ export async function loadChapter(districtId, chapter) {
     id: raw.chapterId,
     districtId: raw.districtId,
     name: raw.name,
+    // One safety note per chapter, shown before the round rather than on every
+    // question. The risk of using a right differs by setting, so it is chapter
+    // level and not global.
+    safetyNote: raw.safetyNote || null,
     reviewedBy: raw.reviewedBy || null,
     questions: (raw.questions || []).map(toRuntime)
   };
