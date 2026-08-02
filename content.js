@@ -99,6 +99,7 @@ function toRuntime(q) {
     misconceptions: opts.map((o) => o.misconceptionCode),
     hint: q.hint,
     principle: q.principle,
+    safetyNote: q.safetyNote,
     keyPhrase: q.keyPhrase,
     scenario: q.scenario
   };
