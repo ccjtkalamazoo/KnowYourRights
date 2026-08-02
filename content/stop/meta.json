@@ -1,0 +1,44 @@
+{
+  "districtId": "stop",
+  "name": "THE STOP",
+  "blurb": "Stopped on the street. Are you being held, and what do you have to give?",
+  "live": false,
+  "chapters": [
+    {
+      "id": "stop.01",
+      "name": "AM I FREE TO GO",
+      "file": "01-am-i-free-to-go.json",
+      "live": false
+    },
+    {
+      "id": "stop.02",
+      "name": "REASONABLE SUSPICION",
+      "file": "02-reasonable-suspicion.json",
+      "live": false
+    },
+    {
+      "id": "stop.03",
+      "name": "WHAT YOU MUST GIVE",
+      "file": "03-what-you-must-give.json",
+      "live": false
+    },
+    {
+      "id": "stop.04",
+      "name": "THE PAT DOWN",
+      "file": "04-the-pat-down.json",
+      "live": false
+    },
+    {
+      "id": "stop.05",
+      "name": "HOW LONG IT LASTS",
+      "file": "05-how-long-it-lasts.json",
+      "live": false
+    },
+    {
+      "id": "stop.06",
+      "name": "WHEN IT BECOMES AN ARREST",
+      "file": "06-when-it-becomes-an-arrest.json",
+      "live": false
+    }
+  ]
+}
