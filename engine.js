@@ -18,22 +18,25 @@
 // what makes locking in an answer feel like a decision.
 
 import { c, u, C, U, LOGO, useState, useEffect, useRef, injectStyles } from "./theme.js";
-import { R } from "./questions.js";
+import { R } from "./copy.js";
 import {
   LADDER, LIFELINE_PRICES, musicStageFor,
   fmtMoney, fmtMoneyShort, shuffle, buildDeck, shuffleOptions,
-  buildEndlessDeck, simulateJury, allQuestions
+  buildEndlessDeck, simulateJury
 } from "./rules.js";
 import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.js";
 import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
+import { loadChapter } from "./content.js";
 
 // ===========================================================================
 // App : all game state lives here.
 // ===========================================================================
 export function App() {
-  const [phase, setPhase] = useState("start"); // start|walkthrough|map|playing|locking|revealing|gameover|won
+  const [phase, setPhase] = useState("start"); // start|walkthrough|map|loading|loaderror|playing|locking|revealing|gameover|won
+  const [chapter, setChapter] = useState(null);   // the loaded chapter being played
+  const [loadError, setLoadError] = useState(null);
   const [walkStep, setWalkStep] = useState(0);
   const [deck, setDeck] = useState([]);
   const [level, setLevel] = useState(0);
@@ -142,13 +145,27 @@ export function App() {
   // resetState() first so a run's leftovers never survive into the next one.
   const goMap = () => { initAudio(); sfx.current.click(); music.current.stop(); if (phase === "playing" || phase === "revealing" || phase === "locking") { EV.trackRunEnd("abandoned", { level, mode: isEndless ? "endless" : "ladder" }); EV.flush(); } EV.trackNav("map"); resetState(); setPhase("map"); };
   const playAgain = () => { initAudio(); sfx.current.click(); goMap(); };
-  const startGame = () => {
+  // Starting a run now means fetching that chapter's 30 questions first, so
+  // this is async and has a visible loading phase between picking a chapter and
+  // seeing question one. Failure is a real state: content arrives over the
+  // network and a missing or malformed file must not white-screen the game.
+  const startChapter = async (district, chapterRef) => {
     resetState();
-    const d = buildDeck();
-    setDeck(d);
-    EV.trackModeStart("ladder", d);
-    setPhase("playing");
-    setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
+    setChapter(null);
+    setLoadError(null);
+    setPhase("loading");
+    try {
+      const ch = await loadChapter(district.id, chapterRef);
+      const d = buildDeck(ch);
+      setChapter(ch);
+      setDeck(d);
+      EV.trackModeStart("chapter", d, { chapterId: ch.id, districtId: district.id });
+      setPhase("playing");
+      setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
+    } catch (err) {
+      setLoadError(err.message || String(err));
+      setPhase("loaderror");
+    }
   };
 
   const currentQ = deck[level];
@@ -157,7 +174,7 @@ export function App() {
 
   const enterEndless = () => {
     sfx.current.click();
-    const extra = buildEndlessDeck(deck);
+    const extra = buildEndlessDeck(deck, chapter);
     EV.trackModeStart("endless", extra);
     setFinalPrize(LADDER[LADDER.length - 1].prize);
     setBestRun((b) => Math.max(b, LADDER[LADDER.length - 1].prize));
@@ -270,13 +287,14 @@ export function App() {
   const requestLifeline = (k) => { if (phase !== "playing") return; setShopOpen(false); sfx.current.modalOpen(); setPendingLifeline(k); };
   const cancelLifeline = () => { sfx.current.click(); setPendingLifeline(null); };
 
-  // Swap the current question for another one not already in this run's deck.
-  // This used to match the old question's difficulty tier; tiers are gone, so it
-  // is any unseen question. Returns true if a swap happened. With a thin bank
-  // this can be false, which confirmLifeline guards against.
+  // Swap the current question for another from THIS CHAPTER not already dealt.
+  // With 30 in a chapter and 15 dealt, there are 15 to swap into. Returns true
+  // if a swap happened; false when the chapter is exhausted, which
+  // confirmLifeline guards against so SKIP is never charged for a no-op.
   const skipQuestion = () => {
-    const seenQs = new Set(deck.map((q) => q.q));
-    const poolRaw = allQuestions().filter((q) => !seenQs.has(q.q));
+    if (!chapter) return false;
+    const seenQs = new Set(deck.map((q) => q.id || q.q));
+    const poolRaw = chapter.questions.filter((q) => !seenQs.has(q.id || q.q));
     if (poolRaw.length === 0) return false;
     const picked = shuffleOptions({ ...shuffle(poolRaw)[0] });
     setDeck((prev) => { const copy = prev.slice(); copy[level] = picked; return copy; });
@@ -285,8 +303,9 @@ export function App() {
   };
   // Is a swap currently available? Used so SKIP is not charged for a no-op.
   const canSkipNow = () => {
-    const seenQs = new Set(deck.map((q) => q.q));
-    return allQuestions().some((q) => !seenQs.has(q.q));
+    if (!chapter) return false;
+    const seenQs = new Set(deck.map((q) => q.id || q.q));
+    return chapter.questions.some((q) => !seenQs.has(q.id || q.q));
   };
 
   const applyLifeline = (k) => {
@@ -382,6 +401,49 @@ export function App() {
   // The CCJT mark sits bottom-left on EVERY screen, this one included. One
   // position, always, so it reads as a persistent maker's mark rather than
   // something that moves around.
+  if (phase === "loading")
+    return c.jsx(Shell, { muted, setMuted, onLogoClick: askLogo,
+      children: c.jsx("div", {
+        style: {
+          minHeight: "60vh", display: "flex", alignItems: "center",
+          justifyContent: "center", padding: "40px 24px"
+        },
+        children: c.jsx("div", {
+          style: {
+            fontFamily: C.mono, fontSize: 12, letterSpacing: 2, color: u.textMuted
+          },
+          children: "DEALING THE QUESTIONS\u2026"
+        })
+      })
+    });
+
+  if (phase === "loaderror")
+    return c.jsx(Shell, { muted, setMuted, onLogoClick: askLogo,
+      children: c.jsx("div", {
+        style: {
+          minHeight: "60vh", display: "flex", alignItems: "center",
+          justifyContent: "center", padding: "40px 24px"
+        },
+        children: c.jsxs("div", {
+          style: {
+            background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12,
+            boxShadow: U.md, padding: "24px 26px", maxWidth: 460, textAlign: "center"
+          },
+          children: [
+            c.jsx("div", {
+              style: { fontFamily: C.display, fontSize: 22, color: u.text, marginBottom: 8 },
+              children: "THAT CHAPTER DID NOT LOAD"
+            }),
+            c.jsx("div", {
+              style: { fontFamily: C.body, fontSize: 14, color: u.textDim, marginBottom: 18 },
+              children: "Its questions could not be fetched. Check your connection and pick it again."
+            }),
+            c.jsx(Button, { onClick: goMap, variant: "primary", size: "sm", children: "Back to the map" })
+          ]
+        })
+      })
+    });
+
   if (phase === "start")
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
       c.jsx(StartScreen, { onPlay: goWalkthrough, bestRun }),
@@ -396,7 +458,7 @@ export function App() {
 
   if (phase === "map")
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
-      c.jsx(MapScreen, { onPlayFullDeck: startGame, onHome: () => { resetState(); setPhase("start"); } }),
+      c.jsx(MapScreen, { onPlayChapter: startChapter, onHome: () => { resetState(); setPhase("start"); } }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
 
