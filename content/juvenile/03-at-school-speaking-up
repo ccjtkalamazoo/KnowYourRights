@@ -1,0 +1,1075 @@
+{
+  "chapterId": "juvenile.03",
+  "districtId": "juvenile",
+  "name": "AT SCHOOL: SPEAKING UP",
+  "safetyNote": "Most things at school feel like a big deal and turn out not to be. Safety is the exception. If you are worried that somebody could get hurt, tell an adult. Do not wait until you are sure. Being asked about something you did is the other kind of moment. That is when you slow down and ask for a parent first.",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "questions": [
+    {
+      "id": "juvenile.03.001",
+      "version": 1,
+      "q": "You send a tip to OK2SAY, Michigan's school safety line. What happens to it first?",
+      "options": [
+        {
+          "id": "juvenile.03.001.a",
+          "text": "It goes to a trained person at the state police, who decides where to send it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.001.b",
+          "text": "It goes straight to your principal with your name attached.",
+          "isCorrect": false,
+          "explanation": "Tips reach the state police first, and your name is not attached when they pass one on.",
+          "misconceptionCode": "tips_are_traced_back"
+        },
+        {
+          "id": "juvenile.03.001.c",
+          "text": "It sits there until you confirm who you are.",
+          "isCorrect": false,
+          "explanation": "You never have to give a name. You do leave a phone number or email so they can ask you questions.",
+          "misconceptionCode": "a_tip_needs_your_name"
+        },
+        {
+          "id": "juvenile.03.001.d",
+          "text": "It comes back to you with an answer about what they will do.",
+          "isCorrect": false,
+          "explanation": "You get a note saying it arrived. What happens after that is not something you get told.",
+          "misconceptionCode": "reporting_gets_me_an_update"
+        }
+      ],
+      "hint": "Who reads it before the school does?",
+      "principle": "OK2SAY is Michigan's student safety tip line. The state police run it, and anybody can use it, day or night. A trained person reads what you send, asks you questions if they need more, and decides who should get it. That might be your school, local police, or a mental health agency. Life threats and crimes happening now go to police first. Everything else usually reaches a school administrator the next school day.",
+      "keyPhrase": {
+        "quote": "A person reads it, not a machine.",
+        "gloss": "Trained state police staff sort every tip."
+      },
+      "scenario": {
+        "setup": "Your kitchen table, late. The app is open on your phone.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "Are you actually going to send that?"
+          },
+          {
+            "label": "YOU",
+            "text": "I think so. I don't even know who reads these."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Some office somewhere."
+          },
+          {
+            "label": "YOU",
+            "text": "State police, apparently. I'm sending it."
+          },
+          {
+            "label": "YES",
+            "text": "It gets read tonight by somebody whose job is reading them."
+          },
+          {
+            "label": "NO",
+            "text": "The thing you know stays with only you, and nobody else can act on it."
+          }
+        ],
+        "note": "If somebody is in danger right now, that is a 911 call, not a tip."
+      }
+    },
+    {
+      "id": "juvenile.03.002",
+      "version": 1,
+      "q": "You want to send an OK2SAY tip but you are scared it gets back to you. What happens to your name?",
+      "options": [
+        {
+          "id": "juvenile.03.002.a",
+          "text": "It stays sealed unless you agree to release it or a judge orders it out.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.002.b",
+          "text": "It goes on the report, so anybody at school can ask for it.",
+          "isCorrect": false,
+          "explanation": "Your name is not passed along with the tip. The protection is a state law, not a school practice.",
+          "misconceptionCode": "tips_are_traced_back"
+        },
+        {
+          "id": "juvenile.03.002.c",
+          "text": "It stays sealed no matter what, with no exception.",
+          "isCorrect": false,
+          "explanation": "There is one exception, and it is for tips somebody sent falsely to cause trouble.",
+          "misconceptionCode": "confidentiality_is_absolute"
+        },
+        {
+          "id": "juvenile.03.002.d",
+          "text": "It depends on your district, since each one writes its own rule.",
+          "isCorrect": false,
+          "explanation": "This one is not up to a district. The same state law covers every school in Michigan.",
+          "misconceptionCode": "the_handbook_is_the_law"
+        }
+      ],
+      "hint": "Who has to agree before anybody learns it was you?",
+      "principle": "The Student Safety Act protects who you are. Your name can be released only if you say yes. If you are under 18, a parent can say yes too. A judge can also order it. It is kept out of public records requests. The tip line cannot even hand over the address a tip came from without a court order. You never have to give your name. You do leave a phone number or email, so a technician can ask you more.",
+      "keyPhrase": {
+        "quote": "They can't hand my name over without a judge.",
+        "gloss": "It is a law, not a promise."
+      },
+      "scenario": {
+        "setup": "The bus stop after school. Your friend is scrolling.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "If you send that, everybody will know it was you."
+          },
+          {
+            "label": "YOU",
+            "text": "They can't hand my name over without a judge."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Says who?"
+          },
+          {
+            "label": "YOU",
+            "text": "It's a state law. I looked it up."
+          },
+          {
+            "label": "YES",
+            "text": "You send it knowing what is actually protecting you."
+          },
+          {
+            "label": "NO",
+            "text": "The thing that stops you is a rumor about how it works."
+          }
+        ],
+        "note": "The protection covers your name. It does not stop people guessing, so keep it to yourself."
+      }
+    },
+    {
+      "id": "juvenile.03.003",
+      "version": 1,
+      "q": "You heard something that worries you about a classmate, but you are not certain it is real. What should you do?",
+      "options": [
+        {
+          "id": "juvenile.03.003.a",
+          "text": "Report what you heard, and say plainly which part you are unsure about.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.003.b",
+          "text": "Wait until you know for sure, so you do not waste anybody's time.",
+          "isCorrect": false,
+          "explanation": "Nobody expects you to be sure. Waiting for certainty is how things get missed.",
+          "misconceptionCode": "must_be_sure_to_report"
+        },
+        {
+          "id": "juvenile.03.003.c",
+          "text": "Ask around first to find out whether it is even true.",
+          "isCorrect": false,
+          "explanation": "Asking around warns people and spreads something that may not be true. It is the one move that makes it worse.",
+          "misconceptionCode": "check_it_yourself_first"
+        },
+        {
+          "id": "juvenile.03.003.d",
+          "text": "Say nothing. Being wrong about it would be worse than staying quiet.",
+          "isCorrect": false,
+          "explanation": "Being wrong costs you very little here. Being right and silent is the expensive one.",
+          "misconceptionCode": "being_wrong_is_worse_than_silence"
+        }
+      ],
+      "hint": "Who is supposed to be doing the checking, you or them?",
+      "principle": "You are not the investigator. Nobody expects you to be sure. The people who take tips are trained to ask questions, and they would rather hear something that turns out to be nothing than miss something real. Saying which part you are unsure about is useful, not weak, because it tells them what to check. Asking around first is the one thing that makes it worse. It warns people, and it spreads something that might not be true.",
+      "keyPhrase": {
+        "quote": "I'm not sure about this part, but here is what I heard.",
+        "gloss": "Not being sure is a reason to say more, not less."
+      },
+      "scenario": {
+        "setup": "The cafeteria. You are half listening to the next table.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "You didn't actually hear it, though."
+          },
+          {
+            "label": "YOU",
+            "text": "I heard enough that I don't want to be wrong about it."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Ask him first."
+          },
+          {
+            "label": "YOU",
+            "text": "No. I'll say what I heard and let them sort it out."
+          },
+          {
+            "label": "YES",
+            "text": "Somebody trained gets to decide what it is worth, which was never your job."
+          },
+          {
+            "label": "NO",
+            "text": "Everybody involved finds out you were asking, and nothing gets checked."
+          }
+        ],
+        "note": "Do not investigate. Repeating what you heard to the wrong person is its own problem."
+      }
+    },
+    {
+      "id": "juvenile.03.004",
+      "version": 1,
+      "q": "Somebody has a weapon at school right now. Which one do you use?",
+      "options": [
+        {
+          "id": "juvenile.03.004.a",
+          "text": "Call 911, because right now is the one thing a tip line is not for.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.004.b",
+          "text": "Send a tip, since that is exactly what the tip line is there for.",
+          "isCorrect": false,
+          "explanation": "A tip still has to be read and passed along. That is time you do not have when it is happening now.",
+          "misconceptionCode": "tip_line_is_for_emergencies"
+        },
+        {
+          "id": "juvenile.03.004.c",
+          "text": "Tell a teacher after class, so you do not make a scene.",
+          "isCorrect": false,
+          "explanation": "After class is too late for this one. The quiet option is the wrong option here.",
+          "misconceptionCode": "later_is_soon_enough"
+        },
+        {
+          "id": "juvenile.03.004.d",
+          "text": "Post it, since that reaches more people faster than anything else.",
+          "isCorrect": false,
+          "explanation": "A post reaches people who cannot do anything and warns the one person who can move.",
+          "misconceptionCode": "posting_counts_as_telling"
+        }
+      ],
+      "hint": "How fast is this moving, and how fast is each way of telling?",
+      "principle": "OK2SAY, Michigan's school safety tip line, is an early warning system, not an emergency line. It runs day and night, but a technician still has to read your message and pass it on. That is time you do not have when something is happening right now. For right now, call 911. OK2SAY says the same thing itself. Tips about a plan, a pattern, or something that worries you are exactly what it is for.",
+      "keyPhrase": {
+        "quote": "Right now means 911. Later means the tip line.",
+        "gloss": "Match the way you tell it to how fast it is moving."
+      },
+      "scenario": {
+        "setup": "The hallway before third hour. Somebody tells you what they just saw.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "He's got something in his bag. I saw it."
+          },
+          {
+            "label": "YOU",
+            "text": "Is he here right now?"
+          },
+          {
+            "label": "FRIEND",
+            "text": "He's in the building."
+          },
+          {
+            "label": "YOU",
+            "text": "Then I'm calling 911, not typing a tip."
+          },
+          {
+            "label": "YES",
+            "text": "People who can move in minutes find out in minutes."
+          },
+          {
+            "label": "NO",
+            "text": "The fastest thing you had gets used on the slowest way to tell it."
+          }
+        ],
+        "note": "Get somewhere safe first. Make the call from there, not from the hallway."
+      }
+    },
+    {
+      "id": "juvenile.03.005",
+      "version": 1,
+      "q": "You are about to report that a classmate brought a weapon to school. Your friend calls that snitching. What is the honest answer?",
+      "options": [
+        {
+          "id": "juvenile.03.005.a",
+          "text": "It might feel like that, and this one is serious enough to do it anyway.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.005.b",
+          "text": "It is snitching, so stay out of it and let somebody else deal with it.",
+          "isCorrect": false,
+          "explanation": "Snitching is giving somebody up to get them in trouble. This is about somebody getting hurt.",
+          "misconceptionCode": "reporting_is_snitching"
+        },
+        {
+          "id": "juvenile.03.005.c",
+          "text": "Telling an adult about anything a classmate does is always right.",
+          "isCorrect": false,
+          "explanation": "Reporting somebody for skipping class is a different thing, and that one is tattling.",
+          "misconceptionCode": "telling_is_always_right"
+        },
+        {
+          "id": "juvenile.03.005.d",
+          "text": "It does not matter, since nobody will ever find out it was you.",
+          "isCorrect": false,
+          "explanation": "People sometimes guess. The reason to do it is that it matters, not that it is untraceable.",
+          "misconceptionCode": "tips_are_traced_back"
+        }
+      ],
+      "hint": "Trouble for them, or safety for somebody?",
+      "principle": "The feeling is real and worth naming. Telling can make you the person who told, and that is a cost. So the line matters. Safety is the line: somebody getting hurt, a weapon, a threat, a person in real trouble. Skipping class or being mean to you is not that, and reporting those is tattling. When it is a safety thing, the risk of staying quiet is bigger than the risk of being called a name for a week.",
+      "keyPhrase": {
+        "quote": "This one is too serious to worry about the word.",
+        "gloss": "Safety is the line. Annoying is not."
+      },
+      "scenario": {
+        "setup": "The locker room after practice. Two of you are still there.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "You're not going to say anything, right?"
+          },
+          {
+            "label": "YOU",
+            "text": "This one I am."
+          },
+          {
+            "label": "FRIEND",
+            "text": "That's snitching."
+          },
+          {
+            "label": "YOU",
+            "text": "Maybe it looks like it. Somebody could get hurt, so I don't care."
+          },
+          {
+            "label": "YES",
+            "text": "You take the cost with your eyes open instead of pretending it is not there."
+          },
+          {
+            "label": "NO",
+            "text": "A word decides it, and the word was never about this kind of thing."
+          }
+        ],
+        "note": "You do not have to win the argument. You can end it and still send the tip."
+      }
+    },
+    {
+      "id": "juvenile.03.006",
+      "version": 1,
+      "q": "A week ago somebody told you a plan to hurt another student, and you said nothing. Is it too late now?",
+      "options": [
+        {
+          "id": "juvenile.03.006.a",
+          "text": "No. Reporting late is still reporting, and waiting longer does not help you.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.006.b",
+          "text": "Yes. Knowing about it for a week makes you part of it now.",
+          "isCorrect": false,
+          "explanation": "Knowing something is not the same as being part of it. The week does not turn you into a participant.",
+          "misconceptionCode": "knowing_makes_me_part_of_it"
+        },
+        {
+          "id": "juvenile.03.006.c",
+          "text": "Yes. Waiting that long is going to look like you were in on it.",
+          "isCorrect": false,
+          "explanation": "How it looks is not the test, and it looks worse in a week than it does today.",
+          "misconceptionCode": "nothing_to_hide"
+        },
+        {
+          "id": "juvenile.03.006.d",
+          "text": "No, but you should explain your whole week before you get to the point.",
+          "isCorrect": false,
+          "explanation": "The report is about what you know, not about you. Explaining yourself first buries the part that matters.",
+          "misconceptionCode": "my_side_helps"
+        }
+      ],
+      "hint": "What does one more week change?",
+      "principle": "Waiting does not put you in trouble, and the fear that it does keeps people quiet forever. Knowing something is not the same as being part of it. What the week changes is the odds that the thing you know about actually happens. If you are worried how the delay looks, you can say when you heard it and why you sat on it. That is one sentence. It does not change what the report is about.",
+      "keyPhrase": {
+        "quote": "I heard it a week ago. I should have said it then.",
+        "gloss": "Late is not too late."
+      },
+      "scenario": {
+        "setup": "Your kitchen table. You have had your phone in your hand for an hour.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "You've been quiet all night."
+          },
+          {
+            "label": "YOU",
+            "text": "I've known about something for a week."
+          },
+          {
+            "label": "MOM",
+            "text": "Since when do you sit on things?"
+          },
+          {
+            "label": "YOU",
+            "text": "Since I worked out I'd have to explain the week."
+          },
+          {
+            "label": "YES",
+            "text": "The week is a sentence in the report instead of the reason there is no report."
+          },
+          {
+            "label": "NO",
+            "text": "It turns into two weeks, and then into never."
+          }
+        ],
+        "note": "Telling a parent counts. It does not all have to go through a form."
+      }
+    },
+    {
+      "id": "juvenile.03.007",
+      "version": 1,
+      "q": "Three days after your OK2SAY tip, you have heard nothing back. What can you tell from that?",
+      "options": [
+        {
+          "id": "juvenile.03.007.a",
+          "text": "Nothing at all. Nobody is allowed to tell you how it turned out.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.007.b",
+          "text": "It probably got lost, since a real report comes back with an answer.",
+          "isCorrect": false,
+          "explanation": "No update is the normal ending. The tip line does not report back to the person who sent one.",
+          "misconceptionCode": "reporting_gets_me_an_update"
+        },
+        {
+          "id": "juvenile.03.007.c",
+          "text": "Nothing was done, since nothing at school looks any different.",
+          "isCorrect": false,
+          "explanation": "Most of what happens is a conversation you would never see. Quiet is not the same as nothing.",
+          "misconceptionCode": "if_nothing_shows_nothing_happened"
+        },
+        {
+          "id": "juvenile.03.007.d",
+          "text": "Your name was needed after all before anybody could act.",
+          "isCorrect": false,
+          "explanation": "A tip works without your name. What you leave is a way to be asked questions, not an identity.",
+          "misconceptionCode": "a_tip_needs_your_name"
+        }
+      ],
+      "hint": "Is there anybody who can tell you?",
+      "principle": "Silence afterward is normal. It does not mean nothing happened. The tip line does not send you an update. Schools do write up what they did, and that write up is private. A federal law also stops a school from telling you what happened to another student. It is the same law that stops them telling anybody about you. So the quiet is the way it was built.",
+      "keyPhrase": {
+        "quote": "No news is not the same as nothing happened.",
+        "gloss": "You are not going to be told, and that is deliberately."
+      },
+      "scenario": {
+        "setup": "The classroom before the bell. Everything looks completely normal.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "Guess nothing came of it."
+          },
+          {
+            "label": "YOU",
+            "text": "We wouldn't know either way."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Somebody would have said something."
+          },
+          {
+            "label": "YOU",
+            "text": "They're not allowed to. That part is private."
+          },
+          {
+            "label": "YES",
+            "text": "You stop reading the silence as an answer, because it is not one."
+          },
+          {
+            "label": "NO",
+            "text": "You decide it did not work, and next time you do not bother."
+          }
+        ],
+        "note": "Not hearing back is the design, not a failure. Send the next one anyway."
+      }
+    },
+    {
+      "id": "juvenile.03.008",
+      "version": 1,
+      "q": "Somebody suggests sending a fake tip about a person they are angry at. Where does that go?",
+      "options": [
+        {
+          "id": "juvenile.03.008.a",
+          "text": "Into a police matter, since a prosecutor can ask a judge to unseal it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.008.b",
+          "text": "Nowhere. It is a prank, and pranks are not a real thing.",
+          "isCorrect": false,
+          "explanation": "Filing a false report to mislead police can be treated as a crime. That is not a prank.",
+          "misconceptionCode": "a_prank_tip_is_harmless"
+        },
+        {
+          "id": "juvenile.03.008.c",
+          "text": "It disappears, because the line is confidential whatever the tip says.",
+          "isCorrect": false,
+          "explanation": "False tips are the one written exception to that confidentiality. A judge can open one up.",
+          "misconceptionCode": "confidentiality_is_absolute"
+        },
+        {
+          "id": "juvenile.03.008.d",
+          "text": "Into school discipline only, since the whole thing is a school matter.",
+          "isCorrect": false,
+          "explanation": "It can be a school matter and a police matter at once. Neither one waits for the other.",
+          "misconceptionCode": "one_track_replaces_the_other"
+        }
+      ],
+      "hint": "There is one door in the wall. What is it for?",
+      "principle": "The privacy rule has one hole in it, and this is the hole. A prosecutor who thinks a tip was sent falsely can ask a court to open it up. That includes anything that shows who sent it. A judge decides. Filing a false report to mislead police can be treated as a crime. So a fake tip is not a joke that vanishes into a phone. It is the one case the law was written to reach.",
+      "keyPhrase": {
+        "quote": "The one kind they can open up is a fake one.",
+        "gloss": "False reports are the exception to the whole rule."
+      },
+      "scenario": {
+        "setup": "The gym doorway before practice. Somebody is holding out a phone.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "Just send one about him. Nobody can tell."
+          },
+          {
+            "label": "YOU",
+            "text": "That's the one kind they can trace."
+          },
+          {
+            "label": "FRIEND",
+            "text": "You're making that up."
+          },
+          {
+            "label": "YOU",
+            "text": "A judge can open up a fake one. I'm not doing it."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing happens, which is the correct amount of things to happen."
+          },
+          {
+            "label": "NO",
+            "text": "A phone with your number on it sent a report a prosecutor can open."
+          }
+        ],
+        "note": "Sending it from somebody else's phone does not help either of you."
+      }
+    },
+    {
+      "id": "juvenile.03.009",
+      "version": 1,
+      "q": "You told a teacher that a classmate keeps threatening another student. A week later nothing has changed. What now?",
+      "options": [
+        {
+          "id": "juvenile.03.009.a",
+          "text": "Tell somebody higher up, and tell a parent. One adult is not the whole school.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.009.b",
+          "text": "Send a tip so the state can make the school act on it.",
+          "isCorrect": false,
+          "explanation": "A tip line passes information along. It cannot overturn what a school decided to do.",
+          "misconceptionCode": "the_tip_line_can_overrule_school"
+        },
+        {
+          "id": "juvenile.03.009.c",
+          "text": "Nothing more. You told somebody, so it belongs to them now.",
+          "isCorrect": false,
+          "explanation": "Telling one adult is a start, not the whole job. If nothing moved, somebody else needs to hear it.",
+          "misconceptionCode": "telling_once_is_enough"
+        },
+        {
+          "id": "juvenile.03.009.d",
+          "text": "Wait it out, since somebody will get to it eventually.",
+          "isCorrect": false,
+          "explanation": "Waiting works when something is already moving. Nothing here says anything is.",
+          "misconceptionCode": "later_is_soon_enough"
+        }
+      ],
+      "hint": "Is one teacher the same thing as the school?",
+      "principle": "Telling one adult is the start. Sometimes it is enough and sometimes the message stops there. If nothing has moved, go up: a counselor, an assistant principal, the principal, the district office. Tell a parent too, because a parent can ask questions a student cannot. A tip line is useful here as another way in, but it cannot force a school to reach a different answer. That part is escalation, not reporting.",
+      "keyPhrase": {
+        "quote": "I already told somebody, and nothing happened.",
+        "gloss": "One adult is a start, not the whole school."
+      },
+      "scenario": {
+        "setup": "The hallway outside the counselor's room at school.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I told Mr. K last week and nothing happened."
+          },
+          {
+            "label": "STAFF",
+            "text": "Did you tell anybody else?"
+          },
+          {
+            "label": "YOU",
+            "text": "No. I thought that was it."
+          },
+          {
+            "label": "STAFF",
+            "text": "It usually isn't."
+          },
+          {
+            "label": "YES",
+            "text": "A second adult knows, and that one can go further than the first."
+          },
+          {
+            "label": "NO",
+            "text": "It stops with one person who may have already forgotten it."
+          }
+        ],
+        "note": "Going over somebody's head is allowed. Say what you already told and who you told."
+      }
+    },
+    {
+      "id": "juvenile.03.010",
+      "version": 1,
+      "q": "Something happened at the bus stop, not on school grounds. Is that still OK2SAY's business?",
+      "options": [
+        {
+          "id": "juvenile.03.010.a",
+          "text": "Yes. The bus stop is on the list, along with the bus and the walk to school.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.010.b",
+          "text": "No. It has to happen on school property to count.",
+          "isCorrect": false,
+          "explanation": "The list is wider than the building. School events, the bus, the bus stop, and the walk are all on it.",
+          "misconceptionCode": "only_on_campus_counts"
+        },
+        {
+          "id": "juvenile.03.010.c",
+          "text": "No, unless it happened during the school day.",
+          "isCorrect": false,
+          "explanation": "The line runs all day, all night, and through the summer. School hours are not the test.",
+          "misconceptionCode": "only_school_hours_count"
+        },
+        {
+          "id": "juvenile.03.010.d",
+          "text": "Yes, but only if your own district runs that particular stop.",
+          "isCorrect": false,
+          "explanation": "It covers every public and private school in Michigan. Whose stop it is does not decide it.",
+          "misconceptionCode": "the_handbook_is_the_law"
+        }
+      ],
+      "hint": "The line follows something. Is it the building?",
+      "principle": "OK2SAY covers more ground than most people think. Michigan takes reports about anything on school property. It also covers a school event, the school bus, the bus stop, and the way to and from school. It covers every public and private school in the state, from kindergarten to twelfth grade. It runs day and night, and all summer, because the things worth reporting do not keep school hours.",
+      "keyPhrase": {
+        "quote": "The bus stop counts. So does the walk.",
+        "gloss": "It follows the school day, not the building."
+      },
+      "scenario": {
+        "setup": "The bus stop after school, ten minutes after the bus pulls away.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "It wasn't on school property, so who cares."
+          },
+          {
+            "label": "YOU",
+            "text": "It's still on the list."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Since when?"
+          },
+          {
+            "label": "YOU",
+            "text": "Bus, bus stop, the walk. All of it counts."
+          },
+          {
+            "label": "YES",
+            "text": "The thing that happened gets reported to people who can act on it."
+          },
+          {
+            "label": "NO",
+            "text": "A line on a map decides it, and the line is in the wrong place."
+          }
+        ],
+        "note": "If it is happening at the stop right now, that is a 911 call like anywhere else."
+      }
+    },
+    {
+      "id": "juvenile.03.011",
+      "version": 1,
+      "q": "A teacher says the armband you are wearing for a cause is not allowed. What is the actual test?",
+      "options": [
+        {
+          "id": "juvenile.03.011.a",
+          "text": "Whether it would really disrupt school, not whether an adult dislikes it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.011.b",
+          "text": "Whether the school agrees with what it says.",
+          "isCorrect": false,
+          "explanation": "Agreement is not the test. A school cannot ban a message just because it does not like the message.",
+          "misconceptionCode": "school_can_ban_any_message"
+        },
+        {
+          "id": "juvenile.03.011.c",
+          "text": "Whether anybody was bothered by seeing it.",
+          "isCorrect": false,
+          "explanation": "Somebody being annoyed is not a disruption. The bar is real interference with school.",
+          "misconceptionCode": "disruption_means_upset"
+        },
+        {
+          "id": "juvenile.03.011.d",
+          "text": "Nothing at all. A school cannot limit what you wear.",
+          "isCorrect": false,
+          "explanation": "Schools can act when speech would really disrupt school or trample somebody else's rights.",
+          "misconceptionCode": "free_speech_covers_everything"
+        }
+      ],
+      "hint": "Two different things could be true: they hate it, and it changes nothing.",
+      "principle": "Students do not lose free speech at the school door. The Supreme Court said so in 1969, in a case about students who wore black armbands to protest a war, and the rule from that case is still the test. A school can step in when speech would really disrupt school or trample somebody else's rights. Not liking the message is not enough. Somebody being annoyed is not enough either. In 2003 a Michigan student was sent home over a political t-shirt, and the school lost in court.",
+      "keyPhrase": {
+        "quote": "Being disliked is not the same as being disruptive.",
+        "gloss": "The test is real disruption, not how adults feel."
+      },
+      "scenario": {
+        "setup": "First hour. A teacher stops at your desk and points at your sleeve.",
+        "lines": [
+          {
+            "label": "TEACHER",
+            "text": "That's going to have to come off."
+          },
+          {
+            "label": "YOU",
+            "text": "Has it caused a problem?"
+          },
+          {
+            "label": "TEACHER",
+            "text": "It might."
+          },
+          {
+            "label": "YOU",
+            "text": "I'll ask the office which rule it breaks."
+          },
+          {
+            "label": "YES",
+            "text": "The question gets asked where somebody has to answer it in writing."
+          },
+          {
+            "label": "NO",
+            "text": "It comes off, and nobody ever names the rule."
+          }
+        ],
+        "note": "Take it off if you are told to. Ask which rule afterward, not in front of the class."
+      }
+    },
+    {
+      "id": "juvenile.03.012",
+      "version": 1,
+      "q": "You give a speech at a school assembly and fill it with crude jokes. Can the school do anything?",
+      "options": [
+        {
+          "id": "juvenile.03.012.a",
+          "text": "Yes. Lewd talk at a school event is one of the clear exceptions.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.012.b",
+          "text": "No. Crude is not the same as disruptive, so it is covered.",
+          "isCorrect": false,
+          "explanation": "Lewd speech at a school event is its own exception. It does not have to disrupt anything.",
+          "misconceptionCode": "free_speech_covers_everything"
+        },
+        {
+          "id": "juvenile.03.012.c",
+          "text": "No, unless the school warned you about that in advance.",
+          "isCorrect": false,
+          "explanation": "This one does not depend on a handbook. It is a rule from the Supreme Court, not the district.",
+          "misconceptionCode": "the_handbook_is_the_law"
+        },
+        {
+          "id": "juvenile.03.012.d",
+          "text": "Yes, but only if somebody actually complained about it.",
+          "isCorrect": false,
+          "explanation": "Nobody has to complain. The school's own event is the school's own audience.",
+          "misconceptionCode": "disruption_means_upset"
+        }
+      ],
+      "hint": "Whose stage were you standing on?",
+      "principle": "Two exceptions here are settled. A school can act on crude or lewd talk at a school event. The Supreme Court decided that in 1986, after a student gave a speech full of crude jokes at an assembly. A school can also act on speech at a school event that pushes illegal drug use. That was decided in 2007. Both are narrower than they sound. They are about the school's own events, not about everything you ever say.",
+      "keyPhrase": {
+        "quote": "A school event is the school's own audience.",
+        "gloss": "Crude at an assembly is its own exception."
+      },
+      "scenario": {
+        "setup": "The school assembly, right after you sit back down.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "We need to talk about that speech."
+          },
+          {
+            "label": "YOU",
+            "text": "People laughed."
+          },
+          {
+            "label": "STAFF",
+            "text": "That isn't the standard."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. What is the rule, so I know for next time?"
+          },
+          {
+            "label": "YES",
+            "text": "You find out where the line actually is instead of guessing at it."
+          },
+          {
+            "label": "NO",
+            "text": "You argue the wrong point and never learn the right one."
+          }
+        ],
+        "note": "This is not the moment to test it. Ask what the rule is when nobody is watching."
+      }
+    },
+    {
+      "id": "juvenile.03.013",
+      "version": 1,
+      "q": "The principal cuts your article from the school paper. What makes that different from your own post?",
+      "options": [
+        {
+          "id": "juvenile.03.013.a",
+          "text": "The paper carries the school's name and your own post does not.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.013.b",
+          "text": "Nothing at all, since your writing is your writing either way.",
+          "isCorrect": false,
+          "explanation": "Whose name is on the publication changes the rule. School-sponsored work follows school rules.",
+          "misconceptionCode": "school_paper_is_my_paper"
+        },
+        {
+          "id": "juvenile.03.013.c",
+          "text": "The format, since a newspaper gets more protection than a post.",
+          "isCorrect": false,
+          "explanation": "It runs the other way here. A school paper carries the school's name and your own post does not.",
+          "misconceptionCode": "free_speech_covers_everything"
+        },
+        {
+          "id": "juvenile.03.013.d",
+          "text": "The topic, since a school can only cut something that is untrue.",
+          "isCorrect": false,
+          "explanation": "True and false is not the test. School-sponsored work can be cut for reasons tied to teaching.",
+          "misconceptionCode": "only_falsehood_can_be_cut"
+        }
+      ],
+      "hint": "Whose name is printed at the top of the page?",
+      "principle": "Work the school puts its name on is treated differently. In 1988 the Supreme Court let a principal pull pages from a student newspaper. The paper was part of a class and it carried the school's name. Schools can control school-sponsored work for reasons tied to teaching. That is a real limit on the paper. It says nothing about what you write on your own time, which is a different question with a different answer.",
+      "keyPhrase": {
+        "quote": "Whose name is on it changes the rule.",
+        "gloss": "School-sponsored work follows school rules."
+      },
+      "scenario": {
+        "setup": "The journalism room after school. The layout is up on the screen.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "This one isn't running."
+          },
+          {
+            "label": "YOU",
+            "text": "Can you tell me why?"
+          },
+          {
+            "label": "STAFF",
+            "text": "It's the school's paper."
+          },
+          {
+            "label": "YOU",
+            "text": "Then can I run it somewhere that isn't?"
+          },
+          {
+            "label": "YES",
+            "text": "The piece exists somewhere, and the rule got named out loud."
+          },
+          {
+            "label": "NO",
+            "text": "It comes out of the layout and that is the end of it."
+          }
+        ],
+        "note": "Arguing in the room rarely changes the layout. Ask where else it could run."
+      }
+    },
+    {
+      "id": "juvenile.03.014",
+      "version": 1,
+      "q": "You post something on a Saturday, from home, about a teacher. How far does the school's reach go?",
+      "options": [
+        {
+          "id": "juvenile.03.014.a",
+          "text": "Not very far. Off campus and on your own time is mostly outside it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.014.b",
+          "text": "All the way. You are a student everywhere, all of the time.",
+          "isCorrect": false,
+          "explanation": "Being a student does not follow you into every hour of your life. Off campus, the school's reason to act is much weaker.",
+          "misconceptionCode": "always_a_student"
+        },
+        {
+          "id": "juvenile.03.014.c",
+          "text": "Nowhere at all. Off campus, a school is just another adult.",
+          "isCorrect": false,
+          "explanation": "Less reach is not no reach. Threats, harassment aimed at somebody, and cheating still get in.",
+          "misconceptionCode": "off_campus_ends_school_rules"
+        },
+        {
+          "id": "juvenile.03.014.d",
+          "text": "As far as it wants, unless you take the post down first.",
+          "isCorrect": false,
+          "explanation": "Taking it down does not unsend it. Screenshots are why that plan almost never works.",
+          "misconceptionCode": "deleting_it_ends_it"
+        }
+      ],
+      "hint": "Two things are true at once, and neither one is all or nothing.",
+      "principle": "In 2021 the Supreme Court ruled for a student who posted an angry message on a weekend, away from school, after she did not make a team. The Court said schools have much less reason to police speech that happens off campus and outside school hours. Less is not none. Threats, harassment aimed at a person, and cheating still reach into school. But the ordinary rule is that your own time is your own.",
+      "keyPhrase": {
+        "quote": "Off campus and off hours is mostly not theirs.",
+        "gloss": "Less reach is not no reach."
+      },
+      "scenario": {
+        "setup": "Your kitchen on Saturday. The post is up and the phone will not stop.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "Take it down."
+          },
+          {
+            "label": "YOU",
+            "text": "It's Saturday and I'm not at school."
+          },
+          {
+            "label": "MOM",
+            "text": "Take it down anyway."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I still want to know which rule they'd use."
+          },
+          {
+            "label": "YES",
+            "text": "You find out what they are actually claiming before you agree it applies."
+          },
+          {
+            "label": "NO",
+            "text": "You assume they can do anything, and act like it."
+          }
+        ],
+        "note": "Threats and harassment are the exceptions. Off campus does not cover those."
+      }
+    },
+    {
+      "id": "juvenile.03.015",
+      "version": 1,
+      "q": "A staff member says she can read your messages because you sent them on the school Chromebook. What is true?",
+      "options": [
+        {
+          "id": "juvenile.03.015.a",
+          "text": "A school laptop and a school account belong to the school, so mostly she can.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.015.b",
+          "text": "She would need the same reason she needs to read your own phone.",
+          "isCorrect": false,
+          "explanation": "Your phone is yours and the Chromebook is not. They are not the same question.",
+          "misconceptionCode": "school_device_is_like_my_phone"
+        },
+        {
+          "id": "juvenile.03.015.c",
+          "text": "The same rule would cover your own phone on the school wifi.",
+          "isCorrect": false,
+          "explanation": "Using their wifi does not hand them your phone. The device is what changes it.",
+          "misconceptionCode": "search_has_no_limits"
+        },
+        {
+          "id": "juvenile.03.015.d",
+          "text": "She has to warn you first before she reads anything you wrote.",
+          "isCorrect": false,
+          "explanation": "There is no warning rule. The handbook usually says it once, at the start of the year.",
+          "misconceptionCode": "they_have_to_tell_me_first"
+        }
+      ],
+      "hint": "Whose machine did you type it on?",
+      "principle": "A school Chromebook and a school email account belong to the school, the same way a locker does. Districts usually spell this out in the handbook: no privacy on district devices or district accounts. Your own phone is a different question and stays yours. The practical version is short. If you would not want it read, do not type it on their machine or send it from their account. It is not a hidden rule. It is a question of whose equipment it is.",
+      "keyPhrase": {
+        "quote": "Their laptop, their account, their rules.",
+        "gloss": "Your own phone is a different question."
+      },
+      "scenario": {
+        "setup": "The computer lab. Your school account is open on the screen.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "I can see everything that goes through that account."
+          },
+          {
+            "label": "YOU",
+            "text": "Is that in the handbook?"
+          },
+          {
+            "label": "STAFF",
+            "text": "It is."
+          },
+          {
+            "label": "YOU",
+            "text": "Then I'll keep the rest on my own phone."
+          },
+          {
+            "label": "YES",
+            "text": "You learn where the line is while nothing is happening, which is the cheap time to learn it."
+          },
+          {
+            "label": "NO",
+            "text": "You find out what was readable after somebody has read it."
+          }
+        ],
+        "note": "Assume anything on a school device can be read. That is the safe default, not a punishment."
+      }
+    }
+  ]
+}
