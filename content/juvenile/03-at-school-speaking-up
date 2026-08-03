@@ -751,7 +751,7 @@
         }
       ],
       "hint": "Two different things could be true: they hate it, and it changes nothing.",
-      "principle": "Students do not lose free speech at the school door. The Supreme Court said so in 1969, in a case about students who wore black armbands to protest a war, and the rule from that case is still the test. A school can step in when speech would really disrupt school or trample somebody else's rights. Not liking the message is not enough. Somebody being annoyed is not enough either. In 2003 a Michigan student was sent home over a political t-shirt, and the school lost in court.",
+      "principle": "Students do not lose free speech at the school door. The Supreme Court said so in 1969, in a case about students who wore black armbands to protest a war, and the rule from that case is still the test. A school can step in when speech would really disrupt school or trample somebody else's rights. Not liking the message is not enough. Somebody being annoyed is not enough either. In 2003 a Dearborn student was told to turn a political t-shirt inside out or go home. He went home, and a judge ordered the school to let him wear it.",
       "keyPhrase": {
         "quote": "Being disliked is not the same as being disruptive.",
         "gloss": "The test is real disruption, not how adults feel."
@@ -1390,7 +1390,7 @@
         }
       ],
       "hint": "Who wrote the rule, and who is only enforcing it?",
-      "principle": "Rules come from somewhere, and it is almost never the person telling you about one. Most school rules live in a district policy that a school board adopted. Board meetings are usually open, and most set aside time for anybody to speak. So the order is short. Get the rule in writing. Find out who adopted it. Find out when they meet. Bring the rule with you and say what you would change about it.",
+      "principle": "Rules come from somewhere, and it is almost never the person telling you about one. Most school rules live in a district policy that a school board adopted, and board meetings have to be open. Michigan's Open Meetings Act says a person gets to speak at one, under whatever rules the board sets, and there is no age limit in it. So the order is short. Get the rule in writing. Find out who adopted it. Find out when they meet. Bring the rule with you and say what you would change.",
       "keyPhrase": {
         "quote": "Who can actually change this rule?",
         "gloss": "Take it to whoever wrote it, not whoever said it."
@@ -1788,38 +1788,38 @@
       "options": [
         {
           "id": "juvenile.03.026.a",
-          "text": "A principal for a suspension, and the school board for an expulsion.",
+          "text": "The school board, or whoever the board has handed that job to.",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
         },
         {
           "id": "juvenile.03.026.b",
-          "text": "The school board for a suspension, and a principal for an expulsion.",
+          "text": "The teacher who sent you out, since that is where it started.",
           "isCorrect": false,
-          "explanation": "It runs the other way. The longer the removal, the higher up the decision goes.",
-          "misconceptionCode": "the_ladder_runs_backwards"
-        },
-        {
-          "id": "juvenile.03.026.c",
-          "text": "The teacher who sent you out of the room, for either one.",
-          "isCorrect": false,
-          "explanation": "A teacher can remove you from a class. How long you are out of school is not that teacher's call.",
+          "explanation": "A teacher can pull you out of one class for up to a day. How long you are out of school is a different call.",
           "misconceptionCode": "one_person_decides_it_all"
         },
         {
+          "id": "juvenile.03.026.c",
+          "text": "The board for a suspension, and a principal for an expulsion.",
+          "isCorrect": false,
+          "explanation": "It runs the other way. The longer the removal, the higher up the decision sits.",
+          "misconceptionCode": "the_ladder_runs_backwards"
+        },
+        {
           "id": "juvenile.03.026.d",
-          "text": "A judge for both, once it goes past a few days.",
+          "text": "A judge, once the number of days gets high enough.",
           "isCorrect": false,
           "explanation": "No judge is involved in school discipline. It stays inside the school system.",
           "misconceptionCode": "school_discipline_is_a_trial"
         }
       ],
       "hint": "Does the same person handle one day and sixty?",
-      "principle": "There is a ladder and it is worth knowing which rung you are on. A teacher can remove you from a class. A principal or the person they name handles suspensions. An expulsion is the school board's decision, not one administrator's. The longer the removal, the higher it goes and the more process comes with it. Two useful questions: who is making this decision, and who would we be asking if we disagreed.",
+      "principle": "The authority belongs to the school board. The board can hand it to a superintendent or a principal, and most districts do, which is why a principal is usually the one telling you. An expulsion is the biggest version and normally stays with the board. A teacher has a smaller power. A teacher can pull you out of that one class for up to a full school day, then has to send you to the principal. Ask who is deciding, and who you would ask next.",
       "keyPhrase": {
         "quote": "Who is making this decision?",
-        "gloss": "The longer it is, the higher it goes."
+        "gloss": "It is the board's power, handed down as far as the district chooses."
       },
       "scenario": {
         "setup": "The hallway outside the school office, waiting to be called in.",
