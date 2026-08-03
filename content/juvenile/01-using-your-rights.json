@@ -165,7 +165,7 @@
           "text": "Police have to be truthful when they question someone.",
           "isCorrect": false,
           "explanation": "Courts have allowed police to lie about evidence for a long time. They can say they have your fingerprints, a video, or a confession that does not exist. It is legal, and it works.",
-          "misconceptionCode": "my_side_helps"
+          "misconceptionCode": "police_must_be_truthful"
         },
         {
           "id": "juvenile.01.003.c",
@@ -179,7 +179,7 @@
           "text": "They can say it, but anything you say afterward gets thrown out.",
           "isCorrect": false,
           "explanation": "A statement you give after being lied to usually still counts. That is what makes this dangerous. The lie is legal and your answer is still evidence.",
-          "misconceptionCode": "being_right_helps_now"
+          "misconceptionCode": "a_violation_throws_it_out"
         }
       ],
       "hint": "Is something being unfair the same as it being against the rules?",
@@ -321,7 +321,7 @@
           "text": "No, and once a parent arrives they can decide whether you talk.",
           "isCorrect": false,
           "explanation": "The rights are yours, not your parent's. A parent cannot give up your right to stay silent for you, and they cannot make you talk.",
-          "misconceptionCode": "my_side_helps"
+          "misconceptionCode": "parent_decides_for_me"
         }
       ],
       "hint": "Two different people, two different jobs. Which one is trained to protect you legally?",
@@ -598,7 +598,7 @@
           "text": "Nothing you say counts, since they never read your rights.",
           "isCorrect": false,
           "explanation": "It is narrower than that. The warning matters for questioning after you are in custody. Things you volunteer without being questioned can still count.",
-          "misconceptionCode": "booking_needs_miranda"
+          "misconceptionCode": "a_violation_throws_it_out"
         },
         {
           "id": "juvenile.01.009.d",
@@ -807,7 +807,7 @@
           "text": "You get a lawyer only if you are charged with something serious.",
           "isCorrect": false,
           "explanation": "How serious the charge is does not change it. In juvenile cases you get a lawyer either way.",
-          "misconceptionCode": "police_can_hold_anyone"
+          "misconceptionCode": "rights_start_at_charges"
         },
         {
           "id": "juvenile.01.012.d",
@@ -871,7 +871,7 @@
           "text": "Your mom's, because you are under 18 and she is responsible for you.",
           "isCorrect": false,
           "explanation": "A parent is responsible for a lot of things, but your right to stay silent is not one of them. It belongs to you.",
-          "misconceptionCode": "adult_age_is_17"
+          "misconceptionCode": "parent_decides_for_me"
         },
         {
           "id": "juvenile.01.013.c",
@@ -949,7 +949,7 @@
           "text": "Yes. If your friend already told the story, there is no point staying quiet.",
           "isCorrect": false,
           "explanation": "Their version is their statement. Adding yours gives a second account that can differ in small ways and create new problems.",
-          "misconceptionCode": "my_side_helps"
+          "misconceptionCode": "others_talking_voids_my_silence"
         },
         {
           "id": "juvenile.01.014.d",
@@ -1031,7 +1031,7 @@
           "text": "Nothing happens unless you have already been charged.",
           "isCorrect": false,
           "explanation": "You do not have to wait for charges. Asking works during questioning, which is usually before any charge exists.",
-          "misconceptionCode": "police_can_hold_anyone"
+          "misconceptionCode": "rights_start_at_charges"
         }
       ],
       "hint": "One thing stops right away. A lot of other things keep moving.",
@@ -1453,7 +1453,7 @@
           "text": "That an officer has told you that you are in custody.",
           "isCorrect": false,
           "explanation": "There is no announcement. It is decided later by looking at the whole situation.",
-          "misconceptionCode": "police_can_hold_anyone"
+          "misconceptionCode": "rights_depend_on_a_signal"
         }
       ],
       "hint": "It is about how the moment would feel, not about a word or an object.",
@@ -1520,7 +1520,7 @@
           "text": "Yes, but only if the officer is in uniform.",
           "isCorrect": false,
           "explanation": "A uniform is not what matters. It depends on who they are and what they are doing.",
-          "misconceptionCode": "nerves_are_suspicion"
+          "misconceptionCode": "rights_depend_on_a_signal"
         }
       ],
       "hint": "Does the building someone works in change what they are?",
