@@ -1,0 +1,1079 @@
+{
+  "chapterId": "juvenile.02",
+  "districtId": "juvenile",
+  "name": "AT SCHOOL: SEARCHES",
+  "safetyNote": "Never try to stop a search yourself. Do not grab your bag back, block a door, or run. That turns a school problem into a much bigger one, and it can add a charge that had nothing to do with what they were looking for. Say you do not agree, let it happen, and tell a parent right after.",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "questions": [
+    {
+      "id": "juvenile.02.001",
+      "version": 1,
+      "q": "A teacher tells you she is going to look in your backpack. How much reason does she need?",
+      "options": [
+        {
+          "id": "juvenile.02.001.a",
+          "text": "A good reason to think you broke a rule or the law.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.001.b",
+          "text": "Proof that you broke a rule or the law.",
+          "isCorrect": false,
+          "explanation": "Proof is a much higher bar than school staff need. They can search on a good reason, even if they turn out to be wrong.",
+          "misconceptionCode": "school_matches_street"
+        },
+        {
+          "id": "juvenile.02.001.c",
+          "text": "A warrant signed by a judge.",
+          "isCorrect": false,
+          "explanation": "Warrants are for police searches. School staff do not need one to look in a bag at school.",
+          "misconceptionCode": "everything_needs_a_warrant"
+        },
+        {
+          "id": "juvenile.02.001.d",
+          "text": "None at all, because you are at school.",
+          "isCorrect": false,
+          "explanation": "Being at school does not mean anything goes. Staff still need a real reason, and a search has to fit what they are looking for.",
+          "misconceptionCode": "school_needs_no_reason"
+        }
+      ],
+      "hint": "The bar is lower than a court needs but higher than nothing. Which one is in between?",
+      "principle": "At school, the rules for searches are different. Police on the street usually need a strong reason and often a warrant. School staff need less than that. They need a good reason to think you broke a rule or the law. The Supreme Court decided this in 1985 in a case called New Jersey v. T.L.O. A student was caught smoking, and an assistant principal searched her purse. The Court said schools have to keep order, so staff can search with less reason than police. There are still limits. The search has to make sense for what they are looking for.",
+      "keyPhrase": {
+        "quote": "At school, they need less reason than police do.",
+        "gloss": "Less reason is not no reason. There are still limits."
+      },
+      "scenario": {
+        "setup": "Third hour. Your teacher asks you to bring your backpack up to her desk.",
+        "lines": [
+          {
+            "label": "TEACHER",
+            "text": "Someone said you had something you shouldn't. I need to look in your bag."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't agree to a search."
+          },
+          {
+            "label": "TEACHER",
+            "text": "I still have to look."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I'm just saying I don't agree to it."
+          },
+          {
+            "label": "YES",
+            "text": "The search still happens. But nobody can say later that you were fine with it."
+          },
+          {
+            "label": "NO",
+            "text": "You have agreed. That takes away anything a lawyer could raise about it later."
+          }
+        ],
+        "note": "Saying you do not agree is not the same as refusing. Do not block, grab, or pull away."
+      }
+    },
+    {
+      "id": "juvenile.02.002",
+      "version": 1,
+      "q": "A vice principal looking for a stolen laptop has checked your backpack and now wants your wallet. What does the law say?",
+      "options": [
+        {
+          "id": "juvenile.02.002.a",
+          "text": "A wallet is too small to hold a laptop, so that part goes too far.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.002.b",
+          "text": "A good reason to check the bag lets him look anywhere he wants.",
+          "isCorrect": false,
+          "explanation": "A good reason gets a search started. It does not make the search endless. Staff can only look in places where the missing thing could actually be.",
+          "misconceptionCode": "search_has_no_limits"
+        },
+        {
+          "id": "juvenile.02.002.c",
+          "text": "A wallet is fair game because school owns everything you bring in.",
+          "isCorrect": false,
+          "explanation": "Lockers and school laptops are a different question, and that one turns on your district's own rules. Your own things stay yours, and a search of them still has to fit what staff are looking for.",
+          "misconceptionCode": "school_owns_what_you_bring"
+        },
+        {
+          "id": "juvenile.02.002.d",
+          "text": "A wallet cannot be opened at school without a warrant from a judge.",
+          "isCorrect": false,
+          "explanation": "School staff never needed a warrant here. The limit is not a warrant. The limit is that a search has to match the thing they are trying to find.",
+          "misconceptionCode": "everything_needs_a_warrant"
+        }
+      ],
+      "hint": "The thing they are trying to find decides where they get to search. Could it even be in there?",
+      "principle": "A school search has to fit the thing staff are trying to find. A good reason gets them started. It does not let them look everywhere. A laptop cannot fit in a wallet, so the wallet is off limits. The case that gave schools the lower bar, New Jersey v. T.L.O. in 1985, set this limit at the same time. Staff can search on less reason than police, and the search still has to match what they are after. A search can start out fine and still go too far.",
+      "keyPhrase": {
+        "quote": "That's too small to hold what you're looking for.",
+        "gloss": "A search can only go where the missing thing could be."
+      },
+      "scenario": {
+        "setup": "The front office. A school laptop went missing during lunch.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Your bag is clear. Open your wallet for me."
+          },
+          {
+            "label": "YOU",
+            "text": "That's too small to hold a laptop. I don't agree to it."
+          },
+          {
+            "label": "STAFF",
+            "text": "I would still like to see it."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I'm telling my mom what happened."
+          },
+          {
+            "label": "YES",
+            "text": "The wallet may get opened anyway. But you said out loud where the line was, and someone at home knows."
+          },
+          {
+            "label": "NO",
+            "text": "The wallet gets opened, and later there is nothing to show that anyone thought it went too far."
+          }
+        ],
+        "note": "Say it, do not do it. Never grab your bag or your wallet back."
+      }
+    },
+    {
+      "id": "juvenile.02.003",
+      "version": 1,
+      "q": "You tell a staff member you do not agree to a search. She searches your bag anyway. What did saying no actually do?",
+      "options": [
+        {
+          "id": "juvenile.02.003.a",
+          "text": "It did not stop the search, but it keeps you from being counted as agreeing.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.003.b",
+          "text": "It stops the search, because staff cannot search a student who says no.",
+          "isCorrect": false,
+          "explanation": "Saying no rarely stops a school search. Staff with a good reason can search without your say so. What it changes is what can be said about it afterward.",
+          "misconceptionCode": "saying_no_stops_it_at_school"
+        },
+        {
+          "id": "juvenile.02.003.c",
+          "text": "It counts against you, because a refusal can be used as proof later.",
+          "isCorrect": false,
+          "explanation": "Saying no is not proof of anything. Staff still have to be able to point to the reason they had before the search started.",
+          "misconceptionCode": "refusal_implies_guilt"
+        },
+        {
+          "id": "juvenile.02.003.d",
+          "text": "It changed nothing, because letting them do it means you agreed anyway.",
+          "isCorrect": false,
+          "explanation": "Standing there while it happens is not the same as agreeing. You said no once and did not fight, and both of those things are true at the same time.",
+          "misconceptionCode": "saying_nothing_is_agreeing"
+        }
+      ],
+      "hint": "The search happens. So what is left to gain by saying it?",
+      "principle": "Saying no does not usually stop a school search. Staff with a good reason are allowed to search without your say so. What saying no does is keep the record straight. If you never say anything, staff can say later that you were fine with it and handed the bag over. If you say no out loud and then let it happen, no one can say that, and a lawyer can still ask whether the search was allowed. Saying no is words, not hands.",
+      "keyPhrase": {
+        "quote": "I don't agree to this search.",
+        "gloss": "It may not stop the search. It stops anyone saying you agreed."
+      },
+      "scenario": {
+        "setup": "The hallway between classes. Staff ask you to hand over your bag.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "I need to go through your bag."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't agree to this search."
+          },
+          {
+            "label": "STAFF",
+            "text": "I'm doing it either way."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I'm not going to stop you. I just don't agree to it."
+          },
+          {
+            "label": "YES",
+            "text": "The bag gets searched. But no one can say you were fine with it, and that can matter later."
+          },
+          {
+            "label": "NO",
+            "text": "The bag gets searched, and the only story left is that you handed it over without a word."
+          }
+        ],
+        "note": "Say it once and let it happen. Never hold onto the bag or step in the way."
+      }
+    },
+    {
+      "id": "juvenile.02.004",
+      "version": 1,
+      "q": "A teacher takes your phone for using it in class, then starts reading your messages. What is true about that?",
+      "options": [
+        {
+          "id": "juvenile.02.004.a",
+          "text": "Reading it is a second step, and that step needs its own good reason.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.004.b",
+          "text": "Reading it comes with taking it, since the phone is already in her hand.",
+          "isCorrect": false,
+          "explanation": "Taking a phone and searching a phone are two different things. Holding it lets her hold it. Looking inside is a search of its own.",
+          "misconceptionCode": "holding_phone_means_reading_it"
+        },
+        {
+          "id": "juvenile.02.004.c",
+          "text": "Reading it is fine, since you handed it over unlocked.",
+          "isCorrect": false,
+          "explanation": "Handing a phone over is not the same as agreeing to what is on it. Doing what you are told is not saying yes.",
+          "misconceptionCode": "opening_it_yourself_is_different"
+        },
+        {
+          "id": "juvenile.02.004.d",
+          "text": "Reading it is fine as long as she asks you to unlock it first.",
+          "isCorrect": false,
+          "explanation": "Staff can ask. There is no rule that makes you type in your code for them. Saying no can still bring school consequences.",
+          "misconceptionCode": "passcode_must_be_given"
+        }
+      ],
+      "hint": "The phone being in her hand is one thing. What is inside is another.",
+      "principle": "Taking a phone and reading a phone are two different things. Staff can take a phone for breaking a class rule. Reading what is on it is a search, and a search needs its own good reason. The reason also has to match. If the rule you broke was texting in class, that does not open your photos. In 2014 the Supreme Court said a phone holds more of a person's life than a bag does, in a case called Riley v. California. That case was about police. Courts are still working out how much of it applies at school.",
+      "keyPhrase": {
+        "quote": "You can take it. I don't agree to you reading it.",
+        "gloss": "Holding a phone and searching a phone are two different things."
+      },
+      "scenario": {
+        "setup": "Third hour. Your phone buzzes and your teacher holds out her hand.",
+        "lines": [
+          {
+            "label": "TEACHER",
+            "text": "Phone. Now."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay."
+          },
+          {
+            "label": "TEACHER",
+            "text": "Who were you texting? Let's see."
+          },
+          {
+            "label": "YOU",
+            "text": "You can take it. I don't agree to you reading it."
+          },
+          {
+            "label": "YES",
+            "text": "She may read it anyway. But the objection is on the record, and taking it was never the same as opening it."
+          },
+          {
+            "label": "NO",
+            "text": "Nothing marks where the phone rule ended and the search began."
+          }
+        ],
+        "note": "Hand the phone over when asked. Say the rest with words, not with your hands."
+      }
+    },
+    {
+      "id": "juvenile.02.005",
+      "version": 1,
+      "q": "A friend tells you to delete your photos before staff look at your phone. What actually happens if you do?",
+      "options": [
+        {
+          "id": "juvenile.02.005.a",
+          "text": "Deleting does not clear it, and it can turn a small problem into a bigger one.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.005.b",
+          "text": "Deleting clears it, because a deleted photo is gone.",
+          "isCorrect": false,
+          "explanation": "A photo can still sit in a backup, on someone else's phone, or in a group chat. Deleting your copy does not reach any of those.",
+          "misconceptionCode": "deleting_it_ends_it"
+        },
+        {
+          "id": "juvenile.02.005.c",
+          "text": "Deleting is safe, because whatever staff find at school stays at school.",
+          "isCorrect": false,
+          "explanation": "What staff find can go to police, and a school report can start a case. It does not stop at the office door.",
+          "misconceptionCode": "school_findings_stay_at_school"
+        },
+        {
+          "id": "juvenile.02.005.d",
+          "text": "Deleting looks better than refusing, since refusing makes you seem guilty.",
+          "isCorrect": false,
+          "explanation": "Saying no is not proof of anything. Getting rid of something after you were asked for it is the part that can look bad.",
+          "misconceptionCode": "nothing_to_hide"
+        }
+      ],
+      "hint": "Ask where else the same picture already sits.",
+      "principle": "Deleting is not the safe move it feels like. A photo you delete can still sit in a cloud backup, on someone else's phone, or in a group chat you do not control. Police can also ask a company for it later. And getting rid of something after you have been asked for it can become its own problem, on top of whatever they were looking at. If you think something on your phone matters, the person to talk to is a parent or a lawyer, not the group chat.",
+      "keyPhrase": {
+        "quote": "Deleting it does not make it gone.",
+        "gloss": "You can delete your copy. You cannot delete theirs."
+      },
+      "scenario": {
+        "setup": "The cafeteria. Word is going around that staff are checking phones.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "Delete everything before they get to you."
+          },
+          {
+            "label": "YOU",
+            "text": "That doesn't make it gone."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Nobody checks the cloud."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not deleting anything. I'll talk to my mom tonight."
+          },
+          {
+            "label": "YES",
+            "text": "Whatever happens next is about the photo. Nothing new got added on top of it."
+          },
+          {
+            "label": "NO",
+            "text": "The copies are still out there, and now there is a second thing to explain."
+          }
+        ],
+        "note": "Do not delete, and do not hand your phone around to friends either."
+      }
+    },
+    {
+      "id": "juvenile.02.006",
+      "version": 1,
+      "q": "The search is over and you think it was not fair. What is the most useful thing to do that night?",
+      "options": [
+        {
+          "id": "juvenile.02.006.a",
+          "text": "Write down what happened while it is fresh, and tell a parent.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.006.b",
+          "text": "Nothing, because an unfair search cancels the punishment anyway.",
+          "isCorrect": false,
+          "explanation": "School discipline does not fall apart on its own when a search was improper. Somebody has to raise it for you.",
+          "misconceptionCode": "bad_search_undoes_discipline"
+        },
+        {
+          "id": "juvenile.02.006.c",
+          "text": "Go back tomorrow and argue it with the staff member who did it.",
+          "isCorrect": false,
+          "explanation": "Arguing with the person who did it rarely changes it, and it can add a second problem to the first one.",
+          "misconceptionCode": "being_right_helps_now"
+        },
+        {
+          "id": "juvenile.02.006.d",
+          "text": "Clear anything off your phone that could come up later.",
+          "isCorrect": false,
+          "explanation": "Copies usually sit somewhere you do not control, and clearing things out after the fact can become its own problem.",
+          "misconceptionCode": "deleting_it_ends_it"
+        }
+      ],
+      "hint": "Ask which of these still helps you in a week.",
+      "principle": "The time to sort out an unfair search is after it, not during it. Write down what happened while you still have it clear: who, when, what was said, who else saw it. Tell a parent that night. If the school takes action, ask for the reason in writing. A search that was not proper does not undo school discipline on its own, so someone may have to raise it for you. That is what a parent, an advocate, or a lawyer is for. None of this works as well a week later, when everyone tells it differently.",
+      "keyPhrase": {
+        "quote": "Write it down tonight, while you still have it clear.",
+        "gloss": "Details fade fast, and later on you will need them."
+      },
+      "scenario": {
+        "setup": "Your kitchen table that night. Your bag is still by the door.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "So what actually happened?"
+          },
+          {
+            "label": "YOU",
+            "text": "They went through my bag. I said I didn't agree."
+          },
+          {
+            "label": "MOM",
+            "text": "Did they say why?"
+          },
+          {
+            "label": "YOU",
+            "text": "No. I'm writing down what I have before I lose it."
+          },
+          {
+            "label": "YES",
+            "text": "You have names, times, and words while they are still right."
+          },
+          {
+            "label": "NO",
+            "text": "In a week it is your word against a report that was written the same day."
+          }
+        ],
+        "note": "Write it for yourself first. Deciding what to do with it can wait until morning."
+      }
+    },
+    {
+      "id": "juvenile.02.007",
+      "version": 1,
+      "q": "A staff member says she will call police unless you open your bag yourself. What does opening it get you?",
+      "options": [
+        {
+          "id": "juvenile.02.007.a",
+          "text": "It gets you nothing you can count on. The call can happen anyway, and now you agreed.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.007.b",
+          "text": "It keeps police out of it, since staff deal with what they find themselves.",
+          "isCorrect": false,
+          "explanation": "Staff can call police whether you open it or not. Handing over the bag does not buy that decision.",
+          "misconceptionCode": "school_findings_stay_at_school"
+        },
+        {
+          "id": "juvenile.02.007.c",
+          "text": "It shows you are cooperating, which usually earns you a break.",
+          "isCorrect": false,
+          "explanation": "The person searching you does not decide what happens next. Cooperating is not a deal, because nobody on that side is offering one.",
+          "misconceptionCode": "talking_earns_leniency"
+        },
+        {
+          "id": "juvenile.02.007.d",
+          "text": "It changes nothing, since opening it yourself is not the same as agreeing.",
+          "isCorrect": false,
+          "explanation": "Opening it yourself is the clearest way to agree there is. After that, nobody has to show they had a reason at all.",
+          "misconceptionCode": "opening_it_yourself_is_different"
+        }
+      ],
+      "hint": "Who gets to decide if police are called?",
+      "principle": "A trade like this is not really a trade. Whether police get called is usually not up to the person in front of you, and it can happen either way. What opening the bag does do is settle the consent question. Once you open it yourself, nobody has to show they had a good reason. You can say no and still be polite, and you can let a search happen without helping it along. Those are two different things, and the difference is the whole point.",
+      "keyPhrase": {
+        "quote": "I'm not opening it. I'm not going to stop you either.",
+        "gloss": "Not helping is not the same as fighting."
+      },
+      "scenario": {
+        "setup": "The principal's office. Your bag is on the chair next to you.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Open it, or I call the police."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not opening it."
+          },
+          {
+            "label": "STAFF",
+            "text": "That choice is going to look bad."
+          },
+          {
+            "label": "YOU",
+            "text": "I understand. I'm not going to stop you from looking."
+          },
+          {
+            "label": "YES",
+            "text": "The bag may get opened anyway, and the call may happen anyway. Neither one is on you."
+          },
+          {
+            "label": "NO",
+            "text": "You opened it, so the reason never has to be explained, and the call can still happen."
+          }
+        ],
+        "note": "Say no with words. Do not hold the bag, and do not walk out of the room."
+      }
+    },
+    {
+      "id": "juvenile.02.008",
+      "version": 1,
+      "q": "A staff member says she is not searching you, she is just taking a look. Does the name change anything?",
+      "options": [
+        {
+          "id": "juvenile.02.008.a",
+          "text": "No. Going through your things is a search whatever anyone calls it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.008.b",
+          "text": "Yes. A look is casual, so the rules about searches do not apply.",
+          "isCorrect": false,
+          "explanation": "The rules follow what is happening, not the word for it. Casual is a tone, not a legal test.",
+          "misconceptionCode": "sro_is_off_the_record"
+        },
+        {
+          "id": "juvenile.02.008.c",
+          "text": "Yes. It only counts as a search when an officer is the one looking.",
+          "isCorrect": false,
+          "explanation": "School staff searching you is a school search. It has its own rules and it counts.",
+          "misconceptionCode": "only_police_really_search"
+        },
+        {
+          "id": "juvenile.02.008.d",
+          "text": "No. And because it is a search, she needs a warrant before she can look.",
+          "isCorrect": false,
+          "explanation": "Warrants are for police. School staff need a good reason, and that is a lower bar than a warrant.",
+          "misconceptionCode": "everything_needs_a_warrant"
+        }
+      ],
+      "hint": "The word she uses does not change what her hands are doing.",
+      "principle": "What something is called does not change what it is. If a staff member goes through your bag, your pockets, or your phone, that is a search, and it needs the same good reason any school search needs. Calling it a look, a check, or a quick peek does not lower the bar. It matters later, because if it was a search, then whether there was a reason for it is a fair thing to ask. It matters now too, because you can say you do not agree to a look just as easily as to a search.",
+      "keyPhrase": {
+        "quote": "Call it what you want. I don't agree to it.",
+        "gloss": "A search by another name follows the same rules."
+      },
+      "scenario": {
+        "setup": "The hallway. She is already unzipping the front pocket.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Relax. This isn't a search, I'm just taking a look."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't agree to it, whatever it's called."
+          },
+          {
+            "label": "STAFF",
+            "text": "It isn't that serious."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I'm still not agreeing to it."
+          },
+          {
+            "label": "YES",
+            "text": "It is on the record as a search, which is what it was."
+          },
+          {
+            "label": "NO",
+            "text": "It goes down as a look you were fine with, and the reason never gets asked about."
+          }
+        ],
+        "note": "You can be calm and still disagree. Tone is not the same as agreeing."
+      }
+    },
+    {
+      "id": "juvenile.02.009",
+      "version": 1,
+      "q": "An officer at school asks a staff member to search your bag for him. Why does that matter?",
+      "options": [
+        {
+          "id": "juvenile.02.009.a",
+          "text": "It can raise the bar to the one police work from, instead of the school one.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.009.b",
+          "text": "It makes no difference, because he is at school and not out on the street.",
+          "isCorrect": false,
+          "explanation": "The same officer has the same job in both places. Being inside a school does not make it a smaller thing.",
+          "misconceptionCode": "sro_is_off_the_record"
+        },
+        {
+          "id": "juvenile.02.009.c",
+          "text": "It means a warrant is needed now, because police are the ones asking.",
+          "isCorrect": false,
+          "explanation": "It does not go straight to a warrant. What can change is the level of reason needed, not the paperwork.",
+          "misconceptionCode": "everything_needs_a_warrant"
+        },
+        {
+          "id": "juvenile.02.009.d",
+          "text": "It means whatever turns up can only be used by police, not by the school.",
+          "isCorrect": false,
+          "explanation": "Both can act on it. School discipline and a case run on their own rules and neither waits for the other.",
+          "misconceptionCode": "school_findings_stay_at_school"
+        }
+      ],
+      "hint": "Ask whose search it really is when someone else asked for it.",
+      "principle": "Who is really running a search matters. School staff work from a lower bar than police do. When an officer asks staff to search for him, courts have said that can change which rules apply, because the school is doing police work. It is not automatic, and it is not settled the same way everywhere. What you do is the same either way. Say you do not agree, do not physically stop it, and tell a parent right after. Whether the bar shifted is a question for a lawyer, later.",
+      "keyPhrase": {
+        "quote": "I don't agree to this search, and I want my mom called.",
+        "gloss": "Say it the same way, whoever is doing the asking."
+      },
+      "scenario": {
+        "setup": "A small room off the school office. An officer waits by the door.",
+        "lines": [
+          {
+            "label": "SRO",
+            "text": "Go ahead and check the bag for me."
+          },
+          {
+            "label": "STAFF",
+            "text": "Empty it out on the table."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't agree to this. Can someone call my mom?"
+          },
+          {
+            "label": "STAFF",
+            "text": "We'll get to that."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. I'm not going to stop you."
+          },
+          {
+            "label": "YES",
+            "text": "Who asked for the search is now part of the story, and a lawyer can use that."
+          },
+          {
+            "label": "NO",
+            "text": "It reads as a school search you were fine with, and the officer never appears in it."
+          }
+        ],
+        "note": "Ask who is asking, then say the same words. Do not argue about which rules apply."
+      }
+    },
+    {
+      "id": "juvenile.02.010",
+      "version": 1,
+      "q": "Money goes missing at practice and the coach tells the whole team to empty their bags. What is different about a search like that?",
+      "options": [
+        {
+          "id": "juvenile.02.010.a",
+          "text": "It is aimed at everyone at once, which is the weakest kind of reason.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.010.b",
+          "text": "It is stronger, because covering everyone means nobody got singled out.",
+          "isCorrect": false,
+          "explanation": "Searching everybody is not fairer, it is thinner. A school search normally has to point at a person.",
+          "misconceptionCode": "group_suspicion_covers_everyone"
+        },
+        {
+          "id": "juvenile.02.010.c",
+          "text": "It is fine, because somebody on the team obviously took it.",
+          "isCorrect": false,
+          "explanation": "That somebody did it is not a reason to think you did. A reason has to be about you.",
+          "misconceptionCode": "rumor_is_enough"
+        },
+        {
+          "id": "juvenile.02.010.d",
+          "text": "It works out fine once the money turns up in somebody's bag.",
+          "isCorrect": false,
+          "explanation": "Whether a search was allowed is decided by what staff knew before it started, not by what it turned up.",
+          "misconceptionCode": "finding_something_makes_it_legal"
+        }
+      ],
+      "hint": "Ask who it is actually pointed at.",
+      "principle": "A school search normally has to point at a person. Staff need a good reason to think you broke a rule, not that the room did. A search of everyone at once is the weakest version of that, and courts look at it hardest. It is not the same as a metal detector at the door. That one is quick, treats everyone alike, and is not about catching one person. If a whole group gets searched over one missing thing, saying you do not agree is worth more than usual. There may have been no reason aimed at you at all.",
+      "keyPhrase": {
+        "quote": "I don't agree. Nobody said anything about me.",
+        "gloss": "A reason aimed at the room is not a reason aimed at you."
+      },
+      "scenario": {
+        "setup": "The locker room after practice. Bags in a line on the bench.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Everybody. Bags out on the bench."
+          },
+          {
+            "label": "YOU",
+            "text": "Did somebody say it was me?"
+          },
+          {
+            "label": "STAFF",
+            "text": "I'm not doing this one at a time."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't agree to it. I'm not going to hold anyone up."
+          },
+          {
+            "label": "YES",
+            "text": "Your bag gets looked through with everyone else's, and the missing reason is on the record."
+          },
+          {
+            "label": "NO",
+            "text": "It looks like the whole team agreed, so nobody has to explain why anyone was searched."
+          }
+        ],
+        "note": "Do not make it a standoff in front of the team. Say it once and let it go."
+      }
+    },
+    {
+      "id": "juvenile.02.011",
+      "version": 1,
+      "q": "On the bus back from a field trip, a chaperone asks to look in your bag. Does being off campus change anything?",
+      "options": [
+        {
+          "id": "juvenile.02.011.a",
+          "text": "No. A school trip runs on school rules, and she is school staff for the day.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.011.b",
+          "text": "Yes. Off school grounds she has no more say than any other adult.",
+          "isCorrect": false,
+          "explanation": "A trip is school. The adults running it are acting as staff the whole time, not just on the property.",
+          "misconceptionCode": "off_campus_ends_school_rules"
+        },
+        {
+          "id": "juvenile.02.011.c",
+          "text": "Yes. Once you leave campus, only police can search anything.",
+          "isCorrect": false,
+          "explanation": "Nothing switches over to police when the bus pulls out. The school bar still applies.",
+          "misconceptionCode": "only_police_really_search"
+        },
+        {
+          "id": "juvenile.02.011.d",
+          "text": "No. And on a trip she can look at anything of yours for any reason.",
+          "isCorrect": false,
+          "explanation": "The rules travel with you, and so do the limits. A search still needs a reason and still has to fit it.",
+          "misconceptionCode": "search_has_no_limits"
+        }
+      ],
+      "hint": "Ask what the trip is, not where the bus is.",
+      "principle": "A school trip is still school. The adults in charge are acting as school staff, and the same lower bar applies on a bus, at a game, or at a museum three hours away. Being off campus does not turn a chaperone into a stranger, and it does not turn the trip into a police matter either. What changes is practical, not legal. Your parents are further away and there may be nobody else to ask. Say the same thing you would say in a hallway, then tell a parent when you get back.",
+      "keyPhrase": {
+        "quote": "I don't agree to a search, here or at school.",
+        "gloss": "A trip is still school. Same rules, further from home."
+      },
+      "scenario": {
+        "setup": "The bus back from a field trip. Two rows behind the chaperone.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Can I see in your bag?"
+          },
+          {
+            "label": "YOU",
+            "text": "Is this about something?"
+          },
+          {
+            "label": "STAFF",
+            "text": "Just checking before we get back."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't agree to it. I won't stop you."
+          },
+          {
+            "label": "YES",
+            "text": "The rest of the ride is quiet, and what happened is clear if it comes up later."
+          },
+          {
+            "label": "NO",
+            "text": "Nothing marks it, and being far from home is the only thing anyone remembers."
+          }
+        ],
+        "note": "A bus is a bad place for an argument. Say it once, sit down, and call a parent later."
+      }
+    },
+    {
+      "id": "juvenile.02.012",
+      "version": 1,
+      "q": "A staff member tells you to open your backpack and take everything out yourself. What is the best move?",
+      "options": [
+        {
+          "id": "juvenile.02.012.a",
+          "text": "Do what she says with your hands, and say out loud that you do not agree.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.012.b",
+          "text": "Do it, since doing it yourself keeps it from counting as a search.",
+          "isCorrect": false,
+          "explanation": "It counts either way, and doing it yourself can be treated as agreeing to it.",
+          "misconceptionCode": "opening_it_yourself_is_different"
+        },
+        {
+          "id": "juvenile.02.012.c",
+          "text": "Refuse to touch it, since making them do it stops the search.",
+          "isCorrect": false,
+          "explanation": "It rarely stops anything. It usually adds a discipline problem on top of the search.",
+          "misconceptionCode": "saying_no_stops_it_at_school"
+        },
+        {
+          "id": "juvenile.02.012.d",
+          "text": "Do it fast and say nothing, since arguing only makes it worse.",
+          "isCorrect": false,
+          "explanation": "Saying you do not agree is not arguing. Saying nothing is the part that reads as agreeing.",
+          "misconceptionCode": "saying_nothing_is_agreeing"
+        }
+      ],
+      "hint": "Your hands and your words can do two different things.",
+      "principle": "Doing it yourself is still a search, and it can be treated as agreeing to one. That is the part most people have backwards. It is also true that refusing to move rarely stops anything and can turn a search into a discipline problem. So split it. Let your hands cooperate and let your words object. Open the bag if you are told to, and say clearly that you do not agree to the search. You have then done everything you can safely do, and you have not handed anyone your consent.",
+      "keyPhrase": {
+        "quote": "I'll do what you're telling me. I don't agree to it.",
+        "gloss": "Hands cooperate. Words object. Both at the same time."
+      },
+      "scenario": {
+        "setup": "A classroom after the bell. She is waiting by the door with your bag.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Take everything out, please."
+          },
+          {
+            "label": "YOU",
+            "text": "I'll do it. I don't agree to the search."
+          },
+          {
+            "label": "STAFF",
+            "text": "Noted."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay."
+          },
+          {
+            "label": "YES",
+            "text": "The bag gets emptied and the objection stands. You gave up nothing you did not have to."
+          },
+          {
+            "label": "NO",
+            "text": "It looks like you offered, and later there is no difference between told and offered."
+          }
+        ],
+        "note": "This is the move for almost every school search: do the thing, say the words."
+      }
+    },
+    {
+      "id": "juvenile.02.013",
+      "version": 1,
+      "q": "Staff find something in your bag and ask you to explain it. What happens if you do?",
+      "options": [
+        {
+          "id": "juvenile.02.013.a",
+          "text": "What you say can travel to a case, even though a teacher is the one asking.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.013.b",
+          "text": "Not much, since being honest early clears things up.",
+          "isCorrect": false,
+          "explanation": "Sometimes it does. Sometimes it fills in the part nobody could prove, and you cannot tell which from inside the room.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.02.013.c",
+          "text": "It helps you, since you did nothing wrong and it will show.",
+          "isCorrect": false,
+          "explanation": "Being innocent does not make explaining safe. People who did nothing wrong still say things that get used.",
+          "misconceptionCode": "innocence_makes_talking_safe"
+        },
+        {
+          "id": "juvenile.02.013.d",
+          "text": "It stays at school, since a teacher is not the police.",
+          "isCorrect": false,
+          "explanation": "A staff member can be asked later what you told them, and a school report can be part of a case.",
+          "misconceptionCode": "school_findings_stay_at_school"
+        }
+      ],
+      "hint": "Ask who else could end up reading it.",
+      "principle": "A teacher asking you to explain is not a police interview, and it can still reach one. Staff can be asked later what you told them, and school reports can become part of a case. That does not make the teacher your enemy. It makes the moment worth slowing down. You can be polite, say you would rather not explain right now, and ask to call a parent. If it turns out to be nothing, you lost nothing. If it turns out to be something, you did not hand over the one thing nobody else could give them.",
+      "keyPhrase": {
+        "quote": "I'd rather not explain it until my mom is here.",
+        "gloss": "Polite and quiet are not opposites."
+      },
+      "scenario": {
+        "setup": "A back room off the gym. What they found is on the table.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "So what is this?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'd rather not explain it until my mom is here."
+          },
+          {
+            "label": "STAFF",
+            "text": "It's easier if you just tell me now."
+          },
+          {
+            "label": "YOU",
+            "text": "I understand. I'd still like to wait for her."
+          },
+          {
+            "label": "YES",
+            "text": "The thing is still there, and your account of it is not."
+          },
+          {
+            "label": "NO",
+            "text": "Your explanation exists now, and it can be repeated by someone else later."
+          }
+        ],
+        "note": "You can answer where the bathroom is and still not answer this."
+      }
+    },
+    {
+      "id": "juvenile.02.014",
+      "version": 1,
+      "q": "Staff have a good reason to search you. How far onto your body can a search like that go?",
+      "options": [
+        {
+          "id": "juvenile.02.014.a",
+          "text": "Pockets and shoes with a good reason. Clothing coming off needs far more.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.014.b",
+          "text": "Anywhere, once there is a good reason to search at all.",
+          "isCorrect": false,
+          "explanation": "A reason to start is not a reason to go anywhere. The more serious the step, the more it takes.",
+          "misconceptionCode": "search_has_no_limits"
+        },
+        {
+          "id": "juvenile.02.014.c",
+          "text": "Nowhere at all. A school can search your bag, never your body.",
+          "isCorrect": false,
+          "explanation": "School staff can search a person on the school bar. What changes with each step is how much they need.",
+          "misconceptionCode": "only_police_really_search"
+        },
+        {
+          "id": "juvenile.02.014.d",
+          "text": "As far as they want, as long as what they find turns out to be real.",
+          "isCorrect": false,
+          "explanation": "How it turned out does not decide whether it was allowed. That is decided by what was known going in.",
+          "misconceptionCode": "finding_something_makes_it_legal"
+        }
+      ],
+      "hint": "The more serious the step, the more it takes to justify it.",
+      "principle": "How far a search can go depends on how serious the step is. A good reason can be enough for a bag, pockets, or shoes. Asking a student to pull clothing away is a different level, and it takes much more than a hunch. In 2009 the Supreme Court ruled against a school that did that to a 13 year old girl over pills, because nothing gave staff a reason to think anything was hidden there. The case is Safford v. Redding. Some states add their own rules. If it ever goes there, say no out loud and ask for a parent.",
+      "keyPhrase": {
+        "quote": "I want my mom here before anything else happens.",
+        "gloss": "The bigger the step, the more they have to have."
+      },
+      "scenario": {
+        "setup": "A room off the school office with the door shut.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Take off the sweatshirt and turn out your waistband."
+          },
+          {
+            "label": "YOU",
+            "text": "No. I want my mom here first."
+          },
+          {
+            "label": "STAFF",
+            "text": "This will only take a second."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not agreeing to that. Please call my mom."
+          },
+          {
+            "label": "YES",
+            "text": "Saying no out loud is the whole move here, and a parent on the way changes the room."
+          },
+          {
+            "label": "NO",
+            "text": "It happens with nobody there for you and nothing said about whether it was allowed."
+          }
+        ],
+        "note": "This is the one place to say no clearly and keep saying it. Say it with words. Do not pull away or run."
+      }
+    },
+    {
+      "id": "juvenile.02.015",
+      "version": 1,
+      "q": "A student tells a teacher that people are saying somebody in class has vapes. Is that enough to search you?",
+      "options": [
+        {
+          "id": "juvenile.02.015.a",
+          "text": "No. Nothing in that points at you rather than anybody else.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.02.015.b",
+          "text": "Yes. A tip is a good reason on its own, wherever it came from.",
+          "isCorrect": false,
+          "explanation": "A tip with no name in it does not say anything about you. Where it came from is part of whether it counts.",
+          "misconceptionCode": "rumor_is_enough"
+        },
+        {
+          "id": "juvenile.02.015.c",
+          "text": "Yes. Everyone in the class can be searched once one of them is suspected.",
+          "isCorrect": false,
+          "explanation": "Suspicion about a group is not suspicion about each person in it. The reason has to be about you.",
+          "misconceptionCode": "group_suspicion_covers_everyone"
+        },
+        {
+          "id": "juvenile.02.015.d",
+          "text": "No. But looking nervous while she asks would be enough by itself.",
+          "isCorrect": false,
+          "explanation": "Plenty of people look nervous when an adult asks them something. Nerves are not a reason on their own.",
+          "misconceptionCode": "nerves_are_suspicion"
+        }
+      ],
+      "hint": "Ask what the tip actually says about you.",
+      "principle": "A good reason has to point at a person. Staff need something that makes them think you broke a rule, not that somebody somewhere did. A specific report, a staff member seeing something, or something in your hand can each be enough. A rumor with no name in it is the weakest thing there is, and so is looking nervous while an adult asks you questions. If a search happens on that, saying you do not agree is worth saying out loud, because the reason is the part that gets looked at later.",
+      "keyPhrase": {
+        "quote": "What did they say I did?",
+        "gloss": "A tip with no name in it is not a reason."
+      },
+      "scenario": {
+        "setup": "Third hour. A teacher walks to your desk after talking with another student.",
+        "lines": [
+          {
+            "label": "TEACHER",
+            "text": "I hear some people in here have vapes."
+          },
+          {
+            "label": "YOU",
+            "text": "Did somebody say it was me?"
+          },
+          {
+            "label": "TEACHER",
+            "text": "Not exactly."
+          },
+          {
+            "label": "YOU",
+            "text": "Then I don't agree to a search."
+          },
+          {
+            "label": "YES",
+            "text": "If it goes ahead anyway, the thin reason behind it is now part of the story."
+          },
+          {
+            "label": "NO",
+            "text": "The search happens on a rumor and it looks like it was fine with everyone."
+          }
+        ],
+        "note": "Asking what was said is not talking back. Ask once, calmly, then say your line."
+      }
+    }
+  ]
+}
