@@ -39,7 +39,7 @@
     "adult_age_is_17": "Michigan treats 17-year-olds as adults (changed October 1, 2021).",
     "rumor_is_enough": "A name passed along, with nothing behind it, is by itself a good enough reason to search you.",
     "group_suspicion_covers_everyone": "Suspicion about a group lets staff search every person in it.",
-    "search_has_no_limits": "A good reason to start a search lets staff look anywhere, in anything.",
+    "search_has_no_limits": "Once a search has started, whatever started it lets staff look anywhere, in anything.",
     "finding_something_makes_it_legal": "Whatever turned up proves the search was allowed.",
     "school_owns_what_you_bring": "Anything you carry onto school grounds is school property and can be searched at will.",
     "my_lock_makes_it_private": "Your own lock, or a locker fee you paid, makes the locker yours.",
@@ -63,6 +63,10 @@
     "others_talking_voids_my_silence": "Once somebody else tells the story, staying quiet no longer helps you.",
     "rights_start_at_charges": "Your rights only start once you have actually been charged with something.",
     "a_violation_throws_it_out": "If police break a rule, whatever comes after is automatically thrown out.",
-    "rights_depend_on_a_signal": "Your rights only apply once something official happens: a uniform, handcuffs, or being told."
+    "rights_depend_on_a_signal": "Your rights only apply once something official happens: a uniform, handcuffs, or being told.",
+    "the_label_decides_the_rule": "What an adult calls it, a look, a check, a quick chat, decides which rules apply.",
+    "the_handbook_is_the_law": "Whatever the student handbook says is what the school is allowed to do.",
+    "one_track_replaces_the_other": "School discipline and a court case cannot both run; one takes over from the other.",
+    "a_yes_cannot_be_taken_back": "Once you agree to a search you cannot stop it partway through."
   }
 }
