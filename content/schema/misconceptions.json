@@ -1,5 +1,5 @@
 {
-  "$comment": "Codes name a false BELIEF, not a topic. Add codes here before using them in a chapter; a code not listed fails validation. Extracted initially from the original 72-question bank. Codes carry review checkpoints, not hopes: refusal_implies_guilt merges into nothing_to_hide unless it reaches three uses by the end of chapter 2; police_need_proof_to_say_it, innocence_makes_talking_safe, rights_cover_only_me and guessing_is_harmless are single-use retags from chapter 1 and get the same call at the end of JUVENILE.",
+  "$comment": "Codes name a false BELIEF, not a topic. Add codes here before using them in a chapter; a code not listed fails validation. Extracted initially from the original 72-question bank. Codes carry review checkpoints, not hopes: refusal_implies_guilt merges into nothing_to_hide unless it reaches three uses by the end of chapter 2; police_need_proof_to_say_it, innocence_makes_talking_safe, rights_cover_only_me and guessing_is_harmless are single-use retags from chapter 1 and get the same call at the end of JUVENILE. The chapter 1 second pass added police_must_be_truthful and others_talking_voids_my_silence as single-use codes; both get the end-of-JUVENILE call like the earlier retag codes.",
   "codes": {
     "silence_is_automatic": "Going quiet counts as invoking the right to remain silent (Berghuis v. Thompkins says it does not).",
     "partial_answers_are_safe": "Answering small questions but not big ones is a safe middle ground.",
@@ -17,7 +17,7 @@
     "everything_needs_a_warrant": "Police always need a warrant; plain view does not exist.",
     "holding_phone_means_reading_it": "Seizing a phone permits searching its contents (Riley v. California).",
     "roommate_can_consent_to_anything": "Anyone living in the home can consent to searching your private space.",
-    "nerves_are_suspicion": "Being nervous gives police reasonable suspicion.",
+    "nerves_are_suspicion": "Being nervous is by itself a good enough reason to stop or search someone.",
     "police_can_hold_anyone": "Police can detain anyone for any reason.",
     "must_always_give_name": "You must always identify yourself on demand (Michigan differs).",
     "id_law_is_national": "ID requirements are the same in every state.",
@@ -54,6 +54,15 @@
     "police_need_proof_to_say_it": "Police cannot claim to have a confession or evidence unless they really do.",
     "innocence_makes_talking_safe": "If you did nothing wrong, talking cannot hurt you.",
     "rights_cover_only_me": "The right to remain silent only covers questions about yourself.",
-    "guessing_is_harmless": "Giving your best guess is safe as long as you are trying to tell the truth."
+    "guessing_is_harmless": "Giving your best guess is safe as long as you are trying to tell the truth.",
+    "off_campus_ends_school_rules": "Once you are off school grounds, school staff have no more say than any other adult.",
+    "only_police_really_search": "What school staff do is not really a search; only a police search counts.",
+    "school_needs_no_reason": "At school, staff can search whatever they want without needing a reason at all.",
+    "police_must_be_truthful": "Police are not allowed to lie to you while they question you.",
+    "parent_decides_for_me": "A parent can decide for you whether you talk to police.",
+    "others_talking_voids_my_silence": "Once somebody else tells the story, staying quiet no longer helps you.",
+    "rights_start_at_charges": "Your rights only start once you have actually been charged with something.",
+    "a_violation_throws_it_out": "If police break a rule, whatever comes after is automatically thrown out.",
+    "rights_depend_on_a_signal": "Your rights only apply once something official happens: a uniform, handcuffs, or being told."
   }
 }
