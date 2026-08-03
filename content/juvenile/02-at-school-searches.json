@@ -576,7 +576,7 @@
     },
     {
       "id": "juvenile.02.009",
-      "version": 1,
+      "version": 2,
       "q": "An officer at school asks a staff member to search your bag for him. Why does that matter?",
       "options": [
         {
@@ -602,7 +602,7 @@
         },
         {
           "id": "juvenile.02.009.d",
-          "text": "It means whatever turns up can only be used by police, not by the school.",
+          "text": "Whatever turns up can then only be used by police, not by the school.",
           "isCorrect": false,
           "explanation": "Both can act on it. School discipline and a case run on their own rules and neither waits for the other.",
           "misconceptionCode": "school_findings_stay_at_school"
@@ -722,7 +722,7 @@
     },
     {
       "id": "juvenile.02.011",
-      "version": 1,
+      "version": 2,
       "q": "A staff member tells you to open your backpack and take everything out yourself. What is the best move?",
       "options": [
         {
@@ -748,7 +748,7 @@
         },
         {
           "id": "juvenile.02.011.d",
-          "text": "Do it fast and say nothing, since arguing only makes it worse.",
+          "text": "Get it over with and say nothing, since arguing makes it worse.",
           "isCorrect": false,
           "explanation": "Saying you do not agree is not arguing. Saying nothing is the part that reads as agreeing.",
           "misconceptionCode": "saying_nothing_is_agreeing"
