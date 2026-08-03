@@ -1070,6 +1070,1071 @@
         ],
         "note": "Assume anything on a school device can be read. That is the safe default, not a punishment."
       }
+    },
+    {
+      "id": "juvenile.03.016",
+      "version": 1,
+      "q": "An assistant principal tells you to delete a post you made at home. What is worth doing before it is gone?",
+      "options": [
+        {
+          "id": "juvenile.03.016.a",
+          "text": "Screenshot it, so there is a copy of what it actually said.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.016.b",
+          "text": "Nothing. Once it is deleted the whole thing is over.",
+          "isCorrect": false,
+          "explanation": "Other people already have copies. Deleting takes away yours and leaves theirs alone.",
+          "misconceptionCode": "deleting_it_ends_it"
+        },
+        {
+          "id": "juvenile.03.016.c",
+          "text": "Post an explanation, so everybody knows your side of it.",
+          "isCorrect": false,
+          "explanation": "A second post is a second thing to answer for. It does not settle the first one.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "juvenile.03.016.d",
+          "text": "Not much, since a post from home was never theirs to ask about.",
+          "isCorrect": false,
+          "explanation": "Mostly it is not theirs, and there are exceptions. Either way the copy is what you will want later.",
+          "misconceptionCode": "off_campus_ends_school_rules"
+        }
+      ],
+      "hint": "What disappears along with the post?",
+      "principle": "What you post from home, on your own time, is mostly outside what a school can act on. Mostly is not always, and that is a question for later. What matters right now is that deleting it does not undo it. Other people have screenshots and you will not. So take your own copy first. Then take it down if you are told to, ask which rule they say it breaks, and tell a parent that night.",
+      "keyPhrase": {
+        "quote": "I want a copy of it before it comes down.",
+        "gloss": "Deleting removes your copy, not theirs."
+      },
+      "scenario": {
+        "setup": "The school office, second hour. A laptop is turned toward you.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "I need that taken down today."
+          },
+          {
+            "label": "YOU",
+            "text": "Can I screenshot it first?"
+          },
+          {
+            "label": "STAFF",
+            "text": "Why would you need that?"
+          },
+          {
+            "label": "YOU",
+            "text": "So there's a copy of what it actually said."
+          },
+          {
+            "label": "YES",
+            "text": "What was really posted still exists, and it is not only in somebody's memory."
+          },
+          {
+            "label": "NO",
+            "text": "It is gone, and the only description left is whoever describes it next."
+          }
+        ],
+        "note": "Take it down if you are told to. The copy is the part worth asking about."
+      }
+    },
+    {
+      "id": "juvenile.03.017",
+      "version": 1,
+      "q": "You leave class for a protest walkout. What can the school do about it?",
+      "options": [
+        {
+          "id": "juvenile.03.017.a",
+          "text": "Treat it as an unexcused absence, the same as any other class you missed.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.017.b",
+          "text": "Nothing, since a protest is protected speech.",
+          "isCorrect": false,
+          "explanation": "The speech is protected. Being in class is a separate rule, and leaving it is still leaving it.",
+          "misconceptionCode": "free_speech_covers_everything"
+        },
+        {
+          "id": "juvenile.03.017.c",
+          "text": "Punish it harder than a normal skip, because of what you were protesting.",
+          "isCorrect": false,
+          "explanation": "The message is the one thing they cannot add punishment for. The absence is the part they can act on.",
+          "misconceptionCode": "school_can_ban_any_message"
+        },
+        {
+          "id": "juvenile.03.017.d",
+          "text": "Cancel the absence, since a protest is not the same as skipping.",
+          "isCorrect": false,
+          "explanation": "It counts as a missed class. The reason for missing it does not erase the missing.",
+          "misconceptionCode": "a_protest_excuses_the_absence"
+        }
+      ],
+      "hint": "Two separate things happened. Which one is the school's?",
+      "principle": "A walkout is two things at once. One is speech, and the school does not get to punish you for what you were walking out about. The other is that you were not in class, and that is an ordinary absence with ordinary consequences. So expect what any skipped class gets, and no more. If the punishment is heavier than the usual one, the difference is the part worth asking about, in writing, with a parent.",
+      "keyPhrase": {
+        "quote": "Missing class is the part they can act on.",
+        "gloss": "The absence counts. The message does not."
+      },
+      "scenario": {
+        "setup": "The school steps during fourth hour, with sixty other students.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Everybody out here is getting marked absent."
+          },
+          {
+            "label": "YOU",
+            "text": "Same as any other absence?"
+          },
+          {
+            "label": "STAFF",
+            "text": "Same as any other."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. That's what I expected."
+          },
+          {
+            "label": "YES",
+            "text": "You know what you are paying for it, and you can check that the price does not change."
+          },
+          {
+            "label": "NO",
+            "text": "Anything they add on top of the absence goes unnoticed and unasked about."
+          }
+        ],
+        "note": "Expect the absence. Ask about anything beyond it, afterward, with a parent."
+      }
+    },
+    {
+      "id": "juvenile.03.018",
+      "version": 1,
+      "q": "A teacher says your shirt is a distraction and has to go. What does distraction have to mean here?",
+      "options": [
+        {
+          "id": "juvenile.03.018.a",
+          "text": "Real interference with school, not an adult disliking the message.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.018.b",
+          "text": "Whatever a teacher says it means on the day.",
+          "isCorrect": false,
+          "explanation": "Somebody being bothered is not the test. Real interference with school is.",
+          "misconceptionCode": "disruption_means_upset"
+        },
+        {
+          "id": "juvenile.03.018.c",
+          "text": "Anything the dress code lists, and nothing beyond that.",
+          "isCorrect": false,
+          "explanation": "A dress code is real, and it still cannot be used to reach a message the school dislikes.",
+          "misconceptionCode": "the_handbook_is_the_law"
+        },
+        {
+          "id": "juvenile.03.018.d",
+          "text": "The principal's call, since only a principal enforces it.",
+          "isCorrect": false,
+          "explanation": "Any staff member enforces a dress code. Who says it is not what makes it right or wrong.",
+          "misconceptionCode": "one_person_decides_it_all"
+        }
+      ],
+      "hint": "Is it the shirt, or is it what the shirt says?",
+      "principle": "Schools can have a dress code, and most of it has nothing to do with speech. The question is what the word distraction is doing. If it means real interference with school, it is the actual test. If it means an adult does not like the message, it is not, and that is the version courts have thrown out. You are not going to settle that in a hallway. Ask which line of the dress code it breaks, write down the answer, and take it home.",
+      "keyPhrase": {
+        "quote": "Which part of the dress code is that?",
+        "gloss": "Ask for the rule, not the opinion."
+      },
+      "scenario": {
+        "setup": "The hallway between second and third hour.",
+        "lines": [
+          {
+            "label": "TEACHER",
+            "text": "That shirt is a distraction. Turn it inside out."
+          },
+          {
+            "label": "YOU",
+            "text": "Which part of the dress code is it?"
+          },
+          {
+            "label": "TEACHER",
+            "text": "We can look it up later."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay, I'll turn it around. I'd still like to know."
+          },
+          {
+            "label": "YES",
+            "text": "Somebody has to find the rule, and now there is a record that you asked."
+          },
+          {
+            "label": "NO",
+            "text": "The word does the work, and nobody ever has to point at a rule."
+          }
+        ],
+        "note": "Turn it inside out if you are told to. The rule question is for the office, not the hallway."
+      }
+    },
+    {
+      "id": "juvenile.03.019",
+      "version": 1,
+      "q": "Something you said at school got you suspended and also got police involved. What is true about those two?",
+      "options": [
+        {
+          "id": "juvenile.03.019.a",
+          "text": "They run side by side, on different rules and different clocks.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.019.b",
+          "text": "They run in order, since the school waits for the police part.",
+          "isCorrect": false,
+          "explanation": "Neither waits. School discipline usually moves in days and a case can take months.",
+          "misconceptionCode": "one_track_replaces_the_other"
+        },
+        {
+          "id": "juvenile.03.019.c",
+          "text": "They rise and fall together, so fixing one fixes the other.",
+          "isCorrect": false,
+          "explanation": "A win in one does not clear the other. They are decided separately, by different people.",
+          "misconceptionCode": "a_violation_throws_it_out"
+        },
+        {
+          "id": "juvenile.03.019.d",
+          "text": "They never touch, since words at school cannot reach a police case.",
+          "isCorrect": false,
+          "explanation": "Staff can be asked what you said, and a school report can travel with it.",
+          "misconceptionCode": "school_findings_stay_at_school"
+        }
+      ],
+      "hint": "How many places is this happening in?",
+      "principle": "One thing you said turned into two problems, and they do not travel together. The school runs its own process on its own rules and it usually moves fast. A police matter runs on different rules and takes much longer. Winning one does not end the other. That matters most for what you say, because an explanation you give to settle the school part can show up in the other one. This is where you ask for a parent even if the school part feels small.",
+      "keyPhrase": {
+        "quote": "This is two problems, not one.",
+        "gloss": "Two systems, side by side, on different clocks."
+      },
+      "scenario": {
+        "setup": "The school office. Somebody from outside the building is waiting.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "We'll handle our side today."
+          },
+          {
+            "label": "YOU",
+            "text": "Is somebody else handling another side?"
+          },
+          {
+            "label": "STAFF",
+            "text": "That's not up to us."
+          },
+          {
+            "label": "YOU",
+            "text": "Then I'd rather wait for my mom before I say anything."
+          },
+          {
+            "label": "YES",
+            "text": "You stop at the point where the second system shows up."
+          },
+          {
+            "label": "NO",
+            "text": "One explanation gets used twice, in two places, on two sets of rules."
+          }
+        ],
+        "note": "Be polite about the school part and quiet about the rest. Those are not the same thing."
+      }
+    },
+    {
+      "id": "juvenile.03.020",
+      "version": 1,
+      "q": "You think a school rule is wrong and you want it changed. How do you get that process started?",
+      "options": [
+        {
+          "id": "juvenile.03.020.a",
+          "text": "Ask for the rule in writing, then ask who can change it and when they meet.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.020.b",
+          "text": "Post about it, since enough attention makes them move.",
+          "isCorrect": false,
+          "explanation": "Attention is not a process. The people who can change a rule get reached a different way.",
+          "misconceptionCode": "posting_counts_as_telling"
+        },
+        {
+          "id": "juvenile.03.020.c",
+          "text": "Argue it out with the teacher who enforces it.",
+          "isCorrect": false,
+          "explanation": "The person enforcing a rule usually cannot change it. That argument goes nowhere by design.",
+          "misconceptionCode": "being_right_helps_now"
+        },
+        {
+          "id": "juvenile.03.020.d",
+          "text": "Nothing. Students do not get a say in school rules.",
+          "isCorrect": false,
+          "explanation": "Students get a say more often than they use it. Board meetings are usually open to anybody.",
+          "misconceptionCode": "students_cannot_disagree"
+        }
+      ],
+      "hint": "Who wrote the rule, and who is only enforcing it?",
+      "principle": "Rules come from somewhere, and it is almost never the person telling you about one. Most school rules live in a district policy that a school board adopted. Board meetings are usually open, and most set aside time for anybody to speak. So the order is short. Get the rule in writing. Find out who adopted it. Find out when they meet. Bring the rule with you and say what you would change about it.",
+      "keyPhrase": {
+        "quote": "Who can actually change this rule?",
+        "gloss": "Take it to whoever wrote it, not whoever said it."
+      },
+      "scenario": {
+        "setup": "The school office at lunch, asking for a copy of the policy.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "Can I get the phone policy in writing?"
+          },
+          {
+            "label": "STAFF",
+            "text": "It's in the handbook."
+          },
+          {
+            "label": "YOU",
+            "text": "Who decided it? I want to ask them about it."
+          },
+          {
+            "label": "STAFF",
+            "text": "That would be the board."
+          },
+          {
+            "label": "YES",
+            "text": "You end up in front of the people who can actually change it."
+          },
+          {
+            "label": "NO",
+            "text": "You spend a year arguing with people who could never have changed it."
+          }
+        ],
+        "note": "Bring the rule and one clear change. Arguing without either one goes nowhere."
+      }
+    },
+    {
+      "id": "juvenile.03.021",
+      "version": 1,
+      "q": "Before a school suspends you for a few days, what are you owed?",
+      "options": [
+        {
+          "id": "juvenile.03.021.a",
+          "text": "Being told what you are accused of, and a chance to give your side.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.021.b",
+          "text": "A full hearing with a lawyer before you can be sent home.",
+          "isCorrect": false,
+          "explanation": "A short suspension is not a courtroom. What it takes is notice and a chance to answer.",
+          "misconceptionCode": "school_discipline_is_a_trial"
+        },
+        {
+          "id": "juvenile.03.021.c",
+          "text": "Nothing. A school can send you home and explain afterward.",
+          "isCorrect": false,
+          "explanation": "Even a short suspension takes notice and a chance to respond first, in almost every case.",
+          "misconceptionCode": "no_process_is_owed"
+        },
+        {
+          "id": "juvenile.03.021.d",
+          "text": "A written decision first, since nothing counts until it is on paper.",
+          "isCorrect": false,
+          "explanation": "It can be a conversation in an office. Paper is worth asking for, but it is not what makes it real.",
+          "misconceptionCode": "nothing_counts_until_its_written"
+        }
+      ],
+      "hint": "It is short, so it is small. Is small the same as nothing?",
+      "principle": "In 1975 the Supreme Court decided a case about students suspended for up to ten days with no hearing at all. The Court said even a short suspension takes two things. The school has to tell you what you are accused of, and it has to give you a chance to tell your side. That can be a conversation in an office rather than a hearing. If you are a danger to somebody right then, the school can remove you first and do that part as soon as it can afterward.",
+      "keyPhrase": {
+        "quote": "What am I accused of, and can I tell my side?",
+        "gloss": "Notice and a chance to answer. That is the floor."
+      },
+      "scenario": {
+        "setup": "The school office, first thing in the morning.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "You're out for three days."
+          },
+          {
+            "label": "YOU",
+            "text": "What am I accused of?"
+          },
+          {
+            "label": "STAFF",
+            "text": "You know what this is about."
+          },
+          {
+            "label": "YOU",
+            "text": "I'd still like to hear it, and I want to tell you my side."
+          },
+          {
+            "label": "YES",
+            "text": "Both of the things you are owed happen, and somebody has to say what the accusation is."
+          },
+          {
+            "label": "NO",
+            "text": "You are out for three days and nobody ever had to name what for."
+          }
+        ],
+        "note": "Ask both questions calmly. This is the one part that is supposed to happen before you leave."
+      }
+    },
+    {
+      "id": "juvenile.03.022",
+      "version": 1,
+      "q": "The school is talking about a fifteen day suspension. What changes at that length?",
+      "options": [
+        {
+          "id": "juvenile.03.022.a",
+          "text": "Past ten days, the school has to show it went through the steps.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.022.b",
+          "text": "Nothing changes. Every suspension works about the same way.",
+          "isCorrect": false,
+          "explanation": "They do not. The law puts a heavier requirement on removals longer than ten days.",
+          "misconceptionCode": "any_length_is_the_same"
+        },
+        {
+          "id": "juvenile.03.022.c",
+          "text": "The rules only shift at expulsion, so not yet.",
+          "isCorrect": false,
+          "explanation": "The line sits at ten days, well before expulsion. Fifteen days is already past it.",
+          "misconceptionCode": "rights_start_at_charges"
+        },
+        {
+          "id": "juvenile.03.022.d",
+          "text": "You get a lawyer and a hearing, since fifteen days is serious.",
+          "isCorrect": false,
+          "explanation": "Longer does not turn it into a court case. What changes is what the school has to show, not who speaks for you.",
+          "misconceptionCode": "school_discipline_is_a_trial"
+        }
+      ],
+      "hint": "Count the days. Is that number over a line somewhere?",
+      "principle": "Michigan draws a line at ten days. For ten days or fewer, the school still has to go through seven set things before it decides. Past ten days, or for an expulsion, the law starts from the idea that it is not justified. The district has to show it went through each of the seven. That is the part worth knowing at fifteen days, because it puts the work on the school and not on you.",
+      "keyPhrase": {
+        "quote": "Is this more than ten days?",
+        "gloss": "Ten days is where the law gets heavier."
+      },
+      "scenario": {
+        "setup": "The school office with a letter on the desk between you.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "The suspension is fifteen days."
+          },
+          {
+            "label": "YOU",
+            "text": "That's more than ten."
+          },
+          {
+            "label": "STAFF",
+            "text": "It is."
+          },
+          {
+            "label": "YOU",
+            "text": "Then can we go through the seven factors?"
+          },
+          {
+            "label": "YES",
+            "text": "The number gets noticed out loud, and the number is what changes the rules."
+          },
+          {
+            "label": "NO",
+            "text": "Fifteen and five feel like the same kind of thing, and only one of them is."
+          }
+        ],
+        "note": "The number of days is the first thing to write down. Everything else follows from it."
+      }
+    },
+    {
+      "id": "juvenile.03.023",
+      "version": 1,
+      "q": "A principal decides to suspend you for three days. What does Michigan require before that?",
+      "options": [
+        {
+          "id": "juvenile.03.023.a",
+          "text": "Going through a set list of things the law names, every time.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.023.b",
+          "text": "Going through that list only when a parent asks for it.",
+          "isCorrect": false,
+          "explanation": "It is required whether or not anybody brings it up. You do not have to request it.",
+          "misconceptionCode": "factors_are_optional"
+        },
+        {
+          "id": "juvenile.03.023.c",
+          "text": "Going through none of it. Three days is too short to matter.",
+          "isCorrect": false,
+          "explanation": "The list applies to a three day suspension the same as to an expulsion. Short is not exempt.",
+          "misconceptionCode": "no_process_is_owed"
+        },
+        {
+          "id": "juvenile.03.023.d",
+          "text": "Going through a police report first, so something is on record.",
+          "isCorrect": false,
+          "explanation": "School discipline does not wait for police, and most of it never involves them.",
+          "misconceptionCode": "rights_start_at_charges"
+        }
+      ],
+      "hint": "Does a short one get a pass on this?",
+      "principle": "Michigan law names seven things a school has to weigh before it suspends or expels a student. Your age. Your record. Whether you have a disability. How bad it was. Whether it put anybody at risk. Whether the school will try restorative practices. Whether a smaller step would fix it. All seven are required, and three days counts the same as an expulsion.",
+      "keyPhrase": {
+        "quote": "Did you go through the seven factors?",
+        "gloss": "Required every time, not only for the long ones."
+      },
+      "scenario": {
+        "setup": "The school office. The decision has already been made.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Three days, starting tomorrow."
+          },
+          {
+            "label": "YOU",
+            "text": "Did you go through the seven factors?"
+          },
+          {
+            "label": "STAFF",
+            "text": "That's for the long ones."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't think it is. Can my mom ask about that?"
+          },
+          {
+            "label": "YES",
+            "text": "The question is on the record even if nobody answers it today."
+          },
+          {
+            "label": "NO",
+            "text": "Nobody ever has to say whether the required part happened."
+          }
+        ],
+        "note": "Ask the question once. Let a parent be the one who follows it up."
+      }
+    },
+    {
+      "id": "juvenile.03.024",
+      "version": 1,
+      "q": "The school sends you home the same morning, before anybody talks to you about it. When is that allowed?",
+      "options": [
+        {
+          "id": "juvenile.03.024.a",
+          "text": "When you are a danger right then. The talking has to happen soon after.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.024.b",
+          "text": "Whenever a principal decides that is the easier way to do it.",
+          "isCorrect": false,
+          "explanation": "Easier is not the test. Notice and a chance to answer come first in almost every case.",
+          "misconceptionCode": "no_process_is_owed"
+        },
+        {
+          "id": "juvenile.03.024.c",
+          "text": "Never. Nothing at all can happen before you get to answer.",
+          "isCorrect": false,
+          "explanation": "There is one exception, and it is for right now. Then the answering happens as soon as it can.",
+          "misconceptionCode": "school_discipline_is_a_trial"
+        },
+        {
+          "id": "juvenile.03.024.d",
+          "text": "Any time the police are involved in it too.",
+          "isCorrect": false,
+          "explanation": "Police being involved does not remove the school's own steps. The two run on their own rules.",
+          "misconceptionCode": "one_track_replaces_the_other"
+        }
+      ],
+      "hint": "What would make waiting the wrong call?",
+      "principle": "The ordinary order is that a school tells you what you are accused of and lets you answer before you go home. There is one exception. If you are a danger to somebody right then, the school can remove you first and do the rest as soon as it can afterward. That is meant for real danger, not for convenience. If you were sent home first, the question to ask later is when the school plans to do the part it skipped.",
+      "keyPhrase": {
+        "quote": "When do I get to tell my side of it?",
+        "gloss": "Removing you first is the exception, not the order."
+      },
+      "scenario": {
+        "setup": "The school office at 8:15, with your bag still on your shoulder.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "You need to go home. We will sort it out later."
+          },
+          {
+            "label": "YOU",
+            "text": "When do I get to tell my side?"
+          },
+          {
+            "label": "STAFF",
+            "text": "Somebody will call you."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. Can my mom get that in writing?"
+          },
+          {
+            "label": "YES",
+            "text": "The skipped part becomes something somebody owes you instead of something forgotten."
+          },
+          {
+            "label": "NO",
+            "text": "The order gets reversed and nobody comes back for the missing half."
+          }
+        ],
+        "note": "Go when you are told to go. The question about the missing half is for later, in writing."
+      }
+    },
+    {
+      "id": "juvenile.03.025",
+      "version": 1,
+      "q": "You are being told you are suspended. What should you ask for before you leave the office?",
+      "options": [
+        {
+          "id": "juvenile.03.025.a",
+          "text": "The reason, the number of days, and both of those in writing.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.025.b",
+          "text": "Another chance, since asking right away is when that works.",
+          "isCorrect": false,
+          "explanation": "The person telling you often does not decide it, and asking trades away the questions that help.",
+          "misconceptionCode": "talking_earns_leniency"
+        },
+        {
+          "id": "juvenile.03.025.c",
+          "text": "A call to your parent, and nothing else for now.",
+          "isCorrect": false,
+          "explanation": "Ask for the call and the paper. A parent with nothing written down is starting from your memory.",
+          "misconceptionCode": "parent_decides_for_me"
+        },
+        {
+          "id": "juvenile.03.025.d",
+          "text": "A lawyer, since nothing should happen without one.",
+          "isCorrect": false,
+          "explanation": "A suspension is not a court case. A parent and a piece of paper do more here than a lawyer does.",
+          "misconceptionCode": "school_discipline_is_a_trial"
+        }
+      ],
+      "hint": "What will still be useful in a week?",
+      "principle": "This is the cheapest moment to get three things: what they say you did, how many days, and both of those in writing. Written is what a parent can act on, what an appeal points at, and what keeps the story from changing later. You do not have to argue any of it. Asking is not arguing, and a request for paper is hard for anybody to refuse.",
+      "keyPhrase": {
+        "quote": "Can I get the reason and the days in writing?",
+        "gloss": "Paper is the part you can use later."
+      },
+      "scenario": {
+        "setup": "The doorway of the school office on the way out.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Somebody will call your mom."
+          },
+          {
+            "label": "YOU",
+            "text": "Can I get the reason and the days in writing?"
+          },
+          {
+            "label": "STAFF",
+            "text": "It'll be in the letter."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. Can I have a copy before I go?"
+          },
+          {
+            "label": "YES",
+            "text": "You leave with something a parent can read tonight instead of a memory of a hallway."
+          },
+          {
+            "label": "NO",
+            "text": "The only version of what happened is the one in somebody else's file."
+          }
+        ],
+        "note": "Ask, do not argue. If the answer is no, write down who you asked and when."
+      }
+    },
+    {
+      "id": "juvenile.03.026",
+      "version": 1,
+      "q": "Who actually decides how long you are out of school?",
+      "options": [
+        {
+          "id": "juvenile.03.026.a",
+          "text": "A principal for a suspension, and the school board for an expulsion.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.026.b",
+          "text": "The school board for a suspension, and a principal for an expulsion.",
+          "isCorrect": false,
+          "explanation": "It runs the other way. The longer the removal, the higher up the decision goes.",
+          "misconceptionCode": "the_ladder_runs_backwards"
+        },
+        {
+          "id": "juvenile.03.026.c",
+          "text": "The teacher who sent you out of the room, for either one.",
+          "isCorrect": false,
+          "explanation": "A teacher can remove you from a class. How long you are out of school is not that teacher's call.",
+          "misconceptionCode": "one_person_decides_it_all"
+        },
+        {
+          "id": "juvenile.03.026.d",
+          "text": "A judge for both, once it goes past a few days.",
+          "isCorrect": false,
+          "explanation": "No judge is involved in school discipline. It stays inside the school system.",
+          "misconceptionCode": "school_discipline_is_a_trial"
+        }
+      ],
+      "hint": "Does the same person handle one day and sixty?",
+      "principle": "There is a ladder and it is worth knowing which rung you are on. A teacher can remove you from a class. A principal or the person they name handles suspensions. An expulsion is the school board's decision, not one administrator's. The longer the removal, the higher it goes and the more process comes with it. Two useful questions: who is making this decision, and who would we be asking if we disagreed.",
+      "keyPhrase": {
+        "quote": "Who is making this decision?",
+        "gloss": "The longer it is, the higher it goes."
+      },
+      "scenario": {
+        "setup": "The hallway outside the school office, waiting to be called in.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "Who decides how long it is?"
+          },
+          {
+            "label": "STAFF",
+            "text": "The principal, for something this length."
+          },
+          {
+            "label": "YOU",
+            "text": "And if it were longer?"
+          },
+          {
+            "label": "STAFF",
+            "text": "Then it goes to the board."
+          },
+          {
+            "label": "YES",
+            "text": "You know who to ask and who to ask next, before you need either."
+          },
+          {
+            "label": "NO",
+            "text": "Everybody in the building looks like the person who decided it."
+          }
+        ],
+        "note": "Asking who decides is a normal question. It is not a challenge and nobody minds it."
+      }
+    },
+    {
+      "id": "juvenile.03.027",
+      "version": 1,
+      "q": "The suspension seems wrong to you. What actually starts a review of it?",
+      "options": [
+        {
+          "id": "juvenile.03.027.a",
+          "text": "Somebody asking, in writing, before the deadline. A parent usually files it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.027.b",
+          "text": "Nothing. It gets reviewed on its own if it was wrong.",
+          "isCorrect": false,
+          "explanation": "Nothing reviews itself. A decision nobody challenges just stands.",
+          "misconceptionCode": "bad_search_undoes_discipline"
+        },
+        {
+          "id": "juvenile.03.027.c",
+          "text": "A lawyer, since a review is a court thing.",
+          "isCorrect": false,
+          "explanation": "The first review happens inside the school. A parent can start it without a lawyer.",
+          "misconceptionCode": "school_discipline_is_a_trial"
+        },
+        {
+          "id": "juvenile.03.027.d",
+          "text": "Only you, and only in person on the day.",
+          "isCorrect": false,
+          "explanation": "A parent or guardian can file it, and it is usually in writing rather than in person.",
+          "misconceptionCode": "only_the_student_can_appeal"
+        }
+      ],
+      "hint": "Who has to move first for anything to happen?",
+      "principle": "Nothing in school discipline reviews itself. A decision nobody challenges just stands. Who can ask matters. A parent or guardian usually files it, and an adult student can file for themselves. Where it goes is set by your district, and it is often the superintendent or the school board. Ask two things while it is fresh. What the appeal is called here, and when it is due.",
+      "keyPhrase": {
+        "quote": "What is the appeal, and when is it due?",
+        "gloss": "Somebody has to ask, or it just stands."
+      },
+      "scenario": {
+        "setup": "Your kitchen table with the letter between you and your mom.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "Do we just take this?"
+          },
+          {
+            "label": "YOU",
+            "text": "There's an appeal. I asked what it's called."
+          },
+          {
+            "label": "MOM",
+            "text": "Is there a date on it?"
+          },
+          {
+            "label": "YOU",
+            "text": "Five school days. I wrote it down."
+          },
+          {
+            "label": "YES",
+            "text": "Somebody moves before the deadline, which is the only thing that starts anything."
+          },
+          {
+            "label": "NO",
+            "text": "The date passes and the decision becomes the final version by default."
+          }
+        ],
+        "note": "Get the deadline the same day you get the decision. Deadlines here are short."
+      }
+    },
+    {
+      "id": "juvenile.03.028",
+      "version": 1,
+      "q": "The suspension is over and you are back. What follows you afterward?",
+      "options": [
+        {
+          "id": "juvenile.03.028.a",
+          "text": "A school record, not a criminal one. Those are two different files.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.028.b",
+          "text": "A criminal record, since the police were told about it.",
+          "isCorrect": false,
+          "explanation": "School discipline is not a conviction. If there is a police matter, it is a separate record.",
+          "misconceptionCode": "discipline_is_a_criminal_record"
+        },
+        {
+          "id": "juvenile.03.028.c",
+          "text": "Nothing at all. The days are served, so it is over.",
+          "isCorrect": false,
+          "explanation": "The days ending does not empty the file. Something is written down and it stays written down.",
+          "misconceptionCode": "serving_it_erases_it"
+        },
+        {
+          "id": "juvenile.03.028.d",
+          "text": "Everything forever, since schools never take anything off.",
+          "isCorrect": false,
+          "explanation": "Not everything is permanent, and what is depends on what happened. It is a fair question to ask.",
+          "misconceptionCode": "nothing_ever_comes_off"
+        }
+      ],
+      "hint": "Two offices, two folders, two sets of rules.",
+      "principle": "School discipline lives in your school file. A police case, if there ever is one, is a separate record with its own rules, and a suspension is not a conviction. Some things are permanent by law. An expulsion for certain weapon offenses goes on the permanent record. Most of it is smaller than people think. Ask what went in the file, who can see it, and what comes off later.",
+      "keyPhrase": {
+        "quote": "What went in my file, and who sees it?",
+        "gloss": "A school file is not a criminal record."
+      },
+      "scenario": {
+        "setup": "The school office on the morning you come back.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "What went in my file about this?"
+          },
+          {
+            "label": "STAFF",
+            "text": "The suspension and the reason."
+          },
+          {
+            "label": "YOU",
+            "text": "Who sees that?"
+          },
+          {
+            "label": "STAFF",
+            "text": "Depends who asks."
+          },
+          {
+            "label": "YES",
+            "text": "You find out what exists while you can still ask about it calmly."
+          },
+          {
+            "label": "NO",
+            "text": "You learn what is in the file the first time it matters to somebody else."
+          }
+        ],
+        "note": "Ask on a normal day. Nobody minds the question when nothing is happening."
+      }
+    },
+    {
+      "id": "juvenile.03.029",
+      "version": 1,
+      "q": "Staff say you agreed to the suspension rules when you signed the handbook in September. Is that right?",
+      "options": [
+        {
+          "id": "juvenile.03.029.a",
+          "text": "Only partly. A handbook cannot hand the school more than the law allows.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.029.b",
+          "text": "Yes. Signing it is what makes the rules apply to you.",
+          "isCorrect": false,
+          "explanation": "School rules apply whether or not you signed. The signature is a receipt, not the source.",
+          "misconceptionCode": "the_handbook_is_the_law"
+        },
+        {
+          "id": "juvenile.03.029.c",
+          "text": "No. A handbook is a suggestion and nothing more than that.",
+          "isCorrect": false,
+          "explanation": "It is more than a suggestion. It sets out what your district will do, and that is worth reading.",
+          "misconceptionCode": "the_handbook_is_only_advice"
+        },
+        {
+          "id": "juvenile.03.029.d",
+          "text": "Yes, and it is why the seven factors do not apply here.",
+          "isCorrect": false,
+          "explanation": "Nothing anybody signs takes the seven factors away. Those come from state law.",
+          "misconceptionCode": "factors_are_optional"
+        }
+      ],
+      "hint": "Can a piece of paper hand out powers the law did not?",
+      "principle": "A handbook matters, and it has a ceiling. It tells you what your district plans to do, which you cannot get anywhere else. What it cannot do is hand the school powers the law did not. It also cannot take away what the law requires: the seven factors, the notice, the chance to answer. Signing is not what makes school rules apply. It is still worth reading. A district can promise more than the law asks, and then it has to keep that promise.",
+      "keyPhrase": {
+        "quote": "The handbook can add rules. It cannot remove the law.",
+        "gloss": "It fills in the district's part, not the state's."
+      },
+      "scenario": {
+        "setup": "The school office with a signature page pulled up on a screen.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "You signed this in September."
+          },
+          {
+            "label": "YOU",
+            "text": "Does that change what the state law says?"
+          },
+          {
+            "label": "STAFF",
+            "text": "That's a bigger conversation."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay. My mom is going to want to have it."
+          },
+          {
+            "label": "YES",
+            "text": "The claim gets tested instead of ending the conversation."
+          },
+          {
+            "label": "NO",
+            "text": "One signature in September answers everything that happens after it."
+          }
+        ],
+        "note": "You do not have to win this in the room. Get the sentence they said and take it home."
+      }
+    },
+    {
+      "id": "juvenile.03.030",
+      "version": 1,
+      "q": "Your mom is coming to the school about the suspension. What can she do that you cannot?",
+      "options": [
+        {
+          "id": "juvenile.03.030.a",
+          "text": "Ask for the file, ask for the written reason, and start the appeal.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.03.030.b",
+          "text": "Overrule the suspension, since she is your parent.",
+          "isCorrect": false,
+          "explanation": "A parent cannot cancel a school's decision. What she can do is make it get explained and reviewed.",
+          "misconceptionCode": "parent_decides_for_me"
+        },
+        {
+          "id": "juvenile.03.030.c",
+          "text": "Very little, since the decision has already been made.",
+          "isCorrect": false,
+          "explanation": "Made is not the same as final. Most of what changes a decision happens after it is made.",
+          "misconceptionCode": "no_process_is_owed"
+        },
+        {
+          "id": "juvenile.03.030.d",
+          "text": "Nothing, since this is between you and the school.",
+          "isCorrect": false,
+          "explanation": "A parent is part of this by design. Records and appeals both run through them, not through you.",
+          "misconceptionCode": "school_findings_stay_at_school"
+        }
+      ],
+      "hint": "What can an adult ask for that a student cannot?",
+      "principle": "A parent can get things a student usually cannot. Your file. The written reason. A meeting. The appeal. She can also ask whether the seven factors were gone through, which is the question that puts the work back on the school. What she cannot do is cancel the decision. If any of it turns into a police matter, she is not your lawyer, so that part goes to one.",
+      "keyPhrase": {
+        "quote": "Ask them whether they went through the seven factors.",
+        "gloss": "A parent can ask for things a student cannot."
+      },
+      "scenario": {
+        "setup": "The school office with your mom in the chair next to you.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "What do I even ask for?"
+          },
+          {
+            "label": "YOU",
+            "text": "The file, the reason in writing, and the appeal."
+          },
+          {
+            "label": "MOM",
+            "text": "And the seven things you told me about?"
+          },
+          {
+            "label": "YOU",
+            "text": "Ask whether they went through them."
+          },
+          {
+            "label": "YES",
+            "text": "The meeting produces paper, and paper is the thing that can be appealed."
+          },
+          {
+            "label": "NO",
+            "text": "It becomes a conversation about what happened, and nothing leaves the room."
+          }
+        ],
+        "note": "Give a parent the three things to ask for before the meeting, not during it."
+      }
     }
   ]
 }
