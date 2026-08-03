@@ -150,7 +150,7 @@
     },
     {
       "id": "juvenile.01.003",
-      "version": 1,
+      "version": 2,
       "q": "An officer tells you your friend already confessed and blamed you. What is true about that?",
       "options": [
         {
@@ -176,7 +176,7 @@
         },
         {
           "id": "juvenile.01.003.d",
-          "text": "They can say it, but anything you say afterward gets thrown out.",
+          "text": "Saying it is allowed, but anything you say afterward gets thrown out.",
           "isCorrect": false,
           "explanation": "A statement you give after being lied to usually still counts. That is what makes this dangerous. The lie is legal and your answer is still evidence.",
           "misconceptionCode": "a_violation_throws_it_out"
@@ -1069,7 +1069,7 @@
     },
     {
       "id": "juvenile.01.016",
-      "version": 1,
+      "version": 2,
       "q": "Your dad is upset and tells you to just explain everything so this can be over. What is the best thing to say?",
       "options": [
         {
@@ -1088,10 +1088,10 @@
         },
         {
           "id": "juvenile.01.016.c",
-          "text": "\"I'll tell them the parts that make me look okay.\"",
+          "text": "\"I'll leave out the part that looks bad.\"",
           "isCorrect": false,
-          "explanation": "Half a story is still a statement. The missing parts usually come out later anyway.",
-          "misconceptionCode": "stepping_outside_is_neutral"
+          "explanation": "Half a story is still a statement, and the missing part usually comes out later anyway.",
+          "misconceptionCode": "partial_answers_are_safe"
         },
         {
           "id": "juvenile.01.016.d",
@@ -1140,7 +1140,7 @@
     },
     {
       "id": "juvenile.01.017",
-      "version": 1,
+      "version": 2,
       "q": "An officer hands you a pen and asks you to write it down instead of saying it. What is true about a written statement?",
       "options": [
         {
@@ -1166,7 +1166,7 @@
         },
         {
           "id": "juvenile.01.017.d",
-          "text": "It only counts if they read you your rights first.",
+          "text": "A statement without a warning first is not worth anything.",
           "isCorrect": false,
           "explanation": "What you write can count regardless. Whether a warning was required is something a lawyer sorts out later.",
           "misconceptionCode": "miranda_at_arrest"
@@ -1424,7 +1424,7 @@
     },
     {
       "id": "juvenile.01.021",
-      "version": 1,
+      "version": 2,
       "q": "What does it mean to be \"in custody\" for the purposes of your rights?",
       "options": [
         {
@@ -1443,7 +1443,7 @@
         },
         {
           "id": "juvenile.01.021.c",
-          "text": "That you are inside a police station.",
+          "text": "That the questions are happening inside a police station.",
           "isCorrect": false,
           "explanation": "It depends on the situation, not the building. It can happen on a sidewalk, in a car, or at school.",
           "misconceptionCode": "booking_needs_miranda"
@@ -1633,7 +1633,7 @@
     },
     {
       "id": "juvenile.01.024",
-      "version": 1,
+      "version": 2,
       "q": "Officers knock on your door and ask to come in and talk. Do you have to open it?",
       "options": [
         {
@@ -1652,7 +1652,7 @@
         },
         {
           "id": "juvenile.01.024.c",
-          "text": "Yes, but only if a parent is not home.",
+          "text": "Only when there is no adult in the house with you.",
           "isCorrect": false,
           "explanation": "Whether an adult is home does not create a duty to open the door.",
           "misconceptionCode": "police_can_always_search"
@@ -1771,7 +1771,7 @@
     },
     {
       "id": "juvenile.01.026",
-      "version": 1,
+      "version": 2,
       "q": "A vice principal, not an officer, asks you to explain what happened. What is true about that conversation?",
       "options": [
         {
@@ -1783,7 +1783,7 @@
         },
         {
           "id": "juvenile.01.026.b",
-          "text": "Nothing you tell school staff can ever be used in court.",
+          "text": "A vice principal cannot be asked about it later.",
           "isCorrect": false,
           "explanation": "School staff can be asked what you told them, and school reports can end up in a case.",
           "misconceptionCode": "sro_is_off_the_record"
@@ -1913,7 +1913,7 @@
     },
     {
       "id": "juvenile.01.028",
-      "version": 1,
+      "version": 2,
       "q": "An officer says you can go home as soon as you answer one more question. What is the problem with that trade?",
       "options": [
         {
@@ -1932,7 +1932,7 @@
         },
         {
           "id": "juvenile.01.028.c",
-          "text": "There is no problem, as long as you keep the answer short.",
+          "text": "One short answer cannot hurt, so keeping it brief is enough.",
           "isCorrect": false,
           "explanation": "Short answers still count. A single sentence can place you somewhere or confirm something.",
           "misconceptionCode": "partial_consent_is_safe"
