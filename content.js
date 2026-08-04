@@ -109,8 +109,69 @@ function toRuntime(q) {
   };
 }
 
+// ---------------------------------------------------------------------------
+// The demo pool
+// ---------------------------------------------------------------------------
+// content/demo.json is a list of question IDs, not questions. The chapter files
+// stay the single source of truth: fix a typo in juvenile.01.003 and the demo
+// picks it up, because the demo never holds a copy of anything.
+//
+// An ID carries its own address. "juvenile.01.003" is district juvenile,
+// chapter juvenile.01, so the loader can find any question from its ID alone
+// and this keeps working when the demo pulls from more than one district.
+//
+// The result is shaped exactly like a chapter, which is the point: buildDeck,
+// buildEndlessDeck, and the SKIP lifeline all take it without knowing it is
+// not one. The only differences are a null safetyNote (the demo shows no
+// pre-round screen) and a pool larger than 30.
+let demoCache = null;
+
+export async function loadDemo() {
+  if (demoCache) return demoCache;
+  const spec = await getJSON("content/demo.json");
+  const wanted = spec.questions || [];
+
+  // Group the wanted IDs by chapter so each chapter file is fetched once.
+  const byChapter = new Map(); // chapterId -> districtId
+  wanted.forEach((qid) => {
+    const [districtId, chapterNum] = qid.split(".");
+    byChapter.set(`${districtId}.${chapterNum}`, districtId);
+  });
+
+  // meta.json is what maps a chapter id to its filename, so a renamed file
+  // never has to be chased into a second place.
+  const index = new Map(); // questionId -> authored question
+  for (const [chapterId, districtId] of byChapter) {
+    const meta = await getJSON(`content/${districtId}/meta.json`);
+    const ref = (meta.chapters || []).find((ch) => ch.id === chapterId);
+    if (!ref) throw new Error(`Demo refers to ${chapterId}, which is not in ${districtId}/meta.json`);
+    const raw = await getJSON(`content/${districtId}/${ref.file}`);
+    (raw.questions || []).forEach((q) => index.set(q.id, q));
+  }
+
+  // A missing ID is a content bug, not a runtime condition to paper over: it
+  // means the demo list and the chapters disagree, and silently dealing 44
+  // questions would hide that until someone counted.
+  const missing = wanted.filter((qid) => !index.has(qid));
+  if (missing.length) {
+    throw new Error(`Demo list has ${missing.length} id(s) not found in the chapters: ${missing.slice(0, 5).join(", ")}`);
+  }
+
+  demoCache = {
+    id: "demo",
+    districtId: "demo",
+    name: spec.name || "DEMO",
+    safetyNote: null,
+    reviewedBy: null,
+    isDemo: true,
+    questions: wanted.map((qid) => toRuntime(index.get(qid)))
+  };
+  return demoCache;
+}
+
 // Testing aid: drop caches so a reload picks up edited JSON.
 export function clearContentCache() {
   cache.clear();
   chapters.clear();
+  demoCache = null;
 }
