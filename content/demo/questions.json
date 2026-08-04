@@ -7,8 +7,8 @@
   "questions": [
     {
       "id": "demo.01.001",
-      "version": 1,
-      "q": "In an emergency, who do you call?",
+      "version": 2,
+      "q": "Somebody is badly hurt and needs help right now. Who do you call?",
       "options": [
         {
           "id": "demo.01.001.a",
@@ -69,8 +69,8 @@
     },
     {
       "id": "demo.01.002",
-      "version": 1,
-      "q": "Is calling 911 free?",
+      "version": 2,
+      "q": "You need to call 911, but your phone has no plan and no minutes left. Is calling 911 free?",
       "options": [
         {
           "id": "demo.01.002.a",
@@ -127,8 +127,8 @@
     },
     {
       "id": "demo.01.003",
-      "version": 1,
-      "q": "Do you have to answer a police officer's questions?",
+      "version": 2,
+      "q": "A police officer stops you on the street and starts asking you questions. Do you have to answer them?",
       "options": [
         {
           "id": "demo.01.003.a",
@@ -189,8 +189,8 @@
     },
     {
       "id": "demo.01.004",
-      "version": 1,
-      "q": "What do you say if you want a lawyer?",
+      "version": 2,
+      "q": "Police are questioning you and you decide you want a lawyer. What exactly do you say?",
       "options": [
         {
           "id": "demo.01.004.a",
@@ -247,8 +247,8 @@
     },
     {
       "id": "demo.01.005",
-      "version": 1,
-      "q": "Your family cannot pay for a lawyer. Do you still get one?",
+      "version": 2,
+      "q": "You need a lawyer, but your family has no money to pay for one. Do you still get a lawyer?",
       "options": [
         {
           "id": "demo.01.005.a",
@@ -305,8 +305,8 @@
     },
     {
       "id": "demo.01.006",
-      "version": 1,
-      "q": "Where should your hands be when a police officer is talking to you?",
+      "version": 2,
+      "q": "A police officer walks up to you and starts talking to you. Where should your hands be?",
       "options": [
         {
           "id": "demo.01.006.a",
@@ -363,8 +363,8 @@
     },
     {
       "id": "demo.01.007",
-      "version": 1,
-      "q": "Somebody at school has a weapon. What do you do?",
+      "version": 2,
+      "q": "You find out that somebody at your school has a weapon on them today. What do you do?",
       "options": [
         {
           "id": "demo.01.007.a",
@@ -425,8 +425,8 @@
     },
     {
       "id": "demo.01.008",
-      "version": 1,
-      "q": "A stranger offers you a ride home. What do you say?",
+      "version": 2,
+      "q": "You are walking home and an adult you do not know pulls over and offers you a ride. What do you say?",
       "options": [
         {
           "id": "demo.01.008.a",
@@ -487,8 +487,8 @@
     },
     {
       "id": "demo.01.009",
-      "version": 1,
-      "q": "Is it okay to lie to a police officer?",
+      "version": 2,
+      "q": "A police officer asks you a question, and the true answer is going to sound bad. Is it okay to lie?",
       "options": [
         {
           "id": "demo.01.009.a",
@@ -545,8 +545,8 @@
     },
     {
       "id": "demo.01.010",
-      "version": 1,
-      "q": "What matters most any time you deal with police?",
+      "version": 2,
+      "q": "You are stopped by police and it is not going well. What matters most right then?",
       "options": [
         {
           "id": "demo.01.010.a",
@@ -603,8 +603,8 @@
     },
     {
       "id": "demo.01.011",
-      "version": 1,
-      "q": "You get lost somewhere. Who is a safe person to ask for help?",
+      "version": 2,
+      "q": "You are lost in a big store and cannot find the person you came with. Who do you ask for help?",
       "options": [
         {
           "id": "demo.01.011.a",
@@ -665,8 +665,8 @@
     },
     {
       "id": "demo.01.012",
-      "version": 1,
-      "q": "What is the first thing to tell 911?",
+      "version": 2,
+      "q": "You call 911 and somebody picks up. What is the first thing you tell them?",
       "options": [
         {
           "id": "demo.01.012.a",
@@ -727,8 +727,8 @@
     },
     {
       "id": "demo.01.013",
-      "version": 1,
-      "q": "Can you hang up on 911 before they say it is okay?",
+      "version": 2,
+      "q": "You called 911 and help is on the way. Can you hang up before they say it is okay?",
       "options": [
         {
           "id": "demo.01.013.a",
@@ -789,8 +789,8 @@
     },
     {
       "id": "demo.01.014",
-      "version": 1,
-      "q": "A police officer asks to look in your bag. Can you say no?",
+      "version": 2,
+      "q": "A police officer asks if he can look inside your backpack. Can you say no?",
       "options": [
         {
           "id": "demo.01.014.a",
@@ -851,8 +851,8 @@
     },
     {
       "id": "demo.01.015",
-      "version": 1,
-      "q": "Do you have to unlock your phone for someone at school?",
+      "version": 2,
+      "q": "Somebody at school takes your phone and tells you to unlock it for them. Do you have to?",
       "options": [
         {
           "id": "demo.01.015.a",
@@ -913,8 +913,8 @@
     },
     {
       "id": "demo.01.016",
-      "version": 1,
-      "q": "A police officer says stop. What do you do?",
+      "version": 2,
+      "q": "You are walking down the street and a police officer tells you to stop. What do you do?",
       "options": [
         {
           "id": "demo.01.016.a",
@@ -975,8 +975,8 @@
     },
     {
       "id": "demo.01.017",
-      "version": 1,
-      "q": "Are you allowed to record police with your phone?",
+      "version": 2,
+      "q": "You see police stopping somebody in public and you want to film it on your phone. Are you allowed to?",
       "options": [
         {
           "id": "demo.01.017.a",
@@ -1033,8 +1033,8 @@
     },
     {
       "id": "demo.01.018",
-      "version": 1,
-      "q": "Somebody could get hurt and you tell an adult. Is that snitching?",
+      "version": 2,
+      "q": "You tell an adult that somebody at school could get hurt. Your friend says that makes you a snitch. Is it snitching?",
       "options": [
         {
           "id": "demo.01.018.a",
@@ -1095,8 +1095,8 @@
     },
     {
       "id": "demo.01.019",
-      "version": 1,
-      "q": "You told one adult and nothing changed. What now?",
+      "version": 2,
+      "q": "You told a teacher that somebody could get hurt. A week later nothing has changed. What do you do?",
       "options": [
         {
           "id": "demo.01.019.a",
@@ -1157,8 +1157,8 @@
     },
     {
       "id": "demo.01.020",
-      "version": 1,
-      "q": "Somebody online asks where you live. What do you do?",
+      "version": 2,
+      "q": "Somebody you only know from online keeps asking what street you live on. What do you do?",
       "options": [
         {
           "id": "demo.01.020.a",
@@ -1219,8 +1219,8 @@
     },
     {
       "id": "demo.01.021",
-      "version": 1,
-      "q": "Can you ask a police officer if you are allowed to leave?",
+      "version": 2,
+      "q": "Police have been asking you questions for a while and you want to leave. Can you ask if you are allowed to go?",
       "options": [
         {
           "id": "demo.01.021.a",
@@ -1281,8 +1281,8 @@
     },
     {
       "id": "demo.01.022",
-      "version": 1,
-      "q": "What do you say if you want your parent there?",
+      "version": 2,
+      "q": "You are being questioned by police and you want your mom there with you. What do you say?",
       "options": [
         {
           "id": "demo.01.022.a",
@@ -1339,8 +1339,8 @@
     },
     {
       "id": "demo.01.023",
-      "version": 1,
-      "q": "If you are arrested, when can you get a lawyer?",
+      "version": 2,
+      "q": "You get arrested, and police want to start asking you questions. When can you get a lawyer?",
       "options": [
         {
           "id": "demo.01.023.a",
@@ -1401,8 +1401,8 @@
     },
     {
       "id": "demo.01.024",
-      "version": 1,
-      "q": "Should you run from police?",
+      "version": 2,
+      "q": "Police stop you and you know for a fact you did nothing wrong. Should you run?",
       "options": [
         {
           "id": "demo.01.024.a",
@@ -1459,8 +1459,8 @@
     },
     {
       "id": "demo.01.025",
-      "version": 1,
-      "q": "You think the officer is wrong. When do you fight it?",
+      "version": 2,
+      "q": "Police searched you and you are sure they were not allowed to. When do you fight it?",
       "options": [
         {
           "id": "demo.01.025.a",
