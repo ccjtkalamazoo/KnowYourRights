@@ -441,7 +441,7 @@ function Legend() {
 // The round counter is the honest part. Three rounds per page load, and the
 // banner says how many are left rather than letting a player discover the cap
 // by being refused.
-function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true }) {
+function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true, won = false }) {
   const D = R.demo;
   const left = Math.max(0, maxRuns - runsUsed);
   return c.jsxs("div", {
@@ -474,7 +474,7 @@ function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true }) {
             letterSpacing: -0.5, margin: "6px 0 8px",
             color: canPlay ? u.textOnDark : u.text
           },
-          children: canPlay ? D.title : D.outOfRunsHeadline
+          children: canPlay ? D.title : won ? D.bannerWonTitle : D.outOfRunsHeadline
         }),
         c.jsx("div", {
           style: {
@@ -482,7 +482,7 @@ function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true }) {
             maxWidth: 460, color: canPlay ? u.textOnDark : u.textDim,
             opacity: canPlay ? 0.9 : 1
           },
-          children: canPlay ? D.blurb : D.outOfRunsSub
+          children: canPlay ? D.blurb : won ? D.bannerWonBlurb : D.outOfRunsSub
         })
       ] }),
       c.jsxs("div", {
@@ -498,7 +498,9 @@ function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true }) {
               fontFamily: C.mono, fontSize: 10, letterSpacing: 1.6, fontWeight: 700,
               color: canPlay ? u.textOnDark : u.textMuted, opacity: canPlay ? 0.8 : 1
             },
-            children: left > 0 ? `${left} of ${maxRuns} rounds left` : "no rounds left"
+            // A winner is not out of rounds, they are finished. Never show a count
+            // that implies turns they were owed and did not get.
+            children: won ? D.wonRunsLabel : left > 0 ? `${left} of ${maxRuns} rounds left` : "no rounds left"
           })
         ]
       })
@@ -513,7 +515,7 @@ function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true }) {
 // loaded. The failure state matters more than it looks: content now arrives
 // over the network, so "the file is missing or malformed" is a thing a player
 // can actually hit, and a blank screen would be the worst possible answer.
-export function MapScreen({ onPlayChapter, onHome, onPlayDemo, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true }) {
+export function MapScreen({ onPlayChapter, onHome, onPlayDemo, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
   const [districts, setDistricts] = useState(null);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -621,7 +623,7 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, demoRunsUsed = 0,
       // instruction: the loud thing is the thing to play, and everything else
       // is a roadmap you are looking at, not choosing from.
       onPlayDemo && c.jsx(DemoBanner, {
-        onPlay: onPlayDemo, runsUsed: demoRunsUsed, maxRuns: demoMaxRuns, canPlay: demoCanPlay
+        onPlay: onPlayDemo, runsUsed: demoRunsUsed, maxRuns: demoMaxRuns, canPlay: demoCanPlay, won: demoWon
       }),
 
       // Roadmap divider. Wording follows the content: while nothing is live it
