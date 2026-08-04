@@ -1,0 +1,1075 @@
+{
+  "chapterId": "juvenile.04",
+  "districtId": "juvenile",
+  "name": "DIFFERENT BECAUSE OF YOUR AGE",
+  "safetyNote": "The law changes when you turn 18. That does not mean it leaves you alone until then. Do what an officer tells you to do, the same as an adult would, and sort the rest out later. Being under 18 does not get you out of anything. What it changes is the process: who has to be called, which court hears it, and what happens after.",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "questions": [
+    {
+      "id": "juvenile.04.001",
+      "version": 1,
+      "q": "A friend says you have to be 18 before a case can go to adult court. What is the real age in Michigan?",
+      "options": [
+        {
+          "id": "juvenile.04.001.a",
+          "text": "Fourteen, if what you are accused of would be a felony for an adult.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.001.b",
+          "text": "Eighteen. Adult court is only for adults, by definition.",
+          "isCorrect": false,
+          "explanation": "The line is much lower than the age of adulthood. It sits at 14 for felony-level accusations.",
+          "misconceptionCode": "eighteen_is_the_only_line"
+        },
+        {
+          "id": "juvenile.04.001.c",
+          "text": "Seventeen, the way it used to be before the law changed.",
+          "isCorrect": false,
+          "explanation": "Seventeen was the old line for starting in adult court. It is not the line for moving a case there.",
+          "misconceptionCode": "seventeen_is_an_adult"
+        },
+        {
+          "id": "juvenile.04.001.d",
+          "text": "There is no age. Any case can be moved if it is bad enough.",
+          "isCorrect": false,
+          "explanation": "The statute names an age. Below it, this particular door is closed.",
+          "misconceptionCode": "any_age_can_be_moved"
+        }
+      ],
+      "hint": "The age of an adult and the age this can happen are two different numbers.",
+      "principle": "Michigan law says this. If somebody 14 or older is accused of something that would be a felony for an adult, a prosecutor can ask the family court to give up the case. If that happens, it becomes an adult case. Adult penalties. Adult record. Fourteen is a long way below 18, and most people guess wrong. It does not mean a 14-year-old goes to adult court. It means the door is there at 14.",
+      "keyPhrase": {
+        "quote": "Fourteen, not eighteen.",
+        "gloss": "The adult court door opens years before adulthood does."
+      },
+      "scenario": {
+        "setup": "Your kitchen table, arguing with a friend over something you both half heard.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "They can't do that to a kid. You have to be 18."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't think that's right."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Then what is it?"
+          },
+          {
+            "label": "YOU",
+            "text": "Fourteen, for the serious stuff. I looked it up."
+          },
+          {
+            "label": "YES",
+            "text": "You know the real number, which is the one that would actually apply to you."
+          },
+          {
+            "label": "NO",
+            "text": "You go on believing there is a wall there until somebody proves there is not."
+          }
+        ],
+        "note": "This is a thing to know now, not to find out later."
+      }
+    },
+    {
+      "id": "juvenile.04.002",
+      "version": 1,
+      "q": "A prosecutor asks to move a 15-year-old's case to adult court. What has to happen next?",
+      "options": [
+        {
+          "id": "juvenile.04.002.a",
+          "text": "A judge holds a hearing and decides, and can refuse to move it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.002.b",
+          "text": "Nothing else. Once the prosecutor asks, the case moves.",
+          "isCorrect": false,
+          "explanation": "It is not paperwork. A judge has to hold a hearing and agree to it.",
+          "misconceptionCode": "adult_court_is_automatic"
+        },
+        {
+          "id": "juvenile.04.002.c",
+          "text": "It goes over once the family court finishes its part.",
+          "isCorrect": false,
+          "explanation": "It is not a handoff at the end. It is a request the court can turn down.",
+          "misconceptionCode": "adult_court_is_automatic_2"
+        },
+        {
+          "id": "juvenile.04.002.d",
+          "text": "The parents have to agree before the case can move.",
+          "isCorrect": false,
+          "explanation": "Parents do not decide this. A judge does, after weighing what the law tells him to weigh.",
+          "misconceptionCode": "parent_decides_for_me"
+        }
+      ],
+      "hint": "Somebody asks. Does somebody else get to say no?",
+      "principle": "Moving a case out of the family court is not a form somebody files. A prosecutor has to ask, and a judge has to hold a hearing and decide. Before the judge can send it, there has to be reason to believe a felony-level offense happened and that this young person did it. The judge also weighs things like age, history, and what would actually help. It is a decision, made by somebody who can say no, and it is worth a lawyer.",
+      "keyPhrase": {
+        "quote": "A judge has to agree to it.",
+        "gloss": "Asked for by one person. Decided by another."
+      },
+      "scenario": {
+        "setup": "A courthouse hallway, waiting on a hearing nobody explained to you.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "So it's already decided?"
+          },
+          {
+            "label": "LAWYER",
+            "text": "No. Today is the hearing about whether it moves."
+          },
+          {
+            "label": "YOU",
+            "text": "And a judge decides that?"
+          },
+          {
+            "label": "LAWYER",
+            "text": "A judge decides that."
+          },
+          {
+            "label": "YES",
+            "text": "You understand that today is a decision, so you treat it like one."
+          },
+          {
+            "label": "NO",
+            "text": "You sit through the most important hearing of the case thinking it is a formality."
+          }
+        ],
+        "note": "Nobody should be at that hearing without a lawyer."
+      }
+    },
+    {
+      "id": "juvenile.04.003",
+      "version": 1,
+      "q": "Juvenile court is less formal than adult court. What does that change about your rights there?",
+      "options": [
+        {
+          "id": "juvenile.04.003.a",
+          "text": "Nothing. The right to stay silent and to a lawyer work the same.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.003.b",
+          "text": "You lose the right to stay silent, since there is no jury to hear it.",
+          "isCorrect": false,
+          "explanation": "One has nothing to do with the other. No jury does not remove the right to stay silent.",
+          "misconceptionCode": "informal_means_fewer_rights"
+        },
+        {
+          "id": "juvenile.04.003.c",
+          "text": "A lawyer comes only if the case moves up to adult court.",
+          "isCorrect": false,
+          "explanation": "A lawyer applies on the juvenile side too, and has for a long time.",
+          "misconceptionCode": "rights_start_at_charges"
+        },
+        {
+          "id": "juvenile.04.003.d",
+          "text": "The judge decides at each hearing which ones you get.",
+          "isCorrect": false,
+          "explanation": "They are not handed out hearing by hearing. A judge does not switch them on and off.",
+          "misconceptionCode": "the_judge_picks_which_rights"
+        }
+      ],
+      "hint": "Less formal room. Same rules, or different ones?",
+      "principle": "Juvenile court is less formal than adult court, and that used to mean something worse. For most of its history it ran on the idea that it was helping, not punishing. So young people got very few of the protections adults had. In 1967 the Supreme Court heard a case about a 15-year-old named Gerald Gault and said that had to change. Young people in these cases have due process rights. That includes the right not to say things against yourself. Less formal is not the same as fewer rights.",
+      "keyPhrase": {
+        "quote": "Less formal does not mean fewer rights.",
+        "gloss": "Since 1967 those rights come with you."
+      },
+      "scenario": {
+        "setup": "A courthouse hallway that looks nothing like the ones on television.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "This doesn't look like a real court."
+          },
+          {
+            "label": "LAWYER",
+            "text": "It is one. It just runs differently."
+          },
+          {
+            "label": "YOU",
+            "text": "So do the rules still count?"
+          },
+          {
+            "label": "LAWYER",
+            "text": "All of them. Same as anywhere else."
+          },
+          {
+            "label": "YES",
+            "text": "You treat it like what it is instead of like a meeting."
+          },
+          {
+            "label": "NO",
+            "text": "The room feels casual and you answer things you would never have answered elsewhere."
+          }
+        ],
+        "note": "A quiet room with no jury is still a court. Say the same things you would say anywhere."
+      }
+    },
+    {
+      "id": "juvenile.04.004",
+      "version": 1,
+      "q": "Your cousin got in trouble at 17 in 2019 and went to adult court. What is different now?",
+      "options": [
+        {
+          "id": "juvenile.04.004.a",
+          "text": "Seventeen-year-olds start in the juvenile system, as of October 2021.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.004.b",
+          "text": "Nothing is different. Seventeen has always been an adult here.",
+          "isCorrect": false,
+          "explanation": "Seventeen was an adult for criminal law until October 2021. Many websites still say so.",
+          "misconceptionCode": "seventeen_is_an_adult"
+        },
+        {
+          "id": "juvenile.04.004.c",
+          "text": "Nobody under 18 can reach adult court at all any more.",
+          "isCorrect": false,
+          "explanation": "Starting there is not staying there. A case can still be moved if a judge agrees.",
+          "misconceptionCode": "kids_never_go_to_adult_court"
+        },
+        {
+          "id": "juvenile.04.004.d",
+          "text": "His case would be undone, since the new law reaches back.",
+          "isCorrect": false,
+          "explanation": "It applies going forward. It does not rewrite a case that already finished.",
+          "misconceptionCode": "a_new_law_reaches_backwards"
+        }
+      ],
+      "hint": "Two questions: where you start, and how far back it reaches.",
+      "principle": "Michigan used to send every 17-year-old to adult court, whatever they did. That ended on October 1, 2021. Now anybody under 18 starts in the juvenile system. Two warnings come with this one. Starting there is not staying there, because a case can still be moved. And a lot of guides online, including some official ones, still say 17 is the adult age. They are out of date. If a source does not mention the 2021 change, check it against one that does.",
+      "keyPhrase": {
+        "quote": "Under 18 starts in juvenile court now.",
+        "gloss": "Where you start. Not always where you finish."
+      },
+      "scenario": {
+        "setup": "Your kitchen table, arguing about something that happened years ago.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "He was 17, so they treated him like an adult."
+          },
+          {
+            "label": "MOM",
+            "text": "That was the rule then."
+          },
+          {
+            "label": "YOU",
+            "text": "It isn't now?"
+          },
+          {
+            "label": "MOM",
+            "text": "Not since a few years ago. It changed."
+          },
+          {
+            "label": "YES",
+            "text": "You know which system you would be in, which is the first thing anybody asks."
+          },
+          {
+            "label": "NO",
+            "text": "You plan around a rule that stopped being true before you were old enough for it."
+          }
+        ],
+        "note": "This one is worth knowing before anything happens, not during."
+      }
+    },
+    {
+      "id": "juvenile.04.005",
+      "version": 1,
+      "q": "You turn 18 while a juvenile case from last year is still open. What happens to it?",
+      "options": [
+        {
+          "id": "juvenile.04.005.a",
+          "text": "It stays in the family court, which can keep it well past your birthday.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.005.b",
+          "text": "It closes on your birthday, since that court only covers minors.",
+          "isCorrect": false,
+          "explanation": "The court keeps what it started. Michigan lets it run to 20, and to 21 in the most serious cases.",
+          "misconceptionCode": "turning_18_wipes_it"
+        },
+        {
+          "id": "juvenile.04.005.c",
+          "text": "It transfers to adult court, where it starts over from the top.",
+          "isCorrect": false,
+          "explanation": "Nothing transfers because of a birthday. It stays with the judge who had it.",
+          "misconceptionCode": "eighteen_moves_it_to_adult_court"
+        },
+        {
+          "id": "juvenile.04.005.d",
+          "text": "It stays open, but nothing can be ordered once you are 18.",
+          "isCorrect": false,
+          "explanation": "The court can still order things. That is the whole reason it keeps the case.",
+          "misconceptionCode": "no_orders_after_18"
+        }
+      ],
+      "hint": "Whose case is it, and does a birthday change that?",
+      "principle": "A juvenile case belongs to the court that started it. Michigan lets the family court keep working a case past your 18th birthday. In most cases it runs to 20, and for the most serious ones it can run to 21. Programs, check ins, and reviews can go on for years after the day itself. Turning 18 does not close it, move it, or turn it into an adult conviction. That matters, because plenty of people plan around a birthday that does not do what they think it does.",
+      "keyPhrase": {
+        "quote": "The birthday does not close the case.",
+        "gloss": "The court keeps what it started."
+      },
+      "scenario": {
+        "setup": "Your bedroom the week before your birthday, counting days for the wrong reason.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "Once you're 18 all that stuff disappears."
+          },
+          {
+            "label": "YOU",
+            "text": "Somebody told me the court can keep going."
+          },
+          {
+            "label": "FRIEND",
+            "text": "That can't be right."
+          },
+          {
+            "label": "YOU",
+            "text": "I'd rather check than find out in November."
+          },
+          {
+            "label": "YES",
+            "text": "You plan around what is actually true instead of a rumour with a date on it."
+          },
+          {
+            "label": "NO",
+            "text": "You wait for a birthday to fix something a birthday does not touch."
+          }
+        ],
+        "note": "If you have an open case, ask your lawyer what your 18th birthday does. The answer is specific to you."
+      }
+    },
+    {
+      "id": "juvenile.04.006",
+      "version": 1,
+      "q": "A friend says you can buy a vape at 18 in Michigan. What is the actual age?",
+      "options": [
+        {
+          "id": "juvenile.04.006.a",
+          "text": "Twenty-one. State law and federal law both put it there.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.006.b",
+          "text": "Eighteen, the same as everything except alcohol.",
+          "isCorrect": false,
+          "explanation": "Alcohol is not the only thing at 21. Tobacco and vapes sit there too.",
+          "misconceptionCode": "eighteen_is_the_only_line"
+        },
+        {
+          "id": "juvenile.04.006.c",
+          "text": "Eighteen for vapes, twenty-one only for cigarettes.",
+          "isCorrect": false,
+          "explanation": "Vapes are covered by the same age rule. They are not a gap in it.",
+          "misconceptionCode": "vapes_are_not_tobacco"
+        },
+        {
+          "id": "juvenile.04.006.d",
+          "text": "Twenty-one to sell one, with no age at all to buy one.",
+          "isCorrect": false,
+          "explanation": "Buying is not free. A minor who buys or uses one can face a penalty too.",
+          "misconceptionCode": "only_selling_is_illegal"
+        }
+      ],
+      "hint": "How many things are actually at 21, not 18?",
+      "principle": "The age for tobacco and vapes in Michigan is 21. A federal law says so and a state law says so. Most people guess 18, because 18 is the age for almost everything else. It is not the age here, and it is not the age for alcohol. A kid who buys or uses one can face a penalty, and so can a store that sells it. This is the clearest case of a line sitting somewhere people do not expect.",
+      "keyPhrase": {
+        "quote": "Vapes are 21 here, not 18.",
+        "gloss": "Adulthood at 18 does not move this one."
+      },
+      "scenario": {
+        "setup": "Outside a gas station after school, somebody very confident about the law.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "It's 18 for vapes. Only alcohol is 21."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm pretty sure it's 21 for both now."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Since when?"
+          },
+          {
+            "label": "YOU",
+            "text": "A few years back. Federal and state."
+          },
+          {
+            "label": "YES",
+            "text": "You are not the one holding it when somebody checks."
+          },
+          {
+            "label": "NO",
+            "text": "You find out the real age from a police officer instead of from a friend."
+          }
+        ],
+        "note": "The store gets in trouble too. That is why they check."
+      }
+    },
+    {
+      "id": "juvenile.04.007",
+      "version": 1,
+      "q": "You wake up on your 18th birthday. What actually changes that day?",
+      "options": [
+        {
+          "id": "juvenile.04.007.a",
+          "text": "You can vote and sign a contract, and a new case starts in adult court.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.007.b",
+          "text": "Everything, including buying alcohol and tobacco.",
+          "isCorrect": false,
+          "explanation": "Those two sit at 21, not 18. Turning 18 does not move them.",
+          "misconceptionCode": "eighteen_is_the_only_line"
+        },
+        {
+          "id": "juvenile.04.007.c",
+          "text": "Nothing much. The real line in Michigan is 21.",
+          "isCorrect": false,
+          "explanation": "Plenty changes. Voting, contracts, and which court hears a new case all move at 18.",
+          "misconceptionCode": "nothing_changes_at_18"
+        },
+        {
+          "id": "juvenile.04.007.d",
+          "text": "Only voting. Everything else waits until you are 21.",
+          "isCorrect": false,
+          "explanation": "Voting is one of several. Signing a contract and being sued are others.",
+          "misconceptionCode": "only_voting_changes"
+        }
+      ],
+      "hint": "Some things move that day. Do all of them?",
+      "principle": "Eighteen is the age of majority in Michigan. You can vote, sign a contract that holds up, sue and be sued, and anything new you are accused of starts in adult court. What does not move is the set of rules built on a different number. Alcohol and tobacco stay at 21. A juvenile case that was already open stays where it was. It is a real line, and it is not the only line, which is the thing most people get wrong about it.",
+      "keyPhrase": {
+        "quote": "Eighteen moves some rules. Not all of them.",
+        "gloss": "The age of majority is one line among several."
+      },
+      "scenario": {
+        "setup": "Your kitchen the morning of your birthday, with a list of things people told you.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "You can do everything now."
+          },
+          {
+            "label": "YOU",
+            "text": "Not everything."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Like what?"
+          },
+          {
+            "label": "YOU",
+            "text": "Anything at 21. And the thing from last year is still going."
+          },
+          {
+            "label": "YES",
+            "text": "You know which promises today actually keeps."
+          },
+          {
+            "label": "NO",
+            "text": "You find out on the spot which ones it does not."
+          }
+        ],
+        "note": "If you have an open case, ask what your birthday does to it. The answer is specific to you."
+      }
+    },
+    {
+      "id": "juvenile.04.008",
+      "version": 1,
+      "q": "Missing enough school can put a 15-year-old in front of the family court. What is the adult version of that rule?",
+      "options": [
+        {
+          "id": "juvenile.04.008.a",
+          "text": "There is not one. Truancy only exists because somebody is a minor.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.008.b",
+          "text": "Missing work, which an employer can take to court the same way.",
+          "isCorrect": false,
+          "explanation": "An employer can fire somebody. No court hears a case about an adult not turning up.",
+          "misconceptionCode": "truancy_applies_to_everyone"
+        },
+        {
+          "id": "juvenile.04.008.c",
+          "text": "For adults it is missing a court date instead.",
+          "isCorrect": false,
+          "explanation": "Missing a court date is its own thing, at any age. It is not the grown-up version of truancy.",
+          "misconceptionCode": "adults_have_the_same_duty"
+        },
+        {
+          "id": "juvenile.04.008.d",
+          "text": "None of it is a court matter, for adults or for anybody.",
+          "isCorrect": false,
+          "explanation": "For a minor it can reach the family court. That is what makes it more than a school matter.",
+          "misconceptionCode": "truancy_stays_at_school"
+        }
+      ],
+      "hint": "Try to name the grown-up version of it.",
+      "principle": "Truancy is one of the clearest rules that exists only because somebody is a minor. There is no adult version. Nobody is taken to court for not showing up to a job. For a young person it can reach the family court, which makes it more than a school matter. It has a catch worth knowing too. The missing has to be willful, and findings have been thrown out where nobody dealt with that. Being sick, being kept home, or having nowhere to sleep is not the same as choosing not to go.",
+      "keyPhrase": {
+        "quote": "There is no grown-up version of this.",
+        "gloss": "A rule that only exists while you are a minor."
+      },
+      "scenario": {
+        "setup": "The office at school, being handed a letter about attendance.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "This is going further if it keeps up."
+          },
+          {
+            "label": "YOU",
+            "text": "Further how?"
+          },
+          {
+            "label": "STAFF",
+            "text": "It can go to the court."
+          },
+          {
+            "label": "YOU",
+            "text": "Then I want to explain why I missed those days."
+          },
+          {
+            "label": "YES",
+            "text": "The reason for missing becomes part of the record instead of a blank space."
+          },
+          {
+            "label": "NO",
+            "text": "The days get counted and nobody ever asks what was behind them."
+          }
+        ],
+        "note": "If the days were not your choice, say so early and say it to somebody who writes it down."
+      }
+    },
+    {
+      "id": "juvenile.04.009",
+      "version": 1,
+      "q": "A parent tells a 13-year-old she will take him to court for not listening. What is she talking about?",
+      "options": [
+        {
+          "id": "juvenile.04.009.a",
+          "text": "A case a parent can ask the family court to open about a minor.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.009.b",
+          "text": "Nothing real. A parent cannot bring a case about their own child.",
+          "isCorrect": false,
+          "explanation": "In Michigan a parent can. It is one of the things that exists only because somebody is a minor.",
+          "misconceptionCode": "parents_cannot_start_a_case"
+        },
+        {
+          "id": "juvenile.04.009.c",
+          "text": "A criminal charge, which is what refusing a parent counts as.",
+          "isCorrect": false,
+          "explanation": "It is not a crime and not a misdemeanor. It is its own thing, on the family side.",
+          "misconceptionCode": "disobedience_is_a_crime"
+        },
+        {
+          "id": "juvenile.04.009.d",
+          "text": "A case the judge has to grant the moment it gets filed.",
+          "isCorrect": false,
+          "explanation": "Filing is not deciding. The court has to find its help is really needed, by a high standard.",
+          "misconceptionCode": "filing_it_means_its_decided"
+        }
+      ],
+      "hint": "Is this a threat, or is it a form?",
+      "principle": "Michigan lets a parent ask the family court to open a case about a kid who keeps refusing reasonable, lawful instructions. It runs from age 10 through 17. It is not a crime and not a misdemeanor. Filing it does not decide it. The court has to find, by a high standard, that help only the court can reach is really needed. It is real, it is rare, and it only exists because somebody is under 18.",
+      "keyPhrase": {
+        "quote": "That is a real form, not just a threat.",
+        "gloss": "Exists only because you are a minor. Runs 10 to 17."
+      },
+      "scenario": {
+        "setup": "The living room, at the end of a very bad week.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "I will take you to court over this."
+          },
+          {
+            "label": "YOU",
+            "text": "Can you actually do that?"
+          },
+          {
+            "label": "MOM",
+            "text": "I can."
+          },
+          {
+            "label": "YOU",
+            "text": "Then can we talk about it before you do?"
+          },
+          {
+            "label": "YES",
+            "text": "You find out it is real while there is still time to do something about it."
+          },
+          {
+            "label": "NO",
+            "text": "You treat it as noise until a letter arrives with a date on it."
+          }
+        ],
+        "note": "If this is being said in your house, a counselor or an advocate is worth calling first."
+      }
+    },
+    {
+      "id": "juvenile.04.010",
+      "version": 1,
+      "q": "A 15-year-old and a 25-year-old get caught doing the same thing. What does the officer have to do differently?",
+      "options": [
+        {
+          "id": "juvenile.04.010.a",
+          "text": "Nothing that night. What changes is everything that comes after.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.010.b",
+          "text": "Go easier, since the law says minors get handled more gently.",
+          "isCorrect": false,
+          "explanation": "There is no rule requiring that. Some officers do. It is not something to count on.",
+          "misconceptionCode": "being_a_kid_gets_leniency"
+        },
+        {
+          "id": "juvenile.04.010.c",
+          "text": "Ease off, as long as the young person stays polite about it.",
+          "isCorrect": false,
+          "explanation": "Being polite is worth doing and it is not a rule anybody has to follow.",
+          "misconceptionCode": "politeness_is_a_rule"
+        },
+        {
+          "id": "juvenile.04.010.d",
+          "text": "Nothing at all, then or after. Age changes none of it.",
+          "isCorrect": false,
+          "explanation": "Plenty is different afterward: who gets told, which court, how the record works.",
+          "misconceptionCode": "age_changes_nothing"
+        }
+      ],
+      "hint": "Two questions here. Tonight, and after.",
+      "principle": "Being under 18 is not a discount and it is not a defense. The law applies to you now. An officer can act on it now. Nothing says anybody has to be gentle about it. What being under 18 changes is the part that comes after. A parent has to be told. A different court hears it. The record works another way. That is a real difference. It is just not the difference people hope for in the moment.",
+      "keyPhrase": {
+        "quote": "Being a kid is not a discount.",
+        "gloss": "The night is the same. What follows is different."
+      },
+      "scenario": {
+        "setup": "A bus stop after dark, two people being spoken to at once.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "They'll let us off. We're minors."
+          },
+          {
+            "label": "YOU",
+            "text": "That's not how it works."
+          },
+          {
+            "label": "FRIEND",
+            "text": "It always works."
+          },
+          {
+            "label": "YOU",
+            "text": "Just do what he says. We can sort it out after."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing gets worse because somebody argued about a rule that does not exist."
+          },
+          {
+            "label": "NO",
+            "text": "One of you tests a theory in front of the person it is about."
+          }
+        ],
+        "note": "Do what you are told, the same as an adult would. The difference comes later, not now."
+      }
+    },
+    {
+      "id": "juvenile.04.011",
+      "version": 1,
+      "q": "Police pick up your 14-year-old brother. They call your house twice and nobody answers. What are they allowed to do?",
+      "options": [
+        {
+          "id": "juvenile.04.011.a",
+          "text": "Question him. The law tells them to try, not to succeed.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.011.b",
+          "text": "Wait. Nothing can happen until a parent picks up the phone.",
+          "isCorrect": false,
+          "explanation": "Nothing has to stop. That is the hard part of this rule and it is worth knowing early.",
+          "misconceptionCode": "parents_must_be_called_first"
+        },
+        {
+          "id": "juvenile.04.011.c",
+          "text": "Keep dialing, and nothing else, until somebody answers.",
+          "isCorrect": false,
+          "explanation": "The duty is to try. It is not a promise that anybody gets reached.",
+          "misconceptionCode": "trying_means_they_will_reach_them"
+        },
+        {
+          "id": "juvenile.04.011.d",
+          "text": "Question him, but none of it can be used afterward.",
+          "isCorrect": false,
+          "explanation": "A failed call erases nothing. It becomes one more fact a judge can weigh later.",
+          "misconceptionCode": "a_violation_throws_it_out"
+        }
+      ],
+      "hint": "The word in the law is attempt. What does that leave open?",
+      "principle": "When police pick up somebody under 18 in Michigan, they have to try right away to reach a parent. The word is try. If nobody answers, nothing has to stop. The questions can go on and what gets said can still be used. That is the hard part of this rule. The two things that help are yours to do. Give a number that will be answered, and say you are not answering questions until somebody gets there.",
+      "keyPhrase": {
+        "quote": "I'm not answering anything until somebody gets here.",
+        "gloss": "Trying is required. Reaching them is not guaranteed."
+      },
+      "scenario": {
+        "setup": "A small room at the station. A phone on speaker, ringing out.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "No answer. We can start without her."
+          },
+          {
+            "label": "YOU",
+            "text": "Try this other number first."
+          },
+          {
+            "label": "OFFICER",
+            "text": "We will. Meanwhile, let's talk."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not answering anything until somebody gets here."
+          },
+          {
+            "label": "YES",
+            "text": "The evening still goes on, and none of it is built out of your words."
+          },
+          {
+            "label": "NO",
+            "text": "The call failed and the questioning filled the gap it left."
+          }
+        ],
+        "note": "A failed call is not a shield. Your own sentence is the only thing that is."
+      }
+    },
+    {
+      "id": "juvenile.04.012",
+      "version": 1,
+      "q": "A neighbour sees a 15-year-old and a 30-year-old breaking a car window. Who can he call the police about?",
+      "options": [
+        {
+          "id": "juvenile.04.012.a",
+          "text": "Both of them. Being 15 does not send him to somebody else.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.012.b",
+          "text": "Only the 30-year-old. A minor gets handed to a parent instead.",
+          "isCorrect": false,
+          "explanation": "There is no rule sending him to a parent. He can call police about either one.",
+          "misconceptionCode": "minors_get_a_parent_call_instead"
+        },
+        {
+          "id": "juvenile.04.012.c",
+          "text": "Both, though police will not actually come out for a 15-year-old.",
+          "isCorrect": false,
+          "explanation": "Police respond to calls about people under 18 all the time.",
+          "misconceptionCode": "police_do_not_handle_minors"
+        },
+        {
+          "id": "juvenile.04.012.d",
+          "text": "Both, but nothing at all happens to the 15-year-old afterward.",
+          "isCorrect": false,
+          "explanation": "Plenty can happen. A different court and a different process is not nothing.",
+          "misconceptionCode": "being_a_kid_gets_leniency"
+        }
+      ],
+      "hint": "Does being 15 change who he is allowed to call?",
+      "principle": "Being under 18 does not put you outside the reach of anybody who could call the police on an adult. A store, a neighbour, a bus driver, a stranger, all of them can, and being 15 does not send them to your parents instead. What changes is everything after the call: a parent has to be told, a different court hears it, and the record works another way. That is a real difference. It is just not a difference in whether the call can be made.",
+      "keyPhrase": {
+        "quote": "Being 15 does not stop anybody picking up a phone.",
+        "gloss": "The call is the same. What follows it is not."
+      },
+      "scenario": {
+        "setup": "A street outside a park, with somebody watching from a porch.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "He can't call the cops on us, we're minors."
+          },
+          {
+            "label": "YOU",
+            "text": "He can."
+          },
+          {
+            "label": "FRIEND",
+            "text": "That's not a thing."
+          },
+          {
+            "label": "YOU",
+            "text": "It is. Just wait here and don't make it worse."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing gets added on top of what already happened."
+          },
+          {
+            "label": "NO",
+            "text": "One of you runs on a theory that was never true."
+          }
+        ],
+        "note": "Do what you are told and sort it out afterward. Running turns one thing into two."
+      }
+    },
+    {
+      "id": "juvenile.04.013",
+      "version": 1,
+      "q": "An officer says he does not need your mom here for this conversation. Is he right?",
+      "options": [
+        {
+          "id": "juvenile.04.013.a",
+          "text": "Mostly. He does not need her, and asking for her is still worth it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.013.b",
+          "text": "No. In Michigan a parent has to be in the room for any of it.",
+          "isCorrect": false,
+          "explanation": "A parent being there is not required for police to ask a young person questions.",
+          "misconceptionCode": "parents_must_be_called_first"
+        },
+        {
+          "id": "juvenile.04.013.c",
+          "text": "Yes, so there is no point in asking for her at all.",
+          "isCorrect": false,
+          "explanation": "Asking is never wasted. Whether a parent was there is looked at afterward.",
+          "misconceptionCode": "asking_is_pointless_if_not_required"
+        },
+        {
+          "id": "juvenile.04.013.d",
+          "text": "Not true. Having her there does a lawyer's job.",
+          "isCorrect": false,
+          "explanation": "A parent cannot give legal advice. Both are worth asking for, for different reasons.",
+          "misconceptionCode": "parent_is_my_lawyer"
+        }
+      ],
+      "hint": "Two things can be true. Which two?",
+      "principle": "This is the honest part. In Michigan a parent does not have to be in the room for police to question a young person, so an officer saying he does not need her is usually right. That is not the end of it. Whether a parent was there is one of the things a judge weighs later when deciding if a statement counts. So asking is worth doing even when the answer is no, and the answer being no is not a reason to start talking. Ask for a parent, ask for a lawyer, and wait.",
+      "keyPhrase": {
+        "quote": "I know you don't have to. I'm asking anyway.",
+        "gloss": "Not required and not pointless are both true."
+      },
+      "scenario": {
+        "setup": "An interview room, door open, nobody else in it.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "I don't need your mother for this."
+          },
+          {
+            "label": "YOU",
+            "text": "I know. I'm asking anyway."
+          },
+          {
+            "label": "OFFICER",
+            "text": "It won't change anything."
+          },
+          {
+            "label": "YOU",
+            "text": "That's okay. I'm not answering questions."
+          },
+          {
+            "label": "YES",
+            "text": "The ask is on the record, and so is the answer to it."
+          },
+          {
+            "label": "NO",
+            "text": "Nobody ever asked, so later there is nothing to weigh."
+          }
+        ],
+        "note": "You can accept that the answer is no and still not answer questions."
+      }
+    },
+    {
+      "id": "juvenile.04.014",
+      "version": 1,
+      "q": "Police are asking you questions and your dad tells you to just answer them. Do you have to?",
+      "options": [
+        {
+          "id": "juvenile.04.014.a",
+          "text": "No. It is your choice to make, whatever your dad says about it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.014.b",
+          "text": "Yes. A parent can make that decision for somebody under 18.",
+          "isCorrect": false,
+          "explanation": "A parent can give you advice. The choice being judged afterward is the one you made.",
+          "misconceptionCode": "parent_decides_for_me"
+        },
+        {
+          "id": "juvenile.04.014.c",
+          "text": "Yes, since he is responsible for you until you are 18.",
+          "isCorrect": false,
+          "explanation": "Being responsible for you is not the same as speaking for you when police ask questions.",
+          "misconceptionCode": "responsibility_means_control"
+        },
+        {
+          "id": "juvenile.04.014.d",
+          "text": "No, but staying quiet after he says that counts against you.",
+          "isCorrect": false,
+          "explanation": "Staying quiet is not evidence of anything, whoever it was that told you to speak.",
+          "misconceptionCode": "refusal_implies_guilt"
+        }
+      ],
+      "hint": "Whose right is it in the first place?",
+      "principle": "When a court looks back at what a young person said to police, it looks at the choice that young person made. Not a parent's. In re Gault, a Supreme Court case about a 15-year-old, says statements from young people need the greatest care to be sure they were not the product of fear or of not understanding. Plenty of parents will tell a kid to just clear it up, and they usually mean well. It is still your words in the file. You can say you would rather wait for a lawyer without arguing with your dad about it.",
+      "keyPhrase": {
+        "quote": "I'd rather wait for a lawyer.",
+        "gloss": "The choice being looked at afterward is yours."
+      },
+      "scenario": {
+        "setup": "The living room, two officers at the door and your dad in the hallway.",
+        "lines": [
+          {
+            "label": "DAD",
+            "text": "Just tell them what happened. It'll be easier."
+          },
+          {
+            "label": "YOU",
+            "text": "I'd rather wait for a lawyer."
+          },
+          {
+            "label": "DAD",
+            "text": "You're making this worse."
+          },
+          {
+            "label": "YOU",
+            "text": "Maybe. I'm still going to wait."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing gets said tonight that somebody has to explain later."
+          },
+          {
+            "label": "NO",
+            "text": "You talk to keep the peace at home, and the words leave the house."
+          }
+        ],
+        "note": "You can disagree with a parent quietly. Do not turn it into an argument in front of anybody."
+      }
+    },
+    {
+      "id": "juvenile.04.015",
+      "version": 1,
+      "q": "Two friends, one 17 and one 18, get caught doing the same thing. Where do their cases go?",
+      "options": [
+        {
+          "id": "juvenile.04.015.a",
+          "text": "The 17-year-old to family court, the 18-year-old to adult court.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.015.b",
+          "text": "Both to adult court, since 17 counts as an adult in Michigan.",
+          "isCorrect": false,
+          "explanation": "Not since October 2021. Seventeen now starts on the juvenile side.",
+          "misconceptionCode": "seventeen_is_an_adult"
+        },
+        {
+          "id": "juvenile.04.015.c",
+          "text": "Family court for both, since they were caught together.",
+          "isCorrect": false,
+          "explanation": "Being together does not join the cases. Each one goes by that person's age.",
+          "misconceptionCode": "together_means_same_court"
+        },
+        {
+          "id": "juvenile.04.015.d",
+          "text": "Adult court for the older one only if he already has a record.",
+          "isCorrect": false,
+          "explanation": "A record is not what decides it. Being 18 is what decides it.",
+          "misconceptionCode": "only_a_record_sends_you_up"
+        }
+      ],
+      "hint": "Same night, same act. What is different about the two of them?",
+      "principle": "One year apart, two different systems. Since October 2021, anybody under 18 in Michigan starts on the juvenile side, in the family court. Anybody 18 or over starts in adult court. Being caught together does not put two people in the same place. Age at the time decides it, one person at a time. This is the sharpest example of the line mattering, and it moved recently enough that plenty of adults still have it wrong.",
+      "keyPhrase": {
+        "quote": "One year apart, two different courts.",
+        "gloss": "Age at the time decides it, one person at a time."
+      },
+      "scenario": {
+        "setup": "The back of two different cars, parked on the same street.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "We'll be in the same place, right?"
+          },
+          {
+            "label": "YOU",
+            "text": "You're 18. I don't think we will."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Since when does that matter?"
+          },
+          {
+            "label": "YOU",
+            "text": "Since it changed a few years ago."
+          },
+          {
+            "label": "YES",
+            "text": "Neither of you plans around the other one's situation."
+          },
+          {
+            "label": "NO",
+            "text": "Two people give each other advice about a system only one of them is in."
+          }
+        ],
+        "note": "Do not take advice from somebody in a different court than you."
+      }
+    }
+  ]
+}
