@@ -1,115 +1,240 @@
 // Know Your Rights · CCJT
-// copy.js : every piece of user-facing copy in the game. No logic, no imports.
+// ui.js : the shared component kit.
 //
-// Split out of the old questions.js, which held the copy and the question bank
-// together. Those are different kinds of content with different editors: copy
-// is code and changes with the interface, questions are JSON under content/ and
-// change with the law. Keeping them apart means a wording tweak never risks the
-// bank, and a translation pass has one file to work from.
+// Everything here is presentational and reusable: no game logic, no knowledge of
+// questions or the ladder. The engine (and later the map) both build on these.
+//
+// Design note: the look is "printed paper." Hard 2-3px ink outlines, no blur, and
+// solid offset shadows (U.sm/md/lg) that make elements feel stamped onto the page.
+// Buttons physically press: they slide INTO their shadow on click.
 
-export const R = {
-  presenter: "",
-  title: "KNOW YOUR RIGHTS",
-  hero: {
-    headline: "Fifteen questions about your rights.",
-    headlineAccent: "How many can you get?",
-    subtitle: "Real situations. What you can say, what you can refuse, what the law actually is. Three lifelines if you need help."
-  },
-  playLabel: "Play",
-  walkthrough: [
-    { key: "safety", type: "safety", title: "READ THIS FIRST", body: "This game teaches your legal rights so you never face a law enforcement encounter with no idea what to do. But knowing a right and safely using it are different things. Sometimes your rights will be violated, and the street is not the place to make that point. Your number one goal is to get home safe. Stay calm, keep your hands visible, follow instructions, and do what you have to do to survive. You fight an unfair stop later, in court, with a lawyer, not in the moment. It is completely fine to get a question wrong here. It is far more dangerous to be in that situation knowing nothing at all." },
-    { key: "ladder", type: "ladder", title: "THE LADDER", body: "Each question is worth more than the last. Get all 15 right and you win it all." },
-    { key: "questions", type: "questions", title: "THE QUESTIONS", body: "Four choices per question. Pick one, lock it in. Miss one and the game ends." },
-    { key: "cards", type: "cards", title: "REVIEW CARDS", body: "After you answer, you find out if you were right, then three cards flip up one at a time: the law behind it, a phrase to remember, and how it plays out in real life. Take a few seconds with each one." },
-    { key: "points", type: "points", title: "POINTS", body: "Each review card you read earns a point, up to three per question. Open the Lifelines button during a question to spend points buying back lifelines you have used, so reading pays off when you get stuck later." },
-    { key: "fifty", type: "lifeline", lifelineKey: "fifty", title: "50/50", body: "Your lifelines live behind the Lifelines button on the question screen. The first, 50/50, crosses off two wrong answers, leaving the correct one and one other choice. Best when you can narrow it down to two guesses." },
-    { key: "jury", type: "lifeline", lifelineKey: "poll", title: "JURY", body: "A panel of other students voted on this question. You see what percentage picked each answer. The crowd is usually right, but not always. Trust it more when the top answer is way ahead." },
-    { key: "counsel", type: "lifeline", lifelineKey: "hint", title: "COUNSEL", body: "A lawyer gives you a hint about the question. It won't give away the answer, but it will point you in the right direction. Save this one for when you're truly stuck." },
-    { key: "shop", type: "shop", title: "THE SHOP", body: "Spend points in the Lifelines shop. Buy back any lifeline you have used, or buy two extras: a Shield that survives one wrong answer, and a Skip that trades your question for another. When you win, you will see exactly what you used and what you had left." },
-    { key: "ready", type: "ready", title: "LET'S GO", body: "Fifteen questions. Five lifelines in the shop. No do-overs." }
-  ],
-  walkthroughStepPrefix: "Step",
-  walkthroughSkipLabel: "Skip walkthrough",
-  walkthroughNextLabel: "Next",
-  walkthroughPlayLabel: "Play",
-  homeButton: "\u2190 Home",
-  homeConfirm: { title: "Leave this game?", body: "Your progress will be lost.", leaveLabel: "Leave", stayLabel: "Keep playing" },
-  lifelines: {
-    fifty: { label: "50/50", shortDesc: "Two wrong answers get crossed off.", fullDesc: "Two of the wrong answers get crossed off, leaving you with the correct one and one other choice. Best when you can narrow it down to two guesses." },
-    poll: { label: "JURY", shortDesc: "See how other students answered.", fullDesc: "A panel of other students voted on this same question. You see what percentage picked each answer. Trust it more when the top answer is way ahead.", inGameLabel: "Jury" },
-    hint: { label: "COUNSEL", shortDesc: "A lawyer gives you a hint.", fullDesc: "A lawyer gives you a hint about the question. It won't give away the answer, but it will point you in the right direction.", inGameLabel: "Counsel" },
-    shield: { label: "SHIELD", shortDesc: "Survive one wrong answer.", fullDesc: "Arm it now. The next time you lock in a wrong answer, the shield takes the hit instead of ending your game, crosses that wrong choice off, and lets you pick again." },
-    skip: { label: "SKIP", shortDesc: "Trade this question for another.", fullDesc: "Swaps your current question for a different one of the same difficulty that you haven't seen yet this run." }
-  },
-  lifelineConfirm: {
-    useLabel: "Use it",
-    cancelLabel: "Cancel",
-    remainingOne: "This is your last one.",
-    remainingMany: (e) => `${e} lifelines left after this.`
-  },
-  q15Choice: { takePrize: "Take the prize", keepGoing: "Keep going" },
-  endlessMode: { headerLabel: "BONUS", ladderLabel: "BONUS ROUND" },
-  endScreens: {
-    won: { headline: "YOU WON", sub: "Fifteen out of fifteen. You actually know this stuff." },
-    gameoverLate: { headline: "SO CLOSE", sub: "Almost. Rights are worth getting right. Come back when you want another shot." },
-    gameoverEarly: { headline: "GAME OVER", sub: "That's on us if you didn't know. Now you do. Play again when you're ready." },
-    endlessEnd: { headline: "CHAMPION", sub: "You won the million and kept going. Not bad at all." },
-    endlessChampion: { headline: "LEGEND", sub: "You answered every question in the entire deck. Genuinely legendary." },
-    missedQuestionLabel: "The question you missed",
-    playAgainLabel: "Play again",
-    footerNote: "Each run pulls a fresh set of questions",
-    bonusStreakLabel: "Bonus streak"
-  },
-  cardMeta: [
-    { key: "info", label: "THE LAW", icon: "\u2696" },
-    { key: "phrase", label: "REMEMBER THIS", icon: "\u201C \u201D" },
-    { key: "reallife", label: "IN REAL LIFE", icon: "\uD83D\uDCAC" }
-  ],
-  // Shown once per session, on the pre-round screen, above that chapter's own
-  // safety note. Session-scoped because nothing is ever stored on the device.
-  disclaimer: {
-    title: "BEFORE YOU START",
-    lines: [
-      "This game teaches how rights generally work. It is not legal advice.",
-      "Laws change, and some rules are different from state to state.",
-      "If something real is happening to you, talk to a lawyer about your own situation."
-    ],
-    button: "Got it"
-  },
-  // The demo. Everything a player sees in the event build lives here.
-  // No safety note and no pre-round screen: the walkthrough's first slide is
-  // the safety brief, and repeating it at a table where somebody is standing
-  // next to the player buys nothing.
-  demo: {
-    eyebrow: "START HERE",
-    title: "PLAY THE DEMO",
-    blurb: "Twenty five questions, fifteen a round, shuffled every time. The rest of the map is still being written.",
-    playLabel: "Play now",
-    runLabel: (n, of) => `Round ${n} of ${of}`,
-    tryAgainLabel: "Try again",
-    outOfRunsHeadline: "THAT'S ALL THREE",
-    outOfRunsSub: "Three rounds, and here is how they went. Show this screen to get your prize.",
-    wonHeadline: "YOU WON",
-    wonSub: "All fifteen. Nobody needs to tell you your rights.",
-    roundHeadline: "END OF THE ROUND",
-    scoreboardTitle: "How your rounds went",
-    roundWord: "Round",
-    correctWord: "right",
-    bestLabel: "Best round",
-    tierLabel: "Prize level",
-    tiers: [
-      { at: 15, name: "ALL FIFTEEN" },
-      { at: 10, name: "MADE TEN" },
-      { at: 5, name: "MADE FIVE" }
-    ],
-    noTier: "Not there yet",
-    reachedLabel: (n) => `You got ${n} right before the one that ended it.`,
-    reachedAll: "You got all fifteen right.",
-    loadErrorTitle: "THE DEMO DID NOT LOAD",
-    loadErrorBody: "Its questions could not be fetched. Check the connection and try again."
-  },
-  safetyHeading: "GETTING HOME SAFE COMES FIRST",
-  roundStart: "Start the round \u2192",
-  verdictContinue: "See what it means \u2192",
-  verdictContinueWrong: "Learn why \u2192"
+import { c, u, C, U, LOGO, useState, useMemo } from "./theme.js";
+
+// ---------------------------------------------------------------------------
+// Shell : the page frame every screen sits inside.
+// ---------------------------------------------------------------------------
+// Owns the warm background wash, the two soft corner glows, the full-screen
+// flash on a right/wrong answer, and the mute toggle. screenShake is applied to
+// the whole subtree when an answer is wrong.
+export function Shell({ children, muted, setMuted, screenFlash, screenShake, hideSoundButton, hideLogo, onLogoClick }) {
+  return c.jsxs("div", {
+    className: "ts-shell",
+    style: {
+      fontFamily: C.body, width: "100%",
+      // dvh, not vh: dvh tracks the *visible* viewport as Safari's toolbars slide
+      // in and out, so content is never hidden behind them. min-height (not
+      // height) lets a tall screen grow and scroll instead of clipping.
+      minHeight: "100vh", minHeight: "100dvh",
+      background: `radial-gradient(ellipse at 50% -10%, ${u.bgWarm} 0%, ${u.bg} 70%)`,
+      color: u.text, position: "relative",
+      // overflow was hidden, which is what made content collide instead of
+      // scroll. Let the page scroll when it needs to.
+      overflowX: "hidden", fontSize: 16,
+      display: "flex", flexDirection: "column",
+      // Safari safe-area buffers: keeps content clear of the notch, the home
+      // indicator, and the toolbars. The max() guarantees a minimum buffer even
+      // where there is no inset.
+      paddingTop: "max(env(safe-area-inset-top), 8px)",
+      paddingBottom: "max(env(safe-area-inset-bottom), 8px)",
+      paddingLeft: "env(safe-area-inset-left)",
+      paddingRight: "env(safe-area-inset-right)"
+    },
+    children: [
+      c.jsx("div", { "aria-hidden": true, style: { position: "fixed", top: "60%", left: "-10%", width: "40%", height: "40%", background: `radial-gradient(ellipse, ${u.brandSofter} 0%, transparent 70%)`, filter: "blur(60px)", pointerEvents: "none", zIndex: 0 } }),
+      c.jsx("div", { "aria-hidden": true, style: { position: "fixed", top: "50%", right: "-10%", width: "40%", height: "40%", background: "radial-gradient(ellipse, #f7e0d8 0%, transparent 70%)", filter: "blur(60px)", pointerEvents: "none", zIndex: 0 } }),
+      screenFlash && c.jsx("div", { "aria-hidden": true, style: { position: "fixed", inset: 0, background: screenFlash === "warm" ? "#fde9c8" : "#f7d8cc", opacity: 0, pointerEvents: "none", zIndex: 100, animation: `${screenFlash === "warm" ? "ts-flash-warm" : "ts-flash-red"} 0.6s ease-out forwards` } }),
+      !hideSoundButton && c.jsx("button", {
+        onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound",
+        style: { position: "absolute", top: "max(env(safe-area-inset-top), 8px)", right: 18, zIndex: 60, background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "8px 14px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 11, letterSpacing: 1.5, fontWeight: 700, boxShadow: muted ? "none" : U.sm, WebkitTapHighlightColor: "transparent" },
+        children: muted ? "\u266A OFF" : "\u266A ON"
+      }),
+      // The content grows to fill, pushing the logo to the bottom of the flow.
+      c.jsx("div", { style: { position: "relative", zIndex: 1, flex: "1 1 auto", minHeight: 0, display: "flex", flexDirection: "column", animation: screenShake ? "ts-screen-shake 0.5s" : "none" }, children }),
+      // Footer row, in the document flow below the content so it can never
+      // overlap. The privacy link sits on every screen because data is recorded
+      // during gameplay, not just on the landing page.
+      c.jsxs("div", {
+        className: "ts-footer-row",
+        style: {
+          display: "flex", alignItems: "flex-end", justifyContent: "space-between",
+          gap: 12, marginTop: "auto", paddingTop: 8, position: "relative", zIndex: 1
+        },
+        children: [
+          hideLogo ? c.jsx("span", {}) : c.jsx(SiteLogo, { onClick: onLogoClick }),
+          c.jsx("a", {
+            href: "privacy.html",
+            className: "ts-privacy-link",
+            children: "Privacy"
+          })
+        ]
+      })
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
+// SiteLogo : the persistent CCJT mark, bottom-left.
+// ---------------------------------------------------------------------------
+// position:fixed, so it floats above the layout and costs zero layout space.
+// That is what lets it appear on every screen without ever creating scroll,
+// which matters because the game screens are locked to the viewport height.
+//
+// It is deliberately NOT a plain link. Tapping it opens a confirmation first,
+// because a kid mid-question who accidentally brushes the logo should not get
+// yanked off the site and lose their run.
+//
+// Hidden on the review-card screens (hideLogo), which are the densest screens in
+// the game and the ones where a stray tap would cost the most.
+export function SiteLogo({ onClick }) {
+  const [hover, setHover] = useState(false);
+  return c.jsx("button", {
+    onClick,
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    "aria-label": "About CCJT (opens ccjtkalamazoo.org)",
+    className: "ts-site-logo",
+    style: {
+      // In the document flow, bottom-left, so it sits BELOW content and can
+      // never overlap it. On a tall screen it shows without scrolling; on a
+      // short one you scroll to it. Was position:fixed, which floated over
+      // content and caused the overlap on phones.
+      display: "block",
+      background: "transparent", border: "none", padding: 6,
+      cursor: "pointer", lineHeight: 0,
+      // Kills the dark box iOS Safari paints behind a tapped button. This is the
+      // "black square on mobile only" — it never shows on desktop because desktop
+      // has no tap highlight.
+      WebkitTapHighlightColor: "transparent",
+      opacity: hover ? 1 : 0.82,
+      transform: hover ? "translateY(-2px)" : "translateY(0)",
+      transition: "opacity 0.15s, transform 0.15s",
+    },
+    children: c.jsx("img", {
+      src: LOGO.path,
+      alt: LOGO.alt,
+      // NOTE: the height is set in CSS (.ts-site-logo img), NOT inline. An inline
+      // height would take precedence over the class, and the mobile media query
+      // would then be fighting it. Keeping size purely in CSS means desktop and
+      // mobile sizes live side by side in theme.js and neither can shadow the other.
+      className: "ts-site-logo-img",
+      onError: (e) => {
+        // Try the PNG, then give up quietly rather than showing a broken image.
+        const el = e.currentTarget;
+        if (LOGO.fallbackPath && !el.dataset.triedFallback) {
+          el.dataset.triedFallback = "1";
+          el.src = LOGO.fallbackPath;
+        } else {
+          el.style.display = "none";
+        }
+      },
+      style: { width: "auto", display: "block" }
+    })
+  });
+}
+
+// Inlined Lucide icons (MIT licensed) so lifelines get clean line-icons with no
+// added dependency. Each icon is a list of [tag, attrs] describing the real
+
+// ---------------------------------------------------------------------------
+// LifeIcon : inlined Lucide icons (MIT) for the five lifelines.
+// ---------------------------------------------------------------------------
+// These are the real Lucide paths, pasted as data rather than imported. That
+// keeps the dependency list at exactly one (React) and means the icons cannot
+// break from a CDN outage.
+export const LIFE_ICONS = {
+  // fifty (50/50): two split panels ("columns-2")
+  fifty: [["rect", { x: 3, y: 3, width: 18, height: 18, rx: 2 }], ["line", { x1: 12, y1: 3, x2: 12, y2: 21 }]],
+  // poll (JURY): a group of people ("users")
+  poll: [["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" }], ["circle", { cx: 9, cy: 7, r: 4 }], ["path", { d: "M22 21v-2a4 4 0 0 0-3-3.87" }], ["path", { d: "M16 3.13a4 4 0 0 1 0 7.75" }]],
+  // hint (COUNSEL): a lightbulb
+  hint: [["path", { d: "M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" }], ["path", { d: "M9 18h6" }], ["path", { d: "M10 22h4" }]],
+  // shield (SHIELD): a shield with a check
+  shield: [["path", { d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" }], ["path", { d: "m9 12 2 2 4-4" }]],
+  // skip (SKIP): skip-forward
+  skip: [["polygon", { points: "5 4 15 12 5 20 5 4" }], ["line", { x1: 19, y1: 5, x2: 19, y2: 19 }]],
 };
+export function LifeIcon({ name, size = 22, color = "currentColor" }) {
+  const spec = LIFE_ICONS[name] || [];
+  return c.jsx("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true,
+    children: spec.map(([tag, attrs], i) => c.jsx(tag, { ...attrs }, i)) });
+}
+
+// ---------------------------------------------------------------------------
+// Button : the press-into-shadow button used everywhere.
+// ---------------------------------------------------------------------------
+// Five variants (primary/secondary/accent/danger/ghost), three sizes.
+// The shadow shrinks and the button translates as it is pressed, so it reads as
+// a physical key going down.
+export function Button({ onClick, children, variant = "primary", size = "md", disabled, style, ...rest }) {
+  const [pressed, setPressed] = useState(false);
+  const [hover, setHover] = useState(false);
+  const pal = {
+    primary: { bg: u.brand, color: u.textOnDark, border: u.outline },
+    secondary: { bg: u.surface, color: u.text, border: u.outline },
+    accent: { bg: u.terra, color: u.textOnDark, border: u.outline },
+    danger: { bg: u.red, color: u.textOnDark, border: u.outline },
+    ghost: { bg: "transparent", color: u.text, border: u.outline }
+  }[variant] || { bg: u.brand, color: u.textOnDark, border: u.outline };
+  const sz = {
+    sm: { padding: "8px 14px", fontSize: 13, shadow: U.sm, shadowHover: "2px 2px 0 " + u.outline },
+    md: { padding: "12px 24px", fontSize: 16, shadow: U.md, shadowHover: "3px 3px 0 " + u.outline },
+    lg: { padding: "18px 50px", fontSize: 30, shadow: U.xl, shadowHover: "5px 5px 0 " + u.outline }
+  }[size];
+  let shadow = sz.shadow, transform = "translate(0, 0)";
+  if (disabled) { shadow = "none"; transform = "translate(0, 0)"; }
+  else if (pressed) { shadow = "none"; transform = `translate(${size === "lg" ? "8px" : size === "md" ? "4px" : "3px"}, ${size === "lg" ? "8px" : size === "md" ? "4px" : "3px"})`; }
+  else if (hover) { shadow = sz.shadowHover; transform = `translate(${size === "lg" ? "3px" : "1px"}, ${size === "lg" ? "3px" : "1px"})`; }
+  return c.jsx("button", {
+    onClick, disabled,
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => { setHover(false); setPressed(false); },
+    onMouseDown: () => setPressed(true),
+    onMouseUp: () => setPressed(false),
+    style: { fontFamily: C.display, fontSize: sz.fontSize, letterSpacing: size === "lg" ? 3 : 1.5, padding: sz.padding, background: disabled ? u.surfaceWarm : pal.bg, color: disabled ? u.textMuted : pal.color, border: `2px solid ${pal.border}`, borderRadius: size === "lg" ? 12 : 8, cursor: disabled ? "not-allowed" : "pointer", textTransform: "uppercase", boxShadow: shadow, transform, transition: "transform 0.08s, box-shadow 0.08s", opacity: disabled ? 0.55 : 1, ...style },
+    ...rest,
+    children
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Backdrop + ConfirmModal : every dialog in the game.
+// ---------------------------------------------------------------------------
+export function Backdrop({ children, onClose }) {
+  return c.jsx("div", {
+    onClick: onClose ? (e) => { if (e.target === e.currentTarget) onClose(); } : undefined,
+    style: { position: "fixed", inset: 0, background: "rgba(42, 31, 18, 0.55)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 90, padding: 24, animation: "ts-backdrop-in 0.15s ease-out", overscrollBehavior: "contain", touchAction: "none" },
+    children
+  });
+}
+
+export function ConfirmModal({ title, body, primaryLabel, secondaryLabel, primaryVariant = "primary", onPrimary, onSecondary, header }) {
+  return c.jsx(Backdrop, { children: c.jsxs("div", {
+    className: "ts-modal-card",
+    style: { background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg, padding: "28px 32px 26px", maxWidth: 460, width: "100%", animation: "ts-modal-in 0.18s ease-out" },
+    children: [
+      header,
+      c.jsx("h3", { style: { fontFamily: C.display, fontSize: 26, letterSpacing: 0, margin: header ? "10px 0 8px" : "0 0 8px", color: u.text, lineHeight: 1.15 }, children: title }),
+      body && c.jsx("p", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.65, color: u.textDim, fontWeight: 500, margin: "0 0 22px" }, children: body }),
+      c.jsxs("div", { style: { display: "flex", gap: 12, justifyContent: "flex-end", flexWrap: "wrap" }, children: [
+        c.jsx(Button, { variant: "ghost", size: "sm", onClick: onSecondary, style: { fontSize: 14 }, children: secondaryLabel }),
+        c.jsx(Button, { variant: primaryVariant, size: "sm", onClick: onPrimary, style: { fontSize: 14 }, children: primaryLabel })
+      ] })
+    ]
+  }) });
+}
+
+// ---------------------------------------------------------------------------
+// Confetti : celebration particles.
+// ---------------------------------------------------------------------------
+// Intensity scales with the stakes: a Q2 win gets a sprinkle, a Q15 win gets a
+// downpour. Generated once via useMemo so the pieces don't re-randomize on every
+// re-render mid-fall.
+export function Confetti({ intensity = "med" }) {
+  const count = { low: 35, med: 65, high: 115 }[intensity];
+  const bits = useMemo(() => Array.from({ length: count }).map((o, i) => ({
+    left: Math.random() * 100, delay: Math.random() * 0.5, duration: 2.2 + Math.random() * 2.4,
+    color: [u.brand, u.brandBright, u.terra, u.mustard, u.brandDeep, u.green][i % 6],
+    size: 5 + Math.random() * 9, rot: Math.random() * 360
+  })), [count]);
+  return c.jsx("div", { "aria-hidden": true, style: { position: "fixed", inset: 0, pointerEvents: "none", overflow: "hidden", zIndex: 50 }, children: bits.map((o, i) => c.jsx("span", { style: { position: "absolute", left: o.left + "%", top: -20, width: o.size, height: o.size * 0.45, background: o.color, border: `1px solid ${u.outline}`, transform: `rotate(${o.rot}deg)`, animation: `ts-confetti-fall ${o.duration}s ease-in ${o.delay}s forwards` } }, i)) });
+}
