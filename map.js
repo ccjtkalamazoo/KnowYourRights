@@ -528,7 +528,7 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, demoRunsUsed = 0,
 
   const shell = (children) => c.jsx("div", {
     style: {
-      minHeight: "100vh", display: "flex", alignItems: "center",
+      flex: "1 0 auto", display: "flex", alignItems: "center",
       justifyContent: "center", padding: "48px 24px 78px"
     },
     children: c.jsx("div", { style: { width: "100%", maxWidth: 940 }, children })
