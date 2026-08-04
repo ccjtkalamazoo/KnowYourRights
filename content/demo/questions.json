@@ -1,0 +1,1519 @@
+{
+  "chapterId": "demo.01",
+  "districtId": "demo",
+  "name": "DEMO",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "questions": [
+    {
+      "id": "demo.01.001",
+      "version": 1,
+      "q": "In an emergency, who do you call?",
+      "options": [
+        {
+          "id": "demo.01.001.a",
+          "text": "911",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.001.b",
+          "text": "The police station",
+          "isCorrect": false,
+          "explanation": "That line is for regular business. In an emergency it can ring an empty desk or leave you on hold.",
+          "misconceptionCode": "regular_line_works_in_emergency"
+        },
+        {
+          "id": "demo.01.001.c",
+          "text": "Your parent first",
+          "isCorrect": false,
+          "explanation": "Calling a parent first adds minutes. Call 911 first, then call your parent.",
+          "misconceptionCode": "call_a_parent_first"
+        },
+        {
+          "id": "demo.01.001.d",
+          "text": "An adult nearby",
+          "isCorrect": false,
+          "explanation": "Everyone assumes somebody else already called, so often nobody does. Make the call yourself.",
+          "misconceptionCode": "someone_else_will_call"
+        }
+      ],
+      "hint": "Three digits. It works from any phone in the country.",
+      "principle": "911 reaches police, fire, and an ambulance anywhere in the United States. It is the fastest way to get help to a place. The person who answers stays on the line with you until help arrives.",
+      "keyPhrase": {
+        "quote": "911.",
+        "gloss": "The only number you need to remember in an emergency."
+      },
+      "scenario": {
+        "setup": "You are at a friend's house and his little brother falls off the top bunk and is not getting up.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'm calling 911."
+          },
+          {
+            "label": "911",
+            "text": "Where are you right now?"
+          },
+          {
+            "label": "YES",
+            "text": "Help is already moving while you are still on the phone."
+          },
+          {
+            "label": "NO",
+            "text": "Minutes go by while everybody waits for somebody else to do it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.002",
+      "version": 1,
+      "q": "Is calling 911 free?",
+      "options": [
+        {
+          "id": "demo.01.002.a",
+          "text": "Yes, always",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.002.b",
+          "text": "Only with minutes left",
+          "isCorrect": false,
+          "explanation": "Minutes have nothing to do with it. A phone with zero minutes still dials 911.",
+          "misconceptionCode": "emergency_calls_cost_money"
+        },
+        {
+          "id": "demo.01.002.c",
+          "text": "Only with a plan",
+          "isCorrect": false,
+          "explanation": "A phone with no plan at all still reaches 911. That is built into every phone sold.",
+          "misconceptionCode": "needs_a_plan"
+        },
+        {
+          "id": "demo.01.002.d",
+          "text": "Yes, but they bill you",
+          "isCorrect": false,
+          "explanation": "Nobody gets a bill for calling 911. Worrying about that costs time you need.",
+          "misconceptionCode": "emergency_calls_billed_later"
+        }
+      ],
+      "hint": "Think about a phone with no service sitting in a drawer.",
+      "principle": "911 is free from every phone. No plan, no minutes, and no SIM card still gets you through. A locked phone works too: there is an emergency call button right on the lock screen.",
+      "keyPhrase": {
+        "quote": "It is always free.",
+        "gloss": "No plan, no minutes, no unlock, no bill."
+      },
+      "scenario": {
+        "setup": "Your phone says no service in the corner and something is badly wrong.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "My phone barely works."
+          },
+          {
+            "label": "YES",
+            "text": "It dials anyway, because 911 always does."
+          },
+          {
+            "label": "NO",
+            "text": "You stand there deciding while nothing gets better."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.003",
+      "version": 1,
+      "q": "Do you have to answer a police officer's questions?",
+      "options": [
+        {
+          "id": "demo.01.003.a",
+          "text": "No",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.003.b",
+          "text": "Yes, all of them",
+          "isCorrect": false,
+          "explanation": "You are allowed to not answer. That is what the right to remain silent means.",
+          "misconceptionCode": "must_answer_police"
+        },
+        {
+          "id": "demo.01.003.c",
+          "text": "Yes, because you are under 18",
+          "isCorrect": false,
+          "explanation": "Being a kid does not remove the right. It belongs to everybody.",
+          "misconceptionCode": "minors_must_answer"
+        },
+        {
+          "id": "demo.01.003.d",
+          "text": "Only the easy ones",
+          "isCorrect": false,
+          "explanation": "There is no safe middle. Answering some questions and not others does not protect you.",
+          "misconceptionCode": "partial_answers_are_safe"
+        }
+      ],
+      "hint": "There is a right with the word silent in it.",
+      "principle": "You do not have to answer questions from police, and that is true for kids too. The safest way to use it is out loud: say that you do not want to answer, then stop. Going quiet without saying anything is not the same thing.",
+      "keyPhrase": {
+        "quote": "I don't want to answer questions.",
+        "gloss": "Say it out loud. Going quiet is not the same as saying it."
+      },
+      "scenario": {
+        "setup": "An officer starts asking you about something that happened down the block.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Just tell me what you saw."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't want to answer questions."
+          },
+          {
+            "label": "YES",
+            "text": "You said it out loud, so it counts."
+          },
+          {
+            "label": "NO",
+            "text": "You go quiet, and the questions keep coming anyway."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.004",
+      "version": 1,
+      "q": "What do you say if you want a lawyer?",
+      "options": [
+        {
+          "id": "demo.01.004.a",
+          "text": "\"I want a lawyer.\"",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.004.b",
+          "text": "\"Maybe I should talk to a lawyer?\"",
+          "isCorrect": false,
+          "explanation": "A maybe is not a request. Questioning can keep going after an unsure one.",
+          "misconceptionCode": "unclear_request_counts"
+        },
+        {
+          "id": "demo.01.004.c",
+          "text": "\"Do I need a lawyer?\"",
+          "isCorrect": false,
+          "explanation": "Asking whether you need one is not asking for one. Say the plain version instead.",
+          "misconceptionCode": "asking_counts_as_requesting"
+        },
+        {
+          "id": "demo.01.004.d",
+          "text": "Nothing, one shows up on their own",
+          "isCorrect": false,
+          "explanation": "Nobody appears unless you ask. The asking is the part that starts it.",
+          "misconceptionCode": "lawyer_arrives_automatically"
+        }
+      ],
+      "hint": "Short and certain. No maybe, no question mark.",
+      "principle": "Asking for a lawyer only works if you say it clearly. \"I want a lawyer\" is a request. \"Maybe I need a lawyer\" is not, and questions can keep coming. Once you say the clear version, questioning is supposed to stop.",
+      "keyPhrase": {
+        "quote": "I want a lawyer.",
+        "gloss": "Four words. Say them exactly."
+      },
+      "scenario": {
+        "setup": "You are in a small room and somebody says it will go easier if you just explain.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I want a lawyer."
+          },
+          {
+            "label": "YES",
+            "text": "The questions are supposed to stop right there."
+          },
+          {
+            "label": "NO",
+            "text": "A maybe leaves the door open, and they walk back through it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.005",
+      "version": 1,
+      "q": "Your family cannot pay for a lawyer. Do you still get one?",
+      "options": [
+        {
+          "id": "demo.01.005.a",
+          "text": "Yes, for free",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.005.b",
+          "text": "No, only if you can pay",
+          "isCorrect": false,
+          "explanation": "Money is not what decides it. A lawyer gets appointed for you either way.",
+          "misconceptionCode": "no_money_no_lawyer"
+        },
+        {
+          "id": "demo.01.005.c",
+          "text": "Only after you are found guilty",
+          "isCorrect": false,
+          "explanation": "A lawyer before the questions is the whole point. Afterward is too late to help.",
+          "misconceptionCode": "lawyer_comes_after_verdict"
+        },
+        {
+          "id": "demo.01.005.d",
+          "text": "Only if your parents ask for one",
+          "isCorrect": false,
+          "explanation": "You can ask for yourself. You do not need a parent to say it first.",
+          "misconceptionCode": "parent_must_request_lawyer"
+        }
+      ],
+      "hint": "The price of a lawyer is not what decides whether you get one.",
+      "principle": "If you cannot afford a lawyer, the court appoints one and you do not pay. That is true for kids too. You do not have to prove anything about money before you ask, and asking costs nothing.",
+      "keyPhrase": {
+        "quote": "I want a lawyer, and we can't pay for one.",
+        "gloss": "Say both parts. The second part is what starts the free one."
+      },
+      "scenario": {
+        "setup": "Somebody tells you a lawyer is expensive and you probably do not want to bother.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I want a lawyer, and we can't pay."
+          },
+          {
+            "label": "YES",
+            "text": "One gets appointed, and it costs your family nothing."
+          },
+          {
+            "label": "NO",
+            "text": "You skip asking over money that was never going to be the problem."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.006",
+      "version": 1,
+      "q": "Where should your hands be when a police officer is talking to you?",
+      "options": [
+        {
+          "id": "demo.01.006.a",
+          "text": "Where the officer can see them",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.006.b",
+          "text": "In your pockets",
+          "isCorrect": false,
+          "explanation": "Hidden hands make somebody guess what is in them. That guess is what goes wrong.",
+          "misconceptionCode": "hands_hidden_is_fine"
+        },
+        {
+          "id": "demo.01.006.c",
+          "text": "Wherever is comfortable",
+          "isCorrect": false,
+          "explanation": "Comfortable is not the goal here. Visible is.",
+          "misconceptionCode": "hands_do_not_matter"
+        },
+        {
+          "id": "demo.01.006.d",
+          "text": "Up in the air the whole time",
+          "isCorrect": false,
+          "explanation": "You do not have to hold your hands up. Visible is enough, and easier to hold.",
+          "misconceptionCode": "hands_must_be_raised"
+        }
+      ],
+      "hint": "The point is that nobody has to guess what is in them.",
+      "principle": "Keeping your hands visible lowers the temperature of the whole encounter. An officer who can see your hands is not wondering what is in them. No law requires it, and it is still one of the simplest things you can do to keep everybody calm.",
+      "keyPhrase": {
+        "quote": "Hands where they can see them.",
+        "gloss": "Out of pockets, off your lap, in plain view."
+      },
+      "scenario": {
+        "setup": "An officer walks up while you are standing outside with your hands in your jacket.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'm taking my hands out slow."
+          },
+          {
+            "label": "YES",
+            "text": "Everybody can see there is nothing in them."
+          },
+          {
+            "label": "NO",
+            "text": "One hidden hand turns a two minute stop into something else."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.007",
+      "version": 1,
+      "q": "Somebody at school has a weapon. What do you do?",
+      "options": [
+        {
+          "id": "demo.01.007.a",
+          "text": "Tell an adult right now",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.007.b",
+          "text": "Post about it so people know",
+          "isCorrect": false,
+          "explanation": "A post reaches people who cannot do anything. Say it to an adult who is standing there.",
+          "misconceptionCode": "posting_counts_as_telling"
+        },
+        {
+          "id": "demo.01.007.c",
+          "text": "Wait and see if anything happens",
+          "isCorrect": false,
+          "explanation": "Waiting is the one thing that cannot be undone if you are wrong about it.",
+          "misconceptionCode": "later_is_soon_enough"
+        },
+        {
+          "id": "demo.01.007.d",
+          "text": "Handle it yourself",
+          "isCorrect": false,
+          "explanation": "This is not yours to handle. Getting an adult is the whole job.",
+          "misconceptionCode": "handle_it_yourself"
+        }
+      ],
+      "hint": "The important word in the question is now.",
+      "principle": "When somebody could get hurt in the next few minutes, you need an adult who can act in the next few minutes. Tell a teacher, walk into the office, or call 911. This is not getting somebody in trouble. It is keeping people from getting hurt.",
+      "keyPhrase": {
+        "quote": "Somebody has a weapon, right now.",
+        "gloss": "Say it to an adult who is standing in front of you."
+      },
+      "scenario": {
+        "setup": "Somebody tells you what they just saw in a bag, and the person is still in the building.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "He's got something in his bag."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm telling the office right now."
+          },
+          {
+            "label": "YES",
+            "text": "People who can move in minutes find out in minutes."
+          },
+          {
+            "label": "NO",
+            "text": "The fastest thing you had gets spent on the slowest way to tell it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.008",
+      "version": 1,
+      "q": "A stranger offers you a ride home. What do you say?",
+      "options": [
+        {
+          "id": "demo.01.008.a",
+          "text": "No",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.008.b",
+          "text": "Yes, they seem nice",
+          "isCorrect": false,
+          "explanation": "Nice is not information. Anybody can be nice for the length of a conversation.",
+          "misconceptionCode": "friendly_means_safe"
+        },
+        {
+          "id": "demo.01.008.c",
+          "text": "Yes, they know you",
+          "isCorrect": false,
+          "explanation": "Your name is easy to find out. Knowing it does not make somebody safe.",
+          "misconceptionCode": "knows_my_name_means_safe"
+        },
+        {
+          "id": "demo.01.008.d",
+          "text": "Ask questions first",
+          "isCorrect": false,
+          "explanation": "Questions give them time to talk you into it. The answer was already no.",
+          "misconceptionCode": "questions_make_it_safe"
+        }
+      ],
+      "hint": "Nothing they say changes the answer.",
+      "principle": "A person you do not know offering you a ride is not a favor. Knowing your name, your school, or your parent's name proves nothing, because all of that is easy to find. Say no, walk toward people, and tell an adult you trust.",
+      "keyPhrase": {
+        "quote": "No thanks.",
+        "gloss": "You do not owe a stranger a reason."
+      },
+      "scenario": {
+        "setup": "A car slows down next to you on the walk home and the window comes down.",
+        "lines": [
+          {
+            "label": "DRIVER",
+            "text": "Your mom asked me to grab you."
+          },
+          {
+            "label": "YOU",
+            "text": "No thanks."
+          },
+          {
+            "label": "YES",
+            "text": "You keep walking toward people and tell somebody."
+          },
+          {
+            "label": "NO",
+            "text": "You get in a car nobody knows you got into."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.009",
+      "version": 1,
+      "q": "Is it okay to lie to a police officer?",
+      "options": [
+        {
+          "id": "demo.01.009.a",
+          "text": "No",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.009.b",
+          "text": "Yes, if you're innocent",
+          "isCorrect": false,
+          "explanation": "Being innocent does not make a false answer safe. The lie becomes its own problem.",
+          "misconceptionCode": "innocence_makes_lying_safe"
+        },
+        {
+          "id": "demo.01.009.c",
+          "text": "Yes, for small things",
+          "isCorrect": false,
+          "explanation": "Small ones count the same. There is no size where it stops mattering.",
+          "misconceptionCode": "small_lies_are_fine"
+        },
+        {
+          "id": "demo.01.009.d",
+          "text": "Yes, they lie too",
+          "isCorrect": false,
+          "explanation": "They are, and you are not. That is unfair and it is still how it works.",
+          "misconceptionCode": "police_lie_so_i_can"
+        }
+      ],
+      "hint": "Not answering and saying something false are two different things.",
+      "principle": "Lying to police can be a crime by itself, even when the thing you lied about was not. You always have the option of not answering, which is a right. Saying something you know is false is not a right, and it turns a small situation into a bigger one.",
+      "keyPhrase": {
+        "quote": "I don't want to answer.",
+        "gloss": "The safe alternative to a lie is silence, not a better story."
+      },
+      "scenario": {
+        "setup": "You get asked something and the true answer feels like it will sound bad.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I don't want to answer that."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing you said can be used to catch you out."
+          },
+          {
+            "label": "NO",
+            "text": "A quick made up answer becomes the thing you have to explain."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.010",
+      "version": 1,
+      "q": "What matters most any time you deal with police?",
+      "options": [
+        {
+          "id": "demo.01.010.a",
+          "text": "Getting home safe",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.010.b",
+          "text": "Proving you are right",
+          "isCorrect": false,
+          "explanation": "Being right does not help you in the moment. It helps later, with a lawyer.",
+          "misconceptionCode": "being_right_helps_now"
+        },
+        {
+          "id": "demo.01.010.c",
+          "text": "Getting the last word",
+          "isCorrect": false,
+          "explanation": "The last word costs more than it is worth, every single time.",
+          "misconceptionCode": "last_word_matters"
+        },
+        {
+          "id": "demo.01.010.d",
+          "text": "Saying absolutely nothing at all",
+          "isCorrect": false,
+          "explanation": "Silence is a tool, not the goal. The goal is walking away fine.",
+          "misconceptionCode": "total_silence_is_the_goal"
+        }
+      ],
+      "hint": "You can win the argument later. There is one thing you cannot get back.",
+      "principle": "Rights get sorted out afterward, in an office or a courtroom, with a lawyer. The street is not where anybody decides who was right. Stay calm, keep your hands where they can be seen, and deal with the rest when you are safe.",
+      "keyPhrase": {
+        "quote": "Get home first.",
+        "gloss": "Almost everything else can be fixed later."
+      },
+      "scenario": {
+        "setup": "The stop feels wrong and you can feel yourself getting louder.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'm going to deal with this later."
+          },
+          {
+            "label": "YES",
+            "text": "You go home, and a lawyer takes it from there."
+          },
+          {
+            "label": "NO",
+            "text": "You win the argument and lose the night."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.011",
+      "version": 1,
+      "q": "You get lost somewhere. Who is a safe person to ask for help?",
+      "options": [
+        {
+          "id": "demo.01.011.a",
+          "text": "A worker in a uniform",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.011.b",
+          "text": "The first adult you see",
+          "isCorrect": false,
+          "explanation": "Being an adult is not a qualification. Pick somebody, do not take whoever is nearest.",
+          "misconceptionCode": "any_adult_is_safe"
+        },
+        {
+          "id": "demo.01.011.c",
+          "text": "Somebody who offers to help you look",
+          "isCorrect": false,
+          "explanation": "The safest person is one you chose, not one who chose you.",
+          "misconceptionCode": "helper_is_safe"
+        },
+        {
+          "id": "demo.01.011.d",
+          "text": "Nobody, keep looking on your own",
+          "isCorrect": false,
+          "explanation": "Wandering makes you harder to find. Standing still and asking works better.",
+          "misconceptionCode": "asking_makes_it_worse"
+        }
+      ],
+      "hint": "Think about who is wearing a name tag and is not going anywhere.",
+      "principle": "A worker at a register, a security desk, or an information counter is easy to spot, easy to identify, and stays where they are. A parent with kids is another good choice. The safest person to ask is one you picked out yourself.",
+      "keyPhrase": {
+        "quote": "I'm lost. Can you help me find my adult?",
+        "gloss": "Say it to somebody who works there."
+      },
+      "scenario": {
+        "setup": "You turn around in a big store and the person you came with is gone.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'm lost, can you help?"
+          },
+          {
+            "label": "WORKER",
+            "text": "Stay right here with me."
+          },
+          {
+            "label": "YES",
+            "text": "You stay in one place and get found."
+          },
+          {
+            "label": "NO",
+            "text": "You keep moving and so do they, and it takes an hour."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.012",
+      "version": 1,
+      "q": "What is the first thing to tell 911?",
+      "options": [
+        {
+          "id": "demo.01.012.a",
+          "text": "Where you are",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.012.b",
+          "text": "Your name",
+          "isCorrect": false,
+          "explanation": "They will ask. If the call drops first, your name does not send anybody anywhere.",
+          "misconceptionCode": "name_comes_first"
+        },
+        {
+          "id": "demo.01.012.c",
+          "text": "What happened, from the start",
+          "isCorrect": false,
+          "explanation": "The story can wait. Without a location none of it helps.",
+          "misconceptionCode": "story_comes_first"
+        },
+        {
+          "id": "demo.01.012.d",
+          "text": "Who caused it",
+          "isCorrect": false,
+          "explanation": "Blame is not their job on this call. Getting help to the right place is.",
+          "misconceptionCode": "blame_comes_first"
+        }
+      ],
+      "hint": "If the call drops right now, what do they need to already have?",
+      "principle": "Location comes first because everything else is useless without it. If the call cuts off after you give an address, help can still come. The person on the line will ask you the rest, so you do not have to plan out what to say.",
+      "keyPhrase": {
+        "quote": "Here's where I am.",
+        "gloss": "An address, the nearest cross streets, or the name of the building."
+      },
+      "scenario": {
+        "setup": "You are calling from somewhere you have only been once and the signal is bad.",
+        "lines": [
+          {
+            "label": "911",
+            "text": "Where are you?"
+          },
+          {
+            "label": "YOU",
+            "text": "The gas station on Westnedge and Kilgore."
+          },
+          {
+            "label": "YES",
+            "text": "Even if the call drops, help has somewhere to go."
+          },
+          {
+            "label": "NO",
+            "text": "The call cuts out and nobody knows where to send anybody."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.013",
+      "version": 1,
+      "q": "Can you hang up on 911 before they say it is okay?",
+      "options": [
+        {
+          "id": "demo.01.013.a",
+          "text": "No",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.013.b",
+          "text": "Yes, after the address",
+          "isCorrect": false,
+          "explanation": "They are still working while you are on the line. Let them finish.",
+          "misconceptionCode": "address_is_enough"
+        },
+        {
+          "id": "demo.01.013.c",
+          "text": "Yes, help is coming",
+          "isCorrect": false,
+          "explanation": "Things change while help is on the way, and they need to hear it from you.",
+          "misconceptionCode": "help_coming_means_done"
+        },
+        {
+          "id": "demo.01.013.d",
+          "text": "Yes, if you're scared",
+          "isCorrect": false,
+          "explanation": "Being scared is exactly when you want somebody in your ear. Stay on.",
+          "misconceptionCode": "scared_means_hang_up"
+        }
+      ],
+      "hint": "They are still doing something while you are on the line.",
+      "principle": "The person on the 911 line keeps asking questions to send the right help, and can tell you what to do while you wait. Staying on also means they can reach you if something changes. If you hang up, they have to call back, and that costs time.",
+      "keyPhrase": {
+        "quote": "I'm staying on.",
+        "gloss": "Let them be the one who ends the call."
+      },
+      "scenario": {
+        "setup": "You called, help is coming, and you want to go find your friend.",
+        "lines": [
+          {
+            "label": "911",
+            "text": "Stay on the line with me."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay, I'm here."
+          },
+          {
+            "label": "YES",
+            "text": "They talk you through it until somebody arrives."
+          },
+          {
+            "label": "NO",
+            "text": "You hang up, and they spend the next two minutes calling you back."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.014",
+      "version": 1,
+      "q": "A police officer asks to look in your bag. Can you say no?",
+      "options": [
+        {
+          "id": "demo.01.014.a",
+          "text": "Yes",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.014.b",
+          "text": "No, asking means telling",
+          "isCorrect": false,
+          "explanation": "A request is a request. You are allowed to answer it either way.",
+          "misconceptionCode": "police_can_always_search"
+        },
+        {
+          "id": "demo.01.014.c",
+          "text": "Only if it's empty",
+          "isCorrect": false,
+          "explanation": "Saying no is not a confession. It is not evidence of anything.",
+          "misconceptionCode": "nothing_to_hide"
+        },
+        {
+          "id": "demo.01.014.d",
+          "text": "Only with a parent",
+          "isCorrect": false,
+          "explanation": "You can say it yourself. Nobody has to be standing next to you.",
+          "misconceptionCode": "parent_must_consent"
+        }
+      ],
+      "hint": "A question is a question. You get to answer it either way.",
+      "principle": "When an officer asks to search, that is a request, and you can say no. Saying no is not a crime and does not prove anything about you. They might search anyway, and if that happens you do not fight it. Say clearly that you do not agree, and let a lawyer handle it later.",
+      "keyPhrase": {
+        "quote": "I don't agree to a search.",
+        "gloss": "Say it once, calmly, and do not block anybody."
+      },
+      "scenario": {
+        "setup": "You are on a bench with your backpack and an officer asks to take a look.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Mind if I look in the bag?"
+          },
+          {
+            "label": "YOU",
+            "text": "I don't agree to a search."
+          },
+          {
+            "label": "YES",
+            "text": "You said no clearly, and that stays on the record."
+          },
+          {
+            "label": "NO",
+            "text": "A shrug counts as yes, and now nobody can argue about it later."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.015",
+      "version": 1,
+      "q": "Do you have to unlock your phone for someone at school?",
+      "options": [
+        {
+          "id": "demo.01.015.a",
+          "text": "No",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.015.b",
+          "text": "Yes, they asked",
+          "isCorrect": false,
+          "explanation": "Being asked is not the same as having to. The code is still yours.",
+          "misconceptionCode": "passcode_must_be_given"
+        },
+        {
+          "id": "demo.01.015.c",
+          "text": "Yes, it's school property",
+          "isCorrect": false,
+          "explanation": "Bringing a phone to school does not hand over what is on it.",
+          "misconceptionCode": "school_owns_what_you_bring"
+        },
+        {
+          "id": "demo.01.015.d",
+          "text": "Yes, or more trouble",
+          "isCorrect": false,
+          "explanation": "Say no calmly and ask to call a parent. Do not unlock it because somebody is impatient.",
+          "misconceptionCode": "refusing_adds_punishment"
+        }
+      ],
+      "hint": "Handing over a phone and handing over the code are two different things.",
+      "principle": "Your passcode is yours. Staff can take a phone from you, and you still do not have to unlock it or tell anybody the code. Say no calmly. If somebody keeps pushing, ask to call a parent.",
+      "keyPhrase": {
+        "quote": "I'm not giving my code.",
+        "gloss": "You can hand over the phone and still keep the code."
+      },
+      "scenario": {
+        "setup": "Your phone is on a desk in the office and somebody is waiting for you to type.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "Just open it and this is over."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not giving my code."
+          },
+          {
+            "label": "YES",
+            "text": "The phone is out of your hands and the code is not."
+          },
+          {
+            "label": "NO",
+            "text": "You unlock it to end an awkward minute, and everything on it is open."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.016",
+      "version": 1,
+      "q": "A police officer says stop. What do you do?",
+      "options": [
+        {
+          "id": "demo.01.016.a",
+          "text": "Stop",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.016.b",
+          "text": "Keep walking, you did nothing wrong",
+          "isCorrect": false,
+          "explanation": "Being innocent does not make walking away safe. Stop first.",
+          "misconceptionCode": "innocence_means_you_can_go"
+        },
+        {
+          "id": "demo.01.016.c",
+          "text": "Ask why first, then decide",
+          "isCorrect": false,
+          "explanation": "You can ask every question you want while standing still.",
+          "misconceptionCode": "asking_first_is_fine"
+        },
+        {
+          "id": "demo.01.016.d",
+          "text": "Run",
+          "isCorrect": false,
+          "explanation": "Running turns a conversation into a chase and never helps you.",
+          "misconceptionCode": "running_ends_it"
+        }
+      ],
+      "hint": "You can ask questions standing still.",
+      "principle": "Stopping is the safe move even when you are sure the officer has no reason. Everything you want to say, including asking whether you are free to go, you can say standing right there. Whether the stop was allowed gets sorted out later, by somebody whose job that is.",
+      "keyPhrase": {
+        "quote": "Okay, I've stopped.",
+        "gloss": "Stop first. Ask second."
+      },
+      "scenario": {
+        "setup": "You are half a block from home and somebody behind you says stop.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Hey, stop right there."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay, I've stopped."
+          },
+          {
+            "label": "YES",
+            "text": "It stays a conversation, and you go home."
+          },
+          {
+            "label": "NO",
+            "text": "Three more steps and it is not a conversation anymore."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.017",
+      "version": 1,
+      "q": "Are you allowed to record police with your phone?",
+      "options": [
+        {
+          "id": "demo.01.017.a",
+          "text": "Yes",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.017.b",
+          "text": "Only with permission",
+          "isCorrect": false,
+          "explanation": "You do not need permission to record somebody doing a public job.",
+          "misconceptionCode": "filming_needs_permission"
+        },
+        {
+          "id": "demo.01.017.c",
+          "text": "Only from your yard",
+          "isCorrect": false,
+          "explanation": "You can record from anywhere you are allowed to be standing.",
+          "misconceptionCode": "must_be_on_own_property"
+        },
+        {
+          "id": "demo.01.017.d",
+          "text": "No, it's illegal",
+          "isCorrect": false,
+          "explanation": "It is not. Recording police in public is allowed.",
+          "misconceptionCode": "recording_is_illegal"
+        }
+      ],
+      "hint": "You are allowed to. There is still a smart way to do it.",
+      "principle": "You can record police doing their job in public. Stand back, keep your hands visible, and stay out of the way. Saying out loud that you are recording keeps anybody from being surprised by it. Recording is allowed. Getting in the middle of things is not.",
+      "keyPhrase": {
+        "quote": "I'm recording, and I'm not in the way.",
+        "gloss": "Stay back, keep filming, keep your hands visible."
+      },
+      "scenario": {
+        "setup": "Something is happening across the parking lot and you have your phone out.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'm recording from over here."
+          },
+          {
+            "label": "YES",
+            "text": "You have it on video and you are nowhere near it."
+          },
+          {
+            "label": "NO",
+            "text": "You walk in close for a better angle and become part of it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.018",
+      "version": 1,
+      "q": "Somebody could get hurt and you tell an adult. Is that snitching?",
+      "options": [
+        {
+          "id": "demo.01.018.a",
+          "text": "No",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.018.b",
+          "text": "Yes, telling is telling",
+          "isCorrect": false,
+          "explanation": "Snitching is trading somebody for something you get. This is not that.",
+          "misconceptionCode": "reporting_is_snitching"
+        },
+        {
+          "id": "demo.01.018.c",
+          "text": "Only if you give your name",
+          "isCorrect": false,
+          "explanation": "You can tell somebody without your name being the point of it.",
+          "misconceptionCode": "tips_are_traced_back"
+        },
+        {
+          "id": "demo.01.018.d",
+          "text": "Only if you did not see it yourself",
+          "isCorrect": false,
+          "explanation": "Something you heard still counts. Adults would rather check than miss it.",
+          "misconceptionCode": "only_firsthand_counts"
+        }
+      ],
+      "hint": "What is the difference between getting somebody in trouble and keeping somebody alive?",
+      "principle": "Snitching means trading somebody for something you get out of it. Telling an adult that a person could be hurt is a different act. You are not deciding what happens to anybody. You are making sure a grown up knows in time to do something about it.",
+      "keyPhrase": {
+        "quote": "Somebody could get hurt.",
+        "gloss": "That sentence is the whole reason you are telling."
+      },
+      "scenario": {
+        "setup": "Your friend finds out you are about to tell somebody and calls you a snitch.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "So you're just snitching now."
+          },
+          {
+            "label": "YOU",
+            "text": "Somebody could get hurt."
+          },
+          {
+            "label": "YES",
+            "text": "An adult knows in time, and nobody gets hurt."
+          },
+          {
+            "label": "NO",
+            "text": "You stay quiet to avoid a word, and it happens anyway."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.019",
+      "version": 1,
+      "q": "You told one adult and nothing changed. What now?",
+      "options": [
+        {
+          "id": "demo.01.019.a",
+          "text": "Tell another adult",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.019.b",
+          "text": "Nothing, you did your part",
+          "isCorrect": false,
+          "explanation": "One adult is not every adult. Telling once is a start, not the finish.",
+          "misconceptionCode": "telling_once_is_enough"
+        },
+        {
+          "id": "demo.01.019.c",
+          "text": "Assume somebody handled it",
+          "isCorrect": false,
+          "explanation": "Nothing visible changing does not mean anything happened.",
+          "misconceptionCode": "if_nothing_shows_nothing_happened"
+        },
+        {
+          "id": "demo.01.019.d",
+          "text": "Wait longer and see",
+          "isCorrect": false,
+          "explanation": "Waiting is not a plan. Go to a different adult instead.",
+          "misconceptionCode": "waiting_is_doing_something"
+        }
+      ],
+      "hint": "One adult is not every adult.",
+      "principle": "Adults miss things, get busy, and sometimes get it wrong. Telling one person is a start. Go to a different one: a counselor, the office, a coach, a parent. You are allowed to keep telling people until somebody actually does something.",
+      "keyPhrase": {
+        "quote": "I already told somebody, and nothing happened.",
+        "gloss": "Open with that sentence. It moves you to the front of the line."
+      },
+      "scenario": {
+        "setup": "It has been a week since you told a teacher and everything is exactly the same.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I told somebody last week and nothing happened."
+          },
+          {
+            "label": "COUNSELOR",
+            "text": "Tell me the whole thing."
+          },
+          {
+            "label": "YES",
+            "text": "A second adult picks it up and it moves."
+          },
+          {
+            "label": "NO",
+            "text": "You decide it is handled, and nobody ever looks at it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.020",
+      "version": 1,
+      "q": "Somebody online asks where you live. What do you do?",
+      "options": [
+        {
+          "id": "demo.01.020.a",
+          "text": "Do not tell them",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.020.b",
+          "text": "Tell them the city only",
+          "isCorrect": false,
+          "explanation": "A city plus everything else you have posted narrows down fast. Give none of it.",
+          "misconceptionCode": "partial_info_is_safe"
+        },
+        {
+          "id": "demo.01.020.c",
+          "text": "Tell them if you know them from school",
+          "isCorrect": false,
+          "explanation": "An account with a familiar name is not proof of who is typing.",
+          "misconceptionCode": "online_friend_is_a_friend"
+        },
+        {
+          "id": "demo.01.020.d",
+          "text": "Ask why they want to know",
+          "isCorrect": false,
+          "explanation": "Asking gives them a turn to explain it away. You already had the answer.",
+          "misconceptionCode": "asking_why_makes_it_safe"
+        }
+      ],
+      "hint": "There is no version of this answer that helps you.",
+      "principle": "Where you live is one of the few things about you that cannot be taken back once it is out. Nobody online needs it. If somebody keeps asking after you said no, that is the thing to show an adult, not the thing to answer.",
+      "keyPhrase": {
+        "quote": "I don't give that out.",
+        "gloss": "Then screenshot it and show an adult."
+      },
+      "scenario": {
+        "setup": "Somebody you have been talking to for a while starts asking what street you are on.",
+        "lines": [
+          {
+            "label": "THEM",
+            "text": "What street are you on?"
+          },
+          {
+            "label": "YOU",
+            "text": "I don't give that out."
+          },
+          {
+            "label": "YES",
+            "text": "They learn nothing, and an adult sees the messages."
+          },
+          {
+            "label": "NO",
+            "text": "A small detail goes out and you cannot pull it back."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.021",
+      "version": 1,
+      "q": "Can you ask a police officer if you are allowed to leave?",
+      "options": [
+        {
+          "id": "demo.01.021.a",
+          "text": "Yes",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.021.b",
+          "text": "No, that is disrespectful",
+          "isCorrect": false,
+          "explanation": "It is a normal question, asked calmly. It is not a challenge.",
+          "misconceptionCode": "asking_is_disrespectful"
+        },
+        {
+          "id": "demo.01.021.c",
+          "text": "No, it makes you look guilty",
+          "isCorrect": false,
+          "explanation": "Asking is not evidence of anything. It is how you find out where you stand.",
+          "misconceptionCode": "asking_looks_guilty"
+        },
+        {
+          "id": "demo.01.021.d",
+          "text": "Only after they are finished",
+          "isCorrect": false,
+          "explanation": "You can ask at any point. The answer is what tells you what is happening.",
+          "misconceptionCode": "must_wait_to_ask"
+        }
+      ],
+      "hint": "It is a question, and the answer tells you a lot.",
+      "principle": "\"Am I free to go?\" is a fair question and a useful one. If the answer is yes, you can walk away calmly. If the answer is no, then you know you are being held, which is exactly when the rest of your rights start to matter.",
+      "keyPhrase": {
+        "quote": "Am I free to go?",
+        "gloss": "Ask it calmly, then listen to the answer."
+      },
+      "scenario": {
+        "setup": "The questions have been going a while and you are not sure whether you can walk away.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "Am I free to go?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "Not yet."
+          },
+          {
+            "label": "YES",
+            "text": "Now you know where you stand and what to say next."
+          },
+          {
+            "label": "NO",
+            "text": "You stand there for twenty minutes never knowing you could have left."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.022",
+      "version": 1,
+      "q": "What do you say if you want your parent there?",
+      "options": [
+        {
+          "id": "demo.01.022.a",
+          "text": "\"I want my mom.\"",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.022.b",
+          "text": "Nothing, a parent gets called automatically",
+          "isCorrect": false,
+          "explanation": "Police are supposed to try, and trying is not the same as reaching somebody.",
+          "misconceptionCode": "parent_is_called_automatically"
+        },
+        {
+          "id": "demo.01.022.c",
+          "text": "Wait until somebody offers",
+          "isCorrect": false,
+          "explanation": "Nobody can bring a person you never asked for. Ask out loud.",
+          "misconceptionCode": "wait_to_be_offered"
+        },
+        {
+          "id": "demo.01.022.d",
+          "text": "Only a lawyer can ask for that",
+          "isCorrect": false,
+          "explanation": "You can ask for a parent yourself, any time, in your own words.",
+          "misconceptionCode": "only_a_lawyer_can_ask"
+        }
+      ],
+      "hint": "Nobody can bring somebody you never asked for.",
+      "principle": "Asking for a parent out loud is always worth doing. It does not stop questions the way asking for a lawyer does, but it puts on the record that you asked, and it often gets somebody called. Ask for a parent and a lawyer both. They do different jobs.",
+      "keyPhrase": {
+        "quote": "I want my mom, and I want a lawyer.",
+        "gloss": "Ask for both. One is comfort, one is protection."
+      },
+      "scenario": {
+        "setup": "You are sitting in a room by yourself and nobody has said anything about calling home.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I want my mom, and I want a lawyer."
+          },
+          {
+            "label": "YES",
+            "text": "Both are on the record, and somebody starts making calls."
+          },
+          {
+            "label": "NO",
+            "text": "You wait to be offered something nobody was going to offer."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.023",
+      "version": 1,
+      "q": "If you are arrested, when can you get a lawyer?",
+      "options": [
+        {
+          "id": "demo.01.023.a",
+          "text": "Before you answer any questions",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.023.b",
+          "text": "After you tell your side first",
+          "isCorrect": false,
+          "explanation": "Your side is the part a lawyer is for. Telling it first gives away the point.",
+          "misconceptionCode": "my_side_helps"
+        },
+        {
+          "id": "demo.01.023.c",
+          "text": "Only once you are in court",
+          "isCorrect": false,
+          "explanation": "You can ask the moment you are arrested. You do not wait for a courtroom.",
+          "misconceptionCode": "lawyer_only_in_court"
+        },
+        {
+          "id": "demo.01.023.d",
+          "text": "When they decide you need one",
+          "isCorrect": false,
+          "explanation": "That is not their call. You ask, and asking is what starts it.",
+          "misconceptionCode": "police_decide_lawyer"
+        }
+      ],
+      "hint": "A lawyer is for the hard part, so you want them before the hard part.",
+      "principle": "You can ask for a lawyer the moment you are arrested, before any questions start. Questioning is exactly what a lawyer is most useful for, so waiting until after it gives away the whole point of having one.",
+      "keyPhrase": {
+        "quote": "I want a lawyer before I answer anything.",
+        "gloss": "Say it before the questions, not after them."
+      },
+      "scenario": {
+        "setup": "Somebody sits down across from you and says this will be quick.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Let's just get your side down."
+          },
+          {
+            "label": "YOU",
+            "text": "I want a lawyer before I answer anything."
+          },
+          {
+            "label": "YES",
+            "text": "The questions wait for somebody who is on your side."
+          },
+          {
+            "label": "NO",
+            "text": "You explain for an hour and the lawyer arrives to a finished story."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.024",
+      "version": 1,
+      "q": "Should you run from police?",
+      "options": [
+        {
+          "id": "demo.01.024.a",
+          "text": "No",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.024.b",
+          "text": "Yes, if it's unfair",
+          "isCorrect": false,
+          "explanation": "A bad stop is fixable later. Running turns it into something that is not.",
+          "misconceptionCode": "bad_stop_means_run"
+        },
+        {
+          "id": "demo.01.024.c",
+          "text": "Yes, if you're scared",
+          "isCorrect": false,
+          "explanation": "Being scared is real, and running makes the next minute more dangerous, not less.",
+          "misconceptionCode": "fear_justifies_running"
+        },
+        {
+          "id": "demo.01.024.d",
+          "text": "Only if unseen",
+          "isCorrect": false,
+          "explanation": "This is not how it goes. Running is the thing that makes them look for you.",
+          "misconceptionCode": "running_works_if_unseen"
+        }
+      ],
+      "hint": "Running changes the situation, and never in your favor.",
+      "principle": "Running turns a short stop into a chase, and a chase into something much worse. It can also hand police a reason to stop you that they did not have a second earlier. Whatever was unfair about the stop can be dealt with later. Getting hurt cannot.",
+      "keyPhrase": {
+        "quote": "I'm not going anywhere.",
+        "gloss": "Stand still, hands visible, deal with it later."
+      },
+      "scenario": {
+        "setup": "You know you did nothing and every part of you wants to be gone.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'm not going anywhere."
+          },
+          {
+            "label": "YES",
+            "text": "It stays small, and you go home to argue about it."
+          },
+          {
+            "label": "NO",
+            "text": "One decision turns a stop into a chase."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.025",
+      "version": 1,
+      "q": "You think the officer is wrong. When do you fight it?",
+      "options": [
+        {
+          "id": "demo.01.025.a",
+          "text": "Later, with a lawyer",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.025.b",
+          "text": "Right there, out loud",
+          "isCorrect": false,
+          "explanation": "Arguing on the street does not undo anything and makes the next minutes worse.",
+          "misconceptionCode": "argue_on_the_spot"
+        },
+        {
+          "id": "demo.01.025.c",
+          "text": "Never, nothing can be done about it",
+          "isCorrect": false,
+          "explanation": "Plenty can be done. A judge can throw out a bad search. It just happens later.",
+          "misconceptionCode": "nothing_can_be_done"
+        },
+        {
+          "id": "demo.01.025.d",
+          "text": "Online, afterward",
+          "isCorrect": false,
+          "explanation": "Posting is not the same as doing something. Tell a lawyer or a parent.",
+          "misconceptionCode": "posting_is_fighting_it"
+        }
+      ],
+      "hint": "There is a place where being right actually counts, and it is not a sidewalk.",
+      "principle": "Arguing on the street does not undo an unfair stop, and it can make the next few minutes dangerous. A judge can throw out a bad search. The officer standing in front of you cannot. Write down what happened as soon as you are somewhere safe.",
+      "keyPhrase": {
+        "quote": "I'll deal with this later.",
+        "gloss": "Say that to yourself, not to the officer."
+      },
+      "scenario": {
+        "setup": "You are certain the search was not allowed and you can feel yourself about to say so.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'll deal with this later."
+          },
+          {
+            "label": "YES",
+            "text": "You write it all down that night and a lawyer uses it."
+          },
+          {
+            "label": "NO",
+            "text": "You make the case to the one person who cannot rule on it."
+          }
+        ]
+      }
+    }
+  ]
+}
