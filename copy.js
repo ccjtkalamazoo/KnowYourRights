@@ -83,7 +83,7 @@ export const R = {
   demo: {
     eyebrow: "START HERE",
     title: "PLAY THE DEMO",
-    blurb: "Forty five questions, fifteen a round, shuffled every time. The rest of the map is still being written.",
+    blurb: "Twenty five questions, fifteen a round, shuffled every time. The rest of the map is still being written.",
     playLabel: "Play now",
     runLabel: (n, of) => `Round ${n} of ${of}`,
     tryAgainLabel: "Try again",
