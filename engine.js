@@ -173,6 +173,23 @@ export function App() {
   // resetState() first so a run's leftovers never survive into the next one.
   const goMap = () => { initAudio(); sfx.current.click(); music.current.stop(); if (phase === "playing" || phase === "revealing" || phase === "locking") { EV.trackRunEnd("abandoned", { level, mode: isDemo ? "demo" : isEndless ? "endless" : "ladder" }); EV.flush(); } EV.trackNav("map"); resetState(); setPhase("map"); };
   const playAgain = () => { initAudio(); sfx.current.click(); goMap(); };
+
+  // Leaving the demo. Home ends the round and returns to the landing screen,
+  // and deliberately does NOT give the tries back. The three tries belong to the
+  // session, not to the screen you happen to be on, so the only thing that
+  // resets them is a page refresh, which is also what mints a new session id.
+  // That makes the rule one thing instead of two: one session id, three tries.
+  const exitDemo = () => {
+    initAudio(); sfx.current.click(); music.current.stop();
+    if (phase === "playing" || phase === "revealing" || phase === "locking") {
+      EV.trackRunEnd("abandoned", { level, mode: "demo" }); EV.flush();
+    }
+    EV.trackNav("home");
+    resetState();
+    setChapter(null);
+    setWalkStep(0);
+    setPhase("start");
+  };
   // Starting a run now means fetching that chapter's 30 questions first, so
   // this is async and has a visible loading phase between picking a chapter and
   // seeing question one. Failure is a real state: content arrives over the
@@ -214,7 +231,9 @@ export function App() {
       setDeck(d);
       setIsDemo(true);
       EV.trackModeStart("demo", d, { poolId: "demo", poolSize: pool.questions.length, run: demoRuns.length + 1 });
-      setPhase("playing");
+      // Round 1 gets the "three tries" screen. Rounds 2 and 3 do not: by then
+      // they know, and a screen between rounds is just a click in the way.
+      setPhase(demoRuns.length === 0 ? "demointro" : "playing");
     } catch (err) {
       setLoadError(err.message || String(err));
       setPhase("loaderror");
@@ -472,7 +491,7 @@ export function App() {
     setHomeConfirm(true);
   };
   const cancelHome = () => { sfx.current.click(); setHomeConfirm(false); };
-  const confirmHome = () => { setHomeConfirm(false); goMap(); };
+  const confirmHome = () => { setHomeConfirm(false); if (isDemo) exitDemo(); else goMap(); };
 
   // The CCJT mark: ask first, then open the site in a NEW tab so the player's
   // run is never destroyed by following the link. noopener/noreferrer is standard
@@ -633,12 +652,19 @@ export function App() {
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
 
+  if (phase === "demointro") {
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(DemoIntroScreen, { maxRuns: MAX_DEMO_RUNS, onStart: () => { sfx.current.click(); setPhase("playing"); } }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
+  }
+
   if (isDemo && (phase === "gameover" || phase === "won")) {
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
       c.jsx(DemoEndScreen, {
         runs: demoRuns, maxRuns: MAX_DEMO_RUNS, canPlay: demoCanPlay,
         won: phase === "won", missedQuestion: phase === "gameover" ? currentQ : null,
-        onTryAgain: demoTryAgain, onHome: goMap
+        onTryAgain: demoTryAgain, onHome: exitDemo
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
@@ -1685,7 +1711,7 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, missedQuestion, o
           maxWidth: 540, margin: "24px 0 30px", lineHeight: 1.55
         },
         children: won ? D.wonSub
-          : outOfRuns ? D.outOfRunsSub
+          : outOfRuns ? `${D.outOfRunsSub} ${D.outOfRunsBest(best)}`
           : D.reachedLabel(thisRun.correct)
       }),
 
@@ -1796,7 +1822,55 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, missedQuestion, o
           canPlay && c.jsx(Button, { onClick: onTryAgain, variant: "primary", size: "md", children: D.tryAgainLabel }),
           c.jsx(Button, { onClick: onHome, variant: "ghost", size: "md", children: "Home" })
         ]
+      }),
+      outOfRuns && c.jsx("p", {
+        style: {
+          fontFamily: C.body, fontSize: 15, fontWeight: 500, lineHeight: 1.55,
+          color: u.textDim, maxWidth: 460, margin: "26px 0 0"
+        },
+        children: D.outOfRunsFooter
       })
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
+// DemoIntroScreen : the one screen between the map and question one.
+// ---------------------------------------------------------------------------
+// It exists to set the rule of the table out loud before anybody starts: three
+// tries, best one counts. Round 1 only. It is deliberately one sentence and one
+// button, because the walkthrough already carried the safety brief and this is
+// not the place to add reading.
+function DemoIntroScreen({ maxRuns = 3, onStart }) {
+  const D = R.demo;
+  return c.jsxs("div", {
+    className: "ts-demo-intro",
+    style: {
+      flex: "1 0 auto", display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      padding: "48px 24px", textAlign: "center", gap: 20
+    },
+    children: [
+      c.jsx("div", {
+        style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 2.6, fontWeight: 700, color: u.textMuted },
+        children: D.eyebrow
+      }),
+      c.jsx("h1", {
+        style: {
+          fontFamily: C.display, fontSize: "clamp(46px, 11vw, 104px)", lineHeight: 0.88,
+          letterSpacing: "-0.02em", margin: 0, color: u.brand,
+          textShadow: `6px 6px 0 ${u.outline}`
+        },
+        children: D.introHeadline
+      }),
+      c.jsx("p", {
+        style: {
+          fontFamily: C.body, fontSize: 19, fontWeight: 600, color: u.textDim,
+          maxWidth: 460, margin: 0, lineHeight: 1.55
+        },
+        children: D.introSub(maxRuns)
+      }),
+      c.jsx(Button, { onClick: onStart, variant: "primary", size: "lg", children: D.introStartLabel })
     ]
   });
 }
