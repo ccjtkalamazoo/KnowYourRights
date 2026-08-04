@@ -638,7 +638,7 @@ export function App() {
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
       c.jsx(MapScreen, {
         onPlayChapter: startChapter, onHome: () => { resetState(); setPhase("start"); },
-        onPlayDemo: startDemo, demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay
+        onPlayDemo: startDemo, demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay, demoWon
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
@@ -1710,7 +1710,7 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, missedQuestion, o
           fontFamily: C.body, fontSize: 18, fontWeight: 600, color: u.textDim,
           maxWidth: 540, margin: "24px 0 30px", lineHeight: 1.55
         },
-        children: won ? D.wonSub
+        children: won ? `${D.wonSub} ${D.wonBestOn(runs.length)}`
           : outOfRuns ? `${D.outOfRunsSub} ${D.outOfRunsBest(best)}`
           : D.reachedLabel(thisRun.correct)
       }),
@@ -1765,7 +1765,7 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, missedQuestion, o
                       })
                     : c.jsx("span", {
                         style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.4, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" },
-                        children: "not played"
+                        children: won ? D.notNeededLabel : D.notPlayedLabel
                       })
                 ]
               }, i);
