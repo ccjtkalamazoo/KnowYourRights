@@ -305,7 +305,7 @@
     },
     {
       "id": "demo.01.007",
-      "version": 2,
+      "version": 3,
       "q": "You find out that somebody at your school has a weapon on them today. What do you do?",
       "options": [
         {
@@ -356,11 +356,11 @@
           },
           {
             "label": "YES",
-            "text": "People who can move in minutes find out in minutes."
+            "text": "An adult who can actually do something knows within minutes."
           },
           {
             "label": "NO",
-            "text": "The fastest thing you had gets spent on the slowest way to tell it."
+            "text": "The only people who find out are the ones who cannot do anything about it."
           }
         ]
       }
