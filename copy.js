@@ -76,6 +76,38 @@ export const R = {
     ],
     button: "Got it"
   },
+  // The demo. Everything a player sees in the event build lives here.
+  // No safety note and no pre-round screen: the walkthrough's first slide is
+  // the safety brief, and repeating it at a table where somebody is standing
+  // next to the player buys nothing.
+  demo: {
+    eyebrow: "START HERE",
+    title: "PLAY THE DEMO",
+    blurb: "Forty five questions, fifteen a round, shuffled every time. The rest of the map is still being written.",
+    playLabel: "Play now",
+    runLabel: (n, of) => `Round ${n} of ${of}`,
+    tryAgainLabel: "Try again",
+    outOfRunsHeadline: "THAT'S ALL THREE",
+    outOfRunsSub: "Three rounds, and here is how they went. Show this screen to get your prize.",
+    wonHeadline: "YOU WON",
+    wonSub: "All fifteen. Nobody needs to tell you your rights.",
+    roundHeadline: "END OF THE ROUND",
+    scoreboardTitle: "How your rounds went",
+    roundWord: "Round",
+    correctWord: "right",
+    bestLabel: "Best round",
+    tierLabel: "Prize level",
+    tiers: [
+      { at: 15, name: "ALL FIFTEEN" },
+      { at: 10, name: "MADE TEN" },
+      { at: 5, name: "MADE FIVE" }
+    ],
+    noTier: "Not there yet",
+    reachedLabel: (n) => `You got ${n} right before the one that ended it.`,
+    reachedAll: "You got all fifteen right.",
+    loadErrorTitle: "THE DEMO DID NOT LOAD",
+    loadErrorBody: "Its questions could not be fetched. Check the connection and try again."
+  },
   safetyHeading: "GETTING HOME SAFE COMES FIRST",
   roundStart: "Start the round \u2192",
   verdictContinue: "See what it means \u2192",
