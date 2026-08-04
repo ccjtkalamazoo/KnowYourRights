@@ -68,66 +68,8 @@
       }
     },
     {
-      "id": "demo.01.002",
-      "version": 2,
-      "q": "You need to call 911, but your phone has no plan and no minutes left. Is calling 911 free?",
-      "options": [
-        {
-          "id": "demo.01.002.a",
-          "text": "Yes, always",
-          "isCorrect": true,
-          "explanation": null,
-          "misconceptionCode": null
-        },
-        {
-          "id": "demo.01.002.b",
-          "text": "Only with minutes left",
-          "isCorrect": false,
-          "explanation": "Minutes have nothing to do with it. A phone with zero minutes still dials 911.",
-          "misconceptionCode": "emergency_calls_cost_money"
-        },
-        {
-          "id": "demo.01.002.c",
-          "text": "Only with a plan",
-          "isCorrect": false,
-          "explanation": "A phone with no plan at all still reaches 911. That is built into every phone sold.",
-          "misconceptionCode": "needs_a_plan"
-        },
-        {
-          "id": "demo.01.002.d",
-          "text": "Yes, but they bill you",
-          "isCorrect": false,
-          "explanation": "Nobody gets a bill for calling 911. Worrying about that costs time you need.",
-          "misconceptionCode": "emergency_calls_billed_later"
-        }
-      ],
-      "hint": "Think about a phone with no service sitting in a drawer.",
-      "principle": "911 is free from every phone. No plan, no minutes, and no SIM card still gets you through. A locked phone works too: there is an emergency call button right on the lock screen.",
-      "keyPhrase": {
-        "quote": "It is always free.",
-        "gloss": "No plan, no minutes, no unlock, no bill."
-      },
-      "scenario": {
-        "setup": "Your phone says no service in the corner and something is badly wrong.",
-        "lines": [
-          {
-            "label": "YOU",
-            "text": "My phone barely works."
-          },
-          {
-            "label": "YES",
-            "text": "It dials anyway, because 911 always does."
-          },
-          {
-            "label": "NO",
-            "text": "You stand there deciding while nothing gets better."
-          }
-        ]
-      }
-    },
-    {
       "id": "demo.01.003",
-      "version": 2,
+      "version": 3,
       "q": "A police officer stops you on the street and starts asking you questions. Do you have to answer them?",
       "options": [
         {
@@ -146,7 +88,7 @@
         },
         {
           "id": "demo.01.003.c",
-          "text": "Yes, because you are under 18",
+          "text": "Yes, if you are under 18",
           "isCorrect": false,
           "explanation": "Being a kid does not remove the right. It belongs to everybody.",
           "misconceptionCode": "minors_must_answer"
@@ -247,7 +189,7 @@
     },
     {
       "id": "demo.01.005",
-      "version": 2,
+      "version": 3,
       "q": "You need a lawyer, but your family has no money to pay for one. Do you still get a lawyer?",
       "options": [
         {
@@ -280,10 +222,10 @@
         }
       ],
       "hint": "The price of a lawyer is not what decides whether you get one.",
-      "principle": "If you cannot afford a lawyer, the court appoints one and you do not pay. That is true for kids too. You do not have to prove anything about money before you ask, and asking costs nothing.",
+      "principle": "If you cannot afford a lawyer, the court appoints one and you do not pay. That lawyer works for you and nobody else. Their job is defending you. The prosecutor is a different lawyer, and that one is arguing against you, not helping you. You do not have to prove anything about money before you ask.",
       "keyPhrase": {
         "quote": "I want a lawyer, and we can't pay for one.",
-        "gloss": "Say both parts. The second part is what starts the free one."
+        "gloss": "Say both parts. The free one is yours, and their job is defending you."
       },
       "scenario": {
         "setup": "Somebody tells you a lawyer is expensive and you probably do not want to bother.",
@@ -721,68 +663,6 @@
           {
             "label": "NO",
             "text": "The call cuts out and nobody knows where to send anybody."
-          }
-        ]
-      }
-    },
-    {
-      "id": "demo.01.013",
-      "version": 2,
-      "q": "You called 911 and help is on the way. Can you hang up before they say it is okay?",
-      "options": [
-        {
-          "id": "demo.01.013.a",
-          "text": "No",
-          "isCorrect": true,
-          "explanation": null,
-          "misconceptionCode": null
-        },
-        {
-          "id": "demo.01.013.b",
-          "text": "Yes, after the address",
-          "isCorrect": false,
-          "explanation": "They are still working while you are on the line. Let them finish.",
-          "misconceptionCode": "address_is_enough"
-        },
-        {
-          "id": "demo.01.013.c",
-          "text": "Yes, help is coming",
-          "isCorrect": false,
-          "explanation": "Things change while help is on the way, and they need to hear it from you.",
-          "misconceptionCode": "help_coming_means_done"
-        },
-        {
-          "id": "demo.01.013.d",
-          "text": "Yes, if you're scared",
-          "isCorrect": false,
-          "explanation": "Being scared is exactly when you want somebody in your ear. Stay on.",
-          "misconceptionCode": "scared_means_hang_up"
-        }
-      ],
-      "hint": "They are still doing something while you are on the line.",
-      "principle": "The person on the 911 line keeps asking questions to send the right help, and can tell you what to do while you wait. Staying on also means they can reach you if something changes. If you hang up, they have to call back, and that costs time.",
-      "keyPhrase": {
-        "quote": "I'm staying on.",
-        "gloss": "Let them be the one who ends the call."
-      },
-      "scenario": {
-        "setup": "You called, help is coming, and you want to go find your friend.",
-        "lines": [
-          {
-            "label": "911",
-            "text": "Stay on the line with me."
-          },
-          {
-            "label": "YOU",
-            "text": "Okay, I'm here."
-          },
-          {
-            "label": "YES",
-            "text": "They talk you through it until somebody arrives."
-          },
-          {
-            "label": "NO",
-            "text": "You hang up, and they spend the next two minutes calling you back."
           }
         ]
       }
@@ -1511,6 +1391,126 @@
           {
             "label": "NO",
             "text": "You make the case to the one person who cannot rule on it."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.026",
+      "version": 1,
+      "q": "You are home by yourself and somebody you do not know knocks on the door. What do you do?",
+      "options": [
+        {
+          "id": "demo.01.026.a",
+          "text": "Don't open the door",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.026.b",
+          "text": "Open it and see who it is",
+          "isCorrect": false,
+          "explanation": "Opening the door is the part you cannot take back. You can talk through it, or not talk at all.",
+          "misconceptionCode": "opening_to_look_is_safe"
+        },
+        {
+          "id": "demo.01.026.c",
+          "text": "Yell that nobody is home",
+          "isCorrect": false,
+          "explanation": "That tells somebody the house is empty and that you are in it by yourself.",
+          "misconceptionCode": "saying_nobody_home_is_safe"
+        },
+        {
+          "id": "demo.01.026.d",
+          "text": "Open it if they look official",
+          "isCorrect": false,
+          "explanation": "A uniform or a clipboard is easy to fake. You still do not have to open the door.",
+          "misconceptionCode": "looking_official_is_proof"
+        }
+      ],
+      "hint": "The door is the one part you cannot undo.",
+      "principle": "You never have to open your door for anybody. You can talk through it, look out a window, or say nothing at all. If somebody says they are police and you are not sure, you can call 911 and ask whether an officer really is at your address.",
+      "keyPhrase": {
+        "quote": "I'm not opening the door.",
+        "gloss": "You can say it through the door, or say nothing at all."
+      },
+      "scenario": {
+        "setup": "You are home alone and somebody starts knocking, then knocking harder.",
+        "lines": [
+          {
+            "label": "STRANGER",
+            "text": "Hey, is your mom home?"
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not opening the door."
+          },
+          {
+            "label": "YES",
+            "text": "The door stays shut and you get an adult on the phone."
+          },
+          {
+            "label": "NO",
+            "text": "You open it to be polite, and now somebody is standing in your doorway."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo.01.027",
+      "version": 1,
+      "q": "You are walking home and you start to think somebody is following you. What do you do?",
+      "options": [
+        {
+          "id": "demo.01.027.a",
+          "text": "Go where there are people",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "demo.01.027.b",
+          "text": "Keep walking home like normal",
+          "isCorrect": false,
+          "explanation": "That walks them to your house. Change where you are going instead.",
+          "misconceptionCode": "going_home_loses_them"
+        },
+        {
+          "id": "demo.01.027.c",
+          "text": "Turn around and confront them",
+          "isCorrect": false,
+          "explanation": "Confronting somebody turns a bad feeling into a real problem.",
+          "misconceptionCode": "confronting_ends_it"
+        },
+        {
+          "id": "demo.01.027.d",
+          "text": "Hide somewhere quiet and wait",
+          "isCorrect": false,
+          "explanation": "Quiet and alone is the wrong direction. Other people are what makes you safer.",
+          "misconceptionCode": "hiding_alone_is_safer"
+        }
+      ],
+      "hint": "Which direction has other people in it?",
+      "principle": "Somebody following you is a reason to change where you are going, not to keep going. A store, a gas station, or any busy place with adults in it is safer than your own front door. Once you are somewhere with people, call an adult.",
+      "keyPhrase": {
+        "quote": "I'm going where people are.",
+        "gloss": "Head toward people, not toward home."
+      },
+      "scenario": {
+        "setup": "The same car has gone past you twice on a street with nobody else on it.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I'm turning into the gas station."
+          },
+          {
+            "label": "YES",
+            "text": "You are inside, with adults around, calling somebody."
+          },
+          {
+            "label": "NO",
+            "text": "You walk straight home, and now they know where you live."
           }
         ]
       }
