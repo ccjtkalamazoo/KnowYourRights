@@ -1070,6 +1070,1071 @@
         ],
         "note": "Do not take advice from somebody in a different court than you."
       }
+    },
+    {
+      "id": "juvenile.04.016",
+      "version": 1,
+      "q": "A 16-year-old is caught with a beer for the first time in Michigan. What kind of case is that?",
+      "options": [
+        {
+          "id": "juvenile.04.016.a",
+          "text": "A civil infraction, which means a fine and no jail time.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.016.b",
+          "text": "A misdemeanor, which can carry jail time.",
+          "isCorrect": false,
+          "explanation": "A second one is a misdemeanor. A first one sits below that.",
+          "misconceptionCode": "mip_is_always_criminal"
+        },
+        {
+          "id": "juvenile.04.016.c",
+          "text": "A school matter, handled by the district instead of a court.",
+          "isCorrect": false,
+          "explanation": "A school can have its own rules about it, but this is a court case either way.",
+          "misconceptionCode": "alcohol_is_a_school_matter"
+        },
+        {
+          "id": "juvenile.04.016.d",
+          "text": "A charge that only starts counting once he turns 18.",
+          "isCorrect": false,
+          "explanation": "The rule applies to him now. Turning 18 is not what switches it on.",
+          "misconceptionCode": "age_starts_the_rules"
+        }
+      ],
+      "hint": "A first one and a second one are not the same thing here.",
+      "principle": "Michigan changed this. A first minor in possession is a state civil infraction, which works more like a ticket than a crime. The fine is up to $100 and there is no jail for it. A court can still order things like community service or a substance screening. A second one is a misdemeanor, which is a crime. So a first one is real and it is on a record somewhere. It is just not the criminal charge most people picture.",
+      "keyPhrase": {
+        "quote": "The first one is a ticket, not a crime.",
+        "gloss": "Real, but not criminal."
+      },
+      "scenario": {
+        "setup": "A driveway the morning after a party that ended badly.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "So you have a record now."
+          },
+          {
+            "label": "YOU",
+            "text": "It's a civil infraction. Closer to a ticket."
+          },
+          {
+            "label": "FRIEND",
+            "text": "That's still a record."
+          },
+          {
+            "label": "YOU",
+            "text": "It is. It's just not a crime, and a second one would be."
+          },
+          {
+            "label": "YES",
+            "text": "You know what you are actually dealing with, which changes who you call and what you say."
+          },
+          {
+            "label": "NO",
+            "text": "You panic over a criminal record you do not have, or shrug off a second one that would be."
+          }
+        ],
+        "note": "The alcohol line is 21, not 18. Being over 18 does not move it."
+      }
+    },
+    {
+      "id": "juvenile.04.017",
+      "version": 1,
+      "q": "Michigan's minor in possession law can be broken more than one way. Which of these is enough by itself?",
+      "options": [
+        {
+          "id": "juvenile.04.017.a",
+          "text": "Having alcohol in your body, with nothing in your hands.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.017.b",
+          "text": "Standing in a room where other people are drinking.",
+          "isCorrect": false,
+          "explanation": "Being near it is not covered. What is on you or in you is.",
+          "misconceptionCode": "presence_is_possession"
+        },
+        {
+          "id": "juvenile.04.017.c",
+          "text": "Knowing that friends are planning to drink later.",
+          "isCorrect": false,
+          "explanation": "Knowing about a plan is not part of the law. It reaches what you did, not what you heard.",
+          "misconceptionCode": "knowing_is_involvement"
+        },
+        {
+          "id": "juvenile.04.017.d",
+          "text": "Riding home with somebody who has been drinking.",
+          "isCorrect": false,
+          "explanation": "The law is about your own alcohol, not the driver's. That is a different offense and it is theirs.",
+          "misconceptionCode": "association_is_a_violation"
+        }
+      ],
+      "hint": "The law is not only about what you are holding.",
+      "principle": "The law covers buying, trying to buy, drinking, trying to drink, having it, trying to have it, and having any alcohol in your body at all. That last one is the one people miss. If there is alcohol in your system, the can can be long gone and it still counts. An officer with reasonable cause can ask for a breath test. Being around other people who are drinking is not the same thing, and neither is knowing about it.",
+      "keyPhrase": {
+        "quote": "In your body counts too.",
+        "gloss": "Empty hands is not the same as clear."
+      },
+      "scenario": {
+        "setup": "A parking lot, headlights, an officer walking toward a group.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "Just say it isn't yours. You're not holding anything."
+          },
+          {
+            "label": "YOU",
+            "text": "That isn't the only thing they look at."
+          },
+          {
+            "label": "FRIEND",
+            "text": "What else is there?"
+          },
+          {
+            "label": "YOU",
+            "text": "Whether it's in me."
+          },
+          {
+            "label": "YES",
+            "text": "You understand why a question about drinking matters as much as a question about holding."
+          },
+          {
+            "label": "NO",
+            "text": "You think setting it down solved it."
+          }
+        ],
+        "note": "Knowing the rule is not a reason to start talking. You still do not have to answer questions."
+      }
+    },
+    {
+      "id": "juvenile.04.018",
+      "version": 1,
+      "q": "A 16-year-old is at a party and a friend has drunk so much she will not wake up. He has been drinking too. What does Michigan law do if he calls for help?",
+      "options": [
+        {
+          "id": "juvenile.04.018.a",
+          "text": "It protects him from a minor in possession, and her too.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.018.b",
+          "text": "It protects her, since she is the one who needed help.",
+          "isCorrect": false,
+          "explanation": "The friend who came with her is covered as well. That is the part the law was written for.",
+          "misconceptionCode": "only_the_sick_one_is_covered"
+        },
+        {
+          "id": "juvenile.04.018.c",
+          "text": "It protects neither of them, because both had been drinking.",
+          "isCorrect": false,
+          "explanation": "Drinking is the situation the exception was built for. It is not what cancels it.",
+          "misconceptionCode": "helping_costs_you"
+        },
+        {
+          "id": "juvenile.04.018.d",
+          "text": "It protects him only if he had not been drinking himself.",
+          "isCorrect": false,
+          "explanation": "There is no sober requirement. A kid deciding whether to call is not supposed to have to think about that.",
+          "misconceptionCode": "must_be_sober_to_call"
+        }
+      ],
+      "hint": "The law was written to get somebody to make the call.",
+      "principle": "Michigan wrote an exception into the minor in possession law on purpose. A minor who has been drinking and goes to a hospital for help, or is brought there, is not in violation. Neither is a minor who came with them. The state decided a kid deciding whether to call should not be weighing a ticket against a life. One honest part: if the person is under 18, the hospital has to tell a parent what is going on. It does not stay private. It just does not become a case.",
+      "keyPhrase": {
+        "quote": "Calling for help does not cost you the ticket.",
+        "gloss": "The law took that excuse away on purpose."
+      },
+      "scenario": {
+        "setup": "A basement at one in the morning, somebody who will not wake up.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "If we call, we all get in trouble."
+          },
+          {
+            "label": "YOU",
+            "text": "Not for this. There's an exception."
+          },
+          {
+            "label": "FRIEND",
+            "text": "For her, maybe. Not us."
+          },
+          {
+            "label": "YOU",
+            "text": "For us too. I'm calling."
+          },
+          {
+            "label": "YES",
+            "text": "The person gets help and the law already decided not to punish you for it."
+          },
+          {
+            "label": "NO",
+            "text": "You are guessing about a rule that already says you are covered."
+          }
+        ],
+        "note": "If somebody will not wake up, call 911. Nothing else on this screen matters more than that."
+      }
+    },
+    {
+      "id": "juvenile.04.019",
+      "version": 1,
+      "q": "Michigan requires kids to be in school from age 6 until 18. Who does the law put that duty on?",
+      "options": [
+        {
+          "id": "juvenile.04.019.a",
+          "text": "Your parent, or whoever else has charge of you.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.019.b",
+          "text": "You, since you are the one who has to walk in the door.",
+          "isCorrect": false,
+          "explanation": "There is a separate path for the student, but the attendance statute itself is not written at you.",
+          "misconceptionCode": "duty_is_on_the_student"
+        },
+        {
+          "id": "juvenile.04.019.c",
+          "text": "The school district, which has to come and get you.",
+          "isCorrect": false,
+          "explanation": "A district has to investigate and follow up. It does not carry the duty to get you there.",
+          "misconceptionCode": "school_must_retrieve_you"
+        },
+        {
+          "id": "juvenile.04.019.d",
+          "text": "Nobody in particular, since there is no penalty attached.",
+          "isCorrect": false,
+          "explanation": "There is a penalty. It is a misdemeanor for the adult who does not comply.",
+          "misconceptionCode": "attendance_has_no_penalty"
+        }
+      ],
+      "hint": "Somebody can be charged over this. Who does the statute name?",
+      "principle": "The compulsory attendance law is written at the adult. It says a parent, guardian, or other person with charge of a child shall send that child to school from age 6 until the child turns 18. A parent who does not comply is guilty of a misdemeanor. There is a second, separate path that runs at the student through the family court, and both can be moving at once over the same absences. Knowing the duty sits on the adult explains why a school calls your house long before anything else happens.",
+      "keyPhrase": {
+        "quote": "The attendance law is written at the parent.",
+        "gloss": "There is a second path aimed at you."
+      },
+      "scenario": {
+        "setup": "The kitchen table, a letter from the district lying face up.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "This says I could be charged."
+          },
+          {
+            "label": "YOU",
+            "text": "For me not going?"
+          },
+          {
+            "label": "MOM",
+            "text": "That's what it says."
+          },
+          {
+            "label": "YOU",
+            "text": "I didn't know it worked that way."
+          },
+          {
+            "label": "YES",
+            "text": "You understand why the school keeps calling home instead of dealing with you."
+          },
+          {
+            "label": "NO",
+            "text": "You treat missing school as only your problem to carry."
+          }
+        ],
+        "note": "Missing school for a real reason is not skipping. Whatever the reason is, somebody at the school needs to hear it."
+      }
+    },
+    {
+      "id": "juvenile.04.020",
+      "version": 1,
+      "q": "A school notices a student has missed a lot of days. Who looks into it first?",
+      "options": [
+        {
+          "id": "juvenile.04.020.a",
+          "text": "An attendance officer, whose actual job is investigating absences.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.020.b",
+          "text": "A police officer assigned to the building.",
+          "isCorrect": false,
+          "explanation": "This does not start as a police matter. It starts inside the school system.",
+          "misconceptionCode": "truancy_is_police_work"
+        },
+        {
+          "id": "juvenile.04.020.c",
+          "text": "The principal, as part of ordinary discipline.",
+          "isCorrect": false,
+          "explanation": "Attendance runs on its own track, not the discipline one. A principal can be involved without owning it.",
+          "misconceptionCode": "truancy_is_discipline"
+        },
+        {
+          "id": "juvenile.04.020.d",
+          "text": "Nobody, until the year ends and the totals are added up.",
+          "isCorrect": false,
+          "explanation": "It is looked into while it is happening. Waiting for a total is not how it works.",
+          "misconceptionCode": "nothing_happens_until_year_end"
+        }
+      ],
+      "hint": "There is a specific job for this, and somebody holds it.",
+      "principle": "Michigan districts have attendance officers, and investigating absences is the job. When a teacher or administrator reports a student who is not showing up, the attendance officer looks into it, talks to the parent, and can take it further if nothing changes. It is not police work and it is not ordinary discipline. It is its own track that starts inside the school and can end at the family court. Most cases stop long before that, which is the whole reason the job exists.",
+      "keyPhrase": {
+        "quote": "Somebody's whole job is absences.",
+        "gloss": "It starts with a phone call, not a police car."
+      },
+      "scenario": {
+        "setup": "The hallway outside the front office, pulled out of second hour.",
+        "lines": [
+          {
+            "label": "STAFF",
+            "text": "I'm the attendance officer. Can we talk about last month?"
+          },
+          {
+            "label": "YOU",
+            "text": "Am I in trouble?"
+          },
+          {
+            "label": "STAFF",
+            "text": "Not yet. That's why I'm asking now."
+          },
+          {
+            "label": "YOU",
+            "text": "Okay."
+          },
+          {
+            "label": "YES",
+            "text": "You are talking to the person whose job is keeping this from going further."
+          },
+          {
+            "label": "NO",
+            "text": "The track keeps moving and your side of it is not in it."
+          }
+        ],
+        "note": "If something at home or at school is keeping you out, that is the thing to say out loud."
+      }
+    },
+    {
+      "id": "juvenile.04.021",
+      "version": 1,
+      "q": "A truancy case reaches the family court. Who can end up answering for it?",
+      "options": [
+        {
+          "id": "juvenile.04.021.a",
+          "text": "The student and the parent, on two separate tracks.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.021.b",
+          "text": "Only the parent, because the attendance duty is theirs.",
+          "isCorrect": false,
+          "explanation": "The duty being theirs does not close the door on your side. Both doors are open.",
+          "misconceptionCode": "only_the_adult_answers"
+        },
+        {
+          "id": "juvenile.04.021.c",
+          "text": "Only the student, because the missed days are his.",
+          "isCorrect": false,
+          "explanation": "The adult side is a real case with a real penalty. It does not disappear because you are the one who stayed home.",
+          "misconceptionCode": "only_the_kid_answers"
+        },
+        {
+          "id": "juvenile.04.021.d",
+          "text": "The school, for failing to keep him enrolled.",
+          "isCorrect": false,
+          "explanation": "The school reports and investigates. It is not the one answering.",
+          "misconceptionCode": "school_is_liable_for_absences"
+        }
+      ],
+      "hint": "There is more than one door into that courtroom.",
+      "principle": "Two things can happen over the same absences. A parent can be charged with a misdemeanor under the school code for not sending the child. The student can be brought under the family court's jurisdiction as a truant, which Michigan treats as a status offense. Different laws, different tracks, one set of missed days. This is one of the clearest examples of the age thing in the whole chapter: a case exists here that could not exist for an adult who stopped going.",
+      "keyPhrase": {
+        "quote": "Two tracks, same absences.",
+        "gloss": "One aimed at the adult, one aimed at you."
+      },
+      "scenario": {
+        "setup": "A courthouse waiting area, two appointment slips with different times.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "Mine is at nine. Yours is at ten."
+          },
+          {
+            "label": "YOU",
+            "text": "They split it up?"
+          },
+          {
+            "label": "MOM",
+            "text": "Different cases, apparently."
+          },
+          {
+            "label": "YOU",
+            "text": "Over the same days."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing about that morning catches you off guard."
+          },
+          {
+            "label": "NO",
+            "text": "You show up thinking you came to watch."
+          }
+        ],
+        "note": "Ask about a lawyer for your side of it. Your parent's lawyer is not yours."
+      }
+    },
+    {
+      "id": "juvenile.04.022",
+      "version": 1,
+      "q": "In Michigan a parent can ask the family court to open a case about a child who will not follow rules at home. What does that take?",
+      "options": [
+        {
+          "id": "juvenile.04.022.a",
+          "text": "A pattern of refusing reasonable instructions, not one argument.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.022.b",
+          "text": "Any single incident the parent decides to report.",
+          "isCorrect": false,
+          "explanation": "One incident is not the standard. The statute is built around repetition.",
+          "misconceptionCode": "one_fight_is_enough"
+        },
+        {
+          "id": "juvenile.04.022.c",
+          "text": "Proof that the child broke an actual law at some point.",
+          "isCorrect": false,
+          "explanation": "No crime is needed for this one. That is what makes it a different kind of case.",
+          "misconceptionCode": "must_be_a_crime"
+        },
+        {
+          "id": "juvenile.04.022.d",
+          "text": "Agreement from the child's other parent.",
+          "isCorrect": false,
+          "explanation": "One parent can start it. The other one agreeing is not part of the test.",
+          "misconceptionCode": "both_parents_must_agree"
+        }
+      ],
+      "hint": "Courts here look at how often, not how loud.",
+      "principle": "Michigan calls this incorrigibility. The family court can take jurisdiction over a juvenile who is repeatedly disobedient to the reasonable and lawful commands of a parent or guardian. Repeatedly is the word doing the work. It is not one fight and it does not require a crime, though courts have read it broadly enough to take in things like getting suspended or breaking rules elsewhere. Most counties expect a family to have tried counseling or other help before a petition like this gets filed.",
+      "keyPhrase": {
+        "quote": "Repeatedly is the word that matters.",
+        "gloss": "A pattern, not a bad night."
+      },
+      "scenario": {
+        "setup": "The car in the driveway, right after the worst argument in months.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "I could take you to court over this."
+          },
+          {
+            "label": "YOU",
+            "text": "For one fight?"
+          },
+          {
+            "label": "MOM",
+            "text": "I don't know. Maybe."
+          },
+          {
+            "label": "YOU",
+            "text": "I don't think it works that way."
+          },
+          {
+            "label": "YES",
+            "text": "You can tell a threat made in anger apart from an actual case."
+          },
+          {
+            "label": "NO",
+            "text": "A sentence said in a bad moment feels like something already decided."
+          }
+        ],
+        "note": "If things at home are that bad, an adult you trust outside the house is worth finding."
+      }
+    },
+    {
+      "id": "juvenile.04.023",
+      "version": 1,
+      "q": "Skipping school and refusing to follow parents both go to the family court. How is that different from being accused of a crime?",
+      "options": [
+        {
+          "id": "juvenile.04.023.a",
+          "text": "It is not a criminal charge, but a court still gets involved.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.023.b",
+          "text": "It is a criminal charge, only a smaller one.",
+          "isCorrect": false,
+          "explanation": "It is not a smaller version of a crime. It is a different category that a crime is not part of.",
+          "misconceptionCode": "status_offense_is_a_crime"
+        },
+        {
+          "id": "juvenile.04.023.c",
+          "text": "It is not a court matter at all, only a family one.",
+          "isCorrect": false,
+          "explanation": "A judge, a hearing and orders are all involved. That is a court.",
+          "misconceptionCode": "family_court_is_not_a_real_court"
+        },
+        {
+          "id": "juvenile.04.023.d",
+          "text": "It is handled with the same charges an adult would face.",
+          "isCorrect": false,
+          "explanation": "An adult faces nothing for these. That is the entire reason the category exists.",
+          "misconceptionCode": "same_as_adult_charges"
+        }
+      ],
+      "hint": "Not a crime and not serious are two different claims.",
+      "principle": "Michigan calls these status offenses. The name means the only reason they are anything at all is your status as a minor. An adult who stops going to school has broken no law. A juvenile who does can end up under the family court's jurisdiction. It is not a criminal charge and it is not a conviction. It is still a court, it can order things, and it can bring you back to ask whether you did them. Not a crime does not mean nothing happens.",
+      "keyPhrase": {
+        "quote": "Only an offense because you are a minor.",
+        "gloss": "Not a crime. Still a court."
+      },
+      "scenario": {
+        "setup": "A friend's porch, comparing two very different court dates.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "So you got charged."
+          },
+          {
+            "label": "YOU",
+            "text": "Not exactly. It isn't a criminal thing."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Then why is there a hearing?"
+          },
+          {
+            "label": "YOU",
+            "text": "Because it's still a court. Just a different kind of case."
+          },
+          {
+            "label": "YES",
+            "text": "You can hear the difference between a criminal case and this one."
+          },
+          {
+            "label": "NO",
+            "text": "You either panic over a crime nobody charged you with or skip a hearing you have to attend."
+          }
+        ],
+        "note": "Go either way. Missing the hearing becomes its own problem."
+      }
+    },
+    {
+      "id": "juvenile.04.024",
+      "version": 1,
+      "q": "A 15-year-old is taken into custody and her mother comes to the station. What does Michigan law say usually happens next?",
+      "options": [
+        {
+          "id": "juvenile.04.024.a",
+          "text": "Her mother signs a promise to bring her to court, and she goes home.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.024.b",
+          "text": "She stays until a judge sees her, whoever shows up for her.",
+          "isCorrect": false,
+          "explanation": "Being held until a hearing is the exception, not the rule. Release is the default.",
+          "misconceptionCode": "custody_lasts_until_court"
+        },
+        {
+          "id": "juvenile.04.024.c",
+          "text": "Her mother decides whether she is released or held.",
+          "isCorrect": false,
+          "explanation": "A parent signs and takes her home. The decision to hold is not the parent's to make.",
+          "misconceptionCode": "parent_decides_release"
+        },
+        {
+          "id": "juvenile.04.024.d",
+          "text": "She goes home only once she answers questions.",
+          "isCorrect": false,
+          "explanation": "Release is not a trade for talking. Anybody who describes it that way is describing something the law does not say.",
+          "misconceptionCode": "release_is_a_trade"
+        }
+      ],
+      "hint": "Somebody signs something. Who, and what does it promise?",
+      "principle": "The default in Michigan is release. Unless the situation is one where the law says a juvenile has to be detained, the officer is supposed to accept a written promise from a parent or guardian to bring the child to court at a fixed time, and then release the child to them. That is the ordinary outcome, not a favour anybody did you. It is not a reward for cooperating and it is not the parent's call. Going home was already the plan.",
+      "keyPhrase": {
+        "quote": "The promise is a signature, not a deal.",
+        "gloss": "Going home is the default, not a prize."
+      },
+      "scenario": {
+        "setup": "A station lobby near eleven at night, a clipboard on the counter.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "I need your mom to sign this."
+          },
+          {
+            "label": "MOM",
+            "text": "What is it?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "A promise to bring her to court on the date."
+          },
+          {
+            "label": "YOU",
+            "text": "And then we go home?"
+          },
+          {
+            "label": "YES",
+            "text": "You are not tempted to talk your way out of a room you were leaving anyway."
+          },
+          {
+            "label": "NO",
+            "text": "Somebody hints that cooperating speeds this up, and it sounds true."
+          }
+        ],
+        "note": "Getting home safe comes first. A parent signing a form is not you agreeing to anything."
+      }
+    },
+    {
+      "id": "juvenile.04.025",
+      "version": 1,
+      "q": "Police cannot reach anybody at a 14-year-old's home after taking him in. How does that change things for him?",
+      "options": [
+        {
+          "id": "juvenile.04.025.a",
+          "text": "He is more likely to be held, since there is nobody to release him to.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.025.b",
+          "text": "It changes nothing about whether he is held.",
+          "isCorrect": false,
+          "explanation": "Who can come for you is one of the things that decides it. It changes a lot.",
+          "misconceptionCode": "no_parent_no_effect"
+        },
+        {
+          "id": "juvenile.04.025.c",
+          "text": "He has to be released on his own once enough hours pass.",
+          "isCorrect": false,
+          "explanation": "There is no clock that opens the door by itself for somebody his age.",
+          "misconceptionCode": "time_forces_release"
+        },
+        {
+          "id": "juvenile.04.025.d",
+          "text": "He is handed over to whichever adult relative turns up.",
+          "isCorrect": false,
+          "explanation": "It is not any adult. It is a parent, guardian or custodian.",
+          "misconceptionCode": "any_adult_can_collect"
+        }
+      ],
+      "hint": "If the ordinary way home is an adult, what happens when there is not one?",
+      "principle": "Michigan's rules allow a juvenile to be detained before a hearing when no parent, guardian or custodian can be located, or when one refuses to take custody. That is a hard thing to read and it is worth reading anyway. The usual way home is an adult who comes and signs. When there is no such adult, the fallback is waiting until the court can hold a hearing. It is not extra punishment for what you are accused of. It is the system having nowhere else to put you.",
+      "keyPhrase": {
+        "quote": "The way home is usually an adult.",
+        "gloss": "When there is not one, waiting is the fallback."
+      },
+      "scenario": {
+        "setup": "A station desk, a phone ringing out for the third time.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "Is there another number?"
+          },
+          {
+            "label": "YOU",
+            "text": "My aunt might pick up."
+          },
+          {
+            "label": "OFFICER",
+            "text": "Anybody with legal custody?"
+          },
+          {
+            "label": "YOU",
+            "text": "My mom works nights. Try again after six."
+          },
+          {
+            "label": "YES",
+            "text": "There is a real chance of going home instead of waiting it out."
+          },
+          {
+            "label": "NO",
+            "text": "The night gets much longer for a reason that has nothing to do with what you are accused of."
+          }
+        ],
+        "note": "Know one phone number by heart. Not saved in your phone. In your head."
+      }
+    },
+    {
+      "id": "juvenile.04.026",
+      "version": 1,
+      "q": "A 13-year-old is waiting at a police station for a parent to arrive. What does the law say about where he waits?",
+      "options": [
+        {
+          "id": "juvenile.04.026.a",
+          "text": "Apart from any adults being held, with no contact between them.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.026.b",
+          "text": "In the same holding area, as long as it is not for long.",
+          "isCorrect": false,
+          "explanation": "A short wait is not an exception. The separation is the rule the whole time.",
+          "misconceptionCode": "short_stays_dont_count"
+        },
+        {
+          "id": "juvenile.04.026.c",
+          "text": "Anywhere in the building, since nobody has charged him yet.",
+          "isCorrect": false,
+          "explanation": "This protection does not wait on a charge. It applies while he is there.",
+          "misconceptionCode": "no_charge_no_rules"
+        },
+        {
+          "id": "juvenile.04.026.d",
+          "text": "At home, because a minor cannot be held at a station at all.",
+          "isCorrect": false,
+          "explanation": "A minor can be held somewhere. Where, and next to whom, is what the law controls.",
+          "misconceptionCode": "minors_are_never_held"
+        }
+      ],
+      "hint": "There is a rule about who else is in the room.",
+      "principle": "Michigan law says a child under 18 waiting for a parent to arrive cannot be held in a jail or other detention facility unless the child is kept away from adults being held, with no talking, no seeing and no contact. It is one of the older protections in juvenile law and the reason for it is obvious. It does not mean a minor is never held anywhere. It means a minor is not put in with adults.",
+      "keyPhrase": {
+        "quote": "Not in with the adults.",
+        "gloss": "Separated by law, not by somebody's kindness."
+      },
+      "scenario": {
+        "setup": "A back hallway with a bench, waiting on somebody to answer a phone.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "How long do I sit here?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "Until somebody comes for you."
+          },
+          {
+            "label": "YOU",
+            "text": "Back there with everybody else?"
+          },
+          {
+            "label": "OFFICER",
+            "text": "No. You wait here."
+          },
+          {
+            "label": "YES",
+            "text": "The wait is less frightening, because you know what is supposed to happen."
+          },
+          {
+            "label": "NO",
+            "text": "Every sound from the next room sounds like where you are headed."
+          }
+        ],
+        "note": "Sitting quietly and waiting is not the same as answering questions. You can do one without the other."
+      }
+    },
+    {
+      "id": "juvenile.04.027",
+      "version": 1,
+      "q": "A 16-year-old's mother is sitting next to him while an officer asks questions. What does her being there give him?",
+      "options": [
+        {
+          "id": "juvenile.04.027.a",
+          "text": "Support, and a witness, but not what a lawyer would give.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.027.b",
+          "text": "The same protection as having a lawyer in the room.",
+          "isCorrect": false,
+          "explanation": "A parent does not know the law and cannot keep what you say private. A lawyer does both.",
+          "misconceptionCode": "parent_equals_lawyer"
+        },
+        {
+          "id": "juvenile.04.027.c",
+          "text": "Nothing, since a parent has no role in questioning at all.",
+          "isCorrect": false,
+          "explanation": "It counts for something. Whether a parent was there is one of the things a court looks at later.",
+          "misconceptionCode": "parent_presence_is_worthless"
+        },
+        {
+          "id": "juvenile.04.027.d",
+          "text": "The power to end the questioning whenever she decides.",
+          "isCorrect": false,
+          "explanation": "Stopping it is done by you, saying so. It is not a power that belongs to her.",
+          "misconceptionCode": "parent_can_stop_it"
+        }
+      ],
+      "hint": "Two different people, two different jobs.",
+      "principle": "Having a parent there matters. Courts look at whether one was present when deciding whether what a young person said was truly voluntary. But a parent is not a lawyer. A parent does not know the law, is not required to keep what you say private, and can be asked about it later. Plenty of parents tell their kid to just explain, which is advice a lawyer would almost never give. Ask for a parent and ask for a lawyer, and understand they are doing two different jobs.",
+      "keyPhrase": {
+        "quote": "Ask for both. They are not the same job.",
+        "gloss": "One is support. One is protection."
+      },
+      "scenario": {
+        "setup": "A small room with three chairs and a conversation already moving.",
+        "lines": [
+          {
+            "label": "MOM",
+            "text": "Just tell him what happened."
+          },
+          {
+            "label": "YOU",
+            "text": "I want to. I want a lawyer first."
+          },
+          {
+            "label": "MOM",
+            "text": "You'll look like you're hiding something."
+          },
+          {
+            "label": "YOU",
+            "text": "I know. I still want one."
+          },
+          {
+            "label": "YES",
+            "text": "You get the one person in that room whose job is protecting you."
+          },
+          {
+            "label": "NO",
+            "text": "You have somebody who loves you and cannot do that job."
+          }
+        ],
+        "note": "This is not about trusting your parents. It is about what the law lets each person do."
+      }
+    },
+    {
+      "id": "juvenile.04.028",
+      "version": 1,
+      "q": "People talk about 18 as the age the law starts treating you like an adult. What does Michigan actually do?",
+      "options": [
+        {
+          "id": "juvenile.04.028.a",
+          "text": "It uses different ages for different things.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.028.b",
+          "text": "It uses 18 for everything in the criminal system.",
+          "isCorrect": false,
+          "explanation": "Adult court can open earlier than that, and some rules run later.",
+          "misconceptionCode": "one_age_for_everything"
+        },
+        {
+          "id": "juvenile.04.028.c",
+          "text": "It uses 17, the way it did before the law changed.",
+          "isCorrect": false,
+          "explanation": "That line moved. Cases now start in the juvenile system for anybody under 18.",
+          "misconceptionCode": "seventeen_is_an_adult"
+        },
+        {
+          "id": "juvenile.04.028.d",
+          "text": "It leaves the age to the judge in each case.",
+          "isCorrect": false,
+          "explanation": "The ages are written down. A judge applies them rather than picking them.",
+          "misconceptionCode": "age_is_discretionary"
+        }
+      ],
+      "hint": "Count how many different numbers you have run into.",
+      "principle": "There is no single age of adulthood in Michigan. A case can be moved to adult court starting at 14. Cases start in the juvenile system for anyone under 18. Alcohol, tobacco and vapes are 21. A family court can keep a case running past 18 and sometimes to 21. Every one of those is a separate line drawn for a separate reason. Asking what age you become an adult is the wrong question. The right one is what age this particular rule uses.",
+      "keyPhrase": {
+        "quote": "There is no one age.",
+        "gloss": "Ask which line this rule uses."
+      },
+      "scenario": {
+        "setup": "A lunch table, everybody certain about a different number.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "You're a kid until 18. That's it."
+          },
+          {
+            "label": "YOU",
+            "text": "For court, mostly. Not for everything."
+          },
+          {
+            "label": "FRIEND",
+            "text": "Like what?"
+          },
+          {
+            "label": "YOU",
+            "text": "Alcohol's 21. Adult court can open way before 18."
+          },
+          {
+            "label": "YES",
+            "text": "You check the rule instead of guessing from your birthday."
+          },
+          {
+            "label": "NO",
+            "text": "One number in your head does the work of four and gets three of them wrong."
+          }
+        ],
+        "note": "When somebody tells you an age, ask what for."
+      }
+    },
+    {
+      "id": "juvenile.04.029",
+      "version": 1,
+      "q": "A 15-year-old at a police station wants her dad there before she says anything. What is the strongest thing she can do?",
+      "options": [
+        {
+          "id": "juvenile.04.029.a",
+          "text": "Ask for him out loud, and say she is not answering until he comes.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.029.b",
+          "text": "Refuse to give her name until he gets there.",
+          "isCorrect": false,
+          "explanation": "Your name is what gets a parent called. Holding it back works against the thing you want.",
+          "misconceptionCode": "name_can_be_withheld"
+        },
+        {
+          "id": "juvenile.04.029.c",
+          "text": "Wait quietly and hope somebody offers to call him.",
+          "isCorrect": false,
+          "explanation": "Sitting quietly asks for nothing and stops nothing. It has to be said.",
+          "misconceptionCode": "silence_asks_for_things"
+        },
+        {
+          "id": "juvenile.04.029.d",
+          "text": "Say she will answer as soon as he arrives.",
+          "isCorrect": false,
+          "explanation": "That gives away the thing you were protecting. Arriving is not the same as advising you.",
+          "misconceptionCode": "promising_later_protects_now"
+        }
+      ],
+      "hint": "Two separate things have to be said, not one.",
+      "principle": "Asking for a parent is not the same as invoking a right, so both parts are worth saying out loud. Say you want your dad there. Then say you are not answering questions until he is. Staying quiet does not communicate either one and does not stop the questions from coming. Promising to answer once he shows up hands over the thing you were holding on to. Your name is different, and worth simply giving, because it is what gets a parent called at all.",
+      "keyPhrase": {
+        "quote": "I want my dad here, and I am not answering until he is.",
+        "gloss": "Two sentences. Say both."
+      },
+      "scenario": {
+        "setup": "A room with a table and a door that has closed.",
+        "lines": [
+          {
+            "label": "OFFICER",
+            "text": "We just need your side of it."
+          },
+          {
+            "label": "YOU",
+            "text": "I want my dad here."
+          },
+          {
+            "label": "OFFICER",
+            "text": "He's on his way. Let's get started."
+          },
+          {
+            "label": "YOU",
+            "text": "I'm not answering anything until he's here."
+          },
+          {
+            "label": "YES",
+            "text": "The request is clear and so is the refusal, and neither one depends on the other."
+          },
+          {
+            "label": "NO",
+            "text": "The questions keep coming while you wait, and answering them feels easy."
+          }
+        ],
+        "note": "Say it once, plainly, then stop. You do not have to argue about it."
+      }
+    },
+    {
+      "id": "juvenile.04.030",
+      "version": 1,
+      "q": "A student is told a truancy case cannot really do anything because it is not a crime. What can that court actually do?",
+      "options": [
+        {
+          "id": "juvenile.04.030.a",
+          "text": "Order things he has to do, and check whether he did them.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "juvenile.04.030.b",
+          "text": "Nothing at all, since no crime was committed.",
+          "isCorrect": false,
+          "explanation": "Taking the case is what gives the court authority. A crime is not what unlocks it.",
+          "misconceptionCode": "no_crime_no_consequence"
+        },
+        {
+          "id": "juvenile.04.030.c",
+          "text": "Send him to an adult jail if the absences keep up.",
+          "isCorrect": false,
+          "explanation": "Adult jail is not where a case like this goes. That is a different system entirely.",
+          "misconceptionCode": "status_offense_means_jail"
+        },
+        {
+          "id": "juvenile.04.030.d",
+          "text": "Move the case to adult court once he turns 18.",
+          "isCorrect": false,
+          "explanation": "There is no adult version of this to move it to. An adult who stops going to school has broken no law.",
+          "misconceptionCode": "cases_move_at_18"
+        }
+      ],
+      "hint": "A court that takes a case usually has something it can order.",
+      "principle": "Once the family court takes jurisdiction, it can order things. Counseling, a schedule, check ins, conditions at home, supervision. Then it can bring you back and ask whether you did them. None of that needs a crime, because a status offense case was never built on one. What it means practically is that ignoring a truancy case does not make it smaller. The fastest way through is usually doing the thing the court asked for and showing up to say you did it.",
+      "keyPhrase": {
+        "quote": "Not a crime, still an order.",
+        "gloss": "A court that takes your case can tell you to do things."
+      },
+      "scenario": {
+        "setup": "A hallway after a hearing, holding a paper with dates on it.",
+        "lines": [
+          {
+            "label": "FRIEND",
+            "text": "So nothing happened?"
+          },
+          {
+            "label": "YOU",
+            "text": "I have to do a program and come back in six weeks."
+          },
+          {
+            "label": "FRIEND",
+            "text": "That's nothing?"
+          },
+          {
+            "label": "YOU",
+            "text": "It's not nothing. It's just not a criminal case."
+          },
+          {
+            "label": "YES",
+            "text": "The case closes on the schedule it was supposed to close on."
+          },
+          {
+            "label": "NO",
+            "text": "The court asks why, and that conversation is worse than the first one."
+          }
+        ],
+        "note": "Whatever the paper says, keep it. The dates on it are yours to track."
+      }
     }
   ]
 }
