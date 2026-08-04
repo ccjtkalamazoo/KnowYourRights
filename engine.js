@@ -721,7 +721,7 @@ function LogoConfirm({ onGo, onCancel }) {
 function StartScreen({ onPlay, bestRun }) {
   return c.jsxs("div", {
     className: "ts-start-screen",
-    style: { minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 24px", textAlign: "center" },
+    style: { flex: "1 0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 24px", textAlign: "center" },
     children: [
       R.presenter,
       c.jsx("h1", { className: "ts-start-title", style: { fontFamily: C.display, fontSize: "clamp(56px, 12vw, 140px)", lineHeight: 0.9, letterSpacing: "-0.01em", margin: 0, color: u.text, textShadow: `6px 6px 0 ${u.brand}`, maxWidth: "15ch" }, children: R.title }),
@@ -738,7 +738,7 @@ function StartScreen({ onPlay, bestRun }) {
 function WalkScreen({ step, total, screen, onNext, onPrev, onSkip, isLast, canPrev }) {
   return c.jsxs("div", {
     className: "ts-walk-screen",
-    style: { minHeight: "100vh", minHeight: "100dvh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" },
+    style: { flex: "1 0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" },
     children: [
       c.jsxs("div", {
         className: "ts-walk-card",
@@ -878,7 +878,7 @@ function QuestionScreen(props) {
     setMuted, isEndless, points, shieldArmed, onSelect, onLockIn, onNext, onHome, onRequestLifeline,
     onOpenShop, onEnterEndless } = props;
   return c.jsxs("div", {
-    style: { maxWidth: 1280, margin: "0 auto", padding: "24px 24px 24px", display: "flex", gap: 28, alignItems: "flex-start", minHeight: "100vh", boxSizing: "border-box" },
+    style: { maxWidth: 1280, margin: "0 auto", padding: "24px 24px 24px", display: "flex", gap: 28, alignItems: "flex-start", flex: "1 0 auto", width: "100%", boxSizing: "border-box" },
     className: "ts-game-layout ts-game-screen",
     children: [
       c.jsxs("div", { className: "ts-game-main", style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 22 }, children: [
@@ -1246,7 +1246,7 @@ function RevealScreen(props) {
   if (step === "verdict") {
     return c.jsxs("div", {
       className: "ts-reveal-screen",
-      style: { minHeight: "100vh", minHeight: "100dvh", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 18px", boxSizing: "border-box" },
+      style: { flex: "1 0 auto", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 18px", boxSizing: "border-box" },
       children: [
         c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }, children: [
           c.jsx(Button, { onClick: onHome, variant: "secondary", size: "sm", style: { fontSize: 12 }, children: R.homeButton }),
@@ -1294,7 +1294,7 @@ function RevealScreen(props) {
 
   return c.jsxs("div", {
     className: "ts-reveal-screen",
-    style: { minHeight: "100vh", minHeight: "100dvh", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 12px", boxSizing: "border-box" },
+    style: { flex: "1 0 auto", background: u.bg, display: "flex", flexDirection: "column", padding: "14px 18px 12px", boxSizing: "border-box" },
     children: [
       // top bar: home, question count, compact points readout, mute
       c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexShrink: 0, marginBottom: 10 }, children: [
@@ -1555,7 +1555,7 @@ function WinBigScreen({ prize, usage, pointsSpent, pointsLeft, sfx, onTakeMoney,
   }, []); // eslint-disable-line
 
   return c.jsxs("div", {
-    style: { minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px", textAlign: "center", gap: 18, position: "relative" },
+    style: { flex: "1 0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px", textAlign: "center", gap: 18, position: "relative" },
     children: [
       c.jsx(Confetti, { intensity: "high" }),
       c.jsx("div", { style: { fontFamily: C.mono, fontSize: 13, letterSpacing: 4, color: u.brandDeep, fontWeight: 700, textTransform: "uppercase", animation: "ts-fade-in 0.5s" }, children: "Congratulations" }),
@@ -1611,7 +1611,7 @@ function EndScreen(props) {
   const bonusStreak = isEndless ? Math.max(0, streak - 15) : 0;
   return c.jsxs("div", {
     className: "ts-end-screen",
-    style: { minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 24px 80px", textAlign: "center" },
+    style: { flex: "1 0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 24px 80px", textAlign: "center" },
     children: [
       won && c.jsx(Confetti, { intensity: "high" }),
       c.jsx("h1", { className: "ts-end-headline", style: { fontFamily: C.display, fontSize: "clamp(64px, 15vw, 150px)", lineHeight: 0.85, letterSpacing: "-0.02em", margin: 0, color: won ? u.brand : u.text, textShadow: won ? `6px 6px 0 ${u.outline}` : `5px 5px 0 ${u.terra}` }, children: sk.headline }),
@@ -1664,7 +1664,7 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, missedQuestion, o
   return c.jsxs("div", {
     className: "ts-end-screen",
     style: {
-      minHeight: "100vh", display: "flex", flexDirection: "column",
+      flex: "1 0 auto", display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center",
       padding: "48px 24px 72px", textAlign: "center"
     },
