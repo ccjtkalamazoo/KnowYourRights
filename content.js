@@ -128,43 +128,57 @@ let demoCache = null;
 
 export async function loadDemo() {
   if (demoCache) return demoCache;
-  const spec = await getJSON("content/demo.json");
+  const spec = await getJSON("content/demo/questions.json");
   const wanted = spec.questions || [];
+  if (wanted.length === 0) throw new Error("The demo file has no questions");
 
-  // Group the wanted IDs by chapter so each chapter file is fetched once.
-  const byChapter = new Map(); // chapterId -> districtId
-  wanted.forEach((qid) => {
-    const [districtId, chapterNum] = qid.split(".");
-    byChapter.set(`${districtId}.${chapterNum}`, districtId);
-  });
+  // Two accepted shapes, so the demo can be its own writing or a pull from the
+  // chapters without the loader caring which:
+  //   AUTHORED  questions is a list of full question objects, written for the
+  //             demo and standing on their own with no chapter around them.
+  //   BY ID     questions is a list of id strings resolved against the chapter
+  //             files, which stay the single source of truth for those.
+  const authored = typeof wanted[0] !== "string";
+  let questions;
 
-  // meta.json is what maps a chapter id to its filename, so a renamed file
-  // never has to be chased into a second place.
-  const index = new Map(); // questionId -> authored question
-  for (const [chapterId, districtId] of byChapter) {
-    const meta = await getJSON(`content/${districtId}/meta.json`);
-    const ref = (meta.chapters || []).find((ch) => ch.id === chapterId);
-    if (!ref) throw new Error(`Demo refers to ${chapterId}, which is not in ${districtId}/meta.json`);
-    const raw = await getJSON(`content/${districtId}/${ref.file}`);
-    (raw.questions || []).forEach((q) => index.set(q.id, q));
+  if (authored) {
+    questions = wanted.map(toRuntime);
+  } else {
+    // An id carries its own address: "juvenile.01.003" is district juvenile,
+    // chapter juvenile.01, so any question is findable from its id alone.
+    const byChapter = new Map();
+    wanted.forEach((qid) => {
+      const [districtId, chapterNum] = qid.split(".");
+      byChapter.set(`${districtId}.${chapterNum}`, districtId);
+    });
+    const index = new Map();
+    for (const [chapterId, districtId] of byChapter) {
+      const meta = await getJSON(`content/${districtId}/meta.json`);
+      const ref = (meta.chapters || []).find((ch) => ch.id === chapterId);
+      if (!ref) throw new Error(`Demo refers to ${chapterId}, which is not in ${districtId}/meta.json`);
+      const raw = await getJSON(`content/${districtId}/${ref.file}`);
+      (raw.questions || []).forEach((q) => index.set(q.id, q));
+    }
+    // A missing id is a content bug, not something to paper over: silently
+    // dealing a shorter deck would hide it until somebody counted.
+    const missing = wanted.filter((qid) => !index.has(qid));
+    if (missing.length) {
+      throw new Error(`Demo list has ${missing.length} id(s) not in the chapters: ${missing.slice(0, 5).join(", ")}`);
+    }
+    questions = wanted.map((qid) => toRuntime(index.get(qid)));
   }
 
-  // A missing ID is a content bug, not a runtime condition to paper over: it
-  // means the demo list and the chapters disagree, and silently dealing 44
-  // questions would hide that until someone counted.
-  const missing = wanted.filter((qid) => !index.has(qid));
-  if (missing.length) {
-    throw new Error(`Demo list has ${missing.length} id(s) not found in the chapters: ${missing.slice(0, 5).join(", ")}`);
-  }
-
+  // Shaped exactly like a chapter, which is the point: buildDeck, the SKIP
+  // lifeline and the rest take it without knowing it is not one. safetyNote is
+  // null because the demo shows no pre-round screen.
   demoCache = {
-    id: "demo",
-    districtId: "demo",
+    id: spec.chapterId || "demo",
+    districtId: spec.districtId || "demo",
     name: spec.name || "DEMO",
     safetyNote: null,
-    reviewedBy: null,
+    reviewedBy: spec.reviewedBy || null,
     isDemo: true,
-    questions: wanted.map((qid) => toRuntime(index.get(qid)))
+    questions
   };
   return demoCache;
 }
