@@ -88,6 +88,15 @@ export const R = {
     runLabel: (n, of) => `Round ${n} of ${of}`,
     tryAgainLabel: "Try again",
     introHeadline: "THREE TRIES",
+    // Winning ends the turn early, so every "rounds left" string needs a
+    // won-shaped twin. Nothing that reads like a limit should be on screen
+    // once somebody has cleared all fifteen.
+    notPlayedLabel: "not played",
+    notNeededLabel: "not needed",
+    wonBestOn: (r) => `You won on round ${r}, so that is your turn done, at the top.`,
+    wonRunsLabel: "you won",
+    bannerWonTitle: "YOU WON",
+    bannerWonBlurb: "You cleared all fifteen. Show your screen to get your prize.",
     introSub: (n) => `${n} tries to get your highest score. Your best round is the one that counts.`,
     introStartLabel: "Start",
     outOfRunsHeadline: "THANKS FOR PLAYING",
