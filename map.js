@@ -63,6 +63,7 @@ import { c, u, C, U, useState, useEffect } from "./theme.js";
 import { Button } from "./ui.js";
 import { STATUS, newSession, chapterStatus, districtStatus, completion } from "./state.js";
 import { loadDistricts } from "./content.js";
+import { R } from "./copy.js";
 
 // ---------------------------------------------------------------------------
 // Icon palette
@@ -430,13 +431,89 @@ function Legend() {
 }
 
 // ---------------------------------------------------------------------------
+// DemoBanner : the one thing on this screen that is actually playable.
+// ---------------------------------------------------------------------------
+// Everything else on the map is a roadmap. This is not, so it does not look
+// like the district cards at all: full width, brand fill, the heaviest shadow
+// on the page, and the only large button. A player should not have to read
+// anything to know where to click.
+//
+// The round counter is the honest part. Three rounds per page load, and the
+// banner says how many are left rather than letting a player discover the cap
+// by being refused.
+function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true }) {
+  const D = R.demo;
+  const left = Math.max(0, maxRuns - runsUsed);
+  return c.jsxs("div", {
+    className: "kyr-demo-banner",
+    style: {
+      background: canPlay ? u.brand : u.surfaceWarm,
+      border: `3px solid ${u.outline}`,
+      borderRadius: 14,
+      boxShadow: U.lg,
+      padding: "22px 26px",
+      marginBottom: 26,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 22,
+      flexWrap: "wrap"
+    },
+    children: [
+      c.jsxs("div", { style: { flex: "1 1 300px", minWidth: 240 }, children: [
+        c.jsx("div", {
+          style: {
+            fontFamily: C.mono, fontSize: 10, letterSpacing: 2.6, fontWeight: 700,
+            color: canPlay ? u.textOnDark : u.textMuted, opacity: canPlay ? 0.85 : 1
+          },
+          children: canPlay ? D.eyebrow : "DEMO"
+        }),
+        c.jsx("div", {
+          style: {
+            fontFamily: C.display, fontSize: "clamp(28px, 5vw, 40px)", lineHeight: 1.02,
+            letterSpacing: -0.5, margin: "6px 0 8px",
+            color: canPlay ? u.textOnDark : u.text
+          },
+          children: canPlay ? D.title : D.outOfRunsHeadline
+        }),
+        c.jsx("div", {
+          style: {
+            fontFamily: C.body, fontSize: 14, lineHeight: 1.55, fontWeight: 500,
+            maxWidth: 460, color: canPlay ? u.textOnDark : u.textDim,
+            opacity: canPlay ? 0.9 : 1
+          },
+          children: canPlay ? D.blurb : D.outOfRunsSub
+        })
+      ] }),
+      c.jsxs("div", {
+        style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8 },
+        children: [
+          c.jsx(Button, {
+            onClick: onPlay, variant: "secondary", size: "md", disabled: !canPlay,
+            style: { fontSize: 20, padding: "16px 34px" },
+            children: D.playLabel
+          }),
+          c.jsx("div", {
+            style: {
+              fontFamily: C.mono, fontSize: 10, letterSpacing: 1.6, fontWeight: 700,
+              color: canPlay ? u.textOnDark : u.textMuted, opacity: canPlay ? 0.8 : 1
+            },
+            children: left > 0 ? `${left} of ${maxRuns} rounds left` : "no rounds left"
+          })
+        ]
+      })
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
 // MapScreen
 // ---------------------------------------------------------------------------
 // Districts are fetched from content/ on mount. Three states: loading, failed,
 // loaded. The failure state matters more than it looks: content now arrives
 // over the network, so "the file is missing or malformed" is a thing a player
 // can actually hit, and a blank screen would be the worst possible answer.
-export function MapScreen({ onPlayChapter, onHome }) {
+export function MapScreen({ onPlayChapter, onHome, onPlayDemo, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true }) {
   const [districts, setDistricts] = useState(null);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -537,6 +614,14 @@ export function MapScreen({ onPlayChapter, onHome }) {
             ]
           })
         ]
+      }),
+
+      // The demo sits ABOVE the roadmap, in full colour, at full width. The
+      // districts below it are deliberately quiet. That contrast is the whole
+      // instruction: the loud thing is the thing to play, and everything else
+      // is a roadmap you are looking at, not choosing from.
+      onPlayDemo && c.jsx(DemoBanner, {
+        onPlay: onPlayDemo, runsUsed: demoRunsUsed, maxRuns: demoMaxRuns, canPlay: demoCanPlay
       }),
 
       // Roadmap divider. Wording follows the content: while nothing is live it
