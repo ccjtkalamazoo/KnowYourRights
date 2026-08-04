@@ -28,7 +28,16 @@ import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.
 import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
-import { loadChapter } from "./content.js";
+import { loadChapter, loadDemo } from "./content.js";
+
+// ---------------------------------------------------------------------------
+// The demo (event build)
+// ---------------------------------------------------------------------------
+// Three rounds per page load, then it stops. The cap is deliberately in memory
+// and nowhere else: a refresh clears it, which is exactly how the table is run.
+// The next kid gets the machine reset for them, and nothing about the last kid
+// survives, which is the same privacy posture as everything else here.
+const MAX_DEMO_RUNS = 3;
 
 // ===========================================================================
 // App : all game state lives here.
@@ -67,6 +76,11 @@ export function App() {
   const [finalPrize, setFinalPrize] = useState(0);
   const [bestRun, setBestRun] = useState(0);
   const [muted, setMuted] = useState(false);
+  // Demo state. demoRuns is the scoreboard: one entry per finished round,
+  // { correct, won }. It deliberately survives resetState() and a trip back to
+  // the map, because the three rounds belong to the player, not to a run.
+  const [isDemo, setIsDemo] = useState(false);
+  const [demoRuns, setDemoRuns] = useState([]);
   const [screenFlash, setScreenFlash] = useState(null);
   const [screenShake, setScreenShake] = useState(false);
 
@@ -137,6 +151,19 @@ export function App() {
     setShieldArmed(false); setUsage({ fifty: 0, poll: 0, hint: 0, shield: 0, skip: 0 }); setPointsSpent(0);
     setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
     setPendingLifeline(null); setShopOpen(false); setHomeConfirm(false); setSkipConfirm(false);
+    setPoints(0); setIsEndless(false); setFinalPrize(0); setIsDemo(false);
+  };
+
+  // Per-round reset for the demo. Same as resetState minus the deck and minus
+  // isDemo, so Try Again lands on question one of a fresh shuffle without
+  // going near the map, the walkthrough, or a page reload.
+  const resetRound = () => {
+    setLevel(0); setSelected(null); setLocked(false);
+    setRevealCorrect(false); setRevealWrong(false); setShowFloating(false);
+    setStreak(0); setLifelines({ fifty: true, poll: true, hint: true, shield: false, skip: false });
+    setShieldArmed(false); setUsage({ fifty: 0, poll: 0, hint: 0, shield: 0, skip: 0 }); setPointsSpent(0);
+    setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
+    setPendingLifeline(null); setShopOpen(false); setHomeConfirm(false); setSkipConfirm(false);
     setPoints(0); setIsEndless(false); setFinalPrize(0);
   };
 
@@ -144,7 +171,7 @@ export function App() {
   // The map is the launcher. The walkthrough hands off to it instead of straight
   // into a run, and every end screen returns here rather than to the start.
   // resetState() first so a run's leftovers never survive into the next one.
-  const goMap = () => { initAudio(); sfx.current.click(); music.current.stop(); if (phase === "playing" || phase === "revealing" || phase === "locking") { EV.trackRunEnd("abandoned", { level, mode: isEndless ? "endless" : "ladder" }); EV.flush(); } EV.trackNav("map"); resetState(); setPhase("map"); };
+  const goMap = () => { initAudio(); sfx.current.click(); music.current.stop(); if (phase === "playing" || phase === "revealing" || phase === "locking") { EV.trackRunEnd("abandoned", { level, mode: isDemo ? "demo" : isEndless ? "endless" : "ladder" }); EV.flush(); } EV.trackNav("map"); resetState(); setPhase("map"); };
   const playAgain = () => { initAudio(); sfx.current.click(); goMap(); };
   // Starting a run now means fetching that chapter's 30 questions first, so
   // this is async and has a visible loading phase between picking a chapter and
@@ -170,6 +197,53 @@ export function App() {
       setPhase("loaderror");
     }
   };
+
+  // The demo. Straight from the map into question one: no pre-round screen,
+  // no safety note, no disclaimer. The walkthrough already carried the warning
+  // and the event table has a person standing at it.
+  const startDemo = async () => {
+    if (!demoCanPlay) return;
+    resetState();
+    setChapter(null);
+    setLoadError(null);
+    setPhase("loading");
+    try {
+      const pool = await loadDemo();
+      const d = buildDeck(pool);
+      setChapter(pool);
+      setDeck(d);
+      setIsDemo(true);
+      EV.trackModeStart("demo", d, { poolId: "demo", poolSize: pool.questions.length, run: demoRuns.length + 1 });
+      setPhase("playing");
+    } catch (err) {
+      setLoadError(err.message || String(err));
+      setPhase("loaderror");
+    }
+  };
+
+  // Try Again: reshuffle the same 45, back to question one, same page.
+  const demoTryAgain = () => {
+    if (!demoCanPlay || !chapter) return;
+    sfx.current.click();
+    music.current.stop();
+    resetRound();
+    const d = buildDeck(chapter);
+    setDeck(d);
+    EV.trackModeStart("demo", d, { poolId: "demo", poolSize: chapter.questions.length, run: demoRuns.length + 1 });
+    setPhase("playing");
+  };
+
+  // Recording a finished round. Correct answers is the score, which is the
+  // level reached: lose on question six and you answered five. Lifelines are
+  // deliberately not part of it. Getting there with a 50/50 still means the
+  // player knew enough to use it.
+  const recordDemoRun = (correct, won) => {
+    setDemoRuns((rs) => (rs.length >= MAX_DEMO_RUNS ? rs : [...rs, { correct, won: !!won }]));
+  };
+
+  const demoWon = demoRuns.some((r) => r.won);
+  const demoRunsUsed = demoRuns.length;
+  const demoCanPlay = !demoWon && demoRunsUsed < MAX_DEMO_RUNS;
 
   const currentQ = deck[level];
   const rung = LADDER[level] || { level: level + 1, prize: LADDER[LADDER.length - 1].prize };
@@ -260,11 +334,29 @@ export function App() {
 
   const advance = () => {
     sfx.current.click();
-    if (revealWrong) { music.current.stop(); EV.trackRunEnd("lost", { level, mode: isEndless ? "endless" : "ladder" }); EV.flush(); setPhase("gameover"); return; }
+    const runMode = isDemo ? "demo" : isEndless ? "endless" : "ladder";
+    if (revealWrong) {
+      music.current.stop();
+      // level is the index of the question they missed, so it is also the count
+      // of questions they got right before it.
+      if (isDemo) recordDemoRun(level, false);
+      EV.trackRunEnd("lost", { level, mode: runMode }); EV.flush();
+      setPhase("gameover"); return;
+    }
     if (!isEndless && level === LADDER.length - 1) {
       setFinalPrize(LADDER[level].prize);
       setBestRun((v) => Math.max(v, LADDER[level].prize));
-      EV.trackRunEnd("won", { level, mode: "ladder" }); EV.flush();
+      EV.trackRunEnd("won", { level, mode: runMode }); EV.flush();
+      // Clearing fifteen in the demo is the top prize tier and the end of the
+      // player's turn. No bonus round: it would leave them mid-game with
+      // nothing left to win and somebody waiting behind them.
+      if (isDemo) {
+        recordDemoRun(LADDER.length, true);
+        setPhase("won");
+        setTimeout(() => sfx.current.win(), 200);
+        music.current.stop();
+        return;
+      }
       setPhase("winbig");
       music.current.duck(0.12, 400);
       return;
@@ -525,7 +617,10 @@ export function App() {
 
   if (phase === "map")
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
-      c.jsx(MapScreen, { onPlayChapter: startChapter, onHome: () => { resetState(); setPhase("start"); } }),
+      c.jsx(MapScreen, {
+        onPlayChapter: startChapter, onHome: () => { resetState(); setPhase("start"); },
+        onPlayDemo: startDemo, demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay
+      }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
 
@@ -537,6 +632,17 @@ export function App() {
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
+
+  if (isDemo && (phase === "gameover" || phase === "won")) {
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(DemoEndScreen, {
+        runs: demoRuns, maxRuns: MAX_DEMO_RUNS, canPlay: demoCanPlay,
+        won: phase === "won", missedQuestion: phase === "gameover" ? currentQ : null,
+        onTryAgain: demoTryAgain, onHome: goMap
+      }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
+  }
 
   if (phase === "gameover" || phase === "won") {
     const completedIdx = phase === "won" ? level : level - 1;
@@ -1529,6 +1635,168 @@ function EndScreen(props) {
         c.jsx(Button, { onClick: onHome, variant: "ghost", size: "md", children: "Home" })
       ] }),
       c.jsx("p", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.textMuted, marginTop: 30, fontWeight: 600, textTransform: "uppercase" }, children: R.endScreens.footerNote })
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
+// The demo end screen (event build)
+// ---------------------------------------------------------------------------
+// One screen covers all three endings: a round finished with rounds left, a
+// round finished with none left, and clearing all fifteen. They differ by
+// headline and by whether Try Again is there, and nothing else, because the
+// scoreboard is the reason the screen exists.
+//
+// The scoreboard is cumulative and stays on screen. Whoever is handing out
+// prizes reads the tier off the same screen the player is already looking at,
+// so nobody has to remember three numbers or ask the player to repeat them.
+function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, missedQuestion, onTryAgain, onHome }) {
+  const D = R.demo;
+  const thisRun = runs[runs.length - 1] || { correct: 0, won: false };
+  const best = runs.reduce((m, r) => Math.max(m, r.correct), 0);
+  const tier = D.tiers.find((t) => best >= t.at);
+  const outOfRuns = !canPlay;
+
+  let headline = D.roundHeadline;
+  if (won) headline = D.wonHeadline;
+  else if (outOfRuns) headline = D.outOfRunsHeadline;
+
+  return c.jsxs("div", {
+    className: "ts-end-screen",
+    style: {
+      minHeight: "100vh", display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      padding: "48px 24px 72px", textAlign: "center"
+    },
+    children: [
+      won && c.jsx(Confetti, { intensity: "high" }),
+      c.jsx("h1", {
+        className: "ts-end-headline",
+        style: {
+          fontFamily: C.display, fontSize: "clamp(48px, 12vw, 118px)", lineHeight: 0.85,
+          letterSpacing: "-0.02em", margin: 0, color: won ? u.brand : u.text,
+          textShadow: won ? `6px 6px 0 ${u.outline}` : `5px 5px 0 ${u.terra}`
+        },
+        children: headline
+      }),
+      c.jsx("p", {
+        style: {
+          fontFamily: C.body, fontSize: 18, fontWeight: 600, color: u.textDim,
+          maxWidth: 540, margin: "24px 0 30px", lineHeight: 1.55
+        },
+        children: won ? D.wonSub
+          : outOfRuns ? D.outOfRunsSub
+          : D.reachedLabel(thisRun.correct)
+      }),
+
+      // The scoreboard. One row per round played, blanks for rounds not taken,
+      // so the player can see what is still theirs to use.
+      c.jsxs("div", {
+        style: {
+          width: "100%", maxWidth: 460, background: u.surface,
+          border: `2px solid ${u.outline}`, borderRadius: 14,
+          boxShadow: U.lg, padding: "20px 22px", marginBottom: 26, textAlign: "left"
+        },
+        children: [
+          c.jsx("div", {
+            style: {
+              fontFamily: C.mono, fontSize: 11, letterSpacing: 2, color: u.textMuted,
+              fontWeight: 700, textTransform: "uppercase", marginBottom: 14
+            },
+            children: D.scoreboardTitle
+          }),
+          c.jsx("div", {
+            style: { display: "flex", flexDirection: "column", gap: 8 },
+            children: Array.from({ length: maxRuns }).map((_, i) => {
+              const run = runs[i];
+              const isBest = run && run.correct === best && best > 0;
+              return c.jsxs("div", {
+                style: {
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  gap: 12, padding: "10px 12px", borderRadius: 8,
+                  background: isBest ? u.brandSofter : "transparent",
+                  border: `2px solid ${isBest ? u.brand : u.borderLight}`,
+                  opacity: run ? 1 : 0.45
+                },
+                children: [
+                  c.jsxs("span", {
+                    style: { fontFamily: C.display, fontSize: 16, letterSpacing: 1, color: u.text },
+                    children: [D.roundWord, " ", i + 1]
+                  }),
+                  run
+                    ? c.jsxs("span", {
+                        style: { display: "inline-flex", alignItems: "baseline", gap: 6 },
+                        children: [
+                          c.jsx("span", {
+                            style: { fontFamily: C.display, fontSize: 28, lineHeight: 1, color: isBest ? u.brand : u.text },
+                            children: run.correct
+                          }),
+                          c.jsx("span", {
+                            style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.4, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" },
+                            children: D.correctWord
+                          })
+                        ]
+                      })
+                    : c.jsx("span", {
+                        style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.4, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" },
+                        children: "not played"
+                      })
+                ]
+              }, i);
+            })
+          }),
+
+          // Best and prize tier, the two numbers the prize table actually needs.
+          c.jsxs("div", {
+            style: {
+              display: "flex", justifyContent: "space-between", gap: 12,
+              paddingTop: 14, marginTop: 14, borderTop: `2px solid ${u.borderLight}`
+            },
+            children: [
+              c.jsxs("div", { style: { textAlign: "center", flex: 1 }, children: [
+                c.jsx("div", { style: { fontFamily: C.display, fontSize: 30, color: u.brand, lineHeight: 1 }, children: best }),
+                c.jsx("div", { style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", marginTop: 4 }, children: D.bestLabel })
+              ] }),
+              c.jsx("div", { style: { width: 2, background: u.borderLight } }),
+              c.jsxs("div", { style: { textAlign: "center", flex: 1 }, children: [
+                c.jsx("div", {
+                  style: { fontFamily: C.display, fontSize: tier ? 22 : 16, color: tier ? u.terra : u.textMuted, lineHeight: 1.2, paddingTop: tier ? 4 : 8 },
+                  children: tier ? tier.name : D.noTier
+                }),
+                c.jsx("div", { style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", marginTop: 4 }, children: D.tierLabel })
+              ] })
+            ]
+          })
+        ]
+      }),
+
+      // The question that ended the round, so the last thing on screen is the
+      // right answer rather than the score.
+      !won && missedQuestion && c.jsxs("div", {
+        className: "ts-missed-card",
+        style: {
+          background: u.surface, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${u.terra}`,
+          borderRadius: 10, padding: "20px 24px", maxWidth: 560, marginBottom: 28,
+          boxShadow: U.md, textAlign: "left"
+        },
+        children: [
+          c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.terra, fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }, children: R.endScreens.missedQuestionLabel }),
+          c.jsx("p", { style: { fontFamily: C.body, fontSize: 16, fontWeight: 600, lineHeight: 1.5, color: u.text, margin: "0 0 14px" }, children: missedQuestion.q }),
+          c.jsxs("div", { style: { fontFamily: C.body, fontSize: 15, color: u.green, fontWeight: 700, lineHeight: 1.45 }, children: [
+            c.jsx("span", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.green, marginRight: 8, textTransform: "uppercase" }, children: "Answer" }),
+            missedQuestion.options[missedQuestion.correct]
+          ] })
+        ]
+      }),
+
+      c.jsxs("div", {
+        className: "ts-end-actions",
+        style: { display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", justifyContent: "center" },
+        children: [
+          canPlay && c.jsx(Button, { onClick: onTryAgain, variant: "primary", size: "md", children: D.tryAgainLabel }),
+          c.jsx(Button, { onClick: onHome, variant: "ghost", size: "md", children: "Home" })
+        ]
+      })
     ]
   });
 }
