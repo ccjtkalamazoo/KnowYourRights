@@ -13,9 +13,11 @@
 //   gameover    a miss ended the run
 //   won         the run is over (banked the prize, or cleared the bonus deck)
 //
-// The suspense pause in `locking` is deliberate and scales with the stakes:
-// 1.5s early, 3s mid, 5s late, and a full 7s on Q15. That silence is most of
-// what makes locking in an answer feel like a decision.
+// The suspense pause in `locking` is a flat 2 seconds on every question. It used
+// to scale with the stakes (1.5s early, 5s late, 7s on Q15), which read as
+// tension on a first playthrough and as waiting on a third. At an event with a
+// line of kids and three rounds each, the long ones cost real minutes and bought
+// nothing. One number, every question, every mode.
 
 import { c, u, C, U, LOGO, useState, useEffect, useRef, injectStyles } from "./theme.js";
 import { R } from "./copy.js";
@@ -38,6 +40,10 @@ import { loadChapter, loadDemo } from "./content.js";
 // The next kid gets the machine reset for them, and nothing about the last kid
 // survives, which is the same privacy posture as everything else here.
 const MAX_DEMO_RUNS = 3;
+
+// How long the game holds on a locked answer before the reveal, in ms. Flat
+// across every question and every mode. Change this one number to retune it.
+const LOCK_PAUSE_MS = 2000;
 
 // ===========================================================================
 // App : all game state lives here.
@@ -348,7 +354,7 @@ export function App() {
         setPhase("revealing");
         music.current.duck(0.12, 400);
       }
-    }, (!isEndless && level === LADDER.length - 1) ? 7000 : s === 1 ? 1500 : s === 2 ? 3000 : 5000);
+    }, LOCK_PAUSE_MS);
   };
 
   const advance = () => {
