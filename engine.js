@@ -304,14 +304,14 @@ export function App() {
       const m = qMeter.current;
       const t = performance.now();
       EV.trackAnswer(currentQ, {
-        authoredIndex: currentQ.order ? currentQ.order[selected] : selected,
+        displayIndex: selected,
         correct: selected === currentQ.correct,
         exposure: m.exposure,
         msToFirstSelect: m.firstSelectAt === null ? null : Math.round(m.firstSelectAt - m.shownAt),
         msToLock: Math.round(t - m.shownAt),
         selectionChanges: m.changes,
         lifelinesUsed: m.lifelines.slice(),
-        removedAuthoredIndices: currentQ.order ? removedAnswers.map((i) => currentQ.order[i]) : removedAnswers,
+        removedDisplayIndices: removedAnswers,
       });
     }
     const s = stage;
