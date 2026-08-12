@@ -1268,6 +1268,7 @@ function RevealScreen(props) {
 
   const go = (targetIdx) => {
     if (targetIdx < 0 || targetIdx > CARD_COUNT - 1) return;
+    emitCard(current); // record the card being left before moving off it
     const wasSeen = seen[targetIdx];
     setDir(targetIdx > current ? 1 : -1);
     setFirstView(!wasSeen);
