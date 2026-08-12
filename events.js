@@ -48,14 +48,40 @@ export function questionId(q) {
   return "legacy:" + h.toString(36);
 }
 
-// Option identity: authored content gives every option a permanent id
-// (stop.03.007.a) that survives rewording and the display shuffle. Those ride
-// through on the question as optionIds. The legacy fallback derives one from
-// the question id plus the authored position.
-export function optionId(q, authoredIndex) {
-  if (q.optionIds && q.optionIds[authoredIndex]) return q.optionIds[authoredIndex];
+// ---------------------------------------------------------------------------
+// Option identity
+// ---------------------------------------------------------------------------
+// THE INDEX PASSED IN HERE IS THE DISPLAY INDEX (0 = the option rendered first
+// on screen), not the authored one. That distinction is what the first version
+// of this function got wrong, and it silently destroyed every option-level
+// number collected before this fix.
+//
+// rules.shuffleOptions() permutes optionIds by the SAME order it permutes the
+// visible text, so by the time a question reaches the screen optionIds is
+// ALREADY in display order. optionIds[displayIndex] is therefore the permanent
+// id of the option the player actually tapped. The old code indexed it with the
+// authored index, which un-shuffled an already-shuffled array and returned a
+// real-looking id belonging to a different option. It was right only by chance,
+// roughly one time in four, which is why the collected data showed every letter
+// appearing as both correct and incorrect.
+//
+// The legacy fallback still needs the authored position, because a legacy
+// question has no ids and its letter is defined by authoring order. order[]
+// maps display index to authored index, so that conversion happens here.
+export function optionId(q, displayIndex) {
+  if (q.optionIds && q.optionIds[displayIndex]) return q.optionIds[displayIndex];
   const qid = questionId(q);
-  return qid + "." + "abcd"[authoredIndex];
+  const authored = q.order ? q.order[displayIndex] : displayIndex;
+  return qid + "." + "abcd"[authored];
+}
+
+// The misconception code for a displayed option, same indexing rule as above.
+// Carried ON the event rather than joined from content later, deliberately: if
+// a code is renamed or merged next year, rows keep the code that was true at the
+// moment the player answered.
+export function optionMisconception(q, displayIndex) {
+  if (!q.misconceptions) return null;
+  return q.misconceptions[displayIndex] || null;
 }
 
 // ---------------------------------------------------------------------------
@@ -86,6 +112,7 @@ export function beginSession({ soundOn } = {}) {
     exposures: new Map(),      // questionId -> times shown this session
     flushTimer: null,
     mode: null,                // "ladder" | "endless" | later "chapter" | "tutorial"
+    ended: false,              // session_end is emitted at most once
   };
   track("session_start", {
     viewport: viewportClass(),
@@ -93,10 +120,15 @@ export function beginSession({ soundOn } = {}) {
   });
   if (typeof window !== "undefined") {
     session.flushTimer = setInterval(flush, FLUSH_MS);
-    // pagehide fires on tab close, navigation, and app switch on mobile; it is
-    // the last reliable moment to get the buffer out. sendBeacon survives the
-    // page dying, a normal fetch would not.
-    window.addEventListener("pagehide", onPageHide);
+    // Three listeners, one outcome. pagehide is the reliable one on desktop and
+    // on iOS; visibilitychange catches the phone being locked or the app being
+    // switched away from, which on some mobile browsers is the LAST event before
+    // the page is discarded without pagehide ever firing; beforeunload covers
+    // older desktop browsers. endSession() is idempotent, so whichever arrives
+    // first wins and the rest are no-ops. Before this, 13 of 96 sessions ended
+    // with no close event and no totalMs at all.
+    window.addEventListener("pagehide", () => endSession("pagehide"));
+    window.addEventListener("beforeunload", () => endSession("beforeunload"));
     document.addEventListener("visibilitychange", onVisibility);
   }
   return session.id;
@@ -106,16 +138,24 @@ function now() {
   return (typeof performance !== "undefined" ? performance.now() : Date.now());
 }
 
-function onPageHide() {
-  track("session_end", { reason: "pagehide", totalMs: Math.round(now() - session.t0) });
+// Close the session and get the buffer out. Safe to call repeatedly: only the
+// first call emits, because a tab close can fire two or three of the listeners
+// above and a doubled session_end would corrupt every duration query.
+function endSession(reason) {
+  if (!session || session.ended) return;
+  session.ended = true;
+  track("session_end", { reason, totalMs: Math.round(now() - session.t0) });
   flush(true);
 }
 
 // Tab switches are a data-quality signal (DESIGN.md 5): recorded as bare
-// events, weighted later, never labelled cheating anywhere.
+// events, weighted later, never labelled cheating anywhere. Going hidden is also
+// the last safe moment to send on mobile, so the buffer goes out too.
 function onVisibility() {
   if (!session) return;
-  track("visibility", { hidden: document.visibilityState === "hidden" });
+  const hidden = document.visibilityState === "hidden";
+  track("visibility", { hidden });
+  if (hidden) flush(true);
 }
 
 // ---------------------------------------------------------------------------
@@ -180,10 +220,17 @@ export function trackQuestionShown(q, level) {
   return n;
 }
 
-export function trackAnswer(q, { authoredIndex, correct, exposure, msToFirstSelect, msToLock, selectionChanges, lifelinesUsed, removedAuthoredIndices }) {
+// displayIndex is the on-screen position the player tapped. Everything that
+// needs the authored identity resolves it through optionId/optionMisconception,
+// which own that conversion so no caller has to think about it.
+export function trackAnswer(q, { displayIndex, correct, exposure, msToFirstSelect, msToLock, selectionChanges, lifelinesUsed, removedDisplayIndices }) {
   track("answer", {
     qid: questionId(q),
-    oid: optionId(q, authoredIndex),
+    oid: optionId(q, displayIndex),
+    // The misconception this choice represents, null on the correct answer.
+    // This is the field that makes a wrong answer specifically identified
+    // rather than just wrong.
+    mis: optionMisconception(q, displayIndex),
     correct: !!correct,
     exposure: exposure || 1,
     msToFirstSelect: msToFirstSelect ?? null,
@@ -192,7 +239,7 @@ export function trackAnswer(q, { authoredIndex, correct, exposure, msToFirstSele
     // Category axis (DESIGN.md 5): unaided / hint-assisted / reduced-field is
     // derived downstream from this ordered list, not stored as a judgment here.
     lifelinesUsed: lifelinesUsed || [],
-    removed: (removedAuthoredIndices || []).map((i) => optionId(q, i)),
+    removed: (removedDisplayIndices || []).map((i) => optionId(q, i)),
   });
 }
 
@@ -204,10 +251,17 @@ export function trackShop(action, detail = {}) {
   track("shop", { action, ...detail });
 }
 
-export function trackReviewCard(q, cardIndex, { dwellMs, redeemed, skipped }) {
+// Fired once per card VIEWED, on the way out of that card, whether the answer
+// was right or wrong. Previously this only fired when a point was redeemed,
+// which meant a wrong answer produced no card events at all even though the
+// player sat and read all three. The teaching was happening; the measurement
+// was not. `correct` rides along so "did they read harder after getting it
+// wrong" is one query rather than a join.
+export function trackReviewCard(q, cardIndex, { dwellMs, redeemed, skipped, correct }) {
   track("review_card", {
     qid: questionId(q), card: cardIndex,
     dwellMs: dwellMs ?? null, redeemed: !!redeemed, skipped: !!skipped,
+    correct: typeof correct === "boolean" ? correct : null,
   });
 }
 
@@ -236,7 +290,7 @@ if (typeof window !== "undefined") {
       if (!d) return "No session yet.";
       console.table(d.buffered.map((e) => ({
         seq: e.seq, type: e.type, qid: e.qid || "", oid: e.oid || "",
-        correct: e.correct ?? "", exposure: e.exposure ?? "", ms: e.at,
+        mis: e.mis || "", correct: e.correct ?? "", exposure: e.exposure ?? "", ms: e.at,
       })));
       return d.buffered;
     },
