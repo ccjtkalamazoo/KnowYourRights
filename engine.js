@@ -488,8 +488,7 @@ export function App() {
     setSkipConfirm(true);
   };
   const cancelSkip = () => { sfx.current.click(); setSkipConfirm(false); };
-  const doSkip = () => { sfx.current.click(); EV.trackReviewCard(currentQ, -1, { skipped: true }); setSkipConfirm(false); setSkipConfirmed(true); advance(); };
-
+  const doSkip = () => { sfx.current.click(); EV.trackReviewCard(currentQ, -1, { skipped: true, correct: revealCorrect }); setSkipConfirm(false); setSkipConfirmed(true); advance(); };
   const askHome = () => {
     // Screens with no run in progress: nothing to lose, so no confirmation.
     if (phase === "start" || phase === "map" || phase === "gameover" || phase === "won" || phase === "winbig") return;
