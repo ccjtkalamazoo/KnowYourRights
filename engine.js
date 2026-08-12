@@ -1201,11 +1201,27 @@ function RevealScreen(props) {
     setSeen(copy);
   };
 
+  // One event per card actually viewed, emitted when the player leaves it.
+  // Fires whether the answer was right or wrong, which is the whole point: the
+  // old version only fired on a redeemed point, so misses recorded nothing.
+  // emitted[] guards against double-counting when a card is revisited.
+  const emitted = useRef([false, false, false]);
+  const emitCard = (idx) => {
+    if (idx < 0 || idx > CARD_COUNT - 1) return;
+    if (emitted.current[idx]) return;
+    emitted.current[idx] = true;
+    EV.trackReviewCard(question, idx, {
+      dwellMs: Math.round(performance.now() - cardShownAt.current),
+      redeemed: !!claimed[idx],
+      skipped: false,
+      correct: revealCorrect,
+    });
+  };
+
   // claim the point for the current card. redeem now lives INSIDE the card and
   // is independent of navigation, so advancing never depends on it.
   const claimPoint = (idx) => {
     if (!scoring || claimed[idx]) return false;
-    EV.trackReviewCard(question, idx, { dwellMs: Math.round(performance.now() - cardShownAt.current), redeemed: true });
     const copy = claimed.slice();
     copy[idx] = true;
     const claimedCount = copy.filter(Boolean).length;
