@@ -1249,8 +1249,8 @@ function RevealScreen(props) {
   };
 
   // advancing to the next question/result: sweep up any unclaimed-but-read points first.
-  const advanceOut = () => { autoCreditRemaining(); onNext(); };
-
+  const advanceOut = () => { emitCard(current); autoCreditRemaining(); onNext(); };
+  
   // when a card's dwell completes, mark it read (if first view)
   useEffect(() => {
     if (step !== "cards") return;
