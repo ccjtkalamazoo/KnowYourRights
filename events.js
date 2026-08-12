@@ -31,6 +31,13 @@ const ENDPOINT = "https://kyr-ingest.ccjtkalamazoo.workers.dev/";
 const FLUSH_AT = 25;
 const FLUSH_MS = 30000;
 
+// A failed send is held and tried again rather than dropped. Six seconds is
+// long enough for a wifi stumble at a venue to pass and short enough that the
+// queue is usually empty again before the next question is answered. The cap
+// exists so a genuinely dead network cannot grow the queue without limit.
+const RETRY_MS = 6000;
+const MAX_FAILED_BATCHES = 12;
+
 // ---------------------------------------------------------------------------
 // Question identity (interim)
 // ---------------------------------------------------------------------------
@@ -113,6 +120,8 @@ export function beginSession({ soundOn } = {}) {
     flushTimer: null,
     mode: null,                // "ladder" | "endless" | later "chapter" | "tutorial"
     ended: false,              // session_end is emitted at most once
+    failed: [],                // batches whose send failed, awaiting a retry
+    retryTimer: null,          // at most one retry pass is ever scheduled
   };
   track("session_start", {
     viewport: viewportClass(),
@@ -176,14 +185,48 @@ export function track(type, payload = {}) {
   if (session.buffer.length >= FLUSH_AT) flush();
 }
 
-export function flush(useBeacon = false) {
-  if (!session || session.buffer.length === 0) return;
-  const batch = session.buffer;
-  session.buffer = [];
+// A batch that failed to send goes back to the front of the buffer instead of
+// being dropped. This is why that is safe rather than a source of duplicates:
+// the Worker inserts with INSERT OR IGNORE against a unique index on
+// (sid, seq), so a batch that actually arrived and then got retried anyway is a
+// no-op on the second attempt. Retrying can never double-count.
+//
+// The failure mode this fixes was measurable, not theoretical. At the first
+// event, four sessions had contiguous blocks missing from their sequence
+// numbers, 24 events in total: a POST failed, the batch was already gone from
+// the buffer, and nothing ever tried again. About 1% loss on a good night.
+//
+// Deliberately NOT persisted to localStorage. Surviving a closed tab would mean
+// writing gameplay to the device, which is the one thing the whole privacy
+// posture rests on not doing. A retry queue that lives and dies with the page
+// is the version that stays honest.
+function retryLater(batch) {
+  if (!session) return;
+  session.failed = (session.failed || []).concat([batch]);
+  // Cap it. If sending has been failing for this long the network is gone, and
+  // an unbounded queue would grow until the tab struggles.
+  if (session.failed.length > MAX_FAILED_BATCHES) session.failed.shift();
+  if (session.retryTimer) return;
+  session.retryTimer = setTimeout(() => {
+    if (!session) return;
+    session.retryTimer = null;
+    const queued = session.failed || [];
+    session.failed = [];
+    queued.forEach((b) => send(b, false));
+  }, RETRY_MS);
+}
+
+// Send one batch. Split out from flush() so a retry reuses exactly the same
+// path as a first attempt, rather than a second code path that drifts.
+function send(batch, useBeacon) {
+  if (!batch || batch.length === 0) return;
   if (!ENDPOINT) return; // collection not live yet; the pipeline above still ran
   const body = JSON.stringify({ v: SCHEMA_VERSION, events: batch });
   try {
     if (useBeacon && typeof navigator !== "undefined" && navigator.sendBeacon) {
+      // sendBeacon returns false when the browser refuses to queue it. On a
+      // page that is closing there is no second chance, so this is recorded and
+      // dropped rather than retried into a page that will not exist.
       navigator.sendBeacon(ENDPOINT, body);
     } else if (typeof fetch !== "undefined") {
       fetch(ENDPOINT, {
@@ -191,9 +234,30 @@ export function flush(useBeacon = false) {
         headers: { "Content-Type": "application/json" },
         body,
         keepalive: true,
-      }).catch(() => {});
+      })
+        .then((res) => {
+          // A 4xx means this batch is malformed and will fail forever, so it is
+          // dropped. Only 5xx and network errors are worth trying again.
+          if (!res.ok && res.status >= 500) retryLater(batch);
+        })
+        .catch(() => retryLater(batch));
     }
   } catch (e) { /* collection is best-effort; the game never breaks over it */ }
+}
+
+export function flush(useBeacon = false) {
+  if (!session) return;
+  // A close-out flush also sweeps anything still waiting to be retried, since
+  // this is the last chance those events will get.
+  if (useBeacon && session.failed && session.failed.length) {
+    const queued = session.failed;
+    session.failed = [];
+    queued.forEach((b) => send(b, true));
+  }
+  if (session.buffer.length === 0) return;
+  const batch = session.buffer;
+  session.buffer = [];
+  send(batch, useBeacon);
 }
 
 // ---------------------------------------------------------------------------
