@@ -190,7 +190,13 @@ export const R = {
     // say what the right answer is, and deliberately does not say anything was
     // lost, because nothing was: the tutorial never spends a life on a retry.
     retryTitle: "NOT THAT ONE",
-    retryBody: "Crossed off. Pick another and lock it in again."
+    retryBody: "Crossed off. Pick another and lock it in again.",
+    // Leaving asks first, same as the review cards. The confirm wording leads
+    // with what they lose rather than scolding them for wanting out.
+    bailConfirmTitle: "Skip the tutorial?",
+    bailConfirmBody: "It is about two minutes and it walks you through every button. You can always come back to it from the map.",
+    bailConfirmPrimary: "Skip it",
+    bailConfirmSecondary: "Keep going"
   },
   safetyHeading: "GETTING HOME SAFE COMES FIRST",
   roundStart: "Start the round \u2192",
