@@ -75,7 +75,10 @@
         {
           "id": "s1.answers",
           "phase": "playing",
-          "target": "answers",
+          "target": [
+            "question",
+            "answers"
+          ],
           "title": "FOUR CHOICES",
           "body": "One of them is right. In a moment you will pick one.",
           "action": "next"
@@ -473,7 +476,10 @@
         {
           "id": "s4.pick",
           "phase": "playing",
-          "target": "answers",
+          "target": [
+            "question",
+            "answers"
+          ],
           "title": "YOUR CALL",
           "body": "The hint narrowed it down. Pick whichever you think is right, and if it is wrong you just go again.",
           "action": "tap"
@@ -559,7 +565,10 @@
         {
           "id": "s5.free",
           "phase": "playing",
-          "target": "answers",
+          "target": [
+            "question",
+            "answers"
+          ],
           "title": "YOUR TURN, FOR REAL",
           "body": "No script this time. Pick the one you think is right.",
           "action": "tap"
