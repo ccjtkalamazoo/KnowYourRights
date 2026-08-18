@@ -27,10 +27,15 @@
 //   continues. This also absorbs the old SHIELD lifeline, which was this exact
 //   mechanic sold for points nobody spent.
 //
-//   NO LIFELINES, NO POINTS.  Eight lifeline uses across 453 answers. The shop,
-//   the five lifelines, the points economy, and the four tutorial slides that
-//   explained them are gone. The review-card beat survives; only the currency
-//   is removed, because the pause was doing the work, not the point.
+//   THE SHOP, REBUILT.  Eight lifeline uses across 453 answers said the old one
+//   was not working. It is back with SHIELD removed, because SHIELD survived one
+//   wrong answer and lives now do that three times for free. Four lifelines, same
+//   prices. Points still come only from reading cards after a RIGHT answer, which
+//   is a known weakness worth watching: a player on a cold streak earns nothing
+//   and cannot buy the help that would break the streak. Lives soften it, since a
+//   struggling player now survives to see more cards instead of going out at
+//   question one, but if the next event shows the same near-zero usage, the thing
+//   to try is a small per-round floor rather than another redesign.
 //
 //   FIVE QUESTIONS IN THE DEMO.  Fifteen is a five-minute commitment from a
 //   stranger at a table with a line behind them. The demo exists to show how the
@@ -42,9 +47,10 @@ import { c, u, C, U, LOGO, useState, useEffect, useRef, injectStyles } from "./t
 import { R } from "./copy.js";
 import {
   LADDER, LIVES_PER_ROUND, DEMO_DECK_SIZE, CHAPTER_DECK_SIZE, musicStageFor,
-  fmtMoney, fmtMoneyShort, buildDeck, buildEndlessDeck
+  LIFELINE_PRICES, LIFELINE_KEYS, FREE_LIFELINES,
+  fmtMoney, fmtMoneyShort, shuffle, buildDeck, shuffleOptions, buildEndlessDeck, simulateJury
 } from "./rules.js";
-import { Shell, Button, ConfirmModal, Confetti } from "./ui.js";
+import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.js";
 import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
@@ -86,6 +92,17 @@ export function App() {
   // Every question missed this run, not just the one that ended it. With three
   // lives there can be more than one, and the end screen shows all of them.
   const [missed, setMissed] = useState([]);
+  // Shop and lifeline state. `lifelines[k]` true means a free use is still
+  // available; false means used, and it can be bought back with points.
+  const [lifelines, setLifelines] = useState({ ...FREE_LIFELINES });
+  const [usage, setUsage] = useState({ fifty: 0, poll: 0, hint: 0, skip: 0 });
+  const [points, setPoints] = useState(0);
+  const [pointsSpent, setPointsSpent] = useState(0);
+  const [removedAnswers, setRemovedAnswers] = useState([]);
+  const [juryResults, setJuryResults] = useState(null);
+  const [hintShown, setHintShown] = useState(false);
+  const [pendingLifeline, setPendingLifeline] = useState(null);
+  const [shopOpen, setShopOpen] = useState(false);
   const [homeConfirm, setHomeConfirm] = useState(false);
   const [logoConfirm, setLogoConfirm] = useState(false);
   const [skipConfirm, setSkipConfirm] = useState(false);
@@ -102,6 +119,7 @@ export function App() {
   const sfx = useRef(null);
   const music = useRef(null);
   const audioCtx = useRef(null);
+  const prevAffordable = useRef(false);
 
   if (sfx.current === null) sfx.current = new SfxEngine();
   if (music.current === null) music.current = new MusicEngine();
@@ -116,17 +134,29 @@ export function App() {
   }, [phase, walkStep, level]);
 
   // Per-question measurement (events.js). Reset each time a question is shown.
-  const qMeter = useRef({ exposure: 1, shownAt: 0, firstSelectAt: null, changes: 0 });
+  const qMeter = useRef({ exposure: 1, shownAt: 0, firstSelectAt: null, changes: 0, lifelines: [] });
   useEffect(() => {
     if (phase !== "playing" || !currentQ) return;
     const exposure = EV.trackQuestionShown(currentQ, level);
-    qMeter.current = { exposure, shownAt: performance.now(), firstSelectAt: null, changes: 0 };
+    qMeter.current = { exposure, shownAt: performance.now(), firstSelectAt: null, changes: 0, lifelines: [] };
   }, [phase, level]);
 
   useEffect(() => {
     sfx.current.setMuted(muted);
     music.current.setMuted(muted);
   }, [muted]);
+
+  // Chime the moment points cross into "can afford the cheapest lifeline".
+  // Without it the shop is a thing you have to remember to check; with it the
+  // game tells you when checking is worth doing.
+  useEffect(() => {
+    const cheapest = Math.min(...LIFELINE_KEYS.map((k) => LIFELINE_PRICES[k]));
+    const canAfford = points >= cheapest;
+    if (canAfford && !prevAffordable.current && phase !== "start" && points > 0) {
+      sfx.current.lifelineThreshold();
+    }
+    prevAffordable.current = canAfford;
+  }, [points, phase]);
 
   const initAudio = () => {
     if (audioCtx.current === null) {
@@ -146,6 +176,11 @@ export function App() {
     setRevealCorrect(false); setRevealWrong(false); setShowFloating(false);
     setStreak(0); setLives(LIVES_PER_ROUND); setCorrectCount(0);
     setResults([]); setMissed([]);
+    setLifelines({ ...FREE_LIFELINES });
+    setUsage({ fifty: 0, poll: 0, hint: 0, skip: 0 });
+    setPoints(0); setPointsSpent(0);
+    setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
+    setPendingLifeline(null); setShopOpen(false);
     setHomeConfirm(false); setSkipConfirm(false);
     setIsEndless(false); setFinalPrize(0); setIsDemo(false);
   };
@@ -157,6 +192,11 @@ export function App() {
     setRevealCorrect(false); setRevealWrong(false); setShowFloating(false);
     setStreak(0); setLives(LIVES_PER_ROUND); setCorrectCount(0);
     setResults([]); setMissed([]);
+    setLifelines({ ...FREE_LIFELINES });
+    setUsage({ fifty: 0, poll: 0, hint: 0, skip: 0 });
+    setPoints(0); setPointsSpent(0);
+    setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
+    setPendingLifeline(null); setShopOpen(false);
     setHomeConfirm(false); setSkipConfirm(false);
     setIsEndless(false); setFinalPrize(0);
   };
@@ -268,11 +308,13 @@ export function App() {
     setLevel(deck.length);
     setSelected(null); setLocked(false); setRevealCorrect(false); setRevealWrong(false);
     setShowFloating(false);
+    setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
     setPhase("playing");
   };
 
   const onSelect = (idx) => {
     if (phase !== "playing") return;
+    if (removedAnswers.includes(idx)) return;
     sfx.current.select();
     const m = qMeter.current;
     if (m.firstSelectAt === null) m.firstSelectAt = performance.now();
@@ -295,8 +337,12 @@ export function App() {
         msToFirstSelect: m.firstSelectAt === null ? null : Math.round(m.firstSelectAt - m.shownAt),
         msToLock: Math.round(t - m.shownAt),
         selectionChanges: m.changes,
-        lifelinesUsed: [],
-        removedDisplayIndices: [],
+        // Category axis (DESIGN.md 5): unaided / hint-assisted / reduced-field
+        // is derived downstream from this ordered list, not judged here.
+        lifelinesUsed: m.lifelines.slice(),
+        // Display indices, same rule as displayIndex above. optionId() resolves
+        // each to the permanent id of the option that was actually on screen.
+        removedDisplayIndices: removedAnswers,
       });
     }
     const s = stage;
@@ -384,8 +430,85 @@ export function App() {
     setLevel(next);
     setSelected(null); setLocked(false); setRevealCorrect(false); setRevealWrong(false);
     setShowFloating(false);
+    setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
     if (nextStage !== stage) music.current.setStage(nextStage);
     setPhase("playing");
+  };
+
+  // -------------------------------------------------------------------------
+  // The shop
+  // -------------------------------------------------------------------------
+  const openShop = () => { if (phase !== "playing") return; sfx.current.modalOpen(); setShopOpen(true); };
+  const closeShop = () => { sfx.current.click(); setShopOpen(false); };
+  const requestLifeline = (k) => { if (phase !== "playing") return; setShopOpen(false); sfx.current.modalOpen(); setPendingLifeline(k); };
+  const cancelLifeline = () => { sfx.current.click(); setPendingLifeline(null); };
+
+  // Swap the current question for another from this chapter not already dealt.
+  // Returns true if a swap happened; false when the pool is exhausted, which
+  // confirmLifeline guards against so SKIP is never charged for a no-op.
+  const skipQuestion = () => {
+    if (!chapter) return false;
+    const seenQs = new Set(deck.map((q) => q.id || q.q));
+    const poolRaw = chapter.questions.filter((q) => !seenQs.has(q.id || q.q));
+    if (poolRaw.length === 0) return false;
+    const picked = shuffleOptions({ ...shuffle(poolRaw)[0] });
+    setDeck((prev) => { const copy = prev.slice(); copy[level] = picked; return copy; });
+    setSelected(null); setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
+    return true;
+  };
+  const canSkipNow = () => {
+    if (!chapter) return false;
+    const seenQs = new Set(deck.map((q) => q.id || q.q));
+    return chapter.questions.some((q) => !seenQs.has(q.id || q.q));
+  };
+
+  const applyLifeline = (k) => {
+    sfx.current.lifeline();
+    if (k === "fifty") {
+      const wrong = [0, 1, 2, 3].filter((x) => x !== currentQ.correct);
+      const toRemove = shuffle(wrong).slice(0, 2);
+      setRemovedAnswers(toRemove);
+      if (selected !== null && toRemove.includes(selected)) setSelected(null);
+    } else if (k === "poll") {
+      setJuryResults(simulateJury(currentQ.correct, removedAnswers));
+    } else if (k === "hint") {
+      setHintShown(true);
+    } else if (k === "skip") {
+      skipQuestion();
+    }
+  };
+
+  const confirmLifeline = () => {
+    const k = pendingLifeline;
+    setPendingLifeline(null);
+    if (!k) return;
+    // SKIP with nothing to swap to: do not charge, do not consume.
+    if (k === "skip" && !canSkipNow()) { sfx.current.click(); return; }
+    const bumpUsage = () => setUsage((s) => ({ ...s, [k]: s[k] + 1 }));
+    qMeter.current.lifelines.push(k);
+    EV.trackLifeline(currentQ, k, { purchased: !lifelines[k], points });
+    if (lifelines[k]) {
+      applyLifeline(k);
+      bumpUsage();
+      setLifelines((s) => ({ ...s, [k]: false }));
+    } else {
+      const price = LIFELINE_PRICES[k];
+      if (points >= price) {
+        sfx.current.purchase();
+        setPoints((p) => p - price);
+        setPointsSpent((p) => p + price);
+        applyLifeline(k);
+        bumpUsage();
+      }
+    }
+  };
+
+  // A point banked from reading a review card. Only ever called on a correct
+  // answer; see the note at the top of the file about why that is the part of
+  // this design most worth watching.
+  const earnCardPoint = (seg) => {
+    setPoints((p) => p + 1);
+    sfx.current.cardPointEarn(seg);
   };
 
   const openSkipConfirm = () => {
@@ -548,7 +671,7 @@ export function App() {
     return c.jsxs(Shell, { muted, setMuted, hideSoundButton: true, onLogoClick: askLogo, children: [
       c.jsx(WinBigScreen, {
         prize: finalPrize || prizeFor(correctCount),
-        correctCount, wrongCount, livesLeft: lives,
+        correctCount, wrongCount, usage, pointsSpent, pointsLeft: points,
         sfx: sfx.current, onTakeMoney: winTakeMoney, onKeepGoing: winKeepGoing
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
@@ -590,9 +713,10 @@ export function App() {
     return c.jsxs(Shell, { muted, setMuted, screenFlash, screenShake, hideSoundButton: true, hideLogo: true, children: [
       c.jsx(RevealScreen, {
         question: currentQ, level, runLength, isEndless, streak,
-        revealCorrect, selectedIdx: selected, muted, setMuted,
+        revealCorrect, selectedIdx: selected, muted, setMuted, points,
         lives, isLastQuestion: level + 1 >= deck.length,
         onNext: advance, onHome: askHome,
+        onEarnCardPoint: (seg) => earnCardPoint(seg),
         onFlipSound: () => sfx.current.cardFlip(),
         onRevisitSound: () => sfx.current.cardRevisit(),
         onAckSound: () => sfx.current.click(),
@@ -609,7 +733,18 @@ export function App() {
       question: currentQ, level, runLength, rung, stage, streak, selectedIdx: selected,
       locked, revealCorrect, revealWrong, showFloating, phase, results,
       lives, muted, setMuted, isEndless, isDemo, correctCount,
-      onSelect, onLockIn, onHome: askHome
+      removedAnswers, juryResults, hintShown, lifelines, points,
+      onSelect, onLockIn, onHome: askHome, onOpenShop: openShop
+    }),
+    shopOpen && c.jsx(ShopPanel, {
+      lifelines, points, prices: LIFELINE_PRICES,
+      onPick: requestLifeline, onClose: closeShop
+    }),
+    pendingLifeline && c.jsx(LifelineModal, {
+      lifelineKey: pendingLifeline,
+      remainingAfter: Object.values(lifelines).filter(Boolean).length - 1,
+      available: lifelines[pendingLifeline], points, price: LIFELINE_PRICES[pendingLifeline],
+      onConfirm: confirmLifeline, onCancel: cancelLifeline
     }),
     homeConfirm && c.jsx(ConfirmModal, { title: R.homeConfirm.title, body: R.homeConfirm.body, primaryLabel: R.homeConfirm.leaveLabel, secondaryLabel: R.homeConfirm.stayLabel, primaryVariant: "accent", onPrimary: confirmHome, onSecondary: cancelHome }),
     logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
@@ -734,6 +869,19 @@ function WalkArt({ screen }) {
     return c.jsx("div", { className: "ts-walk-answer-mini", style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, maxWidth: 320 }, children: ["A", "B", "C", "D"].map((t) => c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "10px 12px", boxShadow: U.sm }, children: [c.jsx("span", { style: { fontFamily: C.display, fontSize: 13, color: u.textOnDark, background: u.brand, border: `2px solid ${u.outline}`, borderRadius: 5, width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center" }, children: t }), c.jsxs("span", { style: { fontFamily: C.body, fontSize: 12, color: u.textDim, fontWeight: 500 }, children: ["Choice ", t.toLowerCase()] })] }, t)) });
   if (screen.type === "cards")
     return c.jsx("div", { style: { display: "flex", gap: 8, perspective: 600 }, children: R.cardMeta.map((m, i) => c.jsx("div", { style: { width: 58, height: 78, background: i === 0 ? u.surfaceHigh : u.cardBack, border: `2px solid ${u.outline}`, borderRadius: 7, boxShadow: U.sm, display: "flex", alignItems: "center", justifyContent: "center", transform: `rotateY(${i === 0 ? 0 : -22}deg)`, color: i === 0 ? u.brand : u.brandSoft, fontFamily: C.display, fontSize: 20 }, children: i === 0 ? m.icon : "?" }, i)) });
+  if (screen.type === "points")
+    return c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 14 }, children: [
+      c.jsx("div", { style: { display: "flex", gap: 5 }, children: [0, 1, 2].map((n) => c.jsx("div", { style: { width: 16, height: 16, borderRadius: "50%", background: u.brand, border: `2px solid ${u.outline}` } }, n)) }),
+      c.jsx("div", { style: { fontFamily: C.display, fontSize: 34, color: u.brand }, children: "3 PTS" })
+    ] });
+  // The shop slide shows all four lifelines at once. It used to be one slide
+  // each, four slides, which was most of the walkthrough's length for the
+  // feature nobody used.
+  if (screen.type === "shop")
+    return c.jsx("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, maxWidth: 340 }, children: LIFELINE_KEYS.map((k) => c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, background: u.surface, border: `2px solid ${u.outline}`, padding: "10px 14px", borderRadius: 10, boxShadow: U.sm }, children: [
+      c.jsx("span", { style: { display: "flex", alignItems: "center", justifyContent: "center", width: 30, height: 30, borderRadius: 7, background: u.brand, border: `2px solid ${u.outline}`, color: u.textOnDark, flexShrink: 0 }, children: c.jsx(LifeIcon, { name: k, size: 17 }) }),
+      c.jsx("span", { style: { fontFamily: C.display, fontSize: 14, letterSpacing: 1, color: u.text }, children: R.lifelines[k].label })
+    ] }, k)) });
   if (screen.type === "ready")
     return c.jsx("div", { style: { fontFamily: C.display, fontSize: 44, color: u.terra, letterSpacing: 2, textShadow: `4px 4px 0 ${u.outline}` }, children: "\u2726 \u2726 \u2726" });
   return null;
@@ -777,7 +925,8 @@ function FitText({ children, max = 40, min = 16, style }) {
 function QuestionScreen(props) {
   const { question, level, runLength, rung, stage, streak, selectedIdx, locked, revealCorrect,
     revealWrong, showFloating, phase, results, lives, muted,
-    setMuted, isEndless, isDemo, onSelect, onLockIn, onHome } = props;
+    setMuted, isEndless, isDemo, removedAnswers = [], juryResults, hintShown, lifelines,
+    points, onSelect, onLockIn, onHome, onOpenShop } = props;
   return c.jsxs("div", {
     style: { maxWidth: 1280, margin: "0 auto", padding: "24px 24px 24px", display: "flex", gap: 28, alignItems: "flex-start", flex: "1 0 auto", width: "100%", boxSizing: "border-box" },
     className: "ts-game-layout ts-game-screen",
@@ -793,12 +942,14 @@ function QuestionScreen(props) {
           })
         ] }),
 
-        // The stat row. Lives took the slot the shop used to occupy, which is
-        // the right trade: the shop was a thing almost nobody opened, and lives
-        // are a thing every player needs to see at all times.
+        // The stat row: LIVES, SHOP, WORTH. Three tiles instead of two, because
+        // lives have to be visible at all times and the shop still needs to be
+        // one tap away. Lives sit leftmost because they are the thing a player
+        // checks most often and never have to think about.
         c.jsxs("div", { className: "ts-stat-row", style: { display: "flex", gap: 12, alignItems: "stretch" }, children: [
           c.jsx(LivesBox, { lives }),
-          c.jsxs("div", { className: "ts-stat-money", style: { flex: "2 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 16px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
+          c.jsx(ShopButton, { lifelines, points, disabled: locked, onClick: onOpenShop }),
+          c.jsxs("div", { className: "ts-stat-money", style: { flex: "1.6 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 16px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
             c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: isEndless ? "Streak" : "Worth" }),
             c.jsx(FitText, {
               max: 44, min: 18,
@@ -813,12 +964,17 @@ function QuestionScreen(props) {
             ? c.jsxs(c.Fragment, { children: [R.endlessMode.headerLabel, " Q", String(level + 1).padStart(2, "0")] })
             : c.jsxs(c.Fragment, { children: ["QUESTION ", String(level + 1).padStart(2, "0"), " ", c.jsxs("span", { className: "ts-q-header-total", style: { color: u.textMuted, fontSize: 18 }, children: ["/ ", String(runLength)] })] }) })
         }),
-        c.jsx("div", { className: "ts-question-card", style: { position: "relative", background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${u.brand}`, padding: "32px 36px", borderRadius: 10, animation: revealWrong ? "ts-wrong-shake-card 0.5s ease-out" : "ts-fade-in 0.4s ease-out", boxShadow: U.md }, children:
-          c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.45, fontWeight: 600, margin: 0, color: u.text }, children: question.q })
-        }, "q-" + level),
+        c.jsxs("div", { className: "ts-question-card", style: { position: "relative", background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${u.brand}`, padding: "32px 36px", borderRadius: 10, animation: revealWrong ? "ts-wrong-shake-card 0.5s ease-out" : "ts-fade-in 0.4s ease-out", boxShadow: U.md }, children: [
+          c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.45, fontWeight: 600, margin: 0, color: u.text }, children: question.q }),
+          hintShown && c.jsxs("div", { style: { marginTop: 22, padding: "14px 18px", background: u.blueBg, border: `2px solid ${u.blue}`, borderRadius: 6, fontFamily: C.body, fontSize: 14, color: u.blue, fontStyle: "italic", lineHeight: 1.6, animation: "ts-fade-in 0.4s", fontWeight: 500 }, children: [
+            c.jsx("span", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.blue, fontWeight: 700, fontStyle: "normal", marginRight: 10, textTransform: "uppercase" }, children: R.lifelines.hint.inGameLabel }),
+            question.hint
+          ] })
+        ] }, "q-" + level),
         c.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }, className: "ts-answer-grid", children: question.options.map((opt, i) => c.jsx(AnswerButton, {
           letter: ["A", "B", "C", "D"][i], text: opt, selected: selectedIdx === i, locked,
           isCorrect: i === question.correct, isSelectedAnswer: selectedIdx === i, revealCorrect, revealWrong,
+          removed: removedAnswers.includes(i), juryPct: juryResults ? juryResults[i] : null,
           stage, onClick: () => onSelect(i)
         }, i)) }),
         c.jsx("div", { className: "ts-action-bar", style: { display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 14 }, children:
@@ -857,21 +1013,23 @@ function ProgressDots({ level, runLength, results = [], revealCorrect, revealWro
 }
 
 function AnswerButton(props) {
-  const { letter, text, selected, locked, isCorrect, isSelectedAnswer, revealCorrect, revealWrong, stage, onClick } = props;
+  const { letter, text, selected, locked, isCorrect, isSelectedAnswer, revealCorrect, revealWrong, removed, juryPct, stage, onClick } = props;
   let bg = u.surface, border = u.outline, color = u.text, anim = "", letterBg = u.brand, letterColor = u.textOnDark, shadow = U.md, transform = "translate(0, 0)";
-  if (revealCorrect && isCorrect) { bg = u.green; color = u.textOnDark; letterBg = u.surface; letterColor = u.green; anim = "ts-correct-pop 0.8s ease-out"; }
+  if (removed) { bg = "transparent"; color = u.textMuted; letterBg = u.borderLight; letterColor = u.textMuted; shadow = "none"; }
+  else if (revealCorrect && isCorrect) { bg = u.green; color = u.textOnDark; letterBg = u.surface; letterColor = u.green; anim = "ts-correct-pop 0.8s ease-out"; }
   else if (revealWrong && isCorrect) { bg = u.green; color = u.textOnDark; letterBg = u.surface; letterColor = u.green; anim = "ts-correct-pop 0.9s ease-out"; }
   else if (revealWrong && isSelectedAnswer) { bg = u.red; color = u.textOnDark; letterBg = u.surface; letterColor = u.red; }
   else if (locked && selected) { bg = u.brandSoft; anim = `ts-tension-${stage} ${1.6 - stage * 0.1}s ease-in-out infinite`; shadow = "none"; transform = "translate(4px, 4px)"; }
   else if (selected) { bg = u.brandSoft; shadow = U.sm; transform = "translate(1px, 1px)"; }
   return c.jsxs("button", {
-    onClick, disabled: locked, className: "ts-answer-btn",
-    style: { textAlign: "left", background: bg, color, border: `2px solid ${border}`, borderRadius: 10, padding: "16px 18px", cursor: locked ? "default" : "pointer", fontFamily: C.body, fontSize: 15, fontWeight: 600, transition: "background 0.18s, box-shadow 0.12s, transform 0.12s, opacity 0.3s", animation: anim, position: "relative", minHeight: 68, display: "flex", alignItems: "center", gap: 14, lineHeight: 1.4, boxShadow: shadow, transform },
-    onMouseEnter: (e) => { if (!locked && !selected) { e.currentTarget.style.boxShadow = "2px 2px 0 " + u.outline; e.currentTarget.style.transform = "translate(2px, 2px)"; } },
-    onMouseLeave: (e) => { if (!locked && !selected) { e.currentTarget.style.boxShadow = U.md; e.currentTarget.style.transform = "translate(0, 0)"; } },
+    onClick, disabled: removed || locked, className: "ts-answer-btn",
+    style: { textAlign: "left", background: bg, color, border: `2px solid ${border}`, borderRadius: 10, padding: "16px 18px", cursor: removed || locked ? "default" : "pointer", fontFamily: C.body, fontSize: 15, fontWeight: 600, opacity: removed ? 0.4 : 1, textDecoration: removed ? "line-through" : "none", transition: "background 0.18s, box-shadow 0.12s, transform 0.12s, opacity 0.3s", animation: anim, position: "relative", minHeight: 68, display: "flex", alignItems: "center", gap: 14, lineHeight: 1.4, boxShadow: shadow, transform },
+    onMouseEnter: (e) => { if (!removed && !locked && !selected) { e.currentTarget.style.boxShadow = "2px 2px 0 " + u.outline; e.currentTarget.style.transform = "translate(2px, 2px)"; } },
+    onMouseLeave: (e) => { if (!removed && !locked && !selected) { e.currentTarget.style.boxShadow = U.md; e.currentTarget.style.transform = "translate(0, 0)"; } },
     children: [
       c.jsx("span", { className: "ts-answer-btn-letter", style: { fontFamily: C.display, fontSize: 18, color: letterColor, background: letterBg, border: `2px solid ${u.outline}`, borderRadius: 6, width: 36, height: 36, minWidth: 36, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", letterSpacing: 0, lineHeight: 1 }, children: letter }),
-      c.jsx("span", { style: { flex: 1 }, children: text })
+      c.jsx("span", { style: { flex: 1 }, children: text }),
+      juryPct != null && !removed && c.jsxs("span", { style: { fontFamily: C.mono, fontSize: 12, color: color === u.textOnDark ? u.textOnDark : u.brand, fontWeight: 700, padding: "5px 10px", background: color === u.textOnDark ? "rgba(0,0,0,0.18)" : u.brandSoft, border: `2px solid ${color === u.textOnDark ? u.textOnDark : u.outline}`, borderRadius: 4, flexShrink: 0 }, children: [juryPct, "%"] })
     ]
   });
 }
@@ -900,6 +1058,164 @@ function Ladder({ rungsEarned = 0, isEndless, streak }) {
   });
 }
 
+
+// ---------------------------------------------------------------------------
+// ShopButton : the shop, living as the middle tile of the stat row.
+// ---------------------------------------------------------------------------
+// Terra fill so it reads as a tappable tool, distinct from the neutral Lives and
+// Worth boxes either side of it. The sub-label is just the points now: the old
+// version read "12 PTS · 2 READY", which at three tiles across a phone was more
+// text than the tile could hold.
+function ShopButton({ lifelines, points, disabled, onClick }) {
+  const [hover, setHover] = useState(false);
+  const ready = Object.values(lifelines).filter(Boolean).length;
+  const off = disabled;
+  const active = !off && hover;
+  return c.jsxs("button", {
+    onClick: off ? undefined : onClick, disabled: off,
+    onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false),
+    className: "ts-shop-btn",
+    "aria-label": `Open shop. ${points} points, ${ready} free lifelines ready.`,
+    style: {
+      flex: "1 1 0", minWidth: 0, display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center", gap: 2,
+      padding: "10px 8px", background: off ? u.surface : u.terra,
+      border: `2px solid ${u.outline}`, borderRadius: 10,
+      boxShadow: off ? "none" : active ? U.sm : U.md,
+      transform: active ? "translate(1px,1px)" : "translate(0,0)",
+      transition: "transform 0.1s, box-shadow 0.1s",
+      cursor: off ? "not-allowed" : "pointer", opacity: off ? 0.55 : 1,
+      position: "relative", WebkitTapHighlightColor: "transparent"
+    },
+    children: [
+      c.jsxs("span", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+        c.jsx("svg", {
+          width: 17, height: 17, viewBox: "0 0 24 24", fill: "none",
+          stroke: off ? u.textMuted : u.textOnDark, strokeWidth: 2.4,
+          strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true,
+          children: [
+            c.jsx("path", { d: "M4 8 L20 8 L18.5 22 L5.5 22 Z" }, 0),
+            c.jsx("path", { d: "M8 8 C8 3 16 3 16 8" }, 1)
+          ]
+        }),
+        c.jsx("span", { style: { fontFamily: C.display, fontSize: 16, letterSpacing: 1.5, color: off ? u.textMuted : u.textOnDark }, children: R.shop.openLabel })
+      ] }),
+      c.jsxs("span", { style: { fontFamily: C.mono, fontSize: 9.5, fontWeight: 700, letterSpacing: 0.4, color: off ? u.textMuted : "rgba(251,246,236,0.92)" }, children: [String(points), " ", R.shop.ptsLabel] }),
+      ready > 0 && c.jsx("span", {
+        title: `${ready} free`,
+        style: { position: "absolute", top: 5, right: 5, fontFamily: C.mono, fontSize: 8, fontWeight: 700, color: u.textOnDark, background: u.green, border: `2px solid ${u.outline}`, borderRadius: 5, padding: "1px 4px" },
+        children: String(ready)
+      })
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
+// ShopPanel : four lifelines, each in one of three states.
+// ---------------------------------------------------------------------------
+// Free-and-ready, buyable with points, or too expensive. SHIELD used to add a
+// fourth state (armed) and is gone, which makes this list shorter and the rules
+// simpler to read at a glance.
+function ShopPanel({ lifelines, points, prices, onPick, onClose }) {
+  const purchaseOnly = { skip: true }; // never starts free
+  return c.jsx(Backdrop, { onClose, children: c.jsxs("div", {
+    className: "ts-shop-panel",
+    style: { background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg, padding: "22px 24px 20px", maxWidth: 480, width: "100%", maxHeight: "90dvh", overflowY: "auto", overscrollBehavior: "contain", WebkitOverflowScrolling: "touch", touchAction: "pan-y", animation: "ts-modal-in 0.18s ease-out" },
+    children: [
+      c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }, children: [
+        c.jsx("h3", { style: { fontFamily: C.display, fontSize: 26, letterSpacing: 0, margin: 0, color: u.text }, children: R.shop.title }),
+        c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6, background: u.brandSoft, border: `2px solid ${u.outline}`, borderRadius: 20, padding: "5px 12px" }, children: [
+          c.jsx("span", { style: { fontFamily: C.display, fontSize: 18, color: u.brand, lineHeight: 1 }, children: points }),
+          c.jsx("span", { style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1.5, color: u.brandDeep, fontWeight: 700 }, children: R.shop.ptsLabel })
+        ] })
+      ] }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 13, lineHeight: 1.5, color: u.textDim, fontWeight: 500, margin: "0 0 16px" }, children: R.shop.blurb }),
+      c.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }, children: LIFELINE_KEYS.map((k) => {
+        const meta = R.lifelines[k];
+        const available = lifelines[k];
+        const price = prices[k];
+        const affordable = points >= price;
+        const buyable = !available && affordable;
+        const clickable = available || buyable;
+        let stateLabel, stateColor, actionText;
+        if (available) { stateLabel = R.shop.freeState; stateColor = u.green; actionText = R.shop.useLabel; }
+        else if (buyable) { stateLabel = purchaseOnly[k] ? R.shop.buyState(price) : R.shop.buyBackState(price); stateColor = u.brand; actionText = `Buy ${price}`; }
+        else { stateLabel = R.shop.needState(price); stateColor = u.textMuted; actionText = `${price} pts`; }
+        return c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 14, background: available ? u.surfaceHigh : buyable ? u.brandSofter : u.surfaceWarm, border: `3px solid ${clickable ? u.outline : u.borderLight}`, borderRadius: 12, padding: "12px 14px", opacity: clickable ? 1 : 0.72, boxShadow: clickable ? U.sm : "none" }, children: [
+          c.jsx("div", { style: { flexShrink: 0, width: 46, height: 46, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", background: clickable ? u.brand : u.surface, border: `2px solid ${clickable ? u.outline : u.borderLight}`, color: clickable ? u.textOnDark : u.textMuted, boxShadow: clickable ? U.sm : "none" }, children: c.jsx(LifeIcon, { name: k, size: 24 }) }),
+          c.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
+            c.jsx("div", { style: { fontFamily: C.display, fontSize: 18, letterSpacing: 1, color: clickable ? u.text : u.textMuted }, children: meta.label }),
+            c.jsx("div", { style: { fontFamily: C.body, fontSize: 12.5, lineHeight: 1.4, color: u.textDim, fontWeight: 500, marginTop: 2 }, children: meta.shortDesc }),
+            c.jsx("div", { style: { fontFamily: C.mono, fontSize: 9.5, letterSpacing: 0.5, fontWeight: 700, color: stateColor, textTransform: "uppercase", marginTop: 4 }, children: stateLabel })
+          ] }),
+          c.jsx("button", {
+            onClick: clickable ? () => onPick(k) : undefined, disabled: !clickable,
+            style: { flexShrink: 0, fontFamily: C.display, fontSize: 13, letterSpacing: 1, background: clickable ? u.brand : u.surfaceWarm, color: clickable ? u.textOnDark : u.textMuted, border: `2px solid ${clickable ? u.outline : u.borderLight}`, borderRadius: 8, padding: "9px 16px", cursor: clickable ? "pointer" : "default", textTransform: "uppercase", boxShadow: clickable ? U.sm : "none", minWidth: 72 },
+            children: actionText
+          })
+        ] }, k);
+      }) }),
+      c.jsx("div", { style: { display: "flex", justifyContent: "flex-end" }, children: c.jsx(Button, { onClick: onClose, variant: "ghost", size: "sm", style: { fontSize: 14 }, children: R.shop.closeLabel }) })
+    ]
+  }) });
+}
+
+// Confirmation for spending a lifeline (or buying one back with points).
+function LifelineModal({ lifelineKey, remainingAfter, available, points, price, onConfirm, onCancel }) {
+  const meta = R.lifelines[lifelineKey];
+  const purchaseOnly = lifelineKey === "skip";
+  const affordable = available || points >= price;
+  const isBuy = !available;
+  const header = c.jsx("div", { style: { display: "inline-block", background: u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "6px 14px", fontFamily: C.display, fontSize: 16, letterSpacing: 2, boxShadow: U.sm }, children: meta.label });
+  let remainingLine;
+  if (!isBuy) {
+    remainingLine = remainingAfter <= 0 ? R.lifelineConfirm.remainingOne : R.lifelineConfirm.remainingMany(remainingAfter);
+  } else if (purchaseOnly) {
+    remainingLine = affordable ? `Costs ${price} points. You have ${points}.` : `Costs ${price} points. You have only ${points}. Read more review cards to earn.`;
+  } else {
+    remainingLine = affordable ? `Already used. Buy again for ${price} points. You have ${points}.` : `Already used. Buy again for ${price} points. You have only ${points}. Read more review cards to earn.`;
+  }
+  const primaryLabel = isBuy ? `Buy for ${price} pts` : R.lifelineConfirm.useLabel;
+  return c.jsx(ConfirmModal, {
+    header,
+    title: meta.shortDesc,
+    body: c.jsxs(c.Fragment, { children: [
+      c.jsx("span", { style: { display: "block", marginBottom: 12 }, children: meta.fullDesc }),
+      c.jsx("span", { style: { fontFamily: C.mono, fontSize: 12, letterSpacing: 1.5, color: affordable ? u.textMuted : u.red, fontWeight: 700, textTransform: "uppercase" }, children: remainingLine })
+    ] }),
+    primaryLabel, secondaryLabel: R.lifelineConfirm.cancelLabel,
+    primaryVariant: affordable ? "primary" : "secondary",
+    onPrimary: affordable ? onConfirm : onCancel,
+    onSecondary: onCancel
+  });
+}
+
+// The scoreboard: which lifelines were used, points spent, points left.
+function RunBreakdown({ usage = {}, pointsSpent = 0, pointsLeft = 0 }) {
+  const totalUses = LIFELINE_KEYS.reduce((n, k) => n + (usage[k] || 0), 0);
+  return c.jsxs("div", { style: { width: "100%", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12, padding: "18px 20px", boxShadow: U.md, textAlign: "left" }, children: [
+    c.jsxs("div", { style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }, children: ["How you got there \u00B7 ", totalUses, totalUses === 1 ? " lifeline used" : " lifelines used"] }),
+    c.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 7, marginBottom: 14 }, children: LIFELINE_KEYS.map((k) => {
+      const n = usage[k] || 0;
+      return c.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, opacity: n > 0 ? 1 : 0.5 }, children: [
+        c.jsx("span", { style: { fontFamily: C.display, fontSize: 15, letterSpacing: 1, color: n > 0 ? u.text : u.textMuted }, children: R.lifelines[k].label }),
+        c.jsx("span", { style: { fontFamily: C.mono, fontSize: 12, fontWeight: 700, color: n > 0 ? u.brand : u.textMuted }, children: n > 0 ? `\u00D7 ${n}` : "not used" })
+      ] }, k);
+    }) }),
+    c.jsxs("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, paddingTop: 12, borderTop: `2px solid ${u.borderLight}` }, children: [
+      c.jsxs("div", { style: { textAlign: "center", flex: 1 }, children: [
+        c.jsx("div", { style: { fontFamily: C.display, fontSize: 26, color: u.text, lineHeight: 1 }, children: pointsSpent }),
+        c.jsx("div", { style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", marginTop: 3 }, children: "Points spent" })
+      ] }),
+      c.jsx("div", { style: { width: 2, background: u.borderLight } }),
+      c.jsxs("div", { style: { textAlign: "center", flex: 1 }, children: [
+        c.jsx("div", { style: { fontFamily: C.display, fontSize: 26, color: u.brand, lineHeight: 1 }, children: pointsLeft }),
+        c.jsx("div", { style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", marginTop: 3 }, children: "Points left over" })
+      ] })
+    ] })
+  ] });
+}
+
 // ---------------------------------------------------------------------------
 // The reveal: verdict beat, then three review cards
 // ---------------------------------------------------------------------------
@@ -917,7 +1233,13 @@ function Ladder({ rungsEarned = 0, isEndless, streak }) {
 // already knew it. That was backwards.
 function RevealScreen(props) {
   const { question, level, runLength, isEndless, revealCorrect, selectedIdx, muted, setMuted,
-    lives, isLastQuestion, onNext, onHome, onFlipSound, onRevisitSound, onAckSound, onSkipReview } = props;
+    points, lives, isLastQuestion, onNext, onHome, onEarnCardPoint,
+    onFlipSound, onRevisitSound, onAckSound, onSkipReview } = props;
+
+  // Points are only earned on a correct answer. The cards themselves are
+  // identical either way, which is the part that matters and the part that used
+  // to be broken: a miss showed the cards but recorded nothing about them.
+  const scoring = revealCorrect;
 
   const [step, setStep] = useState("verdict"); // "verdict" | "cards"
   const [current, setCurrent] = useState(0);
@@ -926,7 +1248,9 @@ function RevealScreen(props) {
   const [dir, setDir] = useState(1);
   const [firstView, setFirstView] = useState(true);
   const [dwellDone, setDwellDone] = useState(false);
+  const [pointBurst, setPointBurst] = useState(0);
   const dwellTimer = useRef(null);
+  const burstTimer = useRef(null);
 
   const CARD_COUNT = R.cardMeta.length; // 3
 
@@ -968,13 +1292,35 @@ function RevealScreen(props) {
 
   const acknowledge = (idx) => {
     if (acked[idx]) return;
-    if (onAckSound) onAckSound();
     const copy = acked.slice();
     copy[idx] = true;
     setAcked(copy);
+    if (scoring && onEarnCardPoint) {
+      onEarnCardPoint(copy.filter(Boolean).length - 1);
+      setPointBurst((n) => n + 1);
+      if (burstTimer.current) clearTimeout(burstTimer.current);
+      burstTimer.current = setTimeout(() => setPointBurst(0), 1200);
+    } else if (onAckSound) {
+      onAckSound();
+    }
   };
 
-  const advanceOut = () => { emitCard(current); onNext(); };
+  // Safety net: a player who navigates past a card they read without tapping
+  // still keeps the point. The tap is the intended path, not a toll booth.
+  const creditUnacked = () => {
+    if (!scoring) return;
+    const copy = acked.slice();
+    let added = 0;
+    for (let i = 0; i < CARD_COUNT; i++) {
+      if (seen[i] && !copy[i]) { copy[i] = true; added++; }
+    }
+    if (added === 0) return;
+    const alreadyHad = acked.filter(Boolean).length;
+    setAcked(copy);
+    for (let k = 0; k < added; k++) if (onEarnCardPoint) onEarnCardPoint(alreadyHad + k);
+  };
+
+  const advanceOut = () => { emitCard(current); creditUnacked(); onNext(); };
 
   useEffect(() => {
     if (step !== "cards") return;
@@ -1000,10 +1346,12 @@ function RevealScreen(props) {
     else { if (onRevisitSound) onRevisitSound(); setDwellDone(true); }
   };
 
-  useEffect(() => () => { if (dwellTimer.current) clearTimeout(dwellTimer.current); }, []);
+  useEffect(() => () => { if (dwellTimer.current) clearTimeout(dwellTimer.current); if (burstTimer.current) clearTimeout(burstTimer.current); }, []);
 
   const allSeen = seen.every(Boolean);
   const allAcked = acked.every(Boolean);
+  const earnedCount = acked.filter(Boolean).length;
+  const allEarned = scoring && earnedCount === CARD_COUNT;
   const meta = R.cardMeta[current];
   const cardRead = seen[current] || dwellDone;
   const ackOwed = !acked[current];
@@ -1079,17 +1427,36 @@ function RevealScreen(props) {
           c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: isEndless ? `Bonus Q${level + 1}` : `Q ${String(level + 1).padStart(2, "0")} / ${runLength}` }),
           // Lives stay visible through the review, so the state of the round is
           // never something the player has to remember.
-          c.jsx(LivesBox, { lives, compact: true })
+          c.jsx(LivesBox, { lives, compact: true }),
+          // Three pips plus "X of 3". On a miss this is replaced by a plain
+          // line saying there are no points, so the absence is stated rather
+          // than left as a thing the player notices is missing.
+          scoring
+            ? c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, background: earnedCount === CARD_COUNT ? u.brandSofter : u.surfaceWarm, border: `3px solid ${earnedCount === CARD_COUNT ? u.brand : u.outline}`, borderRadius: 22, padding: "6px 14px 6px 10px", boxShadow: U.sm, animation: earnedCount === CARD_COUNT ? "ts-streak-pop 0.5s ease-out" : "none" }, children: [
+                c.jsx("div", { style: { display: "flex", gap: 5 }, children: [0, 1, 2].map((r) => {
+                  const filled = r < earnedCount;
+                  return c.jsx("div", { style: { width: 20, height: 20, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: filled ? u.brand : u.surface, border: `2.5px solid ${filled ? u.brand : u.borderLight}`, boxShadow: filled ? U.sm : "none", animation: r === earnedCount - 1 ? "ts-pip-pop 0.4s ease-out" : "none" }, children: filled ? c.jsx("span", { style: { color: u.textOnDark, fontSize: 11, fontFamily: C.display, lineHeight: 1 }, children: "\u2605" }) : null }, r);
+                }) }),
+                c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1 }, children: [
+                  c.jsx("div", { style: { fontFamily: C.display, fontSize: 16, letterSpacing: 0.5, color: u.brand, lineHeight: 1 }, children: R.review.pointsOfLabel(earnedCount, CARD_COUNT) }),
+                  c.jsx("div", { style: { fontFamily: C.mono, fontSize: 8, letterSpacing: 1.5, color: u.brandDeep, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }, children: earnedCount === CARD_COUNT ? R.review.allEarnedLabel : R.review.pointsLabel })
+                ] })
+              ] })
+            : c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: R.review.noPointsNote })
         ] }),
         c.jsx("button", { onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute" : "Mute", className: "ts-sound-btn", style: { background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "6px 10px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, fontWeight: 700 }, children: muted ? "OFF" : "ON" })
       ] }),
 
-      c.jsx("div", { style: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", maxWidth: 760, margin: "0 auto", width: "100%", position: "relative" }, children:
+      c.jsxs("div", { style: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", maxWidth: 760, margin: "0 auto", width: "100%", position: "relative" }, children: [
         c.jsx(ComicCard, {
-          cardIndex: current, meta, dir, firstView, question,
+          cardIndex: current, meta, dir, firstView, question, scoring,
           acked: acked[current], onAck: () => acknowledge(current)
-        }, "card-" + current + "-" + (firstView ? "f" : "s"))
-      }),
+        }, "card-" + current + "-" + (firstView ? "f" : "s")),
+        pointBurst > 0 && c.jsxs("div", { "aria-hidden": true, style: { position: "absolute", left: "50%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 20, pointerEvents: "none", textAlign: "center", animation: "ts-point-burst 1.2s cubic-bezier(.2,.8,.2,1.1) forwards" }, children: [
+          c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(48px, 11vw, 92px)", color: u.brand, textShadow: `4px 4px 0 ${u.outline}`, lineHeight: 0.9 }, children: "+1" }),
+          c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(16px, 3.5vw, 26px)", letterSpacing: 3, color: u.brandDeep, marginTop: 2 }, children: allEarned ? "POINT \u00B7 ALL 3!" : "POINT" })
+        ] })
+      ] }),
 
       c.jsxs("div", { style: { flexShrink: 0, paddingTop: 8, display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }, children: [
         c.jsx("div", { style: { display: "flex", gap: 8, alignItems: "center" }, children: R.cardMeta.map((m, i) => c.jsx("button", {
@@ -1104,7 +1471,7 @@ function RevealScreen(props) {
             : ((allSeen && allAcked) ? finalBtnEl : c.jsx(NextCardButton, { canAdvance: canAdvanceCard, ackOwed, cardRead, label: "Almost\u2026", onClick: () => {} }))
         ] }),
 
-        !allSeen && c.jsx("button", { onClick: onSkipReview, style: { background: "transparent", border: "none", fontFamily: C.mono, fontSize: 11, letterSpacing: 2, color: u.textMuted, cursor: "pointer", textTransform: "uppercase", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3, padding: "2px 10px" }, children: R.review.skipLabel })
+        !allSeen && c.jsx("button", { onClick: onSkipReview, style: { background: "transparent", border: "none", fontFamily: C.mono, fontSize: 11, letterSpacing: 2, color: u.textMuted, cursor: "pointer", textTransform: "uppercase", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3, padding: "2px 10px" }, children: scoring ? R.review.skipLabelScoring : R.review.skipLabel })
       ] }),
 
       revealCorrect && c.jsx(Confetti, { intensity: "med" })
@@ -1129,7 +1496,7 @@ function NextCardButton({ canAdvance, onClick, label, ackOwed, cardRead }) {
 }
 
 // A single review card. Flips in on first view, slides on revisit.
-function ComicCard({ cardIndex, meta, dir, firstView, question, acked, onAck }) {
+function ComicCard({ cardIndex, meta, dir, firstView, question, scoring, acked, onAck }) {
   const anim = firstView
     ? "ts-card-flip-in 0.5s cubic-bezier(.2,.7,.2,1) both"
     : (dir >= 0 ? "ts-card-slide-left 0.28s ease-out both" : "ts-card-slide-right 0.28s ease-out both");
@@ -1149,7 +1516,7 @@ function ComicCard({ cardIndex, meta, dir, firstView, question, acked, onAck }) 
       // The acknowledgment footer, in the same place the Redeem button used to
       // sit. It shows on every card now, not just after a right answer.
       c.jsx("div", { className: "ts-comic-redeem", style: { flexShrink: 0, borderTop: `3px solid ${u.outline}`, padding: "14px 20px", background: acked ? u.brandSofter : u.surfaceWarm, display: "flex", justifyContent: "center" }, children:
-        c.jsx(InCardAck, { acked, onAck })
+        c.jsx(InCardAck, { acked, onAck, scoring })
       })
     ] })
   });
@@ -1157,17 +1524,20 @@ function ComicCard({ cardIndex, meta, dir, firstView, question, acked, onAck }) 
 
 // The "I understand" control inside the card. Instantly tappable; the read-gate
 // lives on the Next button.
-function InCardAck({ acked, onAck }) {
+function InCardAck({ acked, onAck, scoring }) {
   if (acked) {
     return c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, fontFamily: C.display, fontSize: 16, letterSpacing: 1.5, color: u.brandDeep, textTransform: "uppercase" }, children: [
-      c.jsx("span", { style: { fontFamily: C.display, fontSize: 20, color: u.green }, children: "\u2713" }),
-      c.jsx("span", { children: R.review.acknowledgedLabel })
+      c.jsx("span", { style: { fontFamily: C.display, fontSize: 20, color: scoring ? u.brand : u.green }, children: scoring ? "\u2605" : "\u2713" }),
+      c.jsx("span", { children: scoring ? R.review.acknowledgedScoringLabel : R.review.acknowledgedLabel })
     ] });
   }
+  // Same tap, same words, plus the point when there is one. The wording leads
+  // with the understanding rather than the reward, which is the right way round
+  // for a card whose job is teaching.
   return c.jsx("button", {
     onClick: onAck,
     style: { fontFamily: C.display, fontSize: "clamp(15px, 2.6vw, 19px)", letterSpacing: 1.5, background: u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, padding: "12px 34px", borderRadius: 10, cursor: "pointer", textTransform: "uppercase", boxShadow: U.md, minWidth: 200, animation: "ts-pulse-next 1.6s ease-in-out infinite" },
-    children: R.review.acknowledgeLabel
+    children: scoring ? R.review.acknowledgeScoringLabel : R.review.acknowledgeLabel
   });
 }
 
@@ -1279,7 +1649,7 @@ function MissedList({ questions = [] }) {
 // ---------------------------------------------------------------------------
 // End screens
 // ---------------------------------------------------------------------------
-function WinBigScreen({ prize, correctCount, wrongCount, sfx, onTakeMoney, onKeepGoing }) {
+function WinBigScreen({ prize, correctCount, wrongCount, usage, pointsSpent, pointsLeft, sfx, onTakeMoney, onKeepGoing }) {
   const [display, setDisplay] = useState(0);
   const [done, setDone] = useState(false);
   const timers = useRef([]);
@@ -1313,6 +1683,7 @@ function WinBigScreen({ prize, correctCount, wrongCount, sfx, onTakeMoney, onKee
       c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(44px, 10vw, 96px)", color: u.text, letterSpacing: "-0.02em", lineHeight: 1, textShadow: `4px 4px 0 ${u.mustard}`, animation: done ? "ts-streak-pop 0.5s ease-out" : "none" }, children: fmtMoney(display) }, "amt-" + done),
       done && c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 18, animation: "ts-verdict-detail-in 0.5s ease-out both", marginTop: 4, width: "100%", maxWidth: 460 }, children: [
         c.jsx(Scorecard, { correct: correctCount, wrong: wrongCount }),
+        c.jsx(RunBreakdown, { usage, pointsSpent, pointsLeft }),
         c.jsxs("div", { className: "ts-end-actions", style: { display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }, children: [
           c.jsx(Button, { onClick: onTakeMoney, variant: "primary", size: "md", children: R.q15Choice.takePrize }),
           c.jsx(Button, { onClick: onKeepGoing, variant: "secondary", size: "md", children: R.q15Choice.keepGoing })
