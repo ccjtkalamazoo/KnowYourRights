@@ -280,25 +280,6 @@ export function App() {
     }
   };
 
-  // Which tour phase the game is in right now. Order matters: a modal sits over
-  // the shop, and the shop sits over the question, so the most-covering surface
-  // wins. Anything else (the locking pause, an end screen) is null, which hides
-  // the overlay and lets the game breathe.
-  const tourPhase = !isTutorial ? null
-    : pendingLifeline ? "modal"
-    : shopOpen ? "shop"
-    : phase === "playing" ? "playing"
-    : phase === "revealing" ? (revealStep === "cards" ? "cards" : "verdict")
-    : null;
-
-  const tourScript = (isTutorial && currentQ && currentQ.tour) || [];
-  const tourStep = isTutorial ? activeStep(tourScript, tourIdx, tourPhase) : null;
-
-  const tourAdvance = () => {
-    const s = tourScript[tourIdx];
-    if (s) EV.trackTutorialStep(s.id, { level, action: s.action, target: s.target });
-    setTourIdx((i) => i + 1);
-  };
 
   // Leaving the tutorial early. Goes straight to the map: dumping somebody back
   // on the title screen after they asked to skip a tutorial makes them start the
@@ -385,6 +366,26 @@ export function App() {
   const prizeFor = (n) => (n <= 0 ? 0 : LADDER[Math.min(n, LADDER.length) - 1].prize);
   const rung = { level: correctCount, prize: prizeFor(correctCount) };
   const stage = isEndless ? 3 : musicStageFor(level);
+
+  // Which tour phase the game is in right now. Order matters: a modal sits over
+  // the shop, and the shop sits over the question, so the most-covering surface
+  // wins. Anything else (the locking pause, an end screen) is null, which hides
+  // the overlay and lets the game breathe.
+  const tourPhase = !isTutorial ? null
+    : pendingLifeline ? "modal"
+    : shopOpen ? "shop"
+    : phase === "playing" ? "playing"
+    : phase === "revealing" ? (revealStep === "cards" ? "cards" : "verdict")
+    : null;
+
+  const tourScript = (isTutorial && currentQ && currentQ.tour) || [];
+  const tourStep = isTutorial ? activeStep(tourScript, tourIdx, tourPhase) : null;
+
+  const tourAdvance = () => {
+    const s = tourScript[tourIdx];
+    if (s) EV.trackTutorialStep(s.id, { level, action: s.action, target: s.target });
+    setTourIdx((i) => i + 1);
+  };
 
   const enterEndless = () => {
     sfx.current.click();
