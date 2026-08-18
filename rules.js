@@ -46,6 +46,22 @@ export const LADDER = [
 export const musicStageFor = (e) => e < 5 ? 1 : e < 10 ? 2 : 3;
 
 // ---------------------------------------------------------------------------
+// Lifelines
+// ---------------------------------------------------------------------------
+// Four, priced in points earned from reading review cards. SHIELD is gone: it
+// was "survive one wrong answer", which is now the default rule three times
+// over. Selling somebody something they already have is the fastest way to make
+// a shop feel like a trick.
+//
+// FIFTY, POLL and HINT start free once each. SKIP never does, so it is the one
+// thing points alone can buy, and it is priced cheapest because it is the least
+// powerful: it trades a question you do not know for one you might not either.
+export const LIFELINE_PRICES = { skip: 4, hint: 6, poll: 10, fifty: 16 };
+export const LIFELINE_KEYS = ["fifty", "poll", "hint", "skip"];
+// Which ones you get one free use of at the start of a run.
+export const FREE_LIFELINES = { fifty: true, poll: true, hint: true, skip: false };
+
+// ---------------------------------------------------------------------------
 // Formatting
 // ---------------------------------------------------------------------------
 export const fmtMoney = (e) => "$" + e.toLocaleString("en-US");
@@ -106,4 +122,52 @@ export const buildEndlessDeck = (seen, chapter) => {
   });
   const pool = fresh.length > 0 ? fresh : repeats;
   return shuffle(pool.map(shuffleOptions));
+};
+
+// ---------------------------------------------------------------------------
+// The JURY lifeline
+// ---------------------------------------------------------------------------
+// Simulates a poll of other students. It is NOT real data. The correct answer
+// always keeps a plurality, so the crowd is helpful without being an oracle.
+//
+// This is a placeholder and always was. What changed is that it no longer has
+// to be: the ingest pipeline now records which specific option each player
+// picked, keyed to that option's permanent id. Once there is enough of it,
+// this function gets replaced by a real per-question distribution and JURY
+// becomes an honest "here is what other people actually believed" readout,
+// which is a considerably better teaching object than a fake one.
+export const simulateJury = (e, t = []) => {
+  // e = correct index, t = removed indices
+  const base = 58;
+  const result = [0, 0, 0, 0];
+  const wrong = [0, 1, 2, 3].filter((v) => v !== e && !t.includes(v));
+
+  if (wrong.length === 0) { result[e] = 100; t.forEach((v) => (result[v] = 0)); return result; }
+
+  let correctShare = base;
+  const remaining = 100 - correctShare;
+  const weights = wrong.map(() => 0.35 + Math.random());
+  const wsum = weights.reduce((a, b) => a + b, 0);
+  let assigned = 0;
+  wrong.forEach((idx, k) => {
+    const share = Math.round((weights[k] / wsum) * remaining);
+    result[idx] = share;
+    assigned += share;
+  });
+  correctShare = 100 - assigned;
+  result[e] = correctShare;
+
+  // guarantee the correct answer is a strict plurality
+  let guard = 0;
+  while (guard++ < 8) {
+    const maxWrong = Math.max(...wrong.map((i) => result[i]));
+    if (result[e] > maxWrong) break;
+    const bigIdx = wrong.find((i) => result[i] === maxWrong);
+    const take = (maxWrong - result[e]) + 1 + Math.floor(Math.random() * 2);
+    const shave = Math.min(take, result[bigIdx]);
+    result[bigIdx] -= shave;
+    result[e] += shave;
+  }
+  t.forEach((v) => (result[v] = 0));
+  return result;
 };
