@@ -62,6 +62,10 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
   const startedAt = useRef(0);
   const scrolledFor = useRef(null);
   const lastBox = useRef(null);
+  // The tooltip measures itself so placement can be decided against its real
+  // height. Starts at a conservative estimate for the first frame only.
+  const cardRef = useRef(null);
+  const [cardH, setCardH] = useState(150);
 
   // Only re-render when something actually moved. The measure loop runs every
   // frame; setting state every frame would re-render the overlay 60 times a
@@ -76,7 +80,12 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
     setBox(next);
   };
 
-  const targetSel = step ? `[data-tour="${step.target}"]` : null;
+  // A step may name one anchor or several. Several produces the union of their
+  // rects, which is how "read this question and pick an answer" highlights both
+  // the question card and the answer grid as one region instead of pretending
+  // the question is not part of the instruction.
+  const targetList = !step ? [] : (Array.isArray(step.target) ? step.target : [step.target]);
+  const targetSel = targetList.map((t) => `[data-tour="${t}"]`).join(",");
 
   // Re-measure every frame. Cheap enough for one element, and it is the only
   // thing that keeps the hole glued to a card that is mid-flip or a panel that
@@ -89,9 +98,25 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
     setBox(null);
 
     const tick = () => {
-      const el = document.querySelector(targetSel);
+      // Keep the measured tooltip height current: the body text length changes
+      // per step and wraps differently at every width.
+      if (cardRef.current) {
+        const h = Math.round(cardRef.current.getBoundingClientRect().height);
+        if (h > 0 && h !== cardH) setCardH(h);
+      }
+      const els = Array.from(document.querySelectorAll(targetSel))
+        .filter((e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; });
+      const el = els[0];
       if (el) {
-        const r = el.getBoundingClientRect();
+        // Union of every matched anchor.
+        const r = els.reduce((acc, e) => {
+          const b = e.getBoundingClientRect();
+          if (!acc) return { top: b.top, left: b.left, right: b.right, bottom: b.bottom };
+          return { top: Math.min(acc.top, b.top), left: Math.min(acc.left, b.left),
+                   right: Math.max(acc.right, b.right), bottom: Math.max(acc.bottom, b.bottom) };
+        }, null);
+        r.width = r.right - r.left;
+        r.height = r.bottom - r.top;
         // A zero-size box means it is in the DOM but not laid out yet (or
         // display:none). Treat it as missing rather than drawing a hole at 0,0.
         if (r.width > 0 && r.height > 0) {
@@ -128,26 +153,26 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
   // advances even if the handler stops propagation or unmounts the node.
   useEffect(() => {
     if (!step || step.action !== "tap" || typeof document === "undefined") return;
-    let el = null;
-    let attached = false;
+    let bound = [];
     const handler = () => { onAdvance(); };
     const attach = () => {
-      const found = document.querySelector(targetSel);
-      if (found && found !== el) {
-        if (el && attached) el.removeEventListener("click", handler, true);
-        el = found;
-        el.addEventListener("click", handler, true);
-        attached = true;
-      }
+      const found = Array.from(document.querySelectorAll(targetSel));
+      // Only rebind when the set actually changed, or every interval tick would
+      // detach and reattach for nothing.
+      const same = found.length === bound.length && found.every((e, i) => e === bound[i]);
+      if (same) return;
+      bound.forEach((e) => e.removeEventListener("click", handler, true));
+      bound = found;
+      bound.forEach((e) => e.addEventListener("click", handler, true));
     };
     attach();
-    // React can swap the node out from under us (the review card is remounted
-    // with a new key on every flip), so re-check on an interval rather than
-    // trusting the node we found on mount.
+    // React can swap nodes out from under us (the review card is remounted with
+    // a new key on every flip), so re-check rather than trusting what was found
+    // on mount.
     const iv = setInterval(attach, 150);
     return () => {
       clearInterval(iv);
-      if (el && attached) el.removeEventListener("click", handler, true);
+      bound.forEach((e) => e.removeEventListener("click", handler, true));
     };
   }, [step && step.id, targetSel]); // eslint-disable-line
 
@@ -197,24 +222,43 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
   const floor = Math.max(0, H - BAIL_STRIP);
   const band = (style) => c.jsx("div", { onClick: swallow, style: { position: "fixed", background: dim, ...style } });
 
-  // Tooltip placement: below the hole if it fits, above if not, and if neither
-  // fits (a tall target on a short phone) it overlays the bottom of the screen,
-  // because an unreadable tooltip is worse than one that covers something.
-  const CARD_H = 168; // generous estimate; only used to choose a side
-  const BAIL_CLEAR = 62; // room at the bottom for the persistent skip chip
-  const spaceBelow = H - (hy + hh) - BAIL_CLEAR;
-  const spaceAbove = hy;
-  const place = spaceBelow >= CARD_H ? "below" : spaceAbove >= CARD_H ? "above" : "bottom";
-
+  // ---- tooltip placement ----
+  const BAIL_CLEAR = 62;  // room at the bottom for the persistent skip chip
+  const GAP = 12;
   const cardWidth = Math.min(W - 24, 360);
   let cardLeft = box.left + box.width / 2 - cardWidth / 2;
   cardLeft = Math.max(12, Math.min(cardLeft, W - cardWidth - 12));
 
-  const cardStyle = place === "below"
-    ? { top: hy + hh + 12, left: cardLeft, width: cardWidth }
-    : place === "above"
-      ? { bottom: H - hy + 12, left: cardLeft, width: cardWidth }
-      : { bottom: 62, left: cardLeft, width: cardWidth };
+  // The question card must stay readable at all times. It is the content the
+  // step is talking about, and a tooltip sitting on top of it is the single
+  // worst thing this overlay can do. Treated as a no-go zone unless it is
+  // itself part of what is being highlighted.
+  let noGo = null;
+  if (!targetList.includes("question") && typeof document !== "undefined") {
+    const qEl = document.querySelector('[data-tour="question"]');
+    if (qEl) {
+      const b = qEl.getBoundingClientRect();
+      if (b.width > 0 && b.height > 0) noGo = { top: b.top, bottom: b.bottom };
+    }
+  }
+  const hitsNoGo = (top, bottom) =>
+    !!noGo && bottom > noGo.top + 4 && top < noGo.bottom - 4;
+
+  const belowTop = hy + hh + GAP;
+  const aboveTop = hy - GAP - cardH;
+  const dockTop = H - BAIL_CLEAR - GAP - cardH;
+
+  let cardStyle;
+  if (belowTop + cardH <= H - BAIL_CLEAR && !hitsNoGo(belowTop, belowTop + cardH)) {
+    cardStyle = { top: belowTop, left: cardLeft, width: cardWidth };
+  } else if (aboveTop >= 8 && !hitsNoGo(aboveTop, aboveTop + cardH)) {
+    cardStyle = { top: aboveTop, left: cardLeft, width: cardWidth };
+  } else {
+    // Nothing fits cleanly. Dock above the skip chip: this covers the action bar
+    // for a moment, which costs nothing, and leaves the question and the answers
+    // both fully visible.
+    cardStyle = { top: Math.max(8, dockTop), left: cardLeft, width: cardWidth };
+  }
 
   return c.jsxs("div", { className: "kyr-tour", children: [
     // Four dim bands. The gap between them IS the spotlight, and it is a real
@@ -249,6 +293,7 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
     }),
 
     c.jsx("div", {
+      ref: cardRef,
       style: { position: "fixed", zIndex: 202, ...cardStyle },
       children: c.jsx(TourCard, { step, stepNumber, stepTotal, onAdvance, onBack, canBack, tapToAdvance })
     })
