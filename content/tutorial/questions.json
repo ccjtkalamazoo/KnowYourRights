@@ -8,84 +8,80 @@
   "questions": [
     {
       "id": "tutorial.01.001",
-      "version": 1,
-      "q": "Police can stop you on the street and start asking you questions. Are you allowed to decide not to answer?",
+      "version": 2,
+      "q": "Police are questioning you and you want a lawyer. What do you say?",
       "options": [
         {
           "id": "tutorial.01.001.a",
-          "text": "Yes",
+          "text": "\"I want a lawyer.\"",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
         },
         {
           "id": "tutorial.01.001.b",
-          "text": "No, never",
+          "text": "\"Maybe I should get a lawyer?\"",
           "isCorrect": false,
-          "explanation": "You are allowed to not answer. That is what the right to remain silent means.",
-          "misconceptionCode": null
+          "explanation": "A maybe is not a request. Questioning can keep going after an unsure one.",
+          "misconceptionCode": "unclear_request_counts"
         },
         {
           "id": "tutorial.01.001.c",
-          "text": "Only adults are",
+          "text": "\"Do I need a lawyer?\"",
           "isCorrect": false,
-          "explanation": "Being a kid does not remove the right. It belongs to everybody.",
-          "misconceptionCode": null
+          "explanation": "Asking whether you need one is not asking for one.",
+          "misconceptionCode": "asking_counts_as_requesting"
         },
         {
           "id": "tutorial.01.001.d",
-          "text": "Only with a lawyer there",
+          "text": "Nothing, one shows up on their own",
           "isCorrect": false,
-          "explanation": "You do not need anybody standing next to you to use it.",
-          "misconceptionCode": null
+          "explanation": "Nobody appears unless you ask. The asking is what starts it.",
+          "misconceptionCode": "lawyer_arrives_automatically"
         }
       ],
-      "hint": "There is a right with the word silent in it.",
-      "principle": "You do not have to answer questions from police, and that is true for kids too. This one is easy on purpose. Right now you are learning the buttons, not the law. The rest of the game is where the real questions live.",
+      "hint": "Short and certain. No maybe, no question mark.",
+      "principle": "Asking for a lawyer only works if you say it clearly. \"I want a lawyer\" is a request. \"Maybe I need a lawyer\" is not, and the questions can keep coming. Once you say the clear version, questioning is supposed to stop. This one is easy on purpose: right now you are learning the buttons.",
       "keyPhrase": {
-        "quote": "I don't want to answer questions.",
-        "gloss": "Say it out loud. Going quiet is not the same as saying it."
+        "quote": "I want a lawyer.",
+        "gloss": "Four words. Say them exactly."
       },
       "scenario": {
-        "setup": "An officer starts asking you about something that happened down the block.",
+        "setup": "You are in a small room and somebody says it will go easier if you just explain.",
         "lines": [
           {
-            "label": "OFFICER",
-            "text": "Just tell me what you saw."
-          },
-          {
             "label": "YOU",
-            "text": "I don't want to answer questions."
+            "text": "I want a lawyer."
           },
           {
             "label": "YES",
-            "text": "You said it out loud, so it counts."
+            "text": "The questions are supposed to stop right there."
           },
           {
             "label": "NO",
-            "text": "You go quiet, and the questions keep coming anyway."
+            "text": "A maybe leaves the door open, and they walk back through it."
           }
         ]
       },
       "tour": [
         {
-          "id": "t1.welcome",
+          "id": "s1.welcome",
           "phase": "playing",
           "target": "question",
           "title": "THIS IS A QUESTION",
-          "body": "Every question is a real situation. Read it, then pick from the four answers below.",
+          "body": "Every question is a real situation. Read it, then look at the four answers below.",
           "action": "next"
         },
         {
-          "id": "t1.answers",
+          "id": "s1.answers",
           "phase": "playing",
           "target": "answers",
           "title": "FOUR CHOICES",
-          "body": "One is right. Tap the one you think it is.",
+          "body": "One of them is right. In a moment you will pick one.",
           "action": "next"
         },
         {
-          "id": "t1.pick",
+          "id": "s1.pick",
           "phase": "playing",
           "target": "answer-0",
           "title": "TAP THIS ONE",
@@ -93,7 +89,7 @@
           "action": "tap"
         },
         {
-          "id": "t1.lock",
+          "id": "s1.lock",
           "phase": "playing",
           "target": "lock",
           "title": "LOCK IT IN",
@@ -101,7 +97,7 @@
           "action": "tap"
         },
         {
-          "id": "t1.verdict",
+          "id": "s1.verdict",
           "phase": "verdict",
           "target": "verdict",
           "title": "RIGHT OR WRONG",
@@ -109,7 +105,7 @@
           "action": "next"
         },
         {
-          "id": "t1.continue",
+          "id": "s1.continue",
           "phase": "verdict",
           "target": "continue",
           "title": "KEEP GOING",
@@ -117,7 +113,7 @@
           "action": "tap"
         },
         {
-          "id": "t1.card",
+          "id": "s1.card",
           "phase": "cards",
           "target": "card",
           "title": "THREE CARDS",
@@ -125,23 +121,23 @@
           "action": "next"
         },
         {
-          "id": "t1.ack",
+          "id": "s1.ack",
           "phase": "cards",
           "target": "ack",
           "title": "I UNDERSTAND",
-          "body": "Tap this when you have read the card. On a right answer it is also worth a point.",
+          "body": "Tap this when you have read the card.",
           "action": "tap"
         },
         {
-          "id": "t1.points",
+          "id": "s1.points",
           "phase": "cards",
           "target": "points",
           "title": "THAT'S A POINT",
-          "body": "You just earned one. Each card is worth a point when you got the question RIGHT, three per question, and points are the only way to buy help later.",
+          "body": "You just earned one. Each card is worth a point when you got the question RIGHT, three per question. Points are the only way to buy help.",
           "action": "next"
         },
         {
-          "id": "t1.nextcard",
+          "id": "s1.nextcard",
           "phase": "cards",
           "target": "next-card",
           "title": "NEXT CARD",
@@ -153,31 +149,147 @@
     {
       "id": "tutorial.01.002",
       "version": 1,
-      "q": "Police start asking you questions and you decide to just go completely silent. Does staying quiet count as using your right to remain silent?",
+      "q": "You need a lawyer and your family has no money to pay for one. What happens?",
       "options": [
         {
           "id": "tutorial.01.002.a",
+          "text": "You go without one",
+          "isCorrect": false,
+          "explanation": "Money is not what decides it. A lawyer gets appointed either way.",
+          "misconceptionCode": "no_money_no_lawyer"
+        },
+        {
+          "id": "tutorial.01.002.b",
+          "text": "You pay it back later",
+          "isCorrect": false,
+          "explanation": "There is no bill waiting for you afterward.",
+          "misconceptionCode": "lawyer_is_a_debt"
+        },
+        {
+          "id": "tutorial.01.002.c",
+          "text": "The court appoints one, free",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "tutorial.01.002.d",
+          "text": "Your parents have to find one",
+          "isCorrect": false,
+          "explanation": "Nobody in your family has to go looking. You ask, and one is appointed.",
+          "misconceptionCode": "parents_must_find_lawyer"
+        }
+      ],
+      "hint": "The price of a lawyer is not what decides whether you get one.",
+      "principle": "If you cannot afford a lawyer, the court appoints one and you do not pay. That lawyer works for you and nobody else. You do not have to prove anything about money before you ask.",
+      "keyPhrase": {
+        "quote": "I want a lawyer, and we can't pay for one.",
+        "gloss": "Say both parts. The free one is yours."
+      },
+      "scenario": {
+        "setup": "Somebody tells you a lawyer is expensive and you probably do not want to bother.",
+        "lines": [
+          {
+            "label": "YOU",
+            "text": "I want a lawyer, and we can't pay."
+          },
+          {
+            "label": "YES",
+            "text": "One gets appointed, and it costs your family nothing."
+          },
+          {
+            "label": "NO",
+            "text": "You skip asking over money that was never going to be the problem."
+          }
+        ]
+      },
+      "tour": [
+        {
+          "id": "s2.points",
+          "phase": "playing",
+          "target": "shop",
+          "title": "YOU HAVE POINTS",
+          "body": "Those three cards you just read earned you three points. This is where you spend them.",
+          "action": "next"
+        },
+        {
+          "id": "s2.open",
+          "phase": "playing",
+          "target": "shop",
+          "title": "OPEN THE SHOP",
+          "body": "Tap it.",
+          "action": "tap"
+        },
+        {
+          "id": "s2.list",
+          "phase": "shop",
+          "target": "shop-list",
+          "title": "FOUR LIFELINES",
+          "body": "50/50 crosses off two wrong answers. JURY shows how other students voted. COUNSEL gives you a hint. SKIP trades the question for a different one.",
+          "action": "next"
+        },
+        {
+          "id": "s2.free",
+          "phase": "shop",
+          "target": "shop-item-fifty",
+          "title": "FIRST THREE ARE FREE",
+          "body": "One free use each of 50/50, JURY and COUNSEL. After that you buy them back with points. SKIP always costs. Tap 50/50.",
+          "action": "tap"
+        },
+        {
+          "id": "s2.confirm",
+          "phase": "modal",
+          "target": "modal-primary",
+          "title": "CONFIRM IT",
+          "body": "It always asks first, so you never spend one by accident.",
+          "action": "tap"
+        },
+        {
+          "id": "s2.pick",
+          "phase": "playing",
+          "target": "answer-2",
+          "title": "TWO LEFT",
+          "body": "50/50 crossed off two wrong ones. Tap this one.",
+          "action": "tap"
+        },
+        {
+          "id": "s2.lock",
+          "phase": "playing",
+          "target": "lock",
+          "title": "LOCK IT IN",
+          "body": "",
+          "action": "tap"
+        }
+      ]
+    },
+    {
+      "id": "tutorial.01.003",
+      "version": 1,
+      "q": "Police start asking you questions and you decide to just go completely silent. Does staying quiet count as using your right to remain silent?",
+      "options": [
+        {
+          "id": "tutorial.01.003.a",
           "text": "Yes, staying quiet is enough",
           "isCorrect": false,
           "explanation": "Going quiet is not the same as saying you are using the right. Questions can keep coming.",
           "misconceptionCode": "silence_invokes_the_right"
         },
         {
-          "id": "tutorial.01.002.b",
+          "id": "tutorial.01.003.b",
           "text": "No, you have to say it out loud",
           "isCorrect": true,
           "explanation": null,
           "misconceptionCode": null
         },
         {
-          "id": "tutorial.01.002.c",
+          "id": "tutorial.01.003.c",
           "text": "Only if you stay quiet long enough",
           "isCorrect": false,
           "explanation": "There is no amount of time that turns silence into a request.",
           "misconceptionCode": "silence_works_eventually"
         },
         {
-          "id": "tutorial.01.002.d",
+          "id": "tutorial.01.003.d",
           "text": "Only if they read you your rights first",
           "isCorrect": false,
           "explanation": "The right is yours either way. Saying it out loud is what uses it.",
@@ -214,15 +326,15 @@
       },
       "tour": [
         {
-          "id": "t2.lives",
+          "id": "s3.lives",
           "phase": "playing",
           "target": "lives",
           "title": "THREE LIVES",
-          "body": "You start every round with three. Getting one wrong costs a life, but the round keeps going.",
+          "body": "You have had three all along. Here is what one costs.",
           "action": "next"
         },
         {
-          "id": "t2.pick",
+          "id": "s3.pick",
           "phase": "playing",
           "target": "answer-0",
           "title": "TAP THIS ONE",
@@ -230,7 +342,7 @@
           "action": "tap"
         },
         {
-          "id": "t2.lock",
+          "id": "s3.lock",
           "phase": "playing",
           "target": "lock",
           "title": "LOCK IT IN",
@@ -238,7 +350,7 @@
           "action": "tap"
         },
         {
-          "id": "t2.cost",
+          "id": "s3.cost",
           "phase": "verdict",
           "target": "verdict-hearts",
           "title": "THAT COST A LIFE",
@@ -246,7 +358,7 @@
           "action": "next"
         },
         {
-          "id": "t2.still",
+          "id": "s3.still",
           "phase": "verdict",
           "target": "continue",
           "title": "THE CARDS STILL COME",
@@ -254,128 +366,12 @@
           "action": "tap"
         },
         {
-          "id": "t2.nopoints",
+          "id": "s3.nopoints",
           "phase": "cards",
           "target": "card",
-          "title": "NO POINTS ON A MISS",
-          "body": "Same three cards, same everything. You just do not earn from them this time.",
+          "title": "NO POINTS THIS TIME",
+          "body": "Same three cards, same everything. You just do not earn from them when the answer was wrong.",
           "action": "next"
-        }
-      ]
-    },
-    {
-      "id": "tutorial.01.003",
-      "version": 1,
-      "q": "You need a lawyer and your family has no money to pay for one. What happens?",
-      "options": [
-        {
-          "id": "tutorial.01.003.a",
-          "text": "You go without one",
-          "isCorrect": false,
-          "explanation": "Money is not what decides it. A lawyer gets appointed either way.",
-          "misconceptionCode": "no_money_no_lawyer"
-        },
-        {
-          "id": "tutorial.01.003.b",
-          "text": "You pay it back later",
-          "isCorrect": false,
-          "explanation": "There is no bill waiting for you afterward.",
-          "misconceptionCode": "lawyer_is_a_debt"
-        },
-        {
-          "id": "tutorial.01.003.c",
-          "text": "The court appoints one, free",
-          "isCorrect": true,
-          "explanation": null,
-          "misconceptionCode": null
-        },
-        {
-          "id": "tutorial.01.003.d",
-          "text": "Your parents have to find one",
-          "isCorrect": false,
-          "explanation": "Nobody in your family has to go looking. You ask, and one is appointed.",
-          "misconceptionCode": "parents_must_find_lawyer"
-        }
-      ],
-      "hint": "The price of a lawyer is not what decides whether you get one.",
-      "principle": "If you cannot afford a lawyer, the court appoints one and you do not pay. That lawyer works for you and nobody else. You do not have to prove anything about money before you ask.",
-      "keyPhrase": {
-        "quote": "I want a lawyer, and we can't pay for one.",
-        "gloss": "Say both parts. The free one is yours."
-      },
-      "scenario": {
-        "setup": "Somebody tells you a lawyer is expensive and you probably do not want to bother.",
-        "lines": [
-          {
-            "label": "YOU",
-            "text": "I want a lawyer, and we can't pay."
-          },
-          {
-            "label": "YES",
-            "text": "One gets appointed, and it costs your family nothing."
-          },
-          {
-            "label": "NO",
-            "text": "You skip asking over money that was never going to be the problem."
-          }
-        ]
-      },
-      "tour": [
-        {
-          "id": "t3.points",
-          "phase": "playing",
-          "target": "shop",
-          "title": "SPEND YOUR POINTS",
-          "body": "The points you banked back on question one live here.",
-          "action": "next"
-        },
-        {
-          "id": "t3.open",
-          "phase": "playing",
-          "target": "shop",
-          "title": "OPEN THE SHOP",
-          "body": "Tap it.",
-          "action": "tap"
-        },
-        {
-          "id": "t3.list",
-          "phase": "shop",
-          "target": "shop-list",
-          "title": "FOUR LIFELINES",
-          "body": "50/50 crosses off two wrong answers. JURY shows how other students voted. COUNSEL gives you a hint. SKIP trades the question for a different one.",
-          "action": "next"
-        },
-        {
-          "id": "t3.free",
-          "phase": "shop",
-          "target": "shop-item-fifty",
-          "title": "FIRST THREE ARE FREE",
-          "body": "One free use each of 50/50, JURY and COUNSEL. After that you buy them back with points. SKIP always costs. Tap 50/50.",
-          "action": "tap"
-        },
-        {
-          "id": "t3.confirm",
-          "phase": "modal",
-          "target": "modal-primary",
-          "title": "CONFIRM IT",
-          "body": "It always asks first, so you never spend one by accident.",
-          "action": "tap"
-        },
-        {
-          "id": "t3.pick",
-          "phase": "playing",
-          "target": "answer-2",
-          "title": "TWO LEFT",
-          "body": "50/50 crossed off two wrong ones. Tap this one.",
-          "action": "tap"
-        },
-        {
-          "id": "t3.lock",
-          "phase": "playing",
-          "target": "lock",
-          "title": "LOCK IT IN",
-          "body": "",
-          "action": "tap"
         }
       ]
     },
@@ -443,7 +439,7 @@
       },
       "tour": [
         {
-          "id": "t4.stuck",
+          "id": "s4.stuck",
           "phase": "playing",
           "target": "shop",
           "title": "STUCK? BUY A HINT",
@@ -451,7 +447,7 @@
           "action": "tap"
         },
         {
-          "id": "t4.counsel",
+          "id": "s4.counsel",
           "phase": "shop",
           "target": "shop-item-hint",
           "title": "COUNSEL",
@@ -459,7 +455,7 @@
           "action": "tap"
         },
         {
-          "id": "t4.confirm",
+          "id": "s4.confirm",
           "phase": "modal",
           "target": "modal-primary",
           "title": "USE IT",
@@ -467,7 +463,7 @@
           "action": "tap"
         },
         {
-          "id": "t4.hint",
+          "id": "s4.hint",
           "phase": "playing",
           "target": "hint",
           "title": "THERE'S YOUR HINT",
@@ -475,7 +471,7 @@
           "action": "next"
         },
         {
-          "id": "t4.pick",
+          "id": "s4.pick",
           "phase": "playing",
           "target": "answers",
           "title": "YOUR CALL",
@@ -483,7 +479,7 @@
           "action": "tap"
         },
         {
-          "id": "t4.lock",
+          "id": "s4.lock",
           "phase": "playing",
           "target": "lock",
           "title": "LOCK IT IN",
@@ -553,7 +549,7 @@
       },
       "tour": [
         {
-          "id": "t5.progress",
+          "id": "s5.progress",
           "phase": "playing",
           "target": "progress",
           "title": "WHERE YOU ARE",
@@ -561,7 +557,7 @@
           "action": "next"
         },
         {
-          "id": "t5.free",
+          "id": "s5.free",
           "phase": "playing",
           "target": "answers",
           "title": "YOUR TURN, FOR REAL",
@@ -569,7 +565,7 @@
           "action": "tap"
         },
         {
-          "id": "t5.lock",
+          "id": "s5.lock",
           "phase": "playing",
           "target": "lock",
           "title": "LOCK IT IN",
@@ -577,7 +573,7 @@
           "action": "tap"
         },
         {
-          "id": "t5.continue",
+          "id": "s5.continue",
           "phase": "verdict",
           "target": "continue",
           "title": "ONE LAST TIME",
@@ -585,7 +581,7 @@
           "action": "tap"
         },
         {
-          "id": "t5.done",
+          "id": "s5.done",
           "phase": "cards",
           "target": "card",
           "title": "THAT'S THE WHOLE GAME",
