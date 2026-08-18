@@ -338,6 +338,21 @@ export function trackNav(where) {
   track("nav", { where });
 }
 
+// ---------------------------------------------------------------------------
+// Tutorial
+// ---------------------------------------------------------------------------
+// The tutorial deliberately emits NO answer, question_shown, lifeline or
+// review_card events. Every tap in it is dictated by the tour, so those rows
+// would be a record of the script rather than of the player, and mixed into the
+// events table they would quietly inflate per-question accuracy toward 100%.
+//
+// What is worth collecting is time and drop-off: which step people abandon on,
+// and how long the whole thing takes at a table with a line behind it. That is
+// what this event is for, and it carries no response data at all.
+export function trackTutorialStep(stepId, detail = {}) {
+  track("tutorial_step", { step: stepId, ...detail });
+}
+
 // Test/debug access to the live buffer and session. Not used by the game.
 export function _debug() {
   return session ? { id: session.id, buffered: session.buffer.slice(), exposures: new Map(session.exposures) } : null;
