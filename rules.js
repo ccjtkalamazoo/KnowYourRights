@@ -171,3 +171,18 @@ export const simulateJury = (e, t = []) => {
   t.forEach((v) => (result[v] = 0));
   return result;
 };
+
+// ---------------------------------------------------------------------------
+// The tutorial deck
+// ---------------------------------------------------------------------------
+// Deliberately NOT shuffled, in either sense: the five questions come in the
+// order they are authored, and each question's four options stay where they
+// were written. Both matter, because the tour scripts in
+// content/tutorial/questions.json address answers by position ("tap answer-2").
+// A shuffle would make the tour point at the wrong button, and it would do it
+// silently, which is the worst kind of wrong.
+//
+// `order` is still attached so anything downstream that expects a display->
+// authored mapping gets an identity one rather than undefined.
+export const buildTutorialDeck = (pool) =>
+  (pool.questions || []).map((q) => ({ ...q, order: [0, 1, 2, 3] }));
