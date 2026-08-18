@@ -48,13 +48,15 @@ import { R } from "./copy.js";
 import {
   LADDER, LIVES_PER_ROUND, DEMO_DECK_SIZE, CHAPTER_DECK_SIZE, musicStageFor,
   LIFELINE_PRICES, LIFELINE_KEYS, FREE_LIFELINES,
-  fmtMoney, fmtMoneyShort, shuffle, buildDeck, shuffleOptions, buildEndlessDeck, simulateJury
+  fmtMoney, fmtMoneyShort, shuffle, buildDeck, buildTutorialDeck, shuffleOptions,
+  buildEndlessDeck, simulateJury
 } from "./rules.js";
 import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.js";
 import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
-import { loadChapter, loadDemo } from "./content.js";
+import { loadChapter, loadDemo, loadTutorial } from "./content.js";
+import { TourOverlay, injectTourStyles, activeStep } from "./tutorial.js";
 
 // ---------------------------------------------------------------------------
 // The demo (event build)
@@ -115,6 +117,14 @@ export function App() {
   const [demoRuns, setDemoRuns] = useState([]);
   const [screenFlash, setScreenFlash] = useState(null);
   const [screenShake, setScreenShake] = useState(false);
+  // Tutorial mode. `tourIdx` is the step within THIS question's tour script;
+  // it resets to 0 on every question, so the scripts stay independent and a
+  // content editor never has to count steps across questions.
+  const [isTutorial, setIsTutorial] = useState(false);
+  const [tourIdx, setTourIdx] = useState(0);
+  // RevealScreen owns whether it is showing the verdict or the cards, and the
+  // tour needs to know which. It reports up rather than the engine guessing.
+  const [revealStep, setRevealStep] = useState("verdict");
 
   const sfx = useRef(null);
   const music = useRef(null);
@@ -126,6 +136,7 @@ export function App() {
 
   useEffect(() => {
     injectStyles();
+    injectTourStyles();
     EV.beginSession({ soundOn: !muted });
   }, []);
 
@@ -137,9 +148,19 @@ export function App() {
   const qMeter = useRef({ exposure: 1, shownAt: 0, firstSelectAt: null, changes: 0, lifelines: [] });
   useEffect(() => {
     if (phase !== "playing" || !currentQ) return;
-    const exposure = EV.trackQuestionShown(currentQ, level);
+    // Tutorial answers are dictated, so they are not knowledge signals and they
+    // never enter the events table. Emitting them would quietly poison the
+    // per-question accuracy numbers with 100% scores on scripted taps.
+    const exposure = isTutorial ? 1 : EV.trackQuestionShown(currentQ, level);
     qMeter.current = { exposure, shownAt: performance.now(), firstSelectAt: null, changes: 0, lifelines: [] };
   }, [phase, level]);
+
+  // Each question carries its own tour script, so the step counter restarts.
+  useEffect(() => {
+    if (!isTutorial) return;
+    setTourIdx(0);
+    setRevealStep("verdict");
+  }, [level, isTutorial]);
 
   useEffect(() => {
     sfx.current.setMuted(muted);
@@ -183,6 +204,7 @@ export function App() {
     setPendingLifeline(null); setShopOpen(false);
     setHomeConfirm(false); setSkipConfirm(false);
     setIsEndless(false); setFinalPrize(0); setIsDemo(false);
+    setIsTutorial(false); setTourIdx(0); setRevealStep("verdict");
   };
 
   // Per-round reset for the demo. Same as resetState minus the deck and minus
@@ -199,8 +221,12 @@ export function App() {
     setPendingLifeline(null); setShopOpen(false);
     setHomeConfirm(false); setSkipConfirm(false);
     setIsEndless(false); setFinalPrize(0);
+    setTourIdx(0); setRevealStep("verdict");
   };
 
+  // Play now means: safety brief, then the tutorial, then the map. The brief
+  // stays a full card and stays first. Everything that used to be a card after
+  // it is now a step in the real game.
   const goWalkthrough = () => { initAudio(); sfx.current.click(); setWalkStep(0); setPhase("walkthrough"); };
 
   const goMap = () => {
@@ -223,6 +249,69 @@ export function App() {
     setChapter(null);
     setWalkStep(0);
     setPhase("start");
+  };
+
+  // -------------------------------------------------------------------------
+  // The tutorial
+  // -------------------------------------------------------------------------
+  // Runs on the real game screen with the real handlers. Five fixed questions,
+  // never shuffled, because the tour scripts address answers by position.
+  const startTutorial = async () => {
+    resetState();
+    setChapter(null);
+    setLoadError(null);
+    setPhase("loading");
+    try {
+      const pool = await loadTutorial();
+      const d = buildTutorialDeck(pool);
+      setChapter(pool);
+      setDeck(d);
+      setIsTutorial(true);
+      setTourIdx(0);
+      // Mode is recorded so every tutorial row is trivially excludable from
+      // analysis. No answers are ever emitted (see the note on trackAnswer
+      // below), so this and the step events are the whole footprint.
+      EV.trackModeStart("tutorial", d, { deckSize: d.length, lives: LIVES_PER_ROUND });
+      setPhase("playing");
+      setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
+    } catch (err) {
+      setLoadError(err.message || String(err));
+      setPhase("loaderror");
+    }
+  };
+
+  // Which tour phase the game is in right now. Order matters: a modal sits over
+  // the shop, and the shop sits over the question, so the most-covering surface
+  // wins. Anything else (the locking pause, an end screen) is null, which hides
+  // the overlay and lets the game breathe.
+  const tourPhase = !isTutorial ? null
+    : pendingLifeline ? "modal"
+    : shopOpen ? "shop"
+    : phase === "playing" ? "playing"
+    : phase === "revealing" ? (revealStep === "cards" ? "cards" : "verdict")
+    : null;
+
+  const tourScript = (isTutorial && currentQ && currentQ.tour) || [];
+  const tourStep = isTutorial ? activeStep(tourScript, tourIdx, tourPhase) : null;
+
+  const tourAdvance = () => {
+    const s = tourScript[tourIdx];
+    if (s) EV.trackTutorialStep(s.id, { level, action: s.action, target: s.target });
+    setTourIdx((i) => i + 1);
+  };
+
+  // Leaving the tutorial early. Goes straight to the map: dumping somebody back
+  // on the title screen after they asked to skip a tutorial makes them start the
+  // navigation over, which is the opposite of what they asked for.
+  const bailTutorial = () => {
+    sfx.current.click();
+    music.current.stop();
+    EV.trackTutorialStep("skipped", { level, atStep: tourIdx });
+    EV.trackRunEnd("abandoned", { level, mode: "tutorial" });
+    EV.flush();
+    resetState();
+    EV.trackNav("map");
+    setPhase("map");
   };
 
   const startChapter = async (district, chapterRef) => {
@@ -325,7 +414,10 @@ export function App() {
   const onLockIn = () => {
     if (selected === null) return;
     const wasRight = selected === currentQ.correct;
-    {
+    // No answer events in the tutorial. The player did not choose anything: the
+    // tour told them which button to press, including the one deliberate miss.
+    // Timing still lands, via the session clock and the tutorial step events.
+    if (!isTutorial) {
       const m = qMeter.current;
       const t = performance.now();
       EV.trackAnswer(currentQ, {
@@ -386,8 +478,10 @@ export function App() {
     sfx.current.click();
     const runMode = isDemo ? "demo" : isEndless ? "endless" : "ladder";
 
-    // Out of lives ends the run wherever it is.
-    if (lives <= 0) {
+    // Out of lives ends the run wherever it is. Never in the tutorial: the
+    // script spends exactly one life on purpose and a tutorial that can be
+    // failed is not a tutorial.
+    if (lives <= 0 && !isTutorial) {
       music.current.stop();
       setFinalPrize(0);
       if (isDemo) recordDemoRun(correctCount, LIVES_PER_ROUND, false);
@@ -402,6 +496,19 @@ export function App() {
     // Reached the end of the deck with lives to spare. This is a finished round
     // whether or not every answer was right, which is the other half of the
     // lives change: "cleared it" now means "got to the end", not "was perfect".
+    // The tutorial has no prize, no scoreboard and no win screen. It ends by
+    // putting the player where they wanted to be in the first place.
+    if (isTutorial && next >= deck.length) {
+      music.current.stop();
+      EV.trackTutorialStep("completed", { level, correct: correctCount });
+      EV.trackRunEnd("tutorial_done", { level, mode: "tutorial", correct: correctCount, wrong: wrongCount });
+      EV.flush();
+      resetState();
+      EV.trackNav("map");
+      setPhase("map");
+      return;
+    }
+
     if (next >= deck.length) {
       const prize = prizeFor(correctCount);
       setFinalPrize(prize);
@@ -486,7 +593,7 @@ export function App() {
     if (k === "skip" && !canSkipNow()) { sfx.current.click(); return; }
     const bumpUsage = () => setUsage((s) => ({ ...s, [k]: s[k] + 1 }));
     qMeter.current.lifelines.push(k);
-    EV.trackLifeline(currentQ, k, { purchased: !lifelines[k], points });
+    if (!isTutorial) EV.trackLifeline(currentQ, k, { purchased: !lifelines[k], points });
     if (lifelines[k]) {
       applyLifeline(k);
       bumpUsage();
@@ -519,7 +626,7 @@ export function App() {
   const cancelSkip = () => { sfx.current.click(); setSkipConfirm(false); };
   const doSkip = () => {
     sfx.current.click();
-    EV.trackReviewCard(currentQ, -1, { skipped: true, correct: revealCorrect });
+    if (!isTutorial) EV.trackReviewCard(currentQ, -1, { skipped: true, correct: revealCorrect });
     setSkipConfirm(false); setSkipConfirmed(true); advance();
   };
 
@@ -550,9 +657,28 @@ export function App() {
   const winTakeMoney = () => { sfx.current.click(); music.current.stop(); EV.trackRunEnd("walked", { level, mode: "endless", correct: correctCount, wrong: wrongCount }); EV.flush(); setPhase("won"); };
   const winKeepGoing = () => { sfx.current.click(); enterEndless(); };
 
-  const walkNext = () => { sfx.current.click(); if (walkStep < R.walkthrough.length - 1) setWalkStep(walkStep + 1); else goMap(); };
+  const walkNext = () => { sfx.current.click(); if (walkStep < R.walkthrough.length - 1) setWalkStep(walkStep + 1); else startTutorial(); };
   const walkPrev = () => { sfx.current.click(); if (walkStep > 0) setWalkStep(walkStep - 1); };
+  // Skipping the brief still skips the tutorial. Somebody who taps past the
+  // safety screen is not going to sit through nine tooltips, and pretending
+  // otherwise just moves the drop-off one screen later.
   const walkSkip = () => { sfx.current.click(); goMap(); };
+
+  // The tutorial layer: the spotlight for the current step, plus a bail-out chip
+  // that is present for the WHOLE tutorial regardless of what the overlay is
+  // doing. If a step ever wedges (a target that never renders, a phase that
+  // never arrives) the chip is the guaranteed way out, and it sits at a higher
+  // z-index than the overlay so it stays reachable.
+  const tutorialLayer = !isTutorial ? [] : [
+    c.jsx("button", { className: "kyr-tour-bail", onClick: bailTutorial, children: R.tutorial.bailLabel }, "tour-bail"),
+    c.jsx(TourOverlay, {
+      step: tourStep,
+      stepNumber: Math.min(tourIdx + 1, tourScript.length),
+      stepTotal: tourScript.length,
+      onAdvance: tourAdvance,
+      onSkip: bailTutorial
+    }, "tour-overlay")
+  ];
 
   // -------------------------------------------------------------------------
   // Screens
@@ -662,7 +788,8 @@ export function App() {
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
       c.jsx(MapScreen, {
         onPlayChapter: startChapter, onHome: () => { resetState(); setPhase("start"); },
-        onPlayDemo: startDemo, demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay, demoWon
+        onPlayDemo: startDemo, onPlayTutorial: startTutorial,
+        demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay, demoWon
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
@@ -717,13 +844,15 @@ export function App() {
         lives, isLastQuestion: level + 1 >= deck.length,
         onNext: advance, onHome: askHome,
         onEarnCardPoint: (seg) => earnCardPoint(seg),
+        onRevealStep: setRevealStep,
         onFlipSound: () => sfx.current.cardFlip(),
         onRevisitSound: () => sfx.current.cardRevisit(),
         onAckSound: () => sfx.current.click(),
         onSkipReview: openSkipConfirm
       }),
       homeConfirm && c.jsx(ConfirmModal, { title: R.homeConfirm.title, body: R.homeConfirm.body, primaryLabel: R.homeConfirm.leaveLabel, secondaryLabel: R.homeConfirm.stayLabel, primaryVariant: "danger", onPrimary: confirmHome, onSecondary: cancelHome }),
-      skipConfirm && c.jsx(ConfirmModal, { title: R.review.skipConfirmTitle, body: R.review.skipConfirmBody, primaryLabel: R.review.skipConfirmPrimary, secondaryLabel: R.review.skipConfirmSecondary, primaryVariant: "danger", onPrimary: doSkip, onSecondary: cancelSkip })
+      skipConfirm && c.jsx(ConfirmModal, { title: R.review.skipConfirmTitle, body: R.review.skipConfirmBody, primaryLabel: R.review.skipConfirmPrimary, secondaryLabel: R.review.skipConfirmSecondary, primaryVariant: "danger", onPrimary: doSkip, onSecondary: cancelSkip }),
+      ...tutorialLayer
     ] });
   }
 
@@ -747,7 +876,8 @@ export function App() {
       onConfirm: confirmLifeline, onCancel: cancelLifeline
     }),
     homeConfirm && c.jsx(ConfirmModal, { title: R.homeConfirm.title, body: R.homeConfirm.body, primaryLabel: R.homeConfirm.leaveLabel, secondaryLabel: R.homeConfirm.stayLabel, primaryVariant: "accent", onPrimary: confirmHome, onSecondary: cancelHome }),
-    logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo }),
+    ...tutorialLayer
   ] });
 }
 
@@ -785,6 +915,7 @@ function LivesBox({ lives, max = LIVES_PER_ROUND, compact }) {
   const low = lives === 1;
   return c.jsxs("div", {
     className: "ts-lives-box",
+    "data-tour": "lives",
     "aria-label": R.lives.remaining(lives),
     style: {
       flex: compact ? "0 0 auto" : "1 1 0", minWidth: 0,
@@ -949,7 +1080,7 @@ function QuestionScreen(props) {
         c.jsxs("div", { className: "ts-stat-row", style: { display: "flex", gap: 12, alignItems: "stretch" }, children: [
           c.jsx(LivesBox, { lives }),
           c.jsx(ShopButton, { lifelines, points, disabled: locked, onClick: onOpenShop }),
-          c.jsxs("div", { className: "ts-stat-money", style: { flex: "1.6 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 16px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
+          c.jsxs("div", { className: "ts-stat-money", "data-tour": "worth", style: { flex: "1.6 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 16px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
             c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: isEndless ? "Streak" : "Worth" }),
             c.jsx(FitText, {
               max: 44, min: 18,
@@ -964,21 +1095,22 @@ function QuestionScreen(props) {
             ? c.jsxs(c.Fragment, { children: [R.endlessMode.headerLabel, " Q", String(level + 1).padStart(2, "0")] })
             : c.jsxs(c.Fragment, { children: ["QUESTION ", String(level + 1).padStart(2, "0"), " ", c.jsxs("span", { className: "ts-q-header-total", style: { color: u.textMuted, fontSize: 18 }, children: ["/ ", String(runLength)] })] }) })
         }),
-        c.jsxs("div", { className: "ts-question-card", style: { position: "relative", background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${u.brand}`, padding: "32px 36px", borderRadius: 10, animation: revealWrong ? "ts-wrong-shake-card 0.5s ease-out" : "ts-fade-in 0.4s ease-out", boxShadow: U.md }, children: [
+        c.jsxs("div", { className: "ts-question-card", "data-tour": "question", style: { position: "relative", background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${u.brand}`, padding: "32px 36px", borderRadius: 10, animation: revealWrong ? "ts-wrong-shake-card 0.5s ease-out" : "ts-fade-in 0.4s ease-out", boxShadow: U.md }, children: [
           c.jsx("p", { style: { fontFamily: C.body, fontSize: "clamp(19px, 2.2vw, 24px)", lineHeight: 1.45, fontWeight: 600, margin: 0, color: u.text }, children: question.q }),
-          hintShown && c.jsxs("div", { style: { marginTop: 22, padding: "14px 18px", background: u.blueBg, border: `2px solid ${u.blue}`, borderRadius: 6, fontFamily: C.body, fontSize: 14, color: u.blue, fontStyle: "italic", lineHeight: 1.6, animation: "ts-fade-in 0.4s", fontWeight: 500 }, children: [
+          hintShown && c.jsxs("div", { "data-tour": "hint", style: { marginTop: 22, padding: "14px 18px", background: u.blueBg, border: `2px solid ${u.blue}`, borderRadius: 6, fontFamily: C.body, fontSize: 14, color: u.blue, fontStyle: "italic", lineHeight: 1.6, animation: "ts-fade-in 0.4s", fontWeight: 500 }, children: [
             c.jsx("span", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.blue, fontWeight: 700, fontStyle: "normal", marginRight: 10, textTransform: "uppercase" }, children: R.lifelines.hint.inGameLabel }),
             question.hint
           ] })
         ] }, "q-" + level),
-        c.jsx("div", { style: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }, className: "ts-answer-grid", children: question.options.map((opt, i) => c.jsx(AnswerButton, {
+        c.jsx("div", { "data-tour": "answers", style: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }, className: "ts-answer-grid", children: question.options.map((opt, i) => c.jsx(AnswerButton, {
           letter: ["A", "B", "C", "D"][i], text: opt, selected: selectedIdx === i, locked,
           isCorrect: i === question.correct, isSelectedAnswer: selectedIdx === i, revealCorrect, revealWrong,
           removed: removedAnswers.includes(i), juryPct: juryResults ? juryResults[i] : null,
+          tourId: "answer-" + i,
           stage, onClick: () => onSelect(i)
         }, i)) }),
         c.jsx("div", { className: "ts-action-bar", style: { display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 14 }, children:
-          c.jsx("div", { className: "ts-action-bar-right", style: { display: "flex", gap: 12 }, children: c.jsx(Button, { variant: "primary", size: "md", disabled: selectedIdx === null || locked, onClick: onLockIn, children: "Lock It In" }) })
+          c.jsx("div", { className: "ts-action-bar-right", style: { display: "flex", gap: 12 }, children: c.jsx(Button, { variant: "primary", size: "md", disabled: selectedIdx === null || locked, onClick: onLockIn, "data-tour": "lock", children: "Lock It In" }) })
         })
       ] }),
       // The money rail is hidden in the demo: it has 15 rungs and the demo is a
@@ -1003,7 +1135,7 @@ function QuestionScreen(props) {
 // ones after it. Under the old one-miss rule that state was impossible.
 function ProgressDots({ level, runLength, results = [], revealCorrect, revealWrong, isEndless }) {
   const n = isEndless ? Math.max(runLength, level + 1) : runLength;
-  return c.jsx("div", { className: "ts-progress-dots", style: { display: "flex", gap: 4, alignItems: "center" }, children: Array.from({ length: n }).map((_, i) => {
+  return c.jsx("div", { className: "ts-progress-dots", "data-tour": "progress", style: { display: "flex", gap: 4, alignItems: "center" }, children: Array.from({ length: n }).map((_, i) => {
     const res = results[i];
     const current = i === level;
     const green = res === true || (current && revealCorrect);
@@ -1013,7 +1145,7 @@ function ProgressDots({ level, runLength, results = [], revealCorrect, revealWro
 }
 
 function AnswerButton(props) {
-  const { letter, text, selected, locked, isCorrect, isSelectedAnswer, revealCorrect, revealWrong, removed, juryPct, stage, onClick } = props;
+  const { letter, text, selected, locked, isCorrect, isSelectedAnswer, revealCorrect, revealWrong, removed, juryPct, stage, tourId, onClick } = props;
   let bg = u.surface, border = u.outline, color = u.text, anim = "", letterBg = u.brand, letterColor = u.textOnDark, shadow = U.md, transform = "translate(0, 0)";
   if (removed) { bg = "transparent"; color = u.textMuted; letterBg = u.borderLight; letterColor = u.textMuted; shadow = "none"; }
   else if (revealCorrect && isCorrect) { bg = u.green; color = u.textOnDark; letterBg = u.surface; letterColor = u.green; anim = "ts-correct-pop 0.8s ease-out"; }
@@ -1022,7 +1154,7 @@ function AnswerButton(props) {
   else if (locked && selected) { bg = u.brandSoft; anim = `ts-tension-${stage} ${1.6 - stage * 0.1}s ease-in-out infinite`; shadow = "none"; transform = "translate(4px, 4px)"; }
   else if (selected) { bg = u.brandSoft; shadow = U.sm; transform = "translate(1px, 1px)"; }
   return c.jsxs("button", {
-    onClick, disabled: removed || locked, className: "ts-answer-btn",
+    onClick, disabled: removed || locked, className: "ts-answer-btn", "data-tour": tourId,
     style: { textAlign: "left", background: bg, color, border: `2px solid ${border}`, borderRadius: 10, padding: "16px 18px", cursor: removed || locked ? "default" : "pointer", fontFamily: C.body, fontSize: 15, fontWeight: 600, opacity: removed ? 0.4 : 1, textDecoration: removed ? "line-through" : "none", transition: "background 0.18s, box-shadow 0.12s, transform 0.12s, opacity 0.3s", animation: anim, position: "relative", minHeight: 68, display: "flex", alignItems: "center", gap: 14, lineHeight: 1.4, boxShadow: shadow, transform },
     onMouseEnter: (e) => { if (!removed && !locked && !selected) { e.currentTarget.style.boxShadow = "2px 2px 0 " + u.outline; e.currentTarget.style.transform = "translate(2px, 2px)"; } },
     onMouseLeave: (e) => { if (!removed && !locked && !selected) { e.currentTarget.style.boxShadow = U.md; e.currentTarget.style.transform = "translate(0, 0)"; } },
@@ -1075,6 +1207,7 @@ function ShopButton({ lifelines, points, disabled, onClick }) {
     onClick: off ? undefined : onClick, disabled: off,
     onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false),
     className: "ts-shop-btn",
+    "data-tour": "shop",
     "aria-label": `Open shop. ${points} points, ${ready} free lifelines ready.`,
     style: {
       flex: "1 1 0", minWidth: 0, display: "flex", flexDirection: "column",
@@ -1130,7 +1263,7 @@ function ShopPanel({ lifelines, points, prices, onPick, onClose }) {
         ] })
       ] }),
       c.jsx("p", { style: { fontFamily: C.body, fontSize: 13, lineHeight: 1.5, color: u.textDim, fontWeight: 500, margin: "0 0 16px" }, children: R.shop.blurb }),
-      c.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }, children: LIFELINE_KEYS.map((k) => {
+      c.jsx("div", { "data-tour": "shop-list", style: { display: "flex", flexDirection: "column", gap: 9, marginBottom: 18 }, children: LIFELINE_KEYS.map((k) => {
         const meta = R.lifelines[k];
         const available = lifelines[k];
         const price = prices[k];
@@ -1150,6 +1283,7 @@ function ShopPanel({ lifelines, points, prices, onPick, onClose }) {
           ] }),
           c.jsx("button", {
             onClick: clickable ? () => onPick(k) : undefined, disabled: !clickable,
+            "data-tour": "shop-item-" + k,
             style: { flexShrink: 0, fontFamily: C.display, fontSize: 13, letterSpacing: 1, background: clickable ? u.brand : u.surfaceWarm, color: clickable ? u.textOnDark : u.textMuted, border: `2px solid ${clickable ? u.outline : u.borderLight}`, borderRadius: 8, padding: "9px 16px", cursor: clickable ? "pointer" : "default", textTransform: "uppercase", boxShadow: clickable ? U.sm : "none", minWidth: 72 },
             children: actionText
           })
@@ -1233,7 +1367,7 @@ function RunBreakdown({ usage = {}, pointsSpent = 0, pointsLeft = 0 }) {
 // already knew it. That was backwards.
 function RevealScreen(props) {
   const { question, level, runLength, isEndless, revealCorrect, selectedIdx, muted, setMuted,
-    points, lives, isLastQuestion, onNext, onHome, onEarnCardPoint,
+    points, lives, isLastQuestion, onNext, onHome, onEarnCardPoint, onRevealStep,
     onFlipSound, onRevisitSound, onAckSound, onSkipReview } = props;
 
   // Points are only earned on a correct answer. The cards themselves are
@@ -1253,6 +1387,11 @@ function RevealScreen(props) {
   const burstTimer = useRef(null);
 
   const CARD_COUNT = R.cardMeta.length; // 3
+
+  // Tell the parent which half of the reveal is on screen. Mount reports
+  // "verdict"; enterCards reports "cards". Without this the tour cannot tell a
+  // verdict step from a card step, since both live in phase "revealing".
+  useEffect(() => { if (onRevealStep) onRevealStep("verdict"); }, []); // eslint-disable-line
 
   const cardShownAt = useRef(performance.now());
   useEffect(() => {
@@ -1330,6 +1469,7 @@ function RevealScreen(props) {
   const enterCards = () => {
     if (onFlipSound) onFlipSound();
     setStep("cards");
+    if (onRevealStep) onRevealStep("cards");
     setCurrent(0);
     setFirstView(true);
     startDwell();
@@ -1373,7 +1513,7 @@ function RevealScreen(props) {
         ] }),
 
         c.jsxs("div", { style: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20, textAlign: "center", maxWidth: 560, margin: "0 auto", width: "100%" }, children: [
-          c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10, animation: "ts-fade-in 0.3s ease-out" }, children: [
+          c.jsxs("div", { "data-tour": "verdict", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10, animation: "ts-fade-in 0.3s ease-out" }, children: [
             c.jsx("div", { style: { width: 54, height: 6, borderRadius: 3, background: revealCorrect ? u.green : u.red } }),
             c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(38px, 8vw, 64px)", lineHeight: 1, letterSpacing: 1, color: revealCorrect ? u.green : u.red }, children: revealCorrect ? "CORRECT" : "NOT QUITE" })
           ] }),
@@ -1382,7 +1522,7 @@ function RevealScreen(props) {
           // Getting this wrong reads as punishment; getting it right reads as a
           // running total, which is the difference between "you failed" and
           // "you have two left".
-          !revealCorrect && c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: "ts-fade-in 0.45s ease-out" }, children: [
+          !revealCorrect && c.jsxs("div", { "data-tour": "verdict-hearts", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: "ts-fade-in 0.45s ease-out" }, children: [
             c.jsx("div", { style: { display: "flex", gap: 7 }, children: Array.from({ length: LIVES_PER_ROUND }).map((_, i) => c.jsx(Heart, { filled: i < lives, size: 30 }, i)) }),
             c.jsx("div", { style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 1.4, fontWeight: 700, textTransform: "uppercase", color: outOfLives ? u.red : lives === 1 ? u.terra : u.textMuted },
               children: outOfLives ? R.lives.outOfLives : lives === 1 ? R.lives.lastOne : R.lives.lostOne })
@@ -1403,7 +1543,7 @@ function RevealScreen(props) {
         ] }),
 
         c.jsx("div", { style: { flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }, children:
-          c.jsx("button", { onClick: enterCards, style: { fontFamily: C.display, fontSize: 16, letterSpacing: 2, background: u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, padding: "13px 32px", borderRadius: 10, cursor: "pointer", textTransform: "uppercase", boxShadow: U.md }, children: revealCorrect ? R.verdictContinue : R.verdictContinueWrong })
+          c.jsx("button", { onClick: enterCards, "data-tour": "continue", style: { fontFamily: C.display, fontSize: 16, letterSpacing: 2, background: u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, padding: "13px 32px", borderRadius: 10, cursor: "pointer", textTransform: "uppercase", boxShadow: U.md }, children: revealCorrect ? R.verdictContinue : R.verdictContinueWrong })
         })
       ]
     });
@@ -1413,6 +1553,7 @@ function RevealScreen(props) {
   const finalLabel = outOfLives ? "See Final Result \u2192" : isLastQuestion ? "See your result \u2192" : "Next Question \u2192";
   const finalBtnEl = c.jsx("button", {
     onClick: advanceOut,
+    "data-tour": "final",
     style: { fontFamily: C.display, fontSize: 15, letterSpacing: 2, background: outOfLives ? u.terra : u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, padding: "11px 24px", borderRadius: 8, cursor: "pointer", textTransform: "uppercase", boxShadow: U.md, animation: "ts-pulse-next 1.8s ease-in-out infinite" },
     children: finalLabel
   });
@@ -1487,6 +1628,7 @@ function NextCardButton({ canAdvance, onClick, label, ackOwed, cardRead }) {
   return c.jsxs("button", {
     onClick: canAdvance ? onClick : undefined,
     disabled: !canAdvance,
+    "data-tour": "next-card",
     style: { position: "relative", overflow: "hidden", fontFamily: C.display, fontSize: 13, letterSpacing: 1.5, background: canAdvance ? u.surface : u.surfaceWarm, color: canAdvance ? u.text : u.textMuted, border: `2px solid ${u.outline}`, padding: "10px 22px", borderRadius: 8, cursor: canAdvance ? "pointer" : "default", textTransform: "uppercase", boxShadow: canAdvance ? U.sm : "none", minWidth: 140 },
     children: [
       readingStill && c.jsx("span", { "aria-hidden": true, style: { position: "absolute", left: 0, top: 0, bottom: 0, background: u.brandSofter, animation: "ts-dwell-fill 2s linear forwards", zIndex: 0 } }),
@@ -1501,7 +1643,7 @@ function ComicCard({ cardIndex, meta, dir, firstView, question, scoring, acked, 
     ? "ts-card-flip-in 0.5s cubic-bezier(.2,.7,.2,1) both"
     : (dir >= 0 ? "ts-card-slide-left 0.28s ease-out both" : "ts-card-slide-right 0.28s ease-out both");
   return c.jsx("div", { className: "ts-comic-flip-wrap", style: { flex: 1, minHeight: 0, perspective: 1400, display: "flex" }, children:
-    c.jsxs("div", { className: "ts-comic-card", style: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0, background: u.surfaceHigh, border: `3px solid ${u.outline}`, borderRadius: 12, boxShadow: U.lg, overflow: "hidden", transformStyle: "preserve-3d", animation: anim }, children: [
+    c.jsxs("div", { className: "ts-comic-card", "data-tour": "card", style: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0, background: u.surfaceHigh, border: `3px solid ${u.outline}`, borderRadius: 12, boxShadow: U.lg, overflow: "hidden", transformStyle: "preserve-3d", animation: anim }, children: [
       c.jsxs("div", { className: "ts-comic-header", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 20px", background: u.brand, color: u.textOnDark, borderBottom: `3px solid ${u.outline}`, fontFamily: C.display, fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: 1, flexShrink: 0 }, children: [
         c.jsx("span", { children: meta.label }),
         c.jsx("span", { style: { fontFamily: C.mono, fontSize: 12, letterSpacing: 1, opacity: 0.85, fontWeight: 700 }, children: `${cardIndex + 1} / ${R.cardMeta.length}` })
@@ -1536,6 +1678,7 @@ function InCardAck({ acked, onAck, scoring }) {
   // for a card whose job is teaching.
   return c.jsx("button", {
     onClick: onAck,
+    "data-tour": "ack",
     style: { fontFamily: C.display, fontSize: "clamp(15px, 2.6vw, 19px)", letterSpacing: 1.5, background: u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, padding: "12px 34px", borderRadius: 10, cursor: "pointer", textTransform: "uppercase", boxShadow: U.md, minWidth: 200, animation: "ts-pulse-next 1.6s ease-in-out infinite" },
     children: scoring ? R.review.acknowledgeScoringLabel : R.review.acknowledgeLabel
   });
