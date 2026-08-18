@@ -207,7 +207,11 @@ export async function loadTutorial() {
   const raw = await getJSON("content/tutorial/questions.json");
   const questions = (raw.questions || []).map((q) => ({
     ...toRuntime(q),
-    tour: q.tour || []
+    tour: q.tour || [],
+    // Tutorial-only. A wrong pick on this question strikes the option out and
+    // lets the player go again instead of spending a life and revealing the
+    // answer. See the retry branch in engine.onLockIn.
+    retryOnWrong: !!q.retryOnWrong
   }));
   if (questions.length === 0) throw new Error("The tutorial file has no questions");
   return {
