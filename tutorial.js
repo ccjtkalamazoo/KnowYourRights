@@ -288,6 +288,51 @@ export function TourBail({ onSkip, label }) {
 }
 
 // ---------------------------------------------------------------------------
+// TourBailConfirm : "are you sure" for leaving the tutorial.
+// ---------------------------------------------------------------------------
+// Not ui.ConfirmModal, deliberately. That component's backdrop sits at z-index
+// 90, which is below the tour's dim bands at 200, so it would render behind the
+// thing it is asking about. Portaled and self-contained instead.
+export function TourBailConfirm({ onConfirm, onCancel, title, body, confirmLabel, cancelLabel }) {
+  if (typeof document === "undefined") return null;
+  return createPortal(
+    c.jsx("div", {
+      onClick: (e) => { if (e.target === e.currentTarget) onCancel(); },
+      style: {
+        position: "fixed", inset: 0, zIndex: 10000,
+        background: "rgba(42,31,18,0.72)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 24, animation: "ts-backdrop-in 0.15s ease-out"
+      },
+      children: c.jsxs("div", {
+        style: {
+          background: u.surfaceHigh, border: `3px solid ${u.outline}`, borderRadius: 14,
+          boxShadow: U.lg, padding: "26px 28px 22px", maxWidth: 420, width: "100%",
+          animation: "ts-modal-in 0.18s ease-out"
+        },
+        children: [
+          c.jsx("h3", { style: { fontFamily: C.display, fontSize: 24, letterSpacing: 0, margin: "0 0 8px", color: u.text, lineHeight: 1.15 }, children: title }),
+          c.jsx("p", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.6, color: u.textDim, fontWeight: 500, margin: "0 0 20px" }, children: body }),
+          c.jsxs("div", { style: { display: "flex", gap: 12, justifyContent: "flex-end", flexWrap: "wrap" }, children: [
+            c.jsx("button", {
+              onClick: onCancel,
+              style: { fontFamily: C.display, fontSize: 13, letterSpacing: 1.4, background: u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "10px 20px", cursor: "pointer", textTransform: "uppercase", boxShadow: U.sm, WebkitTapHighlightColor: "transparent" },
+              children: cancelLabel
+            }),
+            c.jsx("button", {
+              onClick: onConfirm,
+              style: { fontFamily: C.display, fontSize: 13, letterSpacing: 1.4, background: "transparent", color: u.textDim, border: `2px solid ${u.borderLight}`, borderRadius: 8, padding: "10px 20px", cursor: "pointer", textTransform: "uppercase", WebkitTapHighlightColor: "transparent" },
+              children: confirmLabel
+            })
+          ] })
+        ]
+      })
+    }),
+    document.body
+  );
+}
+
+// ---------------------------------------------------------------------------
 // TourCard : the tooltip itself.
 // ---------------------------------------------------------------------------
 function TourCard({ step, stepNumber, stepTotal, onAdvance, onBack, canBack, centred, tapToAdvance }) {
