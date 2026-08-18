@@ -20,20 +20,21 @@ export const R = {
   // here is only subtraction: the four slides about lifelines and points
   // described features that no longer exist, and a tutorial that teaches a
   // thing the game does not do is worse than no tutorial. Six slides now.
+  // The walkthrough is now ONE screen: the safety brief. Everything that used
+  // to be a card after it (the ladder, the questions, the cards, the points,
+  // the shop) is a step in the real game now, pointed at the real button. A
+  // card describing a button is a worse teacher than the button.
+  //
+  // The brief stays a card, and stays first, deliberately. It is the most
+  // important screen in the product and it is the one thing here that is not
+  // about how to play.
   walkthrough: [
-    { key: "safety", type: "safety", title: "READ THIS FIRST", body: "This game teaches your legal rights so you never face a law enforcement encounter with no idea what to do. But knowing a right and safely using it are different things. Sometimes your rights will be violated, and the street is not the place to make that point. Your number one goal is to get home safe. Stay calm, keep your hands visible, follow instructions, and do what you have to do to survive. You fight an unfair stop later, in court, with a lawyer, not in the moment. It is completely fine to get a question wrong here. It is far more dangerous to be in that situation knowing nothing at all." },
-    { key: "questions", type: "questions", title: "THE QUESTIONS", body: "Four choices per question. Pick one, lock it in. Then you find out whether you were right." },
-    { key: "lives", type: "lives", title: "THREE LIVES", body: "You start every round with three lives. Get one wrong and you lose a life, but you keep going. Lose all three and the round is over. You do not have to be perfect, and nobody expects you to be." },
-    { key: "ladder", type: "ladder", title: "THE LADDER", body: "Every right answer moves you up. A wrong one costs a life and leaves you where you are." },
-    { key: "cards", type: "cards", title: "REVIEW CARDS", body: "After every answer, right or wrong, three cards come up one at a time: the law behind it, a phrase to remember, and how it plays out in real life. Take a few seconds with each one. This is the part that actually matters." },
-    { key: "points", type: "points", title: "POINTS", body: "Get a question right and each review card you read is worth a point, three per question. Get it wrong and you still see all three cards, because that is when you need them most, but there is no point in it. Points are the only way to buy help." },
-    { key: "shop", type: "shop", title: "THE SHOP", body: "Tap SHOP during a question to spend points. 50/50 crosses off two wrong answers. JURY shows how other students voted. COUNSEL gives you a hint. SKIP trades your question for a different one. The first three are free once each; after that, and for SKIP, you pay." },
-    { key: "ready", type: "ready", title: "LET'S GO", body: "Three lives. Four lifelines. No do-overs on the round itself." }
+    { key: "safety", type: "safety", title: "READ THIS FIRST", body: "This game teaches your legal rights so you never face a law enforcement encounter with no idea what to do. But knowing a right and safely using it are different things. Sometimes your rights will be violated, and the street is not the place to make that point. Your number one goal is to get home safe. Stay calm, keep your hands visible, follow instructions, and do what you have to do to survive. You fight an unfair stop later, in court, with a lawyer, not in the moment. It is completely fine to get a question wrong here. It is far more dangerous to be in that situation knowing nothing at all." }
   ],
   walkthroughStepPrefix: "Step",
   walkthroughSkipLabel: "Skip walkthrough",
   walkthroughNextLabel: "Next",
-  walkthroughPlayLabel: "Play",
+  walkthroughPlayLabel: "Show me how \u2192",
   homeButton: "\u2190 Home",
   homeConfirm: { title: "Leave this game?", body: "Your progress will be lost.", leaveLabel: "Leave", stayLabel: "Keep playing" },
   // Lives, which replaced both the one-miss-and-out rule and the SHIELD
@@ -177,6 +178,14 @@ export const R = {
     reachedAll: "You got all five right.",
     loadErrorTitle: "THE DEMO DID NOT LOAD",
     loadErrorBody: "Its questions could not be fetched. Check the connection and try again."
+  },
+  // The tutorial. Copy for the tour steps themselves lives with the questions
+  // in content/tutorial/questions.json, so a wording change there is a content
+  // edit rather than a code change.
+  tutorial: {
+    replayLabel: "How to play",
+    replayBlurb: "Two minutes. Walks you through every button.",
+    bailLabel: "Skip tutorial"
   },
   safetyHeading: "GETTING HOME SAFE COMES FIRST",
   roundStart: "Start the round \u2192",
