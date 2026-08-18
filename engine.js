@@ -56,7 +56,7 @@ import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
 import { loadChapter, loadDemo, loadTutorial } from "./content.js";
-import { TourOverlay, injectTourStyles, activeStep } from "./tutorial.js";
+import { TourOverlay, TourBail, injectTourStyles, activeStep } from "./tutorial.js";
 
 // ---------------------------------------------------------------------------
 // The demo (event build)
@@ -387,6 +387,16 @@ export function App() {
     setTourIdx((i) => i + 1);
   };
 
+  // Back reaches within the current section only, and only across steps that
+  // share a phase. Crossing a phase would mean undoing an answer or closing a
+  // dialog the player already resolved, which Back cannot actually do, so
+  // offering it would be a lie. Sections themselves are one-way: once a new
+  // question is dealt, the previous one is gone.
+  const tourCanBack = isTutorial && tourIdx > 0
+    && !!tourScript[tourIdx] && !!tourScript[tourIdx - 1]
+    && tourScript[tourIdx - 1].phase === tourScript[tourIdx].phase;
+  const tourBack = () => { if (tourCanBack) setTourIdx((i) => Math.max(0, i - 1)); };
+
   const enterEndless = () => {
     sfx.current.click();
     const extra = buildEndlessDeck(deck, chapter);
@@ -457,6 +467,23 @@ export function App() {
         setTimeout(() => sfx.current.correct(s), 160);
         setPhase("revealing");
         music.current.unduck(800);
+      } else if (isTutorial && currentQ && currentQ.retryOnWrong) {
+        // Tutorial retry. The last tutorial question is a real choice, so a wrong
+        // pick has to do something, but marching a player through the whole
+        // wrong-answer ceremony on the closing question is the wrong note and
+        // handing them the answer defeats the point of asking.
+        //
+        // The option they picked is struck out the way 50/50 strikes one, the
+        // selection clears, and they go again. No life, no verdict, no reveal.
+        setResults((r) => { const copy = r.slice(); copy[level] = undefined; return copy; });
+        setRemovedAnswers((prev) => (prev.includes(selected) ? prev : [...prev, selected]));
+        setSelected(null);
+        setLocked(false);
+        setScreenFlash("red");
+        setTimeout(() => setScreenFlash(null), 600);
+        sfx.current.lifeline();
+        setPhase("playing");
+        music.current.unduck(600);
       } else {
         // A miss costs a life. It does NOT end the run unless that was the last
         // one, which is the whole point of the change.
@@ -671,13 +698,14 @@ export function App() {
   // never arrives) the chip is the guaranteed way out, and it sits at a higher
   // z-index than the overlay so it stays reachable.
   const tutorialLayer = !isTutorial ? [] : [
-    c.jsx("button", { className: "kyr-tour-bail", onClick: bailTutorial, children: R.tutorial.bailLabel }, "tour-bail"),
+    c.jsx(TourBail, { onSkip: bailTutorial, label: R.tutorial.bailLabel }, "tour-bail"),
     c.jsx(TourOverlay, {
       step: tourStep,
       stepNumber: Math.min(tourIdx + 1, tourScript.length),
       stepTotal: tourScript.length,
       onAdvance: tourAdvance,
-      onSkip: bailTutorial
+      onBack: tourBack,
+      canBack: tourCanBack
     }, "tour-overlay")
   ];
 
@@ -842,7 +870,7 @@ export function App() {
       c.jsx(RevealScreen, {
         question: currentQ, level, runLength, isEndless, streak,
         revealCorrect, selectedIdx: selected, muted, setMuted, points,
-        lives, isLastQuestion: level + 1 >= deck.length,
+        lives, isLastQuestion: level + 1 >= deck.length, isTutorial,
         onNext: advance, onHome: askHome,
         onEarnCardPoint: (seg) => earnCardPoint(seg),
         onRevealStep: setRevealStep,
@@ -1368,7 +1396,7 @@ function RunBreakdown({ usage = {}, pointsSpent = 0, pointsLeft = 0 }) {
 // already knew it. That was backwards.
 function RevealScreen(props) {
   const { question, level, runLength, isEndless, revealCorrect, selectedIdx, muted, setMuted,
-    points, lives, isLastQuestion, onNext, onHome, onEarnCardPoint, onRevealStep,
+    points, lives, isLastQuestion, isTutorial, onNext, onHome, onEarnCardPoint, onRevealStep,
     onFlipSound, onRevisitSound, onAckSound, onSkipReview } = props;
 
   // Points are only earned on a correct answer. The cards themselves are
@@ -1574,7 +1602,7 @@ function RevealScreen(props) {
           // line saying there are no points, so the absence is stated rather
           // than left as a thing the player notices is missing.
           scoring
-            ? c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, background: earnedCount === CARD_COUNT ? u.brandSofter : u.surfaceWarm, border: `3px solid ${earnedCount === CARD_COUNT ? u.brand : u.outline}`, borderRadius: 22, padding: "6px 14px 6px 10px", boxShadow: U.sm, animation: earnedCount === CARD_COUNT ? "ts-streak-pop 0.5s ease-out" : "none" }, children: [
+            ? c.jsxs("div", { "data-tour": "points", style: { display: "flex", alignItems: "center", gap: 10, background: earnedCount === CARD_COUNT ? u.brandSofter : u.surfaceWarm, border: `3px solid ${earnedCount === CARD_COUNT ? u.brand : u.outline}`, borderRadius: 22, padding: "6px 14px 6px 10px", boxShadow: U.sm, animation: earnedCount === CARD_COUNT ? "ts-streak-pop 0.5s ease-out" : "none" }, children: [
                 c.jsx("div", { style: { display: "flex", gap: 5 }, children: [0, 1, 2].map((r) => {
                   const filled = r < earnedCount;
                   return c.jsx("div", { style: { width: 20, height: 20, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: filled ? u.brand : u.surface, border: `2.5px solid ${filled ? u.brand : u.borderLight}`, boxShadow: filled ? U.sm : "none", animation: r === earnedCount - 1 ? "ts-pip-pop 0.4s ease-out" : "none" }, children: filled ? c.jsx("span", { style: { color: u.textOnDark, fontSize: 11, fontFamily: C.display, lineHeight: 1 }, children: "\u2605" }) : null }, r);
@@ -1613,7 +1641,10 @@ function RevealScreen(props) {
             : ((allSeen && allAcked) ? finalBtnEl : c.jsx(NextCardButton, { canAdvance: canAdvanceCard, ackOwed, cardRead, label: "Almost\u2026", onClick: () => {} }))
         ] }),
 
-        !allSeen && c.jsx("button", { onClick: onSkipReview, style: { background: "transparent", border: "none", fontFamily: C.mono, fontSize: 11, letterSpacing: 2, color: u.textMuted, cursor: "pointer", textTransform: "uppercase", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3, padding: "2px 10px" }, children: scoring ? R.review.skipLabelScoring : R.review.skipLabel })
+        // No skipping the review in the tutorial. The cards are the reason the
+        // tutorial exists, and a skip link on them is an invitation to miss the
+        // one part that is not about buttons.
+        !allSeen && !isTutorial && c.jsx("button", { onClick: onSkipReview, style: { background: "transparent", border: "none", fontFamily: C.mono, fontSize: 11, letterSpacing: 2, color: u.textMuted, cursor: "pointer", textTransform: "uppercase", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3, padding: "2px 10px" }, children: scoring ? R.review.skipLabelScoring : R.review.skipLabel })
       ] }),
 
       revealCorrect && c.jsx(Confetti, { intensity: "med" })
