@@ -185,7 +185,12 @@ export const R = {
   tutorial: {
     replayLabel: "How to play",
     replayBlurb: "Two minutes. Walks you through every button.",
-    bailLabel: "Skip tutorial"
+    bailLabel: "Skip tutorial",
+    // Shown when a tutorial retry strikes an option out. Deliberately does not
+    // say what the right answer is, and deliberately does not say anything was
+    // lost, because nothing was: the tutorial never spends a life on a retry.
+    retryTitle: "NOT THAT ONE",
+    retryBody: "Crossed off. Pick another and lock it in again."
   },
   safetyHeading: "GETTING HOME SAFE COMES FIRST",
   roundStart: "Start the round \u2192",
