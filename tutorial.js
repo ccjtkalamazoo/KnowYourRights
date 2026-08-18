@@ -39,6 +39,7 @@
 //     the engine keeps on screen. Nobody is ever trapped in the tutorial.
 
 import { c, u, C, U, useState, useEffect, useRef } from "./theme.js";
+import { createPortal } from "https://esm.sh/react-dom@18.3.1";
 
 // Breathing room around the highlighted element, in px.
 const PAD = 8;
@@ -174,7 +175,7 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
     }
     return c.jsx("div", {
       className: "kyr-tour",
-      style: { position: "fixed", left: 12, right: 12, bottom: 58, zIndex: 202, display: "flex", justifyContent: "center", pointerEvents: "none" },
+      style: { position: "fixed", left: 12, right: 12, bottom: 62, zIndex: 202, display: "flex", justifyContent: "center", pointerEvents: "none" },
       children: c.jsx("div", { style: { maxWidth: 360, width: "100%", pointerEvents: "auto" },
         children: c.jsx(TourCard, { step, stepNumber, stepTotal, onAdvance, onBack, canBack, centred: true, tapToAdvance }) })
     });
@@ -190,13 +191,17 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
   const hh = Math.min(H - hy, box.height + PAD * 2);
 
   const dim = "rgba(42,31,18,0.62)";
+  // Height of the always-clickable strip at the bottom of the screen where the
+  // skip chip lives. No interactive overlay layer is ever painted here.
+  const BAIL_STRIP = 54;
+  const floor = Math.max(0, H - BAIL_STRIP);
   const band = (style) => c.jsx("div", { onClick: swallow, style: { position: "fixed", background: dim, ...style } });
 
   // Tooltip placement: below the hole if it fits, above if not, and if neither
   // fits (a tall target on a short phone) it overlays the bottom of the screen,
   // because an unreadable tooltip is worse than one that covers something.
   const CARD_H = 168; // generous estimate; only used to choose a side
-  const BAIL_CLEAR = 46; // room at the bottom for the persistent skip chip
+  const BAIL_CLEAR = 62; // room at the bottom for the persistent skip chip
   const spaceBelow = H - (hy + hh) - BAIL_CLEAR;
   const spaceAbove = hy;
   const place = spaceBelow >= CARD_H ? "below" : spaceAbove >= CARD_H ? "above" : "bottom";
@@ -209,15 +214,18 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
     ? { top: hy + hh + 12, left: cardLeft, width: cardWidth }
     : place === "above"
       ? { bottom: H - hy + 12, left: cardLeft, width: cardWidth }
-      : { bottom: 52, left: cardLeft, width: cardWidth };
+      : { bottom: 62, left: cardLeft, width: cardWidth };
 
   return c.jsxs("div", { className: "kyr-tour", children: [
     // Four dim bands. The gap between them IS the spotlight, and it is a real
     // gap: no element sits over the target, so its own click handler runs.
-    band({ top: 0, left: 0, width: W, height: hy, zIndex: 200 }),
-    band({ top: hy + hh, left: 0, width: W, height: Math.max(0, H - (hy + hh)), zIndex: 200 }),
-    band({ top: hy, left: 0, width: hx, height: hh, zIndex: 200 }),
-    band({ top: hy, left: hx + hw, width: Math.max(0, W - (hx + hw)), height: hh, zIndex: 200 }),
+    band({ top: 0, left: 0, width: W, height: Math.min(hy, floor), zIndex: 200 }),
+    band({ top: hy + hh, left: 0, width: W, height: Math.max(0, floor - (hy + hh)), zIndex: 200 }),
+    band({ top: hy, left: 0, width: hx, height: Math.max(0, Math.min(hh, floor - hy)), zIndex: 200 }),
+    band({ top: hy, left: hx + hw, width: Math.max(0, W - (hx + hw)), height: Math.max(0, Math.min(hh, floor - hy)), zIndex: 200 }),
+    // The bottom strip: dimmed for looks, transparent to clicks, so the skip
+    // chip underneath is always reachable.
+    c.jsx("div", { "aria-hidden": true, style: { position: "fixed", top: floor, left: 0, width: W, height: BAIL_STRIP, background: dim, pointerEvents: "none", zIndex: 200 } }),
 
     // On a "next" step, seal the hole. The player has nothing to do here except
     // read and continue, and leaving the real control live underneath means a
@@ -258,7 +266,8 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, ca
 // z-index sits above every band (200), ring (201) and card (202) in this file.
 export function TourBail({ onSkip, label }) {
   const [hover, setHover] = useState(false);
-  return c.jsx("button", {
+  if (typeof document === "undefined") return null;
+  return createPortal(c.jsx("button", {
     onClick: onSkip,
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false),
@@ -275,7 +284,7 @@ export function TourBail({ onSkip, label }) {
       boxShadow: U.sm, WebkitTapHighlightColor: "transparent"
     },
     children: label
-  });
+  }), document.body);
 }
 
 // ---------------------------------------------------------------------------
