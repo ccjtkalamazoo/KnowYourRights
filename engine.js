@@ -56,7 +56,7 @@ import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
 import { loadChapter, loadDemo, loadTutorial } from "./content.js";
-import { TourOverlay, TourBail, injectTourStyles, activeStep } from "./tutorial.js";
+import { TourOverlay, TourBail, TourBailConfirm, injectTourStyles, activeStep } from "./tutorial.js";
 
 // ---------------------------------------------------------------------------
 // The demo (event build)
@@ -125,6 +125,10 @@ export function App() {
   // say so. Without it the board just quietly rearranges itself and the player
   // has no idea they got it wrong.
   const [retryNotice, setRetryNotice] = useState(false);
+  // Leaving the tutorial asks first, the same way skipping the review cards
+  // does. A single tap on a chip that is on screen for the whole tutorial is
+  // too easy to hit by accident.
+  const [bailConfirm, setBailConfirm] = useState(false);
   const [tourIdx, setTourIdx] = useState(0);
   // RevealScreen owns whether it is showing the verdict or the cards, and the
   // tour needs to know which. It reports up rather than the engine guessing.
@@ -209,6 +213,7 @@ export function App() {
     setHomeConfirm(false); setSkipConfirm(false);
     setIsEndless(false); setFinalPrize(0); setIsDemo(false);
     setIsTutorial(false); setTourIdx(0); setRevealStep("verdict");
+    setRetryNotice(false); setBailConfirm(false);
   };
 
   // Per-round reset for the demo. Same as resetState minus the deck and minus
@@ -288,7 +293,11 @@ export function App() {
   // Leaving the tutorial early. Goes straight to the map: dumping somebody back
   // on the title screen after they asked to skip a tutorial makes them start the
   // navigation over, which is the opposite of what they asked for.
+  const askBailTutorial = () => { sfx.current.modalOpen(); setBailConfirm(true); };
+  const cancelBailTutorial = () => { sfx.current.click(); setBailConfirm(false); };
+
   const bailTutorial = () => {
+    setBailConfirm(false);
     sfx.current.click();
     music.current.stop();
     EV.trackTutorialStep("skipped", { level, atStep: tourIdx });
@@ -704,7 +713,12 @@ export function App() {
   // never arrives) the chip is the guaranteed way out, and it sits at a higher
   // z-index than the overlay so it stays reachable.
   const tutorialLayer = !isTutorial ? [] : [
-    c.jsx(TourBail, { onSkip: bailTutorial, label: R.tutorial.bailLabel }, "tour-bail"),
+    c.jsx(TourBail, { onSkip: askBailTutorial, label: R.tutorial.bailLabel }, "tour-bail"),
+    bailConfirm && c.jsx(TourBailConfirm, {
+      onConfirm: bailTutorial, onCancel: cancelBailTutorial,
+      title: R.tutorial.bailConfirmTitle, body: R.tutorial.bailConfirmBody,
+      confirmLabel: R.tutorial.bailConfirmPrimary, cancelLabel: R.tutorial.bailConfirmSecondary
+    }, "tour-bail-confirm"),
     c.jsx(TourOverlay, {
       step: tourStep,
       stepNumber: Math.min(tourIdx + 1, tourScript.length),
