@@ -13,7 +13,7 @@ export const R = {
   hero: {
     headline: "Questions about your rights.",
     headlineAccent: "How many can you get?",
-    subtitle: "Real situations. What you can say, what you can refuse, what the law actually is. Three lives per round, so a wrong answer is not the end of it."
+    subtitle: "Real situations. What you can say, what you can refuse, what the law actually is. Three lives per round, and four lifelines if you need help."
   },
   playLabel: "Play",
   // The walkthrough is due a rework into something interactive. What changed
@@ -26,7 +26,9 @@ export const R = {
     { key: "lives", type: "lives", title: "THREE LIVES", body: "You start every round with three lives. Get one wrong and you lose a life, but you keep going. Lose all three and the round is over. You do not have to be perfect, and nobody expects you to be." },
     { key: "ladder", type: "ladder", title: "THE LADDER", body: "Every right answer moves you up. A wrong one costs a life and leaves you where you are." },
     { key: "cards", type: "cards", title: "REVIEW CARDS", body: "After every answer, right or wrong, three cards come up one at a time: the law behind it, a phrase to remember, and how it plays out in real life. Take a few seconds with each one. This is the part that actually matters." },
-    { key: "ready", type: "ready", title: "LET'S GO", body: "Three lives. No do-overs on the round itself." }
+    { key: "points", type: "points", title: "POINTS", body: "Get a question right and each review card you read is worth a point, three per question. Get it wrong and you still see all three cards, because that is when you need them most, but there is no point in it. Points are the only way to buy help." },
+    { key: "shop", type: "shop", title: "THE SHOP", body: "Tap SHOP during a question to spend points. 50/50 crosses off two wrong answers. JURY shows how other students voted. COUNSEL gives you a hint. SKIP trades your question for a different one. The first three are free once each; after that, and for SKIP, you pay." },
+    { key: "ready", type: "ready", title: "LET'S GO", body: "Three lives. Four lifelines. No do-overs on the round itself." }
   ],
   walkthroughStepPrefix: "Step",
   walkthroughSkipLabel: "Skip walkthrough",
@@ -43,6 +45,35 @@ export const R = {
     lastOne: "One life left. Take your time.",
     outOfLives: "That was your last life.",
     remaining: (n) => n === 1 ? "1 life left" : `${n} lives left`
+  },
+  // The four surviving lifelines. SHIELD is gone: it survived one wrong answer,
+  // which is now the standing rule three times over, and selling somebody a
+  // thing they already have for free is how a shop loses trust.
+  lifelines: {
+    fifty: { label: "50/50", shortDesc: "Two wrong answers get crossed off.", fullDesc: "Two of the wrong answers get crossed off, leaving you with the correct one and one other choice. Best when you can narrow it down to two guesses." },
+    poll: { label: "JURY", shortDesc: "See how other students answered.", fullDesc: "A panel of other students voted on this same question. You see what percentage picked each answer. Trust it more when the top answer is way ahead.", inGameLabel: "Jury" },
+    hint: { label: "COUNSEL", shortDesc: "A lawyer gives you a hint.", fullDesc: "A lawyer gives you a hint about the question. It won't give away the answer, but it will point you in the right direction.", inGameLabel: "Counsel" },
+    skip: { label: "SKIP", shortDesc: "Trade this question for another.", fullDesc: "Swaps your current question for a different one from this chapter that you have not seen yet this run. Costs a life nothing, but it does cost points." }
+  },
+  lifelineConfirm: {
+    useLabel: "Use it",
+    cancelLabel: "Cancel",
+    remainingOne: "This is your last free one.",
+    remainingMany: (e) => `${e} free lifelines left after this.`
+  },
+  shop: {
+    title: "LIFELINES",
+    blurb: "The first three are free once each. Buy any of them back, or buy a SKIP, with points from reading review cards after a right answer.",
+    ptsLabel: "PTS",
+    closeLabel: "Close",
+    openLabel: "SHOP",
+    readyLabel: "READY",
+    armedLabel: "ARMED",
+    useLabel: "Use",
+    freeState: "Ready to use, free",
+    buyState: (p) => `Buy for ${p} pts`,
+    buyBackState: (p) => `Buy back for ${p} pts`,
+    needState: (p) => `Need ${p} pts`
   },
   q15Choice: { takePrize: "Take the prize", keepGoing: "Keep going" },
   endlessMode: { headerLabel: "BONUS", ladderLabel: "BONUS ROUND" },
@@ -63,19 +94,26 @@ export const R = {
     { key: "phrase", label: "REMEMBER THIS", icon: "\u201C \u201D" },
     { key: "reallife", label: "IN REAL LIFE", icon: "\uD83D\uDCAC" }
   ],
-  // The review cards. The old version made reading a card earn a point, and the
-  // points bought lifelines. Kids did not spend them, did not ask about them,
-  // and mostly did not understand what they were for: 8 lifeline uses across 453
-  // answers. The beat is kept because the pause is the useful part; only the
-  // currency is gone. "I understand" is an acknowledgment, not a purchase.
+  // The review cards. The acknowledgment beat survives from the no-points
+  // version because the pause is what makes somebody look at the card. What
+  // came back is the reward on the same tap: on a right answer "I understand"
+  // is also worth a point. On a wrong answer the cards are identical and the
+  // tap is identical, there is just nothing to bank.
   review: {
     acknowledgeLabel: "I understand",
+    acknowledgeScoringLabel: "I understand  +1",
     acknowledgedLabel: "Got it",
+    acknowledgedScoringLabel: "Point earned",
     readingLabel: "Reading\u2026",
     acknowledgeFirstLabel: "Tap I understand",
+    noPointsNote: "Review \u00B7 no points on a miss",
+    pointsOfLabel: (n, of) => `${n} of ${of}`,
+    allEarnedLabel: "All earned!",
+    pointsLabel: "Points",
     skipLabel: "Skip \u2192",
+    skipLabelScoring: "Skip Review (no points) \u2192",
     skipConfirmTitle: "Skip the review?",
-    skipConfirmBody: "This is the part that explains why the answer is what it is.",
+    skipConfirmBody: "This is the part that explains why the answer is what it is, and you will not get the points.",
     skipConfirmPrimary: "Skip anyway",
     skipConfirmSecondary: "Keep reading"
   },
