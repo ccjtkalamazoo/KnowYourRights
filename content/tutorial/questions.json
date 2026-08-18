@@ -133,20 +133,20 @@
           "action": "tap"
         },
         {
+          "id": "t1.points",
+          "phase": "cards",
+          "target": "points",
+          "title": "THAT'S A POINT",
+          "body": "You just earned one. Each card is worth a point when you got the question RIGHT, three per question, and points are the only way to buy help later.",
+          "action": "next"
+        },
+        {
           "id": "t1.nextcard",
           "phase": "cards",
           "target": "next-card",
           "title": "NEXT CARD",
           "body": "Read all three. Then you move on.",
           "action": "tap"
-        },
-        {
-          "id": "t1.points",
-          "phase": "cards",
-          "target": "points",
-          "title": "THAT'S A POINT",
-          "body": "Every card you read after a RIGHT answer is worth one. Three per question. You spend them on help later.",
-          "action": "next"
         }
       ]
     },
@@ -362,19 +362,11 @@
           "action": "tap"
         },
         {
-          "id": "t3.result",
-          "phase": "playing",
-          "target": "answers",
-          "title": "TWO ARE GONE",
-          "body": "Crossed off and unpickable. Two choices left, and one of them is right.",
-          "action": "next"
-        },
-        {
           "id": "t3.pick",
           "phase": "playing",
           "target": "answer-2",
-          "title": "TAP THIS ONE",
-          "body": "This is the right one.",
+          "title": "TWO LEFT",
+          "body": "50/50 crossed off two wrong ones. Tap this one.",
           "action": "tap"
         },
         {
@@ -485,9 +477,9 @@
         {
           "id": "t4.pick",
           "phase": "playing",
-          "target": "answer-1",
-          "title": "YOUR TURN",
-          "body": "This is the one.",
+          "target": "answers",
+          "title": "YOUR CALL",
+          "body": "The hint narrowed it down. Pick whichever you think is right, and if it is wrong you just go again.",
           "action": "tap"
         },
         {
@@ -498,7 +490,8 @@
           "body": "",
           "action": "tap"
         }
-      ]
+      ],
+      "retryOnWrong": true
     },
     {
       "id": "tutorial.01.005",
