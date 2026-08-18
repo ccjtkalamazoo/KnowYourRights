@@ -17,36 +17,23 @@
 // ---------------------------------------------------------------------------
 // CURRENT STATE: SHELL, DELIBERATELY
 // ---------------------------------------------------------------------------
-// The eight districts below are the content roadmap, not playable content. The
-// question bank is 72 questions sorted by DIFFICULTY, not by district, so there
-// is nothing yet to deal a district-specific deck from. Every district ships as
-// COMING SOON.
-//
-// The one live entry is ALL RIGHTS, which plays the existing 15-question run
-// exactly as before. It is deliberately NOT one of the eight districts:
-// labeling 72 untagged questions as "THE STOP" would create a data lie that has
-// to be undone later when the questions actually get tagged.
+// The eight districts below are the content roadmap. Every district that is not
+// marked live in its meta.json ships as COMING SOON. The demo banner above them
+// is the one thing on this screen that is actually playable today.
 //
 // ---------------------------------------------------------------------------
 // THE RULES THE CONTENT IS BEING WRITTEN AGAINST
 // ---------------------------------------------------------------------------
-//   * 30 questions in a chapter's bank, 15 dealt per quiz.
+//   * 30 questions in a chapter's bank, 15 dealt per quiz. The demo deals 5.
 //   * 5 to 7 chapters per district. All eight currently sit at 6.
 //   * Chapters are SEQUENTIAL inside a district: clear chapter 1 to open 2.
 //     Districts themselves are free-choice. That is why chapter order is a
 //     content constraint, not just navigation: a chapter may rely on everything
 //     before it and must assume nothing after it.
-//   * Difficulty tiers are being dropped. Every question in a chapter is
-//     eligible for every rung. That change lands in content/ and rules.js,
-//     not here, but it is why the ladder and the SKIP lifeline both need
-//     revisiting.
+//   * Three lives per round. A miss costs one and the round continues.
 //
 // Districts 1 through 3 (JUVENILE, THE STOP, THE ARREST) are the authoring
 // priority. The remaining five are ordered but not scheduled.
-//
-// Ordering note: the first six are roughly chronological through the system.
-// THE BYSTANDER and JUVENILE are off-arc; JUVENILE leads anyway because it is
-// what applies to the player today.
 //
 // Not yet owned by any district: searches. They currently sit as chapters
 // inside THE STOP, THE ARREST, and THE BYSTANDER. The Fourth Amendment is deep
@@ -197,8 +184,6 @@ function stateColors(status) {
 // ---------------------------------------------------------------------------
 // ChapterBar : the row of segments under a district name, one per chapter.
 // ---------------------------------------------------------------------------
-// Fills with gold as chapters clear. While a district is coming-soon every
-// segment reads locked, which is honest: it shows the shape of what is coming.
 function ChapterBar({ district }) {
   return c.jsx("div", {
     style: { display: "flex", gap: 3, marginTop: 10 },
@@ -452,7 +437,7 @@ function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true, won = f
       borderRadius: 14,
       boxShadow: U.lg,
       padding: "22px 26px",
-      marginBottom: 26,
+      marginBottom: 14,
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
@@ -509,13 +494,67 @@ function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true, won = f
 }
 
 // ---------------------------------------------------------------------------
+// TutorialLink : a way back into the guided tour.
+// ---------------------------------------------------------------------------
+// The tutorial normally runs once, straight after the safety brief, and then
+// nobody sees it again. This is for the two cases that leaves out: somebody who
+// tapped Skip and then wished they had not, and the second kid at the table who
+// arrived after the first one had already been through it.
+//
+// Deliberately quiet. It is a text row under the demo banner, not a second big
+// button: a player who already knows how to play should not have to read past
+// something loud to get to the game.
+function TutorialLink({ onPlay }) {
+  const [hover, setHover] = useState(false);
+  return c.jsxs("button", {
+    onClick: onPlay,
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    className: "kyr-tutorial-link",
+    "aria-label": `${R.tutorial.replayLabel}. ${R.tutorial.replayBlurb}`,
+    style: {
+      display: "flex", alignItems: "center", gap: 10, width: "100%",
+      background: hover ? u.surface : "transparent",
+      border: `2px solid ${hover ? u.outline : u.borderLight}`,
+      borderRadius: 10, padding: "10px 14px", marginBottom: 26,
+      cursor: "pointer", textAlign: "left", font: "inherit",
+      boxShadow: hover ? U.sm : "none",
+      transition: "background 0.12s, border-color 0.12s, box-shadow 0.12s",
+      WebkitTapHighlightColor: "transparent"
+    },
+    children: [
+      c.jsx("span", {
+        "aria-hidden": true,
+        style: {
+          flexShrink: 0, width: 26, height: 26, borderRadius: "50%",
+          border: `2px solid ${u.outline}`, background: u.mustardSoft,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontFamily: C.display, fontSize: 14, color: u.text, lineHeight: 1
+        },
+        children: "?"
+      }),
+      c.jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 1, minWidth: 0 }, children: [
+        c.jsx("span", {
+          style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 1.4, fontWeight: 700, color: u.text, textTransform: "uppercase" },
+          children: R.tutorial.replayLabel
+        }),
+        c.jsx("span", {
+          style: { fontFamily: C.body, fontSize: 12.5, color: u.textMuted, fontWeight: 500 },
+          children: R.tutorial.replayBlurb
+        })
+      ] })
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
 // MapScreen
 // ---------------------------------------------------------------------------
 // Districts are fetched from content/ on mount. Three states: loading, failed,
 // loaded. The failure state matters more than it looks: content now arrives
 // over the network, so "the file is missing or malformed" is a thing a player
 // can actually hit, and a blank screen would be the worst possible answer.
-export function MapScreen({ onPlayChapter, onHome, onPlayDemo, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
+export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
   const [districts, setDistricts] = useState(null);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -625,6 +664,9 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, demoRunsUsed = 0,
       onPlayDemo && c.jsx(DemoBanner, {
         onPlay: onPlayDemo, runsUsed: demoRunsUsed, maxRuns: demoMaxRuns, canPlay: demoCanPlay, won: demoWon
       }),
+
+      // Directly under it, quietly, the way back into the tutorial.
+      onPlayTutorial && c.jsx(TutorialLink, { onPlay: onPlayTutorial }),
 
       // Roadmap divider. Wording follows the content: while nothing is live it
       // says so plainly rather than implying the map is playable.
