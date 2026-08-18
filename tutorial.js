@@ -52,7 +52,7 @@ function vh() { return typeof window === "undefined" ? 0 : window.innerHeight; }
 // ---------------------------------------------------------------------------
 // Renders exactly one step. Sequencing lives in the engine, which knows what
 // phase the game is in; this component knows only how to point at a thing.
-export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onSkip }) {
+export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onBack, canBack }) {
   // `box` holds the target rect AND the viewport size together, because both
   // change the geometry and both have to land in the same render.
   const [box, setBox] = useState(null);
@@ -158,13 +158,25 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onSkip }) 
   // ---- no target: centred card, no spotlight ----
   if (!box) {
     if (!gaveUp) return null; // still looking; do not flash an empty scrim
-    return c.jsxs("div", {
+    // A "next" step can safely dim the screen: there is nothing to reach.
+    // A "tap" step must NOT, because the element it is pointing at has not
+    // rendered yet and a scrim would seal the player away from the very control
+    // that makes it appear. This was a hard lock at the end of the tutorial.
+    if (tapToAdvance) {
+      return c.jsxs("div", {
+        className: "kyr-tour",
+        style: { position: "fixed", inset: 0, zIndex: 200, background: "rgba(42,31,18,0.62)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 },
+        onClick: swallow,
+        children: [
+          c.jsx(TourCard, { step, stepNumber, stepTotal, onAdvance, onBack, canBack, centred: true, tapToAdvance })
+        ]
+      });
+    }
+    return c.jsx("div", {
       className: "kyr-tour",
-      style: { position: "fixed", inset: 0, zIndex: 200, background: "rgba(42,31,18,0.62)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 },
-      onClick: swallow,
-      children: [
-        c.jsx(TourCard, { step, stepNumber, stepTotal, onAdvance, onSkip, centred: true, tapToAdvance })
-      ]
+      style: { position: "fixed", left: 12, right: 12, bottom: 58, zIndex: 202, display: "flex", justifyContent: "center", pointerEvents: "none" },
+      children: c.jsx("div", { style: { maxWidth: 360, width: "100%", pointerEvents: "auto" },
+        children: c.jsx(TourCard, { step, stepNumber, stepTotal, onAdvance, onBack, canBack, centred: true, tapToAdvance }) })
     });
   }
 
@@ -230,15 +242,46 @@ export function TourOverlay({ step, stepNumber, stepTotal, onAdvance, onSkip }) 
 
     c.jsx("div", {
       style: { position: "fixed", zIndex: 202, ...cardStyle },
-      children: c.jsx(TourCard, { step, stepNumber, stepTotal, onAdvance, onSkip, tapToAdvance })
+      children: c.jsx(TourCard, { step, stepNumber, stepTotal, onAdvance, onBack, canBack, tapToAdvance })
     })
   ] });
 }
 
 // ---------------------------------------------------------------------------
+// TourBail : the one and only way out of the tutorial.
+// ---------------------------------------------------------------------------
+// Inline styles, deliberately. This was a CSS class, and a class is one missing
+// stylesheet away from a button that renders in the document flow behind the
+// dim bands: visibly there, completely dead. The escape hatch is the last thing
+// that should depend on anything.
+//
+// z-index sits above every band (200), ring (201) and card (202) in this file.
+export function TourBail({ onSkip, label }) {
+  const [hover, setHover] = useState(false);
+  return c.jsx("button", {
+    onClick: onSkip,
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    style: {
+      position: "fixed",
+      bottom: "max(env(safe-area-inset-bottom), 10px)",
+      left: "50%", transform: "translateX(-50%)",
+      zIndex: 9999,
+      background: hover ? u.surfaceHigh : u.surface,
+      border: `2px solid ${u.outline}`, borderRadius: 8,
+      padding: "8px 18px", cursor: "pointer",
+      fontFamily: C.mono, fontSize: 10.5, letterSpacing: 1.4,
+      fontWeight: 700, textTransform: "uppercase", color: u.textDim,
+      boxShadow: U.sm, WebkitTapHighlightColor: "transparent"
+    },
+    children: label
+  });
+}
+
+// ---------------------------------------------------------------------------
 // TourCard : the tooltip itself.
 // ---------------------------------------------------------------------------
-function TourCard({ step, stepNumber, stepTotal, onAdvance, onSkip, centred, tapToAdvance }) {
+function TourCard({ step, stepNumber, stepTotal, onAdvance, onBack, canBack, centred, tapToAdvance }) {
   return c.jsxs("div", {
     className: "kyr-tour-card",
     onClick: (e) => e.stopPropagation(),
@@ -255,10 +298,20 @@ function TourCard({ step, stepNumber, stepTotal, onAdvance, onSkip, centred, tap
       ] }),
       step.body && c.jsx("p", { style: { fontFamily: C.body, fontSize: 13.5, lineHeight: 1.5, color: u.textDim, fontWeight: 500, margin: "0 0 10px" }, children: step.body }),
       c.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }, children: [
+        // Back, not Skip. Skipping lives in exactly one place, the chip pinned
+        // to the bottom of the screen, because two skip buttons on one screen is
+        // one more than anybody needs.
+        //
+        // Back only reaches within the current section, and only across steps in
+        // the same phase. You cannot un-answer a question, so a Back that tried
+        // to cross a lock would be lying about what it can undo. Hidden rather
+        // than disabled at the start of a section: a permanently greyed control
+        // is just clutter.
         c.jsx("button", {
-          onClick: onSkip,
-          style: { background: "none", border: "none", padding: "4px 2px", fontFamily: C.mono, fontSize: 10, letterSpacing: 1.4, color: u.textMuted, cursor: "pointer", textTransform: "uppercase", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3, WebkitTapHighlightColor: "transparent" },
-          children: "Skip tutorial"
+          onClick: canBack ? onBack : undefined,
+          disabled: !canBack,
+          style: { background: "none", border: "none", padding: "4px 2px", fontFamily: C.mono, fontSize: 10, letterSpacing: 1.4, color: u.textMuted, cursor: canBack ? "pointer" : "default", textTransform: "uppercase", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3, WebkitTapHighlightColor: "transparent", visibility: canBack ? "visible" : "hidden" },
+          children: "\u2039 Back"
         }),
         // A "tap" step has no Next button on purpose: the only way forward is
         // doing the thing. A "next" step gets a button AND tap-anywhere, since
@@ -291,17 +344,6 @@ export const TOUR_CSS = `
     50%      { box-shadow: 0 0 0 2px ${u.outline}, 0 0 0 7px rgba(214,134,24,0); }
   }
   .kyr-tour-card { pointer-events: auto; }
-  /* The persistent escape hatch the engine keeps on screen for the whole
-     tutorial, above the overlay so it is reachable even if a step wedges. */
-  .kyr-tour-bail {
-    position: fixed; z-index: 210;
-    bottom: max(env(safe-area-inset-bottom), 10px);
-    left: 50%; transform: translateX(-50%);
-    background: ${u.surface}; border: 2px solid ${u.outline}; border-radius: 8px;
-    padding: 7px 16px; font-family: ${C.mono}; font-size: 10px; letter-spacing: 1.4px;
-    font-weight: 700; text-transform: uppercase; color: ${u.textDim}; cursor: pointer;
-    box-shadow: ${U.sm}; -webkit-tap-highlight-color: transparent;
-  }
   @media (max-width: 600px) {
     .kyr-tour-card { padding: 12px 13px 10px !important; }
   }
