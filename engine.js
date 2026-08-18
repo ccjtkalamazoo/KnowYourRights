@@ -121,6 +121,10 @@ export function App() {
   // it resets to 0 on every question, so the scripts stay independent and a
   // content editor never has to count steps across questions.
   const [isTutorial, setIsTutorial] = useState(false);
+  // Set when a tutorial retry strikes an option out, so the question screen can
+  // say so. Without it the board just quietly rearranges itself and the player
+  // has no idea they got it wrong.
+  const [retryNotice, setRetryNotice] = useState(false);
   const [tourIdx, setTourIdx] = useState(0);
   // RevealScreen owns whether it is showing the verdict or the cards, and the
   // tour needs to know which. It reports up rather than the engine guessing.
@@ -416,6 +420,7 @@ export function App() {
     if (phase !== "playing") return;
     if (removedAnswers.includes(idx)) return;
     sfx.current.select();
+    setRetryNotice(false);
     const m = qMeter.current;
     if (m.firstSelectAt === null) m.firstSelectAt = performance.now();
     else if (idx !== selected) m.changes += 1;
@@ -479,6 +484,7 @@ export function App() {
         setRemovedAnswers((prev) => (prev.includes(selected) ? prev : [...prev, selected]));
         setSelected(null);
         setLocked(false);
+        setRetryNotice(true);
         setScreenFlash("red");
         setTimeout(() => setScreenFlash(null), 600);
         sfx.current.lifeline();
@@ -564,7 +570,7 @@ export function App() {
     const nextStage = isEndless ? 3 : musicStageFor(next);
     setLevel(next);
     setSelected(null); setLocked(false); setRevealCorrect(false); setRevealWrong(false);
-    setShowFloating(false);
+    setShowFloating(false); setRetryNotice(false);
     setRemovedAnswers([]); setJuryResults(null); setHintShown(false);
     if (nextStage !== stage) music.current.setStage(nextStage);
     setPhase("playing");
@@ -891,7 +897,7 @@ export function App() {
       question: currentQ, level, runLength, rung, stage, streak, selectedIdx: selected,
       locked, revealCorrect, revealWrong, showFloating, phase, results,
       lives, muted, setMuted, isEndless, isDemo, correctCount,
-      removedAnswers, juryResults, hintShown, lifelines, points,
+      removedAnswers, juryResults, hintShown, lifelines, points, retryNotice,
       onSelect, onLockIn, onHome: askHome, onOpenShop: openShop
     }),
     shopOpen && c.jsx(ShopPanel, {
@@ -1003,8 +1009,11 @@ function WalkScreen({ step, total, screen, onNext, onPrev, onSkip, isLast, canPr
             c.jsx("div", { style: { margin: "32px 0 28px", display: "flex", justifyContent: "center" }, children: c.jsx(WalkArt, { screen }) }),
             c.jsx("p", { style: { fontFamily: C.body, fontSize: 16, color: u.textDim, lineHeight: 1.7, fontWeight: 500, margin: "0 auto", maxWidth: 500 }, children: screen.body })
           ] }),
+          // Back is omitted entirely when there is nowhere to go back to. It
+          // used to be visibility:hidden, which still occupies its width and
+          // shoved the only button off-centre.
           c.jsxs("div", { style: { marginTop: 30, display: "flex", justifyContent: "center", alignItems: "center", gap: 12, flexShrink: 0 }, children: [
-            c.jsx(Button, { onClick: canPrev ? onPrev : undefined, variant: "secondary", size: "md", style: { visibility: canPrev ? "visible" : "hidden", pointerEvents: canPrev ? "auto" : "none" }, children: "\u2039 Back" }),
+            canPrev && c.jsx(Button, { onClick: onPrev, variant: "secondary", size: "md", children: "\u2039 Back" }),
             c.jsx(Button, { onClick: onNext, variant: "primary", size: "md", children: isLast ? R.walkthroughPlayLabel : R.walkthroughNextLabel })
           ] })
         ]
@@ -1086,7 +1095,7 @@ function QuestionScreen(props) {
   const { question, level, runLength, rung, stage, streak, selectedIdx, locked, revealCorrect,
     revealWrong, showFloating, phase, results, lives, muted,
     setMuted, isEndless, isDemo, removedAnswers = [], juryResults, hintShown, lifelines,
-    points, onSelect, onLockIn, onHome, onOpenShop } = props;
+    points, retryNotice, onSelect, onLockIn, onHome, onOpenShop } = props;
   return c.jsxs("div", {
     style: { maxWidth: 1280, margin: "0 auto", padding: "24px 24px 24px", display: "flex", gap: 28, alignItems: "flex-start", flex: "1 0 auto", width: "100%", boxSizing: "border-box" },
     className: "ts-game-layout ts-game-screen",
@@ -1131,6 +1140,18 @@ function QuestionScreen(props) {
             question.hint
           ] })
         ] }, "q-" + level),
+        // Tutorial retry notice. Terra, not red: this is "go again", not "you
+        // lost something", and the tutorial never takes a life for it.
+        retryNotice && c.jsxs("div", {
+          style: { display: "flex", alignItems: "center", gap: 12, background: u.terraSoft, border: `2px solid ${u.terra}`, borderRadius: 10, padding: "12px 16px", boxShadow: U.sm, animation: "ts-fade-in 0.35s ease-out" },
+          children: [
+            c.jsx("span", { "aria-hidden": true, style: { fontFamily: C.display, fontSize: 20, color: u.terra, lineHeight: 1, flexShrink: 0 }, children: "\u2715" }),
+            c.jsxs("div", { children: [
+              c.jsx("div", { style: { fontFamily: C.display, fontSize: 16, letterSpacing: 1, color: u.terra, lineHeight: 1.1 }, children: R.tutorial.retryTitle }),
+              c.jsx("div", { style: { fontFamily: C.body, fontSize: 13.5, lineHeight: 1.45, color: u.text, fontWeight: 500, marginTop: 3 }, children: R.tutorial.retryBody })
+            ] })
+          ]
+        }),
         c.jsx("div", { "data-tour": "answers", style: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }, className: "ts-answer-grid", children: question.options.map((opt, i) => c.jsx(AnswerButton, {
           letter: ["A", "B", "C", "D"][i], text: opt, selected: selectedIdx === i, locked,
           isCorrect: i === question.correct, isSelectedAnswer: selectedIdx === i, revealCorrect, revealWrong,
