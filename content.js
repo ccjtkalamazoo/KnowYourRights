@@ -88,6 +88,10 @@ export async function loadChapter(districtId, chapter) {
 // Authoring shape -> runtime shape. The correct answer is authored at index 0;
 // rules.shuffleOptions() is what randomizes display position, and it permutes
 // every parallel array together so option identity survives the shuffle.
+//
+// NOTE: the tutorial is the one caller whose questions are never passed through
+// shuffleOptions, because its tour scripts address answers by position. See
+// loadTutorial() at the bottom of this file.
 function toRuntime(q) {
   const opts = q.options || [];
   return {
@@ -181,6 +185,42 @@ export async function loadDemo() {
     questions
   };
   return demoCache;
+}
+
+// ---------------------------------------------------------------------------
+// The tutorial
+// ---------------------------------------------------------------------------
+// Shaped like a chapter so buildTutorialDeck and every screen take it without
+// knowing it is not one. The difference is `tour`: each question carries its own
+// step script, which rides through untouched because toRuntime does not know
+// about it and does not need to.
+//
+// The tutorial is the ONE deck that is never shuffled, in either sense. The
+// questions come in file order and each question's options stay where they were
+// written, because the tour scripts address answers by position ("tap
+// answer-2"). rules.buildTutorialDeck is what enforces that; this loader just
+// has to not undo it.
+//
+// Deliberately NOT cached the way chapters are. Somebody replaying the tutorial
+// should get the current file, and five questions is not worth holding onto.
+export async function loadTutorial() {
+  const raw = await getJSON("content/tutorial/questions.json");
+  const questions = (raw.questions || []).map((q) => ({
+    ...toRuntime(q),
+    tour: q.tour || []
+  }));
+  if (questions.length === 0) throw new Error("The tutorial file has no questions");
+  return {
+    id: raw.chapterId || "tutorial",
+    districtId: raw.districtId || "tutorial",
+    name: raw.name || "TUTORIAL",
+    // No pre-round screen in the tutorial, so no chapter-level safety note. The
+    // safety brief is its own full screen immediately before this.
+    safetyNote: null,
+    reviewedBy: raw.reviewedBy || null,
+    isTutorial: true,
+    questions
+  };
 }
 
 // Testing aid: drop caches so a reload picks up edited JSON.
