@@ -2,19 +2,19 @@
   "districtId": "courtroom",
   "name": "IN THE ROOM",
   "blurb": "Who everybody in a courthouse is, who they work for, and what you can do in that building.",
-  "live": false,
+  "live": true,
   "chapters": [
     {
       "id": "courtroom.01",
       "name": "WHO DECIDES AND WHO ARGUES",
       "file": "01-who-decides-and-who-argues.json",
-      "live": false
+      "live": true
     },
     {
       "id": "courtroom.02",
       "name": "EVERYBODY ELSE IN THE BUILDING",
       "file": "02-everybody-else-in-the-building.json",
-      "live": false
+      "live": true
     }
   ]
 }
