@@ -212,10 +212,10 @@ function DistrictCard({ district, selected, onSelect }) {
   return c.jsxs("button", {
     // Selecting a district does not start a run. It reveals that district's
     // chapters in the panel below, and a chapter is what you actually play.
-    onClick: () => onSelect(district.id),
-    onMouseEnter: () => onSelect(district.id),
+    onClick: () => onSelect(selected ? null : district.id),
+    "aria-expanded": !!selected,
     "aria-label": live
-      ? `${district.name}. ${total} chapters. Show chapters.`
+      ? `${district.name}. ${total} chapters. ${selected ? "Hide" : "Show"} chapters.`
       : `${district.name}, coming soon. ${total} chapters planned. ${district.blurb}`,
     style: {
       textAlign: "left", padding: 0, font: "inherit",
@@ -242,6 +242,20 @@ function DistrictCard({ district, selected, onSelect }) {
             viewBox: "0 0 100 100", width: 62, height: 62, "aria-hidden": true,
             style: live ? undefined : { filter: "grayscale(0.75)", opacity: 0.6 },
             children: district.icon()
+          }),
+          live && c.jsx("div", {
+            "aria-hidden": true,
+            style: {
+              position: "absolute", top: 8, right: 8,
+              width: 20, height: 20, borderRadius: "50%",
+              background: active ? u.brand : u.surface,
+              border: `2px solid ${u.outline}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: C.mono, fontSize: 10, fontWeight: 700, lineHeight: 1,
+              color: active ? u.textOnDark : u.text,
+              transition: "background 0.12s"
+            },
+            children: active ? "\u2212" : "+"
           }),
           !live && c.jsx("div", {
             style: {
@@ -296,87 +310,88 @@ function DistrictCard({ district, selected, onSelect }) {
 }
 
 // ---------------------------------------------------------------------------
-// ChapterPanel : the detail strip below the grid.
+// ChapterStrip : the chapters, opened directly under the district you clicked.
 // ---------------------------------------------------------------------------
-// Shows the selected district's blurb and its chapters. Driven by selection,
-// which is set on hover (desktop) or tap (touch), so it is not a hover-only
-// feature that dies on phones.
+// This used to be a panel pinned below the whole grid, which meant clicking a
+// district appeared to do nothing: the thing that actually changed was off the
+// bottom of the screen. Now it opens in place, spanning the row.
 //
-// This is also where a chapter is CHOSEN. A district is not itself playable:
-// it holds several chapters and you play one of them, so the chapter tags
-// are buttons once a chapter is live and plain tags while it is not.
-function ChapterPanel({ district, onPlayChapter }) {
-  return c.jsx("div", {
+// Chapters are NOT locked. Order is shown instead of enforced, because there is
+// no saved progress: a locked chapter 2 would be locked again for every new
+// player and every refresh, which would make it unreachable in practice. So the
+// first unplayed chapter is marked START HERE and the rest are numbered and
+// quieter. The order is obvious and nothing is ever blocked.
+function ChapterStrip({ district, onPlayChapter }) {
+  const firstUnplayed = district.chapters.findIndex(
+    (_, i) => chapterStatus(SESSION, district, i) !== STATUS.CLEARED
+  );
+  return c.jsxs("div", {
     style: {
-      marginTop: 20, background: u.surface, border: `2px solid ${u.outline}`,
-      borderRadius: 10, padding: "14px 16px", boxShadow: U.md, minHeight: 92
+      gridColumn: "1 / -1",
+      background: u.surface, border: `2px solid ${u.outline}`,
+      borderRadius: 10, padding: "16px 18px", boxShadow: U.md
     },
-    children: district
-      ? c.jsxs("div", { children: [
-          c.jsxs("div", {
-            style: {
-              display: "flex", justifyContent: "space-between",
-              alignItems: "baseline", gap: 14, flexWrap: "wrap"
-            },
-            children: [
-              c.jsx("div", {
-                style: { fontFamily: C.display, fontSize: 17, color: u.text },
-                children: district.name
-              }),
-              c.jsxs("div", {
-                style: {
-                  fontFamily: C.mono, fontSize: 10, letterSpacing: 1.2, color: u.brand
-                },
-                children: [String(district.chapters.length), " CHAPTERS"]
-              })
-            ]
-          }),
-          c.jsx("div", {
-            style: {
-              fontFamily: C.body, fontSize: 13, color: u.textDim, marginTop: 4
-            },
-            children: district.blurb
-          }),
-          c.jsx("div", {
-            style: { display: "flex", gap: 6, marginTop: 12, flexWrap: "wrap" },
-            children: district.chapters.map((ch, i) => {
-              const st = stateColors(chapterStatus(SESSION, district, i));
-              const playable = ch.live;
-              const inner = [
-                c.jsx("span", {
-                  style: { opacity: 0.7, fontWeight: 700 },
-                  children: String(i + 1).padStart(2, "0")
-                }, "n"),
-                ch.name
-              ];
-              const style = {
-                display: "inline-flex", alignItems: "center", gap: 6,
-                fontFamily: C.mono, fontSize: 9, letterSpacing: 0.8,
-                background: st.fill, color: st.text,
-                border: `2px solid ${st.border}`, borderRadius: 5,
-                padding: "4px 8px", textAlign: "left"
-              };
-              return playable
-                ? c.jsx("button", {
-                    onClick: () => onPlayChapter && onPlayChapter(district, ch),
-                    style: {
-                      ...style, cursor: "pointer", boxShadow: U.sm,
-                      WebkitTapHighlightColor: "transparent"
-                    },
-                    "aria-label": `Play ${ch.name}`,
-                    children: inner
-                  }, ch.id)
-                : c.jsx("span", { style, children: inner }, ch.id);
-            })
-          })
-        ] })
-      : c.jsx("div", {
-          style: {
-            fontFamily: C.mono, fontSize: 11, letterSpacing: 1.2,
-            color: u.textMuted, paddingTop: 14
-          },
-          children: "SELECT A DISTRICT TO SEE ITS CHAPTERS"
+    children: [
+      c.jsx("div", {
+        style: { fontFamily: C.body, fontSize: 13.5, color: u.textDim, marginBottom: 14 },
+        children: district.blurb
+      }),
+      c.jsx("div", {
+        style: { display: "flex", flexDirection: "column", gap: 8 },
+        children: district.chapters.map((ch, i) => {
+          const cleared = chapterStatus(SESSION, district, i) === STATUS.CLEARED;
+          const isStart = i === firstUnplayed;
+          const playable = ch.live;
+          const row = {
+            display: "flex", alignItems: "center", gap: 12, width: "100%",
+            textAlign: "left", font: "inherit",
+            background: isStart && playable ? u.brandSofter : u.surfaceWarm,
+            border: `2px solid ${isStart && playable ? u.brand : u.borderLight}`,
+            borderRadius: 9, padding: "12px 14px",
+            opacity: playable ? 1 : 0.6,
+            boxShadow: isStart && playable ? U.sm : "none"
+          };
+          const inner = [
+            c.jsx("span", {
+              "aria-hidden": true,
+              style: {
+                flexShrink: 0, width: 28, height: 28, borderRadius: "50%",
+                background: cleared ? u.brand : (isStart && playable ? u.brand : u.surface),
+                border: `2px solid ${u.outline}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontFamily: C.mono, fontSize: 12, fontWeight: 700, lineHeight: 1,
+                color: cleared || (isStart && playable) ? u.textOnDark : u.textMuted
+              },
+              children: cleared ? "\u2713" : String(i + 1)
+            }, "num"),
+            c.jsx("span", {
+              style: {
+                flex: 1, minWidth: 0,
+                fontFamily: C.mono, fontSize: 11, letterSpacing: 0.7,
+                fontWeight: 700, color: u.text
+              },
+              children: ch.name
+            }, "name"),
+            c.jsx("span", {
+              style: {
+                flexShrink: 0,
+                fontFamily: C.mono, fontSize: 9, letterSpacing: 1.4, fontWeight: 700,
+                color: !playable ? u.textMuted : isStart ? u.brand : u.textMuted
+              },
+              children: !playable ? "SOON" : isStart ? "START HERE \u2192" : "PLAY \u2192"
+            }, "cta")
+          ];
+          return playable
+            ? c.jsx("button", {
+                onClick: () => onPlayChapter && onPlayChapter(district, ch),
+                style: { ...row, cursor: "pointer", WebkitTapHighlightColor: "transparent" },
+                "aria-label": `Play ${ch.name}`,
+                children: inner
+              }, ch.id)
+            : c.jsx("div", { style: row, children: inner }, ch.id);
         })
+      })
+    ]
   });
 }
 
@@ -602,7 +617,6 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, d
 
   const totalChapters = districts.reduce((n, d) => n + d.chapters.length, 0);
   const clearedChapters = Math.round(completion(SESSION, districts) * totalChapters);
-  const selectedDistrict = districts.find((d) => d.id === selected) || null;
   const anyLive = districts.some((d) => d.live);
 
   return shell(c.jsxs("div", {
@@ -686,15 +700,17 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, d
       c.jsx("div", {
         className: "kyr-map-grid",
         style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 },
-        children: districts.map((d) => c.jsx(DistrictCard, {
-          district: d,
-          selected: selected === d.id,
-          onSelect: setSelected
-        }, d.id))
+        children: districts.flatMap((d) => {
+          const card = c.jsx(DistrictCard, {
+            district: d,
+            selected: selected === d.id,
+            onSelect: setSelected
+          }, d.id);
+          return selected === d.id
+            ? [card, c.jsx(ChapterStrip, { district: d, onPlayChapter }, d.id + "-strip")]
+            : [card];
+        })
       }),
-
-      // Chapter detail panel: also where a chapter is chosen.
-      c.jsx(ChapterPanel, { district: selectedDistrict, onPlayChapter }),
 
       c.jsx(Legend, {}),
 
