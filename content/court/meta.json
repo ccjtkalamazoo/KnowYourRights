@@ -1,44 +1,20 @@
 {
   "districtId": "court",
   "name": "THE COURTHOUSE",
-  "blurb": "Arraignment, bail, the public defender, and the plea.",
-  "live": false,
+  "blurb": "Who everybody in a courthouse is, who they work for, and what you can do in that building.",
+  "live": true,
   "chapters": [
     {
       "id": "court.01",
-      "name": "ARRAIGNMENT",
-      "file": "01-arraignment.json",
-      "live": false
+      "name": "THE JUDGE, THE JURY, AND THE LAWYERS",
+      "file": "01-the-judge-the-jury-and-the-lawyers.json",
+      "live": true
     },
     {
       "id": "court.02",
-      "name": "BAIL AND PRETRIAL RELEASE",
-      "file": "02-bail-and-pretrial-release.json",
-      "live": false
-    },
-    {
-      "id": "court.03",
-      "name": "THE PUBLIC DEFENDER",
-      "file": "03-the-public-defender.json",
-      "live": false
-    },
-    {
-      "id": "court.04",
-      "name": "THE PLEA",
-      "file": "04-the-plea.json",
-      "live": false
-    },
-    {
-      "id": "court.05",
-      "name": "YOUR HEARING",
-      "file": "05-your-hearing.json",
-      "live": false
-    },
-    {
-      "id": "court.06",
-      "name": "VERDICT AND SENTENCING",
-      "file": "06-verdict-and-sentencing.json",
-      "live": false
+      "name": "COURT STAFF, COURT RECORDS, COURT DATES",
+      "file": "02-court-staff-court-records-court-dates.json",
+      "live": true
     }
   ]
 }
