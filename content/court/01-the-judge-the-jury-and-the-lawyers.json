@@ -47,23 +47,23 @@
         "gloss": "Two jobs, two people."
       },
       "scenario": {
-        "setup": "The verdict was read ten minutes ago. Everybody is still in the room.",
+        "setup": "A school trip to the courthouse. A case just finished.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "So the jury decides what happens to me now?"
+            "label": "TEACHER",
+            "text": "The jury's part is over. They said guilty, and that's all they decide."
           },
           {
-            "label": "LAWYER",
-            "text": "No. That part is the judge, at a separate hearing."
+            "label": "YOU",
+            "text": "So when does he find out how long?"
           },
           {
             "label": "YES",
-            "text": "You know there is another hearing coming and who runs it."
+            "text": "You know a second hearing is coming and who runs it."
           },
           {
             "label": "NO",
-            "text": "You think the verdict was the whole thing and the sentence blindsides you."
+            "text": "You think the whole thing was decided this morning."
           }
         ]
       },
@@ -111,23 +111,23 @@
         "gloss": "A stuck jury asks the judge, in writing."
       },
       "scenario": {
-        "setup": "The jury room, hour three.",
+        "setup": "Your aunt got called for jury duty and is telling everyone about it.",
         "lines": [
           {
-            "label": "JUROR",
-            "text": "The prosecutor said it means something different."
+            "label": "AUNT",
+            "text": "Somebody in the room kept saying the law meant something else."
           },
           {
             "label": "YOU",
-            "text": "Let's write it down and send it out."
+            "text": "Who settles that?"
           },
           {
             "label": "YES",
-            "text": "The answer comes from the one person allowed to give it."
+            "text": "She explains the jury sends the judge a written question."
           },
           {
             "label": "NO",
-            "text": "The room settles it by picking whichever lawyer sounded better."
+            "text": "You picture twelve people arguing it out with nobody to ask."
           }
         ]
       },
@@ -175,19 +175,19 @@
         "gloss": "It is called a bench trial."
       },
       "scenario": {
-        "setup": "Back row of a courtroom. Your cousin's hearing.",
+        "setup": "Back row of a courtroom, watching a case with your cousin.",
         "lines": [
           {
             "label": "YOU",
-            "text": "Where is everybody? I thought there'd be twelve people."
+            "text": "Where's the jury? I thought there'd be twelve people."
           },
           {
             "label": "COUSIN",
-            "text": "He picked a bench trial. It's just the judge."
+            "text": "There isn't one. She picked to have the judge decide it."
           },
           {
             "label": "YES",
-            "text": "You follow what is happening instead of waiting for a jury that is not coming."
+            "text": "You follow what is happening instead of waiting for a jury."
           },
           {
             "label": "NO",
@@ -239,23 +239,23 @@
         "gloss": "Did it happen, and did this person do it."
       },
       "scenario": {
-        "setup": "A meeting room before trial.",
+        "setup": "A summons came in the post for your uncle. The family is reading it.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "If they find me guilty, do they decide the years too?"
+            "label": "UNCLE",
+            "text": "So if I do this, do I have to decide how long somebody goes away for?"
           },
           {
-            "label": "LAWYER",
-            "text": "Not in Michigan. That is the judge, later."
+            "label": "YOU",
+            "text": "No. That part's the judge."
           },
           {
             "label": "YES",
-            "text": "You know what the jury is being asked and what it is not."
+            "text": "He turns up knowing what he is actually being asked to decide."
           },
           {
             "label": "NO",
-            "text": "You spend the trial watching twelve people you think are picking your sentence."
+            "text": "He spends the week worrying about a decision that was never his."
           }
         ]
       },
@@ -303,23 +303,23 @@
         "gloss": "A judge cannot listen to one person alone."
       },
       "scenario": {
-        "setup": "A courthouse hallway before a hearing.",
+        "setup": "A hearing you are watching. Somebody in the gallery stands up.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "Can I just talk to the judge for a second first?"
+            "label": "JUDGE",
+            "text": "Anything you want me to hear has to be said in here, with both sides present."
           },
           {
-            "label": "LAWYER",
-            "text": "Not without the prosecutor there. That is the whole rule."
+            "label": "YOU",
+            "text": "Why can't he just tell her outside?"
           },
           {
             "label": "YES",
-            "text": "You save it for the hearing, where it counts."
+            "text": "You understand it is a rule, not the judge being difficult."
           },
           {
             "label": "NO",
-            "text": "You try to catch the judge and it goes nowhere."
+            "text": "It looks like the judge refusing to listen."
           }
         ]
       },
@@ -375,7 +375,7 @@
           },
           {
             "label": "LAWYER",
-            "text": "No objection from us."
+            "text": "No objection."
           },
           {
             "label": "YES",
@@ -431,23 +431,23 @@
         "gloss": "Everybody else in the room has one."
       },
       "scenario": {
-        "setup": "A courtroom during a hearing.",
+        "setup": "School trip. The class is watching a hearing.",
         "lines": [
           {
             "label": "YOU",
-            "text": "The judge didn't ask a single question about what actually happened."
+            "text": "The judge hasn't asked one question about what actually happened."
           },
           {
-            "label": "LAWYER",
-            "text": "That is not the judge's job. That is mine and the prosecutor's."
+            "label": "TEACHER",
+            "text": "That's not the judge's job. Both lawyers do that part."
           },
           {
             "label": "YES",
-            "text": "You stop waiting for the judge to fix things and work with your lawyer."
+            "text": "You know who to watch for the actual argument."
           },
           {
             "label": "NO",
-            "text": "You expect the judge to dig into your case and nothing happens."
+            "text": "You wait all morning for the judge to dig into it."
           }
         ]
       },
@@ -495,23 +495,23 @@
         "gloss": "Being friendly is not the same as being on your side."
       },
       "scenario": {
-        "setup": "Outside a courtroom, waiting for a hearing to be called.",
+        "setup": "The hallway outside a courtroom. The prosecutor is being friendly to everybody.",
         "lines": [
           {
-            "label": "PROSECUTOR",
-            "text": "Want me to walk you through what happens in there?"
+            "label": "YOU",
+            "text": "She's nice. Is she kind of neutral?"
           },
           {
-            "label": "YOU",
-            "text": "I'll wait for my lawyer."
+            "label": "COUSIN",
+            "text": "No, she's the other side. She's just polite."
           },
           {
             "label": "YES",
-            "text": "You know who is on which side before anybody says anything."
+            "text": "You can tell being decent apart from being on your side."
           },
           {
             "label": "NO",
-            "text": "A helpful explanation feels like help from your side."
+            "text": "You read good manners as a signal about the case."
           }
         ]
       },
@@ -559,7 +559,7 @@
         "gloss": "The case belongs to the state."
       },
       "scenario": {
-        "setup": "A meeting room at the prosecutor's office.",
+        "setup": "Somebody took your bike. A meeting at the prosecutor's office.",
         "lines": [
           {
             "label": "YOU",
@@ -687,7 +687,7 @@
         "gloss": "And friendly is not the same as yours."
       },
       "scenario": {
-        "setup": "A hearing that went better than expected.",
+        "setup": "A hearing you are sitting in on. It goes better than expected.",
         "lines": [
           {
             "label": "PROSECUTOR",
@@ -695,15 +695,15 @@
           },
           {
             "label": "YOU",
-            "text": "Wait, is she helping me?"
+            "text": "Wait, is she helping him?"
           },
           {
             "label": "YES",
-            "text": "You take the good moment and still talk to your own lawyer about the next one."
+            "text": "You understand a prosecutor is meant to be fair, and is still the other side."
           },
           {
             "label": "NO",
-            "text": "You start treating the other side as an ally."
+            "text": "You read one fair comment as the sides changing."
           }
         ]
       },
@@ -751,23 +751,23 @@
         "gloss": "Who signs the cheque is not whose side they are on."
       },
       "scenario": {
-        "setup": "A meeting room at the jail.",
+        "setup": "The kitchen. Your cousin's family is talking about the lawyer the court gave him.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "If the county pays you, do you have to tell them what I say?"
+            "label": "MOM",
+            "text": "If the county's paying, whose side is she really on?"
           },
           {
-            "label": "LAWYER",
-            "text": "No. You're my client. Nobody else gets any of it."
+            "label": "YOU",
+            "text": "His. That part doesn't change."
           },
           {
             "label": "YES",
-            "text": "You tell your lawyer the whole thing, which is what makes the lawyer useful."
+            "text": "The family stops second-guessing the lawyer and starts helping."
           },
           {
             "label": "NO",
-            "text": "You hold back from the one person on your side."
+            "text": "Everybody treats the lawyer as an outsider."
           }
         ]
       },
@@ -827,11 +827,11 @@
           },
           {
             "label": "YES",
-            "text": "You work with your lawyer instead of writing them off."
+            "text": "Your friend stops repeating it as if it were true."
           },
           {
             "label": "NO",
-            "text": "You ignore advice from the one person whose job is your case."
+            "text": "Somebody who needs one goes in already convinced it is hopeless."
           }
         ]
       },
@@ -879,23 +879,23 @@
         "gloss": "A real problem is worth raising with the court."
       },
       "scenario": {
-        "setup": "The kitchen, after a first meeting with the lawyer.",
+        "setup": "A friend is complaining about the lawyer her family was given.",
         "lines": [
           {
-            "label": "DAD",
-            "text": "Can we just ask for somebody else?"
+            "label": "FRIEND",
+            "text": "We asked for a different one and they said no."
           },
           {
             "label": "YOU",
-            "text": "We can ask. We have to say why."
+            "text": "Did anybody tell the court why?"
           },
           {
             "label": "YES",
-            "text": "A real problem gets raised with the court properly."
+            "text": "She learns you have to give the court a reason, not just ask."
           },
           {
             "label": "NO",
-            "text": "The family stews about it and nobody ever tells the judge."
+            "text": "The family stays unhappy and nobody ever raises it properly."
           }
         ]
       },
@@ -943,23 +943,23 @@
         "gloss": "Everybody else has a different job."
       },
       "scenario": {
-        "setup": "First time in a courtroom, looking around.",
+        "setup": "School trip. First time in a courtroom, looking around.",
         "lines": [
           {
             "label": "YOU",
-            "text": "There's like eight people up there. Which one's mine?"
+            "text": "There's like eight people up there. Which one's for him?"
           },
           {
-            "label": "LAWYER",
-            "text": "The one sitting next to you."
+            "label": "TEACHER",
+            "text": "The one sitting next to him."
           },
           {
             "label": "YES",
-            "text": "You know where to look and who to ask."
+            "text": "You know where to look and who does what."
           },
           {
             "label": "NO",
-            "text": "You wait for somebody else in the room to speak up for you."
+            "text": "Every person in the room looks equally official."
           }
         ]
       },
@@ -1007,23 +1007,23 @@
         "gloss": "And only when jail is on the table."
       },
       "scenario": {
-        "setup": "An arraignment. The judge is going down a list.",
+        "setup": "Your uncle is telling the family what happened at his first court date.",
         "lines": [
           {
-            "label": "JUDGE",
-            "text": "Do you want a lawyer, and can you afford one?"
+            "label": "UNCLE",
+            "text": "The judge asked if I wanted a lawyer and whether I could pay for one."
           },
           {
             "label": "YOU",
-            "text": "I want one, and no."
+            "text": "And you can't. So what happened?"
           },
           {
             "label": "YES",
-            "text": "The court appoints somebody before anything else happens."
+            "text": "He explains the court appointed one before anything else happened."
           },
           {
             "label": "NO",
-            "text": "You say you will handle it and face the case alone."
+            "text": "You assume no money means going in alone."
           }
         ]
       },
@@ -1075,19 +1075,19 @@
         "lines": [
           {
             "label": "YOU",
-            "text": "Does it matter what I'm charged with?"
+            "text": "Does it matter what he's charged with?"
           },
           {
             "label": "CLERK",
-            "text": "Not on this form. It's asking what you earn."
+            "text": "Not on this form. It's asking what he earns."
           },
           {
             "label": "YES",
-            "text": "You answer the money questions and get the lawyer."
+            "text": "The money questions get answered and the lawyer gets appointed."
           },
           {
             "label": "NO",
-            "text": "You start explaining your case on a form nobody reads for that."
+            "text": "Somebody starts explaining the case on a form nobody reads for that."
           }
         ]
       },
@@ -1135,7 +1135,7 @@
         "gloss": "The court is supposed to ask you too."
       },
       "scenario": {
-        "setup": "Arraignment, on a video screen from the jail.",
+        "setup": "Watching a first appearance from the gallery.",
         "lines": [
           {
             "label": "JUDGE",
@@ -1143,15 +1143,15 @@
           },
           {
             "label": "YOU",
-            "text": "Yes."
+            "text": "That's the first thing they ask?"
           },
           {
             "label": "YES",
-            "text": "Somebody is on your side before bond gets set."
+            "text": "You know the earliest moment somebody can ask."
           },
           {
             "label": "NO",
-            "text": "You wait, and the first decisions happen without anybody for you."
+            "text": "You think a lawyer only turns up nearer a trial."
           }
         ]
       },
@@ -1199,19 +1199,19 @@
         "gloss": "Being sued is not a criminal case."
       },
       "scenario": {
-        "setup": "An envelope on the kitchen table.",
+        "setup": "An envelope on the kitchen table. Somebody is suing over money owed.",
         "lines": [
           {
-            "label": "YOU",
+            "label": "MOM",
             "text": "It says I have to answer in 21 days. Do I get a lawyer for this?"
           },
           {
-            "label": "MOM",
+            "label": "YOU",
             "text": "Not for this kind. Nobody's charging you with anything."
           },
           {
             "label": "YES",
-            "text": "You answer in time instead of waiting for somebody who is not coming."
+            "text": "The answer goes in on time instead of waiting for somebody who is not coming."
           },
           {
             "label": "NO",
@@ -1263,27 +1263,23 @@
         "gloss": "Your lawyer advises. You decide."
       },
       "scenario": {
-        "setup": "A meeting room at the jail, two days before a hearing.",
+        "setup": "A courtroom drama is on. Somebody's lawyer just takes a deal for them.",
         "lines": [
           {
-            "label": "LAWYER",
-            "text": "I think you should take it. I'll tell you that plainly."
-          },
-          {
             "label": "YOU",
-            "text": "I want to go to trial."
+            "text": "Can a lawyer even do that?"
           },
           {
-            "label": "LAWYER",
-            "text": "Then that's what we do."
+            "label": "AUNT",
+            "text": "Not in real life. That one's the client's call."
           },
           {
             "label": "YES",
-            "text": "You make the call with real advice in front of you."
+            "text": "You know which decisions belong to the person, not the lawyer."
           },
           {
             "label": "NO",
-            "text": "You go along with it because it felt like the lawyer's decision."
+            "text": "You take the television version as how it works."
           }
         ]
       },
@@ -1331,23 +1327,23 @@
         "gloss": "Ask why, do not assume a mistake."
       },
       "scenario": {
-        "setup": "A break in the hallway during trial.",
+        "setup": "A break in the hallway during a hearing you are watching.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "Why didn't you ask him about the text messages?"
+            "label": "COUSIN",
+            "text": "Why didn't his lawyer ask about the messages?"
           },
           {
-            "label": "LAWYER",
-            "text": "Because it opens a door I don't want opened. Let me explain."
+            "label": "YOU",
+            "text": "Might be on purpose. That part's the lawyer's call."
           },
           {
             "label": "YES",
-            "text": "You get the reasoning and stay in the loop."
+            "text": "You know a missing question is not automatically a mistake."
           },
           {
             "label": "NO",
-            "text": "You spend the trial thinking your lawyer forgot."
+            "text": "You spend the hearing sure the lawyer forgot something."
           }
         ]
       },
@@ -1395,23 +1391,23 @@
         "gloss": "Those three are yours. The rest is your lawyer's."
       },
       "scenario": {
-        "setup": "A meeting room the week before trial.",
+        "setup": "Your neighbour took a plea deal years ago and still talks about it.",
         "lines": [
           {
-            "label": "LAWYER",
-            "text": "I don't think you should take the stand, but that's yours to decide."
+            "label": "NEIGHBOUR",
+            "text": "Everyone kept telling me what to do. In the end it was my signature."
           },
           {
             "label": "YOU",
-            "text": "What happens if I do?"
+            "text": "So the lawyer couldn't just decide?"
           },
           {
             "label": "YES",
-            "text": "You get the trade-offs and make the call yourself."
+            "text": "You know which calls belong to the person, not the lawyer."
           },
           {
             "label": "NO",
-            "text": "You find out on the day that nobody asked you."
+            "text": "You assume the lawyer runs everything."
           }
         ]
       },
@@ -1459,27 +1455,23 @@
         "gloss": "Your lawyer says so, then does what you chose."
       },
       "scenario": {
-        "setup": "A phone call the night before a hearing.",
+        "setup": "A film on in the background. A lawyer just overrules a client on screen.",
         "lines": [
           {
-            "label": "LAWYER",
-            "text": "I want it on the record that I advised against this."
-          },
-          {
             "label": "YOU",
-            "text": "Understood. Not guilty."
+            "text": "Can they actually do that?"
           },
           {
-            "label": "LAWYER",
-            "text": "Then that's what I'll enter."
+            "label": "AUNT",
+            "text": "Not with a plea. That one's the client's call, even if the lawyer hates it."
           },
           {
             "label": "YES",
-            "text": "Both things happen: real advice, and your decision."
+            "text": "You know disagreeing and overruling are different things."
           },
           {
             "label": "NO",
-            "text": "You assume the disagreement means you have to give in."
+            "text": "You take the film version as how it works."
           }
         ]
       },
@@ -1527,23 +1519,23 @@
         "gloss": "Not the judge, not the prosecutor, not your parents."
       },
       "scenario": {
-        "setup": "A meeting room. Your mom is waiting outside.",
+        "setup": "Careers day. Somebody asks the question everybody wanted to ask.",
         "lines": [
           {
             "label": "YOU",
-            "text": "If I tell you, does my mom find out?"
+            "text": "If someone tells you something, who can you tell?"
           },
           {
             "label": "LAWYER",
-            "text": "Not from me. You're my client, not your mom."
+            "text": "Nobody, unless they say so. Not the judge, not the prosecutor, not their parents."
           },
           {
             "label": "YES",
-            "text": "Your lawyer knows the whole thing and can actually help."
+            "text": "You know what a lawyer is actually for."
           },
           {
             "label": "NO",
-            "text": "Your lawyer builds a defence around a story with holes in it."
+            "text": "Somebody holds back from the one person on their side."
           }
         ]
       },
@@ -1591,23 +1583,23 @@
         "gloss": "Everything else on that phone is recorded."
       },
       "scenario": {
-        "setup": "A phone on the wall. Your mom picks up.",
+        "setup": "Your uncle works at the courthouse and is explaining how calls work there.",
         "lines": [
           {
-            "label": "MOM",
-            "text": "What actually happened that night?"
+            "label": "UNCLE",
+            "text": "Every call out of that building is recorded. Everyone knows it."
           },
           {
             "label": "YOU",
-            "text": "I can't get into it on this phone."
+            "text": "Even to family?"
           },
           {
             "label": "YES",
-            "text": "The recording exists and there is nothing on it about your case."
+            "text": "You know the difference between a lawyer call and any other one."
           },
           {
             "label": "NO",
-            "text": "Your account of that night becomes a recording somebody can play."
+            "text": "Somebody assumes talking to family is private and it is not."
           }
         ]
       },
@@ -1663,15 +1655,15 @@
           },
           {
             "label": "YOU",
-            "text": "I'd rather just talk to my lawyer about it."
+            "text": "If it ever mattered, they could just ask you."
           },
           {
             "label": "YES",
-            "text": "Your friend is never in a position to be asked about it."
+            "text": "Your friend is never put in that position."
           },
           {
             "label": "NO",
-            "text": "Your friend meant it and gets asked anyway."
+            "text": "Your friend means it and gets asked anyway."
           }
         ]
       },
@@ -1719,23 +1711,23 @@
         "gloss": "The job is the state's proof, not your guilt."
       },
       "scenario": {
-        "setup": "A meeting room, second visit.",
+        "setup": "A group chat argument about a true crime show.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "If I tell you the truth, do you have to quit?"
+            "label": "FRIEND",
+            "text": "His own lawyer knew he did it. That should be illegal."
           },
           {
-            "label": "LAWYER",
-            "text": "No. And it stays between us. It helps me know what we're actually working with."
+            "label": "YOU",
+            "text": "That's the job. The state still has to prove it."
           },
           {
             "label": "YES",
-            "text": "Your lawyer plans around what is real."
+            "text": "You understand what a defence lawyer is actually for."
           },
           {
             "label": "NO",
-            "text": "Your lawyer is surprised in court by something you knew."
+            "text": "You assume a lawyer would walk out on the spot."
           }
         ]
       },
@@ -1783,15 +1775,15 @@
         "gloss": "Your view counts. It does not decide."
       },
       "scenario": {
-        "setup": "The kitchen, a week after making the report.",
+        "setup": "The kitchen, a week after reporting the stolen bike.",
         "lines": [
           {
             "label": "YOU",
-            "text": "I told them I don't want to press charges anymore."
+            "text": "I said I don't want to press charges anymore."
           },
           {
             "label": "MOM",
-            "text": "They said it's not up to us now."
+            "text": "They said that's not up to us now."
           },
           {
             "label": "YES",
@@ -1799,7 +1791,7 @@
           },
           {
             "label": "NO",
-            "text": "You expect it to be over and get a subpoena instead."
+            "text": "You expect it to be over and a subpoena arrives."
           }
         ]
       },
@@ -1847,23 +1839,23 @@
         "gloss": "The charge is real when it gets filed."
       },
       "scenario": {
-        "setup": "The back of a patrol car.",
+        "setup": "Kitchen table. Your uncle got a ticket last night.",
         "lines": [
           {
-            "label": "OFFICER",
-            "text": "You're being arrested for assault."
+            "label": "UNCLE",
+            "text": "The officer said what I'm being charged with."
           },
           {
             "label": "YOU",
-            "text": "Is that definitely the charge?"
+            "text": "Is that definitely it?"
           },
           {
             "label": "YES",
-            "text": "You know a prosecutor still has to decide and you wait for the arraignment."
+            "text": "He waits for the prosecutor's decision instead of panicking early."
           },
           {
             "label": "NO",
-            "text": "You spend three days sure of a charge that may change."
+            "text": "He spends three days certain of a charge that may change."
           }
         ]
       },
@@ -1911,11 +1903,11 @@
         "gloss": "The charging power belongs to somebody on a ballot."
       },
       "scenario": {
-        "setup": "A campaign sign in a yard, two streets over.",
+        "setup": "A sample ballot on the kitchen table before an election.",
         "lines": [
           {
             "label": "YOU",
-            "text": "Why is there an election for that?"
+            "text": "Why is there an election for prosecutor?"
           },
           {
             "label": "MOM",
