@@ -164,7 +164,11 @@ const ICON_FOR = {
   after: ICONS.after,
 };
 
-const SESSION = newSession();
+// The tutorial gate in state.js is not wired up yet: nothing ever sets
+// tutorialCleared, so chapterStatus() would report every chapter LOCKED and the
+// segment bars would all render grey. Chapters are not gated on the map anyway
+// (order is shown, not enforced), so the session starts past that flag.
+const SESSION = { ...newSession(), tutorialCleared: true };
 
 // Palette for the four chapter states. Segment fill + border per state.
 function stateColors(status) {
