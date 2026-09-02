@@ -778,9 +778,15 @@ export function App() {
               ] })
             ]
           }),
-          c.jsx("div", {
-            style: { display: "flex", justifyContent: "center", marginTop: 20 },
-            children: c.jsx(Button, { onClick: beginRound, variant: "primary", children: R.roundStart })
+          // Back sits next to Start, not instead of it. Landing on the safety
+          // screen with no way out but a refresh was the one dead end left in
+          // the flow after chapters became reachable from the map.
+          c.jsxs("div", {
+            style: { display: "flex", justifyContent: "center", gap: 12, marginTop: 20, flexWrap: "wrap" },
+            children: [
+              c.jsx(Button, { onClick: goMap, variant: "ghost", children: "\u2190 Back to the map" }),
+              c.jsx(Button, { onClick: beginRound, variant: "primary", children: R.roundStart })
+            ]
           })
         ] })
       })
