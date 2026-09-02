@@ -1,13 +1,12 @@
 {
   "districts": [
-    "courtroom",
+    "court",
     "juvenile",
     "stop",
     "arrest",
     "saying",
     "bystander",
     "jail",
-    "court",
     "after"
   ]
 }
