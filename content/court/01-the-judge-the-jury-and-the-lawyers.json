@@ -1097,7 +1097,7 @@
     {
       "id": "court.01.018",
       "version": 1,
-      "q": "In Michigan you cannot afford a lawyer for a criminal charge. When do you ask for one?",
+      "q": "In Michigan, if you cannot afford a lawyer for a criminal charge, when do you ask for one?",
       "options": [
         {
           "id": "court.01.018.a",
