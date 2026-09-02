@@ -47,23 +47,23 @@
         "gloss": "Every filing goes through there."
       },
       "scenario": {
-        "setup": "First floor, a counter with a line at it.",
+        "setup": "School trip. The class stops at a counter on the first floor.",
         "lines": [
           {
             "label": "YOU",
-            "text": "I need a copy of my brother's file. Who do I ask?"
+            "text": "What happens here?"
           },
           {
             "label": "CLERK",
-            "text": "You're in the right place. What's the case number?"
+            "text": "Everything filed in this building comes through us. Every file, every deadline."
           },
           {
             "label": "YES",
-            "text": "You go to the counter and get what you came for."
+            "text": "You know where paperwork actually lives."
           },
           {
             "label": "NO",
-            "text": "You spend an hour looking for somebody who was never the right person."
+            "text": "You picture the judge keeping the files in an office somewhere."
           }
         ]
       },
@@ -111,7 +111,7 @@
         "gloss": "Order, not sides."
       },
       "scenario": {
-        "setup": "A courtroom filling up before the morning calendar.",
+        "setup": "Your family is in court for a relative's hearing. Everybody stands.",
         "lines": [
           {
             "label": "BAILIFF",
@@ -123,11 +123,11 @@
           },
           {
             "label": "YES",
-            "text": "You know who to ask where to sit and who not to ask about your case."
+            "text": "You know who to ask where to sit, and who not to ask about a case."
           },
           {
             "label": "NO",
-            "text": "You assume the person in uniform is there about you."
+            "text": "You assume the person in uniform is there about somebody in particular."
           }
         ]
       },
@@ -175,15 +175,15 @@
         "gloss": "The record outlives everybody's memory."
       },
       "scenario": {
-        "setup": "A hearing that has been going twenty minutes.",
+        "setup": "Back row of a courtroom with your cousin, twenty minutes in.",
         "lines": [
           {
             "label": "YOU",
-            "text": "Why is she typing the whole time?"
+            "text": "Why is that person typing the whole time?"
           },
           {
-            "label": "LAWYER",
-            "text": "So there's a record. If we appeal, that's what we use."
+            "label": "COUSIN",
+            "text": "So there's a record. If anybody appeals, that's what they use."
           },
           {
             "label": "YES",
@@ -191,7 +191,7 @@
           },
           {
             "label": "NO",
-            "text": "You assume it is note-taking and that nothing is being kept."
+            "text": "You assume it is note-taking and nothing is being kept."
           }
         ]
       },
@@ -239,23 +239,23 @@
         "gloss": "Court staff work for the process."
       },
       "scenario": {
-        "setup": "A hallway between hearings.",
+        "setup": "At home afterwards, talking about who was in the room.",
         "lines": [
           {
             "label": "YOU",
-            "text": "The clerk was really nice about the forms. Should I ask her what to do?"
+            "text": "The clerk was really helpful. Is she on our side?"
           },
           {
-            "label": "LAWYER",
-            "text": "Ask me. She's not allowed to answer that."
+            "label": "MOM",
+            "text": "She works for the court. That means neither side."
           },
           {
             "label": "YES",
-            "text": "You know who to bring a real question to."
+            "text": "You know helpful and on-your-side are different things."
           },
           {
             "label": "NO",
-            "text": "You take direction from somebody who cannot give it."
+            "text": "You read ordinary politeness as somebody backing you."
           }
         ]
       },
@@ -303,23 +303,23 @@
         "gloss": "Kind is not the same as on your side."
       },
       "scenario": {
-        "setup": "A small office with a desk and two chairs.",
+        "setup": "Your cousin finished probation last year and is explaining it.",
         "lines": [
           {
-            "label": "OFFICER",
-            "text": "How's the job going? Anything I should know about?"
+            "label": "COUSIN",
+            "text": "She was decent to me. But her job was checking I did what the order said."
           },
           {
             "label": "YOU",
-            "text": "It's going alright."
+            "text": "So not, like, a support worker."
           },
           {
             "label": "YES",
-            "text": "You answer knowing where the answer goes."
+            "text": "You know what the role actually is before you ever meet one."
           },
           {
             "label": "NO",
-            "text": "You treat it as a private chat with somebody who is on your side."
+            "text": "Somebody treats a probation officer as a friend and is surprised later."
           }
         ]
       },
@@ -367,23 +367,23 @@
         "gloss": "It goes to the court."
       },
       "scenario": {
-        "setup": "The same small office, a month later.",
+        "setup": "A youth worker at the community centre is answering questions.",
         "lines": [
           {
             "label": "YOU",
-            "text": "I missed the test last week. Can we keep that between us?"
+            "text": "If somebody tells their probation officer they slipped up, where does that go?"
           },
           {
-            "label": "OFFICER",
-            "text": "I have to report it. I can tell them you told me yourself."
+            "label": "STAFF",
+            "text": "Into a report the judge can read. That's what the job is."
           },
           {
             "label": "YES",
-            "text": "You are not blindsided when it turns up in a report."
+            "text": "You know where anything said in that room ends up."
           },
           {
             "label": "NO",
-            "text": "You expect it to stay in the room and read about it at a hearing."
+            "text": "Somebody expects a private chat and reads about it at a hearing."
           }
         ]
       },
@@ -431,23 +431,23 @@
         "gloss": "Everything else is somebody's say-so."
       },
       "scenario": {
-        "setup": "A phone call on a Tuesday afternoon.",
+        "setup": "Your uncle, about somebody at work who is on probation.",
         "lines": [
           {
-            "label": "OFFICER",
-            "text": "Don't worry about next month, we'll pick it up in June."
+            "label": "UNCLE",
+            "text": "His officer told him to skip a month. He got it in writing anyway."
           },
           {
             "label": "YOU",
-            "text": "Can I get that in writing?"
+            "text": "Why bother?"
           },
           {
             "label": "YES",
-            "text": "You have something to point at if anybody asks later."
+            "text": "You know only the court can actually change the order."
           },
           {
             "label": "NO",
-            "text": "A missed meeting shows up as a violation and nobody remembers the call."
+            "text": "A missed meeting shows up as a violation and nobody remembers the conversation."
           }
         ]
       },
@@ -495,23 +495,23 @@
         "gloss": "A probation officer's job is to pass it on."
       },
       "scenario": {
-        "setup": "The office again. It has been a hard month.",
+        "setup": "A friend is worried about somebody in her family.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "Can I tell you something off the record?"
+            "label": "FRIEND",
+            "text": "Can you tell a probation officer something off the record?"
           },
           {
-            "label": "OFFICER",
-            "text": "There's no off the record with me. You can tell your lawyer."
+            "label": "YOU",
+            "text": "No. That's what a lawyer's for."
           },
           {
             "label": "YES",
-            "text": "You take it to somebody who can hold it."
+            "text": "She passes on something worth knowing."
           },
           {
             "label": "NO",
-            "text": "You say something you meant privately and it goes in a report."
+            "text": "Somebody says something they meant privately and it goes in a report."
           }
         ]
       },
@@ -559,7 +559,7 @@
         "gloss": "Asking for one is normal."
       },
       "scenario": {
-        "setup": "A hearing about to start. Your aunt looks lost.",
+        "setup": "Your aunt has to give evidence. She does not follow much English.",
         "lines": [
           {
             "label": "YOU",
@@ -575,7 +575,7 @@
           },
           {
             "label": "NO",
-            "text": "She sits through a hearing about her and understands none of it."
+            "text": "She sits through a hearing about something she saw and understands none of it."
           }
         ]
       },
@@ -623,15 +623,15 @@
         "gloss": "Neutral matters more than convenient."
       },
       "scenario": {
-        "setup": "Outside the courtroom, ten minutes before.",
+        "setup": "A neighbour is going to court as a witness and is worried about the language.",
         "lines": [
           {
-            "label": "COUSIN",
-            "text": "I can just translate for her, I've done it at the doctor."
+            "label": "NEIGHBOUR",
+            "text": "My daughter can come and translate for me."
           },
           {
-            "label": "CLERK",
-            "text": "For court it has to be one the judge appoints."
+            "label": "YOU",
+            "text": "I think the court picks who does that."
           },
           {
             "label": "YES",
@@ -639,7 +639,7 @@
           },
           {
             "label": "NO",
-            "text": "A family member interprets and every answer runs through somebody who cares how it sounds."
+            "text": "Every answer runs through somebody who cares how it sounds."
           }
         ]
       },
@@ -687,15 +687,15 @@
         "gloss": "Civil cases can work differently."
       },
       "scenario": {
-        "setup": "A kitchen table the night before a hearing.",
+        "setup": "A community meeting about going to court. Somebody puts a hand up.",
         "lines": [
           {
-            "label": "MOM",
-            "text": "How much is the interpreter going to cost us?"
+            "label": "NEIGHBOUR",
+            "text": "What does an interpreter cost?"
           },
           {
-            "label": "YOU",
-            "text": "For a criminal case, nothing. It's free."
+            "label": "STAFF",
+            "text": "In a criminal case, nothing. The court covers it."
           },
           {
             "label": "YES",
@@ -751,23 +751,23 @@
         "gloss": "Nothing added, nothing left out."
       },
       "scenario": {
-        "setup": "Testimony, through an interpreter.",
+        "setup": "Watching a hearing where a witness is speaking through an interpreter.",
         "lines": [
           {
-            "label": "INTERPRETER",
-            "text": "She says she does not remember."
+            "label": "YOU",
+            "text": "She said way more than that."
           },
           {
-            "label": "YOU",
-            "text": "She said more than that, didn't she?"
+            "label": "COUSIN",
+            "text": "They have to say it exactly. Nothing added, nothing cut."
           },
           {
             "label": "YES",
-            "text": "You know that if she had said more, more would have come across."
+            "text": "You trust that what came across is what was said."
           },
           {
             "label": "NO",
-            "text": "You assume something got lost and start second-guessing the whole thing."
+            "text": "You assume something got lost and start doubting the whole thing."
           }
         ]
       },
@@ -815,23 +815,23 @@
         "gloss": "Not part of the court, not on anybody's side."
       },
       "scenario": {
-        "setup": "A phone number on a card somebody handed over at the jail.",
+        "setup": "An advert on a bus stop bench near the courthouse.",
         "lines": [
           {
-            "label": "MOM",
-            "text": "Is this person from the court?"
+            "label": "YOU",
+            "text": "Is that a court thing?"
           },
           {
-            "label": "YOU",
-            "text": "No. It's a company."
+            "label": "MOM",
+            "text": "No. That's a company. They charge to post it for you."
           },
           {
             "label": "YES",
-            "text": "The family treats it as a money decision and asks what it costs."
+            "text": "You read it as a business, which is what it is."
           },
           {
             "label": "NO",
-            "text": "Somebody signs assuming the court sent them."
+            "text": "Somebody calls assuming the court sent them."
           }
         ]
       },
@@ -879,19 +879,19 @@
         "gloss": "It does not come back."
       },
       "scenario": {
-        "setup": "Kitchen table, case finished, months later.",
+        "setup": "Kitchen table, months after a relative's case finished.",
         "lines": [
           {
             "label": "MOM",
-            "text": "So when do we get the thousand back?"
+            "text": "So when do we get the fee back?"
           },
           {
             "label": "YOU",
-            "text": "We don't. That was the fee."
+            "text": "We don't. That part was the price."
           },
           {
             "label": "YES",
-            "text": "The family knows going in what the money is."
+            "text": "The family knew going in what the money was."
           },
           {
             "label": "NO",
@@ -943,23 +943,23 @@
         "gloss": "Nobody else is responsible for it."
       },
       "scenario": {
-        "setup": "Nine at night, nobody picking up.",
+        "setup": "Your cousin has court in the morning and nobody can reach anyone.",
         "lines": [
           {
-            "label": "MOM",
-            "text": "He's not answering. Do we still go?"
+            "label": "COUSIN",
+            "text": "Nobody's answering. Do I still go?"
           },
           {
             "label": "YOU",
-            "text": "Yeah. It's my date either way."
+            "text": "Yeah. It's your date either way."
           },
           {
             "label": "YES",
-            "text": "You are there in the morning."
+            "text": "He is there in the morning."
           },
           {
             "label": "NO",
-            "text": "Nobody goes, and there is a warrant by lunchtime."
+            "text": "He waits for a phone call instead of turning up."
           }
         ]
       },
@@ -1007,23 +1007,23 @@
         "gloss": "Two different numbers from two different people."
       },
       "scenario": {
-        "setup": "An arraignment on a video screen.",
+        "setup": "School trip. The class watches a first appearance.",
         "lines": [
           {
             "label": "MAGISTRATE",
             "text": "Bond is set at five thousand, ten percent."
           },
           {
-            "label": "MOM",
-            "text": "Can we ask for less?"
+            "label": "YOU",
+            "text": "Who is that? That's not the judge."
           },
           {
             "label": "YES",
-            "text": "The family knows who to ask and asks the right person."
+            "text": "You learn a magistrate can do some of what a judge does."
           },
           {
             "label": "NO",
-            "text": "The family calls a bondsman to negotiate a number the bondsman does not control."
+            "text": "Every person on a bench looks the same to you."
           }
         ]
       },
@@ -1071,15 +1071,15 @@
         "gloss": "You can walk in and watch."
       },
       "scenario": {
-        "setup": "A courthouse lobby on a Tuesday morning.",
+        "setup": "Your cousin has a hearing next week.",
         "lines": [
           {
             "label": "YOU",
-            "text": "I'm here for my cousin's hearing. Do I need to sign something?"
+            "text": "Can I come watch, or do I need permission?"
           },
           {
-            "label": "DEPUTY",
-            "text": "Just through the scanner. Courtroom three."
+            "label": "COUSIN",
+            "text": "Just turn up. Court's open."
           },
           {
             "label": "YES",
@@ -1135,7 +1135,7 @@
         "gloss": "Two different questions with two different answers."
       },
       "scenario": {
-        "setup": "Family arguing about it in a car outside.",
+        "setup": "The family arguing about it in the car outside.",
         "lines": [
           {
             "label": "MOM",
@@ -1151,7 +1151,7 @@
           },
           {
             "label": "NO",
-            "text": "Everybody waits in the parking lot for no reason."
+            "text": "Everybody waits in the car park for no reason."
           }
         ]
       },
@@ -1199,7 +1199,7 @@
         "gloss": "The rest of the hearing stays open."
       },
       "scenario": {
-        "setup": "A judge speaking to the gallery mid-hearing.",
+        "setup": "Mid-hearing, the judge speaks to the gallery.",
         "lines": [
           {
             "label": "JUDGE",
@@ -1263,7 +1263,7 @@
         "gloss": "Watch, listen, stay quiet."
       },
       "scenario": {
-        "setup": "Back row, and something just got said that was not true.",
+        "setup": "Back row, and something just got said that was not right.",
         "lines": [
           {
             "label": "YOU",
@@ -1271,15 +1271,15 @@
           },
           {
             "label": "BAILIFF",
-            "text": "Sir. Outside."
+            "text": "Outside, please."
           },
           {
             "label": "YES",
-            "text": "You save it for your cousin's lawyer in the hallway."
+            "text": "You save it for the hallway afterward."
           },
           {
             "label": "NO",
-            "text": "You get removed and miss the rest of the hearing."
+            "text": "You get removed and miss the rest of it."
           }
         ]
       },
@@ -1327,7 +1327,7 @@
         "gloss": "You do not need a reason."
       },
       "scenario": {
-        "setup": "The clerk's counter, with a case number written on a scrap of paper.",
+        "setup": "The clerk's counter, with a case number on a scrap of paper.",
         "lines": [
           {
             "label": "YOU",
@@ -1391,19 +1391,19 @@
         "gloss": "Not open to everybody, not closed to everybody."
       },
       "scenario": {
-        "setup": "A job application asking about court history.",
+        "setup": "A form at school asking about court history.",
         "lines": [
           {
             "label": "YOU",
             "text": "Can they just look it up?"
           },
           {
-            "label": "LAWYER",
-            "text": "Not in Michigan. Not since 2021."
+            "label": "TEACHER",
+            "text": "Not in Michigan. Not for a juvenile case."
           },
           {
             "label": "YES",
-            "text": "You know what an employer can and cannot find on their own."
+            "text": "You know what somebody can and cannot find on their own."
           },
           {
             "label": "NO",
@@ -1519,15 +1519,15 @@
         "gloss": "At least fifty dollars in Michigan."
       },
       "scenario": {
-        "setup": "Trying to work out what a judge actually said last month.",
+        "setup": "An argument at home about exactly what a judge said last month.",
         "lines": [
           {
             "label": "MOM",
-            "text": "Can we just get a copy of what he said?"
+            "text": "One of us is remembering it wrong."
           },
           {
-            "label": "CLERK",
-            "text": "You'd order a transcript. There's a minimum charge."
+            "label": "YOU",
+            "text": "There's a transcript. It costs though."
           },
           {
             "label": "YES",
@@ -1535,7 +1535,7 @@
           },
           {
             "label": "NO",
-            "text": "Somebody expects a free printout and gets a bill."
+            "text": "Everybody keeps arguing about something written down."
           }
         ]
       },
@@ -1583,7 +1583,7 @@
         "gloss": "Whoever posted the bond gets told."
       },
       "scenario": {
-        "setup": "A letter arriving at an aunt's house.",
+        "setup": "Your aunt posted bond for a relative and a letter arrives.",
         "lines": [
           {
             "label": "AUNT",
@@ -1591,15 +1591,15 @@
           },
           {
             "label": "YOU",
-            "text": "Because you're the one who posted it."
+            "text": "Because you're the one who put the money up. They have to tell you."
           },
           {
             "label": "YES",
-            "text": "You tell the family yourself before the letter does."
+            "text": "Everybody knew that letter could come."
           },
           {
             "label": "NO",
-            "text": "Somebody who helped you finds out from the mail."
+            "text": "The person who helped finds out from the post."
           }
         ]
       },
@@ -1647,7 +1647,7 @@
         "gloss": "Not an invitation, not a request."
       },
       "scenario": {
-        "setup": "An envelope with a court seal on it.",
+        "setup": "An envelope with a court seal on it. You saw something at a shop.",
         "lines": [
           {
             "label": "YOU",
@@ -1663,7 +1663,7 @@
           },
           {
             "label": "NO",
-            "text": "You skip it and there is a warrant with your name on it."
+            "text": "You skip it and the court comes looking."
           }
         ]
       },
@@ -1711,14 +1711,14 @@
         "gloss": "A missed hearing is recorded the moment it is missed."
       },
       "scenario": {
-        "setup": "A phone call two days before.",
+        "setup": "A phone call two days before your cousin's hearing.",
         "lines": [
           {
             "label": "LAWYER",
-            "text": "It's just scheduling, you don't need to come."
+            "text": "It's just scheduling, he doesn't need to come."
           },
           {
-            "label": "YOU",
+            "label": "COUSIN",
             "text": "Can you clear that with the court before Thursday?"
           },
           {
@@ -1727,7 +1727,7 @@
           },
           {
             "label": "NO",
-            "text": "You skip it and it is logged as a failure to appear."
+            "text": "He skips it and it is logged as a failure to appear."
           }
         ]
       },
@@ -1775,15 +1775,15 @@
         "gloss": "Not a reminder, not a new date."
       },
       "scenario": {
-        "setup": "Waking up at eleven, realising it was nine.",
+        "setup": "Your cousin rings at eleven in the morning.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "Do I just go tomorrow?"
+            "label": "COUSIN",
+            "text": "Court was at nine. I slept through it."
           },
           {
-            "label": "LAWYER",
-            "text": "Call me now. There's probably already a warrant."
+            "label": "YOU",
+            "text": "Call the lawyer now, not tomorrow."
           },
           {
             "label": "YES",
@@ -1791,7 +1791,7 @@
           },
           {
             "label": "NO",
-            "text": "It sits there for two years until a traffic stop finds it."
+            "text": "It sits there for years until it turns up at the worst moment."
           }
         ]
       },
@@ -1839,23 +1839,23 @@
         "gloss": "It waits for somebody to run your name."
       },
       "scenario": {
-        "setup": "A traffic stop for a brake light, three years later.",
+        "setup": "Your uncle explaining why he sorted his out straight away.",
         "lines": [
           {
-            "label": "OFFICER",
-            "text": "Step out of the vehicle for me."
+            "label": "UNCLE",
+            "text": "It doesn't expire. It just sits there till somebody runs your name."
           },
           {
             "label": "YOU",
-            "text": "What's this about?"
+            "text": "Even years later?"
           },
           {
             "label": "YES",
-            "text": "You dealt with it back then and this is a brake light."
+            "text": "You know why dealing with it quickly matters."
           },
           {
             "label": "NO",
-            "text": "A three-year-old missed hearing ends the night in custody."
+            "text": "Somebody assumes it goes away on its own."
           }
         ]
       },
@@ -1903,23 +1903,23 @@
         "gloss": "Usually somebody else's money."
       },
       "scenario": {
-        "setup": "A hearing about the missed hearing.",
+        "setup": "A friend's older brother missed a court date last year.",
         "lines": [
           {
-            "label": "JUDGE",
-            "text": "Bond is revoked and forfeited."
+            "label": "FRIEND",
+            "text": "They took the bond money back. My mum had put it up."
           },
           {
-            "label": "MOM",
-            "text": "That was our rent."
+            "label": "YOU",
+            "text": "That's why they wanted him there."
           },
           {
             "label": "YES",
-            "text": "Somebody went the first time and none of this happened."
+            "text": "You know what a missed morning can cost somebody else."
           },
           {
             "label": "NO",
-            "text": "A missed morning costs the family everything they put up."
+            "text": "You think a warrant is the only thing that happens."
           }
         ]
       },
