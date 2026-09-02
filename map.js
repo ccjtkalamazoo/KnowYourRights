@@ -137,19 +137,6 @@ export const ICONS = {
     c.jsx("path", { d: "M24,74 L56,74 M24,64 L56,64", fill: "none", stroke: INK, strokeWidth: 3.2, strokeLinecap: "round", strokeLinejoin: "round" }, 4),
     c.jsx("path", { d: "M14,88 L86,88", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round", strokeLinejoin: "round" }, 5)
   ],
-  // COURTROOM: the judge's bench seen from the gallery, with a gavel resting on
-  // it. Deliberately an interior, so it does not read as a second version of the
-  // `court` icon above, which is the building from outside.
-  courtroom: () => [
-    c.jsx("circle", { cx: 50, cy: 46, r: 37, fill: GSOFT }, 0),
-    c.jsx("path", { d: "M36,20 L64,20 C68,20 70,23 70,27 L70,52 L30,52 L30,27 C30,23 32,20 36,20 Z", fill: GBRIGHT, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 1),
-    c.jsx("rect", { x: 12, y: 52, width: 76, height: 10, rx: 2, fill: PAPER, stroke: INK, strokeWidth: 4.5 }, 2),
-    c.jsx("path", { d: "M18,62 L82,62 L82,86 L18,86 Z", fill: PAPER, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 3),
-    c.jsx("path", { d: "M34,62 L34,86 M50,62 L50,86 M66,62 L66,86", fill: "none", stroke: INK, strokeWidth: 3.2 }, 4),
-    c.jsx("rect", { x: 19, y: 40, width: 17, height: 9, rx: 3, fill: GOLD, stroke: INK, strokeWidth: 3.4 }, 5),
-    c.jsx("path", { d: "M36,45 L52,49", fill: "none", stroke: INK, strokeWidth: 4, strokeLinecap: "round" }, 6),
-    c.jsx("path", { d: "M6,88 L94,88", fill: "none", stroke: INK, strokeWidth: 4.5, strokeLinecap: "round" }, 7)
-  ],
   allrights: () => [
     c.jsx("circle", { cx: 50, cy: 48, r: 38, fill: GSOFT }, 0),
     c.jsx("path", { d: "M50,14 L80,26 L80,52 C80,70 66,82 50,86 C34,82 20,70 20,52 L20,26 Z", fill: GBRIGHT, stroke: INK, strokeWidth: 4.5, strokeLinejoin: "round" }, 1),
@@ -167,7 +154,6 @@ export const ICONS = {
 // stays here is the artwork: an icon is a component, and components do not
 // belong in JSON. ICON_FOR joins the two by district id.
 const ICON_FOR = {
-  courtroom: ICONS.courtroom,
   juvenile: ICONS.juvenile,
   stop: ICONS.stop,
   arrest: ICONS.arrest,
