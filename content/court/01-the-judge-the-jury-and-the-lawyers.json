@@ -819,11 +819,11 @@
             "text": "They passed the same bar exam as everybody else."
           },
           {
-            "label": "YES",
+            "label": "TRUE",
             "text": "Your friend stops repeating it as if it were true."
           },
           {
-            "label": "NO",
+            "label": "FALSE",
             "text": "He turns down the lawyer and represents himself."
           }
         ]
@@ -1004,11 +1004,11 @@
             "text": "If jail's possible they have to appoint one. You have to ask."
           },
           {
-            "label": "YES",
+            "label": "IF HE ASKS",
             "text": "He asks at the first hearing and somebody is appointed."
           },
           {
-            "label": "NO",
+            "label": "IF HE DOESN'T",
             "text": "He goes in alone because he assumed no money meant no lawyer."
           }
         ]
@@ -1160,7 +1160,7 @@
           "id": "court.01.019.b",
           "text": "A free lawyer, the same as in a criminal case.",
           "isCorrect": false,
-          "explanation": "The right to an appointed lawyer is about criminal charges, not about money disputes.",
+          "explanation": "A lawyer paid for by the court is for criminal charges, not money disputes. You can still hire your own.",
           "misconceptionCode": "free_counsel_in_every_case"
         },
         {
@@ -1179,28 +1179,28 @@
         }
       ],
       "hint": "Nobody is trying to put you in jail here.",
-      "principle": "There are two systems. A criminal charge means the state wants to punish you. If jail is possible, you get a lawyer. Being sued means somebody wants money. No jail, and no lawyer comes with it. More than half of adults think otherwise. Michigan does give lawyers in a few civil cases, like when the state tries to take a child.",
+      "principle": "There are two systems. A criminal charge means the state wants to punish you. If jail is possible, the court gives you a lawyer. Being sued means somebody wants money. No jail, so the court does not give you one. You can still hire a lawyer. Most people just cannot afford it. More than half of adults think a free one comes with any case. Michigan does appoint lawyers in a few civil cases, like when the state tries to take a child.",
       "keyPhrase": {
-        "quote": "No criminal charge means no free lawyer.",
-        "gloss": "Being sued is not a criminal case."
+        "quote": "The court only appoints a lawyer for a crime.",
+        "gloss": "You can hire one for a money case. Nobody gives you one."
       },
       "scenario": {
         "setup": "An envelope on the kitchen table. Somebody is suing your mom over money owed.",
         "lines": [
           {
-            "label": "MOM",
-            "text": "It says answer in 21 days. There's no lawyer for this kind, is there?"
-          },
-          {
             "label": "YOU",
-            "text": "Is there not?"
+            "text": "It says 21 days. Do we get a lawyer for this?"
           },
           {
-            "label": "YES",
+            "label": "MOM",
+            "text": "Only if we pay for one. The court gives you a lawyer for a crime, not for money."
+          },
+          {
+            "label": "IF SHE ANSWERS",
             "text": "She answers in time."
           },
           {
-            "label": "NO",
+            "label": "IF SHE DOESN'T",
             "text": "The deadline passes and the other side wins without a hearing."
           }
         ]
