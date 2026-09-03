@@ -40,25 +40,32 @@
           "misconceptionCode": "sentence_is_negotiated_by_lawyers"
         }
       ],
-      "hint": "The jury already finished its job.",
-      "principle": "In Michigan the judge decides the sentence, even after a jury trial. This is one of the places where states differ. Six states, including Texas, let a jury decide the punishment in some felony cases, and in Texas the person on trial gets to pick which one does it. Michigan does not work that way.",
+      "hint": "The jury is done. Somebody else does the next part.",
+      "principle": "In Michigan the judge picks the sentence. The jury does not. Six states let a jury do it, and Texas is one. Michigan is not.",
       "keyPhrase": {
         "quote": "The jury says whether. The judge says how long.",
         "gloss": "Two jobs, two people."
       },
       "scenario": {
-        "setup": "A school trip to the courthouse. A case just finished.",
+        "setup": "Your neighbor's hearing finished this morning. The family is in the hallway.",
         "lines": [
           {
-            "label": "TEACHER",
-            "text": "The jury's part is over. They said guilty, and that's all they decide."
+            "label": "MOM",
+            "text": "So that's it? It's over?"
           },
           {
             "label": "YOU",
-            "text": "So when does he find out how long?"
+            "text": "No. The judge does the sentence at a separate hearing."
+          },
+          {
+            "label": "YES",
+            "text": "The family is in the room on the day it actually gets decided."
+          },
+          {
+            "label": "NO",
+            "text": "Everybody goes home thinking it is finished, and nobody turns up."
           }
-        ],
-        "note": "The verdict and the sentence happen on two different days, decided by two different people."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -98,24 +105,31 @@
         }
       ],
       "hint": "Only one person in the building is allowed to answer that.",
-      "principle": "The judge gives the jury written instructions explaining the law that applies. If the room gets stuck, the question goes to the judge in writing, everybody sees it, and the answer comes back to the whole jury. It does not go to a lawyer, and it does not go to whoever walks past the door.",
+      "principle": "The judge hands the jury written instructions. Those explain the law. Jurors decide what happened. The judge decides what the law is. A stuck jury sends the judge a note.",
       "keyPhrase": {
         "quote": "Jurors decide facts, not law.",
         "gloss": "A stuck jury asks the judge, in writing."
       },
       "scenario": {
-        "setup": "Your aunt got called for jury duty and is telling everyone about it.",
+        "setup": "Your aunt is on a jury and the room cannot agree what the law means.",
         "lines": [
           {
             "label": "AUNT",
-            "text": "Somebody in the room kept saying the law meant something else."
+            "text": "Half of them think it means one thing, half the other."
           },
           {
             "label": "YOU",
-            "text": "Who settles that?"
+            "text": "Can't you just ask the judge?"
+          },
+          {
+            "label": "YES",
+            "text": "A written question goes out and the same answer comes back to everybody."
+          },
+          {
+            "label": "NO",
+            "text": "The room settles it themselves and the verdict rests on a guess about the law."
           }
-        ],
-        "note": "A jury that gets stuck on the law writes to the judge. Not to either lawyer."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -155,24 +169,31 @@
         }
       ],
       "hint": "The judge is sitting on something called the bench.",
-      "principle": "A trial without a jury is a bench trial, and it is a full trial with a full verdict. The judge does both jobs: deciding what happened and deciding the law. A person can choose a bench trial instead of a jury trial, and it is still open to the public either way.",
+      "principle": "A trial with no jury is called a bench trial. The judge does both jobs. The judge decides what happened, and what the law is. Most cases never reach a trial at all.",
       "keyPhrase": {
         "quote": "No jury means the judge does both jobs.",
         "gloss": "It is called a bench trial."
       },
       "scenario": {
-        "setup": "Back row of a courtroom, watching a case with your cousin.",
+        "setup": "Back row of a courtroom with your cousin's mum. There is no jury.",
         "lines": [
           {
             "label": "YOU",
             "text": "Where's the jury? I thought there'd be twelve people."
           },
           {
-            "label": "COUSIN",
-            "text": "There isn't one. She picked to have the judge decide it."
+            "label": "MOM",
+            "text": "There isn't one. He chose to have the judge decide it."
+          },
+          {
+            "label": "YES",
+            "text": "You stay and follow it through to the verdict."
+          },
+          {
+            "label": "NO",
+            "text": "You go looking for the real trial and miss the end of this one."
           }
-        ],
-        "note": "A trial without a jury is called a bench trial, and the judge does both jobs."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -212,24 +233,31 @@
         }
       ],
       "hint": "A jury answers one question, and it is a question about facts.",
-      "principle": "A jury decides one thing: whether the case was proved. Not the sentence, not the meaning of the law, and not whether the charge was a good idea. In Michigan a felony jury has 12 people and a misdemeanor jury in district court has 6.",
+      "principle": "A jury decides one thing. Was the case proved. Not the sentence. Not what the law means. In Michigan a felony jury has 12 people. A misdemeanor jury has 6.",
       "keyPhrase": {
         "quote": "One question, and it is about facts.",
         "gloss": "Did it happen, and did this person do it."
       },
       "scenario": {
-        "setup": "A summons came in the post for your uncle. The family is reading it.",
+        "setup": "A jury summons came in the post for your uncle.",
         "lines": [
           {
             "label": "UNCLE",
-            "text": "So if I do this, do I have to decide how long somebody goes away for?"
+            "text": "I'm not deciding how long somebody goes away for. I'll get out of it."
           },
           {
             "label": "YOU",
-            "text": "No. That part's the judge."
+            "text": "That part isn't yours. The judge does that."
+          },
+          {
+            "label": "YES",
+            "text": "He turns up knowing what he is actually being asked to decide."
+          },
+          {
+            "label": "NO",
+            "text": "He tries to get excused over a job that was never his."
           }
-        ],
-        "note": "A jury answers one question, and it is a question about what happened."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -269,13 +297,13 @@
         }
       ],
       "hint": "The rule is not about when. It is about who else is there.",
-      "principle": "A judge is not allowed to hear one side of a case without the other side present. The rule exists so nothing gets decided on something only one side knows about. You do get heard. It happens in the courtroom.",
+      "principle": "A judge cannot hear one side alone. It is called ex parte, and it is not allowed. The rule is there so nothing gets decided in secret. You do get heard. It happens in the courtroom.",
       "keyPhrase": {
         "quote": "Both sides, or neither.",
         "gloss": "A judge cannot listen to one person alone."
       },
       "scenario": {
-        "setup": "A hearing you are watching. Somebody in the gallery stands up.",
+        "setup": "A hearing you are watching. Somebody in the gallery stands up to speak.",
         "lines": [
           {
             "label": "JUDGE",
@@ -283,10 +311,17 @@
           },
           {
             "label": "YOU",
-            "text": "Why can't he just tell her outside?"
+            "text": "So he has to wait?"
+          },
+          {
+            "label": "YES",
+            "text": "It gets said in the hearing, on the record, where it counts."
+          },
+          {
+            "label": "NO",
+            "text": "He keeps trying to catch the judge outside and it never reaches anybody."
           }
-        ],
-        "note": "A judge cannot hear one side alone. That is why it waits for the courtroom."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -326,7 +361,7 @@
         }
       ],
       "hint": "The fix for a judge knowing somebody is not secrecy.",
-      "principle": "A judge who has a connection to somebody in a case is expected to put it on the record so both sides know and can say whether it worries them. Sometimes the judge steps aside and sometimes both sides are fine with it, and either way it happens in the open. The same idea runs through everything a judge does: nothing about your case happens where one side cannot see it.",
+      "principle": "A judge who knows somebody in a case has to say so out loud. Then both sides can object. Sometimes the judge steps aside. Sometimes both sides are fine with it. Either way it happens in the open.",
       "keyPhrase": {
         "quote": "A judge says it out loud.",
         "gloss": "Connections get disclosed, not hidden."
@@ -341,9 +376,16 @@
           {
             "label": "LAWYER",
             "text": "No objection."
+          },
+          {
+            "label": "YES",
+            "text": "Both sides heard it at the start and the hearing stands."
+          },
+          {
+            "label": "NO",
+            "text": "It surfaces months later and the whole hearing gets challenged."
           }
-        ],
-        "note": "Anything a judge hears about a case, both sides get to hear too."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -383,7 +425,7 @@
         }
       ],
       "hint": "Everybody else in the room has a side. What is left?",
-      "principle": "A judge runs the process and applies the law. Not on your side, not on the state's side, and not out finding evidence. Our system puts each side in charge of building its own case and puts one person in charge of making sure it is done by the rules.",
+      "principle": "A judge runs the process and applies the law. Not on your side. Not on the state's side. Each side builds its own case. One person makes sure it is done by the rules.",
       "keyPhrase": {
         "quote": "The judge runs the rules, not a side.",
         "gloss": "Everybody else in the room has one."
@@ -440,24 +482,31 @@
         }
       ],
       "hint": "Somebody brought this case. Who was it?",
-      "principle": "A prosecutor represents the government, which is why cases are called The People against somebody. In Michigan the job title is prosecuting attorney, elected by county. Most other states say district attorney, and television almost always says DA. Same job.",
+      "principle": "A prosecutor works for the state. That is why cases are called The People against somebody. In Michigan the job title is prosecuting attorney. Most states say district attorney. TV says DA. Same job.",
       "keyPhrase": {
         "quote": "The prosecutor works for the state.",
         "gloss": "Being friendly is not the same as being on your side."
       },
       "scenario": {
-        "setup": "The hallway outside a courtroom. The prosecutor is being friendly to everybody.",
+        "setup": "The hallway before your cousin's hearing. The prosecutor comes over.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "She's nice. Is she kind of neutral?"
+            "label": "PROSECUTOR",
+            "text": "Want to tell me your side before we go in?"
           },
           {
-            "label": "COUSIN",
-            "text": "No, she's the other side. She's just polite."
+            "label": "NEIGHBOR",
+            "text": "I'll wait for my lawyer."
+          },
+          {
+            "label": "YES",
+            "text": "Nothing goes to the other side before his own lawyer hears it."
+          },
+          {
+            "label": "NO",
+            "text": "He explains everything to the person arguing against him."
           }
-        ],
-        "note": "A prosecutor can be perfectly decent to you and still be the other side."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -478,7 +527,7 @@
           "id": "court.01.009.b",
           "text": "The one bringing the case.",
           "isCorrect": false,
-          "explanation": "The victim is the person it happened to, and that is not the same as bringing the case. The state brings it.",
+          "explanation": "Being the person it happened to is not the same as bringing the case. The state brings it.",
           "misconceptionCode": "victim_brings_the_case"
         },
         {
@@ -497,7 +546,7 @@
         }
       ],
       "hint": "Ask whose name the case is brought in.",
-      "principle": "A crime is treated as something done against the whole community, so the state brings the case and the person it happened to is a witness. That can feel wrong, since it happened to you. Michigan's Crime Victim's Rights Act gives victims real standing anyway, including being told what is happening and speaking at sentencing. What it does not do is make the victim the client.",
+      "principle": "A crime counts as harm to the whole community. So the state brings the case, not the victim. Victims in Michigan still have real rights. They get told what is happening. They can speak at sentencing. Those come from a state law, not from being the client.",
       "keyPhrase": {
         "quote": "The victim is a witness, not the client.",
         "gloss": "The case belongs to the state."
@@ -511,10 +560,17 @@
           },
           {
             "label": "PROSECUTOR",
-            "text": "No. I represent the state. You're a witness, and you can speak at sentencing."
+            "text": "No. I represent the state. You're a witness."
+          },
+          {
+            "label": "YES",
+            "text": "You ask about being told the dates and speaking at sentencing."
+          },
+          {
+            "label": "NO",
+            "text": "You sit back and wait for a lawyer who was never yours."
           }
-        ],
-        "note": "A crime is treated as something done to everybody, so the state brings the case."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -554,7 +610,7 @@
         }
       ],
       "hint": "Advice has to come from somebody whose job is you.",
-      "principle": "Only a lawyer working for you can give you legal advice. In a criminal case the prosecutor is the other side, so that is not them. Court clerks are helpful and are not allowed to cross that line, which is why a clerk will explain where a form goes but not what to write on it. Worth knowing: prosecutors only handle criminal cases. If you are the one suing somebody, there is no prosecutor in that case at all, and the only person who can advise you is a lawyer you find yourself.",
+      "principle": "Only your own lawyer can tell you what to do. Court clerks are not allowed to. A clerk will say what a form means. A clerk will not say what to put on it. That is a rule they work under.",
       "keyPhrase": {
         "quote": "Advice comes from your side only.",
         "gloss": "Everybody else can explain, not advise."
@@ -569,9 +625,16 @@
           {
             "label": "CLERK",
             "text": "I can tell you what the box means. I can't tell you what to pick."
+          },
+          {
+            "label": "YES",
+            "text": "You get an actual answer from somebody allowed to give one."
+          },
+          {
+            "label": "NO",
+            "text": "You guess, and the form comes back to be done again."
           }
-        ],
-        "note": "Court staff can explain what a form is. They are not allowed to tell you what to put on it."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -610,25 +673,32 @@
           "misconceptionCode": "judge_orders_fair_statements"
         }
       ],
-      "hint": "Winning is not actually the prosecutor's job description.",
-      "principle": "A prosecutor is supposed to seek a just result rather than a win, and that duty includes telling the court things that help the other side. Doing that job well can look like friendliness or like a signal that things are going your way. Neither is what it is. The side has not changed.",
+      "hint": "Winning is not the job.",
+      "principle": "A prosecutor is meant to be fair, not to win at all costs. That means telling the court things that help you. Doing the job well can look like being nice. The side has not changed.",
       "keyPhrase": {
         "quote": "Fair is not the same as friendly.",
         "gloss": "And friendly is not the same as yours."
       },
       "scenario": {
-        "setup": "A hearing you are sitting in on. It goes better than expected.",
+        "setup": "Your cousin's hearing goes better than expected.",
         "lines": [
           {
             "label": "PROSECUTOR",
-            "text": "For the record, this person has been at every hearing."
+            "text": "For the record, he's been at every hearing."
           },
           {
-            "label": "YOU",
-            "text": "Wait, is she helping him?"
+            "label": "NEIGHBOR",
+            "text": "Wait, is she on my side now?"
+          },
+          {
+            "label": "YES",
+            "text": "He keeps running everything past his own lawyer."
+          },
+          {
+            "label": "NO",
+            "text": "He starts treating the other side as an ally."
           }
-        ],
-        "note": "A prosecutor is supposed to be fair, which sometimes looks like help."
+        ]
       },
       "setting": "facility",
       "questionType": "judging_a_claim"
@@ -668,24 +738,31 @@
         }
       ],
       "hint": "Ask who the lawyer has to keep secrets for.",
-      "principle": "An appointed lawyer is employed by the county and works for you. Those are two different things, and the second one is what matters. You get the same duties as somebody who paid: loyalty, confidentiality, and their best work. Michigan runs appointed defence through the Michigan Indigent Defense Commission, which sets minimum standards counties have to meet.",
+      "principle": "An appointed lawyer is paid by the county and works for you. Those are two different things. You get the same duties as somebody who paid. Loyalty. Secrets kept. Their best work.",
       "keyPhrase": {
         "quote": "Paid by the county, working for you.",
         "gloss": "Who signs the cheque is not whose side they are on."
       },
       "scenario": {
-        "setup": "The kitchen. Your cousin's family is talking about the lawyer the court gave him.",
+        "setup": "The kitchen. Your aunt is explaining the lawyer the court gave your cousin.",
         "lines": [
           {
-            "label": "MOM",
+            "label": "YOU",
             "text": "If the county's paying, whose side is she really on?"
           },
           {
-            "label": "YOU",
+            "label": "AUNT",
             "text": "His. That part doesn't change."
+          },
+          {
+            "label": "YES",
+            "text": "The family starts telling the lawyer everything she needs."
+          },
+          {
+            "label": "NO",
+            "text": "Everybody treats her as an outsider and holds things back."
           }
-        ],
-        "note": "An appointed lawyer is employed by the county and works for the client."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -706,14 +783,14 @@
           "id": "court.01.013.b",
           "text": "A lawyer still in training.",
           "isCorrect": false,
-          "explanation": "Appointed lawyers are licensed, and many have more trial experience than lawyers you could hire.",
+          "explanation": "Appointed lawyers hold a license. Many have done more trials than one you could hire.",
           "misconceptionCode": "appointed_means_trainee"
         },
         {
           "id": "court.01.013.c",
           "text": "Somebody from the court, not a lawyer.",
           "isCorrect": false,
-          "explanation": "Appointed counsel is a lawyer with a licence who works for you, not somebody employed by the court.",
+          "explanation": "Appointed counsel is a lawyer with a license who works for you, not somebody employed by the court.",
           "misconceptionCode": "appointed_counsel_is_staff"
         },
         {
@@ -725,10 +802,10 @@
         }
       ],
       "hint": "One of these is about who they are, not how they were assigned.",
-      "principle": "An appointed lawyer went to law school, passed the bar, and holds a licence. Michigan courts have said an indigent defendant is entitled to appointed counsel but not to counsel of their own choosing. You do get one. You do not get to shop.",
+      "principle": "An appointed lawyer went to law school and passed the bar. Same license as any other lawyer. Michigan courts have said this: you get a lawyer, but you do not get to pick which one.",
       "keyPhrase": {
         "quote": "Appointed is how you were assigned, not a kind of lawyer.",
-        "gloss": "Same licence."
+        "gloss": "Same license."
       },
       "scenario": {
         "setup": "The bus home from school.",
@@ -740,9 +817,16 @@
           {
             "label": "YOU",
             "text": "They passed the same bar exam as everybody else."
+          },
+          {
+            "label": "YES",
+            "text": "Your friend stops repeating it as if it were true."
+          },
+          {
+            "label": "NO",
+            "text": "He turns down the lawyer and represents himself."
           }
-        ],
-        "note": "Appointed lawyers hold the same licence as any other lawyer."
+        ]
       },
       "setting": "school",
       "questionType": "standard"
@@ -782,24 +866,31 @@
         }
       ],
       "hint": "You can raise it. You cannot go shopping.",
-      "principle": "Michigan courts have said that somebody who cannot afford a lawyer is entitled to appointed counsel but not to counsel of their own choosing. You can ask the court for a different lawyer and you have to give a reason. Not liking the advice is usually not enough. A real breakdown in being able to work together is a different matter.",
+      "principle": "Michigan courts have said you get a lawyer, not the lawyer you want. You can ask the court for a different one. You have to give a reason. Not liking the advice is usually not enough. Not being able to work together at all is different.",
       "keyPhrase": {
         "quote": "You get a lawyer. You do not get to shop.",
         "gloss": "A real problem is worth raising with the court."
       },
       "scenario": {
-        "setup": "A friend is complaining about the lawyer her family was given.",
+        "setup": "A friend is fed up with the lawyer her family was given.",
         "lines": [
           {
             "label": "FRIEND",
-            "text": "We asked for a different one and they said no."
+            "text": "We asked for a different one and they just said no."
           },
           {
             "label": "YOU",
             "text": "Did anybody tell the court why?"
+          },
+          {
+            "label": "YES",
+            "text": "The actual reason goes to the court and gets looked at."
+          },
+          {
+            "label": "NO",
+            "text": "The family stays unhappy and the judge never hears about it."
           }
-        ],
-        "note": "You can ask the court for a different lawyer. You have to give a reason."
+        ]
       },
       "setting": "home",
       "questionType": "standard"
@@ -839,7 +930,7 @@
         }
       ],
       "hint": "Everybody in the room has one job. Which one is arguing for you?",
-      "principle": "One person in a courtroom has the job of arguing your side, and that is your defence lawyer. The judge is neutral, the prosecutor is the other side, and everybody else is staff. You can represent yourself if you choose to, and courts warn against it for good reason.",
+      "principle": "One person in that room argues your side. That is your defense lawyer. The judge is neutral. The prosecutor is the other side. Everybody else works for the court.",
       "keyPhrase": {
         "quote": "One person argues for you.",
         "gloss": "Everybody else has a different job."
@@ -877,7 +968,7 @@
           "id": "court.01.016.b",
           "text": "You go without one.",
           "isCorrect": false,
-          "explanation": "Not being able to pay is the reason you get one, not a reason to go without.",
+          "explanation": "Not being able to pay is the reason you get one. Not a reason to go without.",
           "misconceptionCode": "no_money_no_lawyer"
         },
         {
@@ -896,24 +987,31 @@
         }
       ],
       "hint": "This is the criminal side of the courthouse.",
-      "principle": "Appointed lawyers exist for criminal charges only, and in Michigan the right applies whenever jail is a possible penalty, which is more generous than the constitutional minimum. The US Supreme Court in Scott v. Illinois set the floor at cases where somebody is actually jailed, so a state sitting at that floor gives less than Michigan does. This is a place where where you live matters.",
+      "principle": "Free lawyers are for criminal charges only. In Michigan you get one any time jail is possible. That is more than the law requires. The US Supreme Court set a lower floor. So a state can give less than Michigan does.",
       "keyPhrase": {
         "quote": "A free lawyer is a criminal-case thing.",
         "gloss": "And only when jail is on the table."
       },
       "scenario": {
-        "setup": "Your uncle is telling the family what happened at his first court date.",
+        "setup": "Your neighbor has court next week and no money for a lawyer.",
         "lines": [
           {
-            "label": "UNCLE",
-            "text": "The judge asked if I wanted a lawyer and whether I could pay for one."
+            "label": "NEIGHBOR",
+            "text": "I'll just explain it myself. I can't pay anybody."
           },
           {
             "label": "YOU",
-            "text": "And you can't. So what happened?"
+            "text": "If jail's possible they have to appoint one. You have to ask."
+          },
+          {
+            "label": "YES",
+            "text": "He asks at the first hearing and somebody is appointed."
+          },
+          {
+            "label": "NO",
+            "text": "He goes in alone because he assumed no money meant no lawyer."
           }
-        ],
-        "note": "In Michigan, if jail is possible, a lawyer is available whether or not you can pay."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -952,8 +1050,8 @@
           "misconceptionCode": "must_try_hiring_first"
         }
       ],
-      "hint": "The word is affordable, not innocent.",
-      "principle": "The test is money. Michigan court rules list what a court looks at, including income, what you own, and what you have to pay out. There is usually a short form. It is a financial question and nothing else, and answering it does not say anything about your case.",
+      "hint": "The word is afford, not innocent.",
+      "principle": "The test is money. Michigan lists what a court looks at. What you earn. What you own. What you have to pay out. It is usually a short form. Nobody asks what happened.",
       "keyPhrase": {
         "quote": "The test is money, not guilt.",
         "gloss": "Nobody is asking what happened."
@@ -962,12 +1060,12 @@
         "setup": "Filling in a form at the counter before a hearing.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "Does it matter what he's charged with?"
+            "label": "NEIGHBOR",
+            "text": "Does it matter what I'm charged with?"
           },
           {
             "label": "CLERK",
-            "text": "Not on this form. It's asking what he earns."
+            "text": "Not on this form. It's asking what you earn."
           },
           {
             "label": "YES",
@@ -975,7 +1073,7 @@
           },
           {
             "label": "NO",
-            "text": "Somebody starts explaining the case on a form nobody reads for that."
+            "text": "He writes about the case on a form nobody reads for that, and it goes back."
           }
         ]
       },
@@ -1005,7 +1103,7 @@
           "id": "court.01.018.c",
           "text": "After you have been convicted.",
           "isCorrect": false,
-          "explanation": "A lawyer is most useful before decisions get made, not after they are already made.",
+          "explanation": "A lawyer helps most before choices get made, not after.",
           "misconceptionCode": "counsel_comes_after_conviction"
         },
         {
@@ -1017,24 +1115,31 @@
         }
       ],
       "hint": "The earliest chance is a real answer here.",
-      "principle": "Michigan court rules require the court at arraignment to ask whether you want a lawyer and whether you can afford one. Arraignment is usually your first appearance and it is where the charge is read and bond is set, so it matters that somebody is on your side by then.",
+      "principle": "Michigan rules say the court has to ask at your first hearing. It has to ask if you want a lawyer and if you can pay. That first hearing is where the charge is read and bond is set. So it matters that somebody is on your side by then.",
       "keyPhrase": {
         "quote": "Ask at the first hearing.",
         "gloss": "The court is supposed to ask you too."
       },
       "scenario": {
-        "setup": "Watching a first appearance from the gallery.",
+        "setup": "Your cousin's first appearance. The family is watching.",
         "lines": [
           {
             "label": "JUDGE",
-            "text": "Are you asking for a court-appointed attorney?"
+            "text": "Do you want a lawyer, and can you afford one?"
           },
           {
-            "label": "YOU",
-            "text": "That's the first thing they ask?"
+            "label": "COUSIN",
+            "text": "I'll just handle it myself."
+          },
+          {
+            "label": "YES",
+            "text": "He says yes, and somebody is on his side before bond gets set."
+          },
+          {
+            "label": "NO",
+            "text": "The first decisions in the case happen with nobody arguing for him."
           }
-        ],
-        "note": "The court is supposed to ask at the first hearing. You can ask then too."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1074,29 +1179,29 @@
         }
       ],
       "hint": "Nobody is trying to put you in jail here.",
-      "principle": "There are two different systems and they work differently. A criminal charge means the government is trying to punish you, and if jail is possible you get a lawyer. Being sued means somebody wants money from you, no jail is on the table, and no lawyer comes with it. More than half of American adults believe otherwise, and two thirds of people under 35 do. Michigan does appoint lawyers in a few civil situations, such as cases about taking children from a parent, so the line is criminal charges plus a short list.",
+      "principle": "There are two systems. A criminal charge means the state wants to punish you. If jail is possible, you get a lawyer. Being sued means somebody wants money. No jail, and no lawyer comes with it. More than half of adults think otherwise. Michigan does give lawyers in a few civil cases, like when the state tries to take a child.",
       "keyPhrase": {
         "quote": "No criminal charge means no free lawyer.",
         "gloss": "Being sued is not a criminal case."
       },
       "scenario": {
-        "setup": "An envelope on the kitchen table. Somebody is suing over money owed.",
+        "setup": "An envelope on the kitchen table. Somebody is suing your mum over money owed.",
         "lines": [
           {
             "label": "MOM",
-            "text": "It says I have to answer in 21 days. Do I get a lawyer for this?"
+            "text": "It says answer in 21 days. There's no lawyer for this kind, is there?"
           },
           {
             "label": "YOU",
-            "text": "Not for this kind. Nobody's charging you with anything."
+            "text": "Is there not?"
           },
           {
             "label": "YES",
-            "text": "The answer goes in on time instead of waiting for somebody who is not coming."
+            "text": "She answers in time."
           },
           {
             "label": "NO",
-            "text": "The deadline passes and the other side wins by default."
+            "text": "The deadline passes and the other side wins without a hearing."
           }
         ]
       },
@@ -1138,13 +1243,13 @@
         }
       ],
       "hint": "Whose case is it?",
-      "principle": "Michigan's rules for lawyers say it directly: in a criminal case the lawyer must abide by the client's decision on the plea to be entered, on whether to give up a jury trial, and on whether the client testifies. Those three are yours. Your lawyer's job is to make sure you understand what you are choosing.",
+      "principle": "Michigan rules for lawyers are clear. In a criminal case the lawyer must do what the client decides about three things. The plea. Giving up a jury. Whether to take the stand. Your lawyer's job is making sure you understand the choice.",
       "keyPhrase": {
         "quote": "The plea is your call.",
         "gloss": "Your lawyer advises. You decide."
       },
       "scenario": {
-        "setup": "A courtroom drama is on. Somebody's lawyer just takes a deal for them.",
+        "setup": "A courtroom drama is on. A lawyer just takes a deal for the client.",
         "lines": [
           {
             "label": "YOU",
@@ -1195,24 +1300,31 @@
         }
       ],
       "hint": "Some calls are yours. This is not one of the three.",
-      "principle": "The plea, the jury waiver and whether you testify are your decisions. Which witnesses to call, what to ask, and what to object to are your lawyer's professional judgment. That split is written into the rules lawyers work under. A question you wanted asked may have been left out on purpose, and asking why is a fair conversation to have.",
+      "principle": "Three choices are yours. The plea, the jury, and whether you take the stand. Which witnesses to call is your lawyer's call. So is what to ask. That split is written into the rules. A question left out may have been left out on purpose. Asking why is fair.",
       "keyPhrase": {
         "quote": "Three decisions are yours. The tactics are your lawyer's.",
         "gloss": "Ask why, do not assume a mistake."
       },
       "scenario": {
-        "setup": "A break in the hallway during a hearing you are watching.",
+        "setup": "A break in the hallway during your cousin's trial.",
         "lines": [
           {
-            "label": "COUSIN",
-            "text": "Why didn't his lawyer ask about the messages?"
+            "label": "FRIEND",
+            "text": "She didn't ask about the messages. I told her to."
           },
           {
             "label": "YOU",
-            "text": "Might be on purpose. That part's the lawyer's call."
+            "text": "Ask her why before you decide she forgot."
+          },
+          {
+            "label": "YES",
+            "text": "He gets the reasoning and stays in the loop."
+          },
+          {
+            "label": "NO",
+            "text": "He stops telling his lawyer anything for the rest of the trial."
           }
-        ],
-        "note": "Which questions get asked is the lawyer's judgment. Asking why is fair."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1252,17 +1364,17 @@
         }
       ],
       "hint": "There are exactly three decisions on your list, and one of these is on it.",
-      "principle": "Three decisions belong to the client in a criminal case: the plea, whether to give up a jury trial, and whether to testify. Everything else is the lawyer's professional judgment. This is the same in essentially every state, because the rule lawyers follow was adopted from the same model everywhere.",
+      "principle": "Three choices belong to the client. The plea. Giving up a jury. Whether to take the stand. Everything else is the lawyer's call. It works this way in almost every state, because the rule came from the same model.",
       "keyPhrase": {
         "quote": "Plea, jury, testify.",
         "gloss": "Those three are yours. The rest is your lawyer's."
       },
       "scenario": {
-        "setup": "Your neighbour took a plea deal years ago and still talks about it.",
+        "setup": "Your neighbor took a plea years ago and still talks about it.",
         "lines": [
           {
-            "label": "NEIGHBOUR",
-            "text": "Everyone kept telling me what to do. In the end it was my signature."
+            "label": "NEIGHBOR",
+            "text": "Everyone told me what to do. In the end it was my signature."
           },
           {
             "label": "YOU",
@@ -1309,13 +1421,13 @@
         }
       ],
       "hint": "The rule does not have an exception for when the lawyer disagrees.",
-      "principle": "The plea is the client's decision, full stop. A lawyer who disagrees is supposed to say so clearly, explain why, and then do what the client decided. A lawyer cannot walk away from a case just because a client would not take a deal.",
+      "principle": "The plea is the client's choice, full stop. A lawyer who disagrees should say so clearly and explain why. Then do what the client chose. A lawyer cannot quit just because a client turns down a deal.",
       "keyPhrase": {
         "quote": "Disagreeing is allowed. Overriding is not.",
         "gloss": "Your lawyer says so, then does what you chose."
       },
       "scenario": {
-        "setup": "A film on in the background. A lawyer just overrules a client on screen.",
+        "setup": "A film on in the background. A lawyer overrules a client on screen.",
         "lines": [
           {
             "label": "YOU",
@@ -1323,7 +1435,7 @@
           },
           {
             "label": "AUNT",
-            "text": "Not with a plea. That one's the client's call, even if the lawyer hates it."
+            "text": "Not with a plea. That's the client's, even if the lawyer hates it."
           }
         ],
         "note": "A lawyer can disagree on the record and still has to enter the plea the client chose."
@@ -1366,13 +1478,13 @@
         }
       ],
       "hint": "Ask who the lawyer's client is.",
-      "principle": "What you tell your lawyer to get legal help is confidential, and if you are under 18 that still holds, because the client is you and not your parents. There are a few narrow exceptions and they are not the ones people expect. A lawyer may speak up to stop somebody being killed or badly hurt, cannot help you lie to the court, and can defend themselves if you later accuse them of doing a bad job. A judge asking, a prosecutor asking and a parent asking are none of those.",
+      "principle": "What you tell your lawyer stays there. That holds if you are under 18, because the client is you and not your parents. There are a few narrow limits. A lawyer can speak up to stop somebody being killed or badly hurt. A lawyer cannot help you lie in court. A lawyer can answer back if you say they did a bad job. A judge asking is not one of those. Nor is a parent asking.",
       "keyPhrase": {
         "quote": "Your lawyer keeps it.",
         "gloss": "Not the judge, not the prosecutor, not your parents."
       },
       "scenario": {
-        "setup": "Careers day. Somebody asks the question everybody wanted to ask.",
+        "setup": "Careers day at school. A defense lawyer is taking questions.",
         "lines": [
           {
             "label": "YOU",
@@ -1423,24 +1535,31 @@
         }
       ],
       "hint": "Ask who is on the other end.",
-      "principle": "Jails record calls, and a recorded call can be listened to and used later. That is how jails operate rather than a rule written in a statute, and a recording usually plays at the start of the call saying so. Calls with your lawyer are meant to be treated differently. Everything else is not private, no matter who you are talking to.",
+      "principle": "Jails record calls. A recorded call can be played later. That is how jails work, not a law. A message usually plays at the start of the call to say so. Calls with your lawyer are treated differently. Nothing else on that phone is private.",
       "keyPhrase": {
         "quote": "Only lawyer calls are private.",
         "gloss": "Everything else on that phone is recorded."
       },
       "scenario": {
-        "setup": "Your uncle works at the courthouse and is explaining how calls work there.",
+        "setup": "Your uncle works at the courthouse. The family is planning a call.",
         "lines": [
           {
             "label": "UNCLE",
-            "text": "Every call out of that building is recorded. Everyone knows it."
+            "text": "Every call out of that building is recorded. Don't get into the case."
           },
           {
-            "label": "YOU",
-            "text": "Even to family?"
+            "label": "MOM",
+            "text": "Even to me?"
+          },
+          {
+            "label": "YES",
+            "text": "Nothing about that night ends up on a recording."
+          },
+          {
+            "label": "NO",
+            "text": "The family's version of events becomes a file somebody can play back."
           }
-        ],
-        "note": "Calls out of a jail are recorded. Calls with your lawyer are treated differently."
+        ]
       },
       "setting": "phone",
       "questionType": "standard"
@@ -1480,7 +1599,7 @@
         }
       ],
       "hint": "Only one person in this list has a duty to keep your secrets.",
-      "principle": "Confidentiality is not about the room or how quiet the conversation was. It is about who the other person is and what their job is. Your lawyer has a duty to keep what you say. A probation officer has a duty to report. A friend has no duty either way and can be asked.",
+      "principle": "Being private is not about the room. It is about who you are talking to, and what their job is. Your lawyer has to keep what you say. A probation officer has to report it. A friend has no duty either way, and can be asked.",
       "keyPhrase": {
         "quote": "Privacy comes from the person, not the room.",
         "gloss": "Only your lawyer has that duty."
@@ -1494,10 +1613,17 @@
           },
           {
             "label": "YOU",
-            "text": "If it ever mattered, they could just ask you."
+            "text": "My cousin's lawyer said only she has to keep things."
+          },
+          {
+            "label": "YES",
+            "text": "Your friend is never put in that position."
+          },
+          {
+            "label": "NO",
+            "text": "Your friend means it, and gets asked anyway."
           }
-        ],
-        "note": "Confidentiality comes from who you are talking to, not how quiet the room is."
+        ]
       },
       "setting": "school",
       "questionType": "standard"
@@ -1536,8 +1662,8 @@
           "misconceptionCode": "truth_forces_a_plea"
         }
       ],
-      "hint": "Everything in this chapter about whose decision it is applies here too.",
-      "principle": "A defence lawyer's job is to hold the state to its proof, not to decide whether you are guilty. What you say stays confidential either way. There is one limit: your lawyer cannot help you lie to the court, so knowing the truth changes what your lawyer can put in front of a jury. It does not change whose side your lawyer is on.",
+      "hint": "Think about whose choice the plea is.",
+      "principle": "A defense lawyer's job is to make the state prove it. Not to decide if you are guilty. What you say stays private either way. There is one limit. Your lawyer cannot help you lie in court. So the truth changes what your lawyer can use. It does not change whose side they are on.",
       "keyPhrase": {
         "quote": "Your lawyer keeps working either way.",
         "gloss": "The job is the state's proof, not your guilt."
@@ -1554,7 +1680,7 @@
             "text": "That's the job. The state still has to prove it."
           }
         ],
-        "note": "A defence lawyer's job is the state's proof, not deciding who is guilty."
+        "note": "A defense lawyer's job is testing the state's proof, not deciding who is guilty."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1594,7 +1720,7 @@
         }
       ],
       "hint": "Whose case is it, once it has been filed?",
-      "principle": "Once charges are filed, the case belongs to the state and not to the person it happened to. A prosecutor will usually want to know what a victim wants and will often weigh it heavily. It is still the prosecutor's decision, and a case can go forward even when a victim asks for it to stop.",
+      "principle": "Once charges are filed the case belongs to the state. Not to the person it happened to. A prosecutor will usually ask what a victim wants, and often takes it seriously. It is still the prosecutor's choice. A case can go ahead even when the victim asks it to stop.",
       "keyPhrase": {
         "quote": "The case belongs to the state.",
         "gloss": "Your view counts. It does not decide."
@@ -1604,19 +1730,19 @@
         "lines": [
           {
             "label": "YOU",
-            "text": "I said I don't want to press charges anymore."
+            "text": "I don't want to press charges anymore. Can I stop it?"
           },
           {
             "label": "MOM",
-            "text": "They said that's not up to us now."
+            "text": "They said that's the prosecutor's call now."
           },
           {
             "label": "YES",
-            "text": "You know who to talk to and what asking can and cannot do."
+            "text": "You tell the prosecutor what you want, knowing it may go ahead anyway."
           },
           {
             "label": "NO",
-            "text": "You expect it to be over and a subpoena arrives."
+            "text": "You stop answering the phone and a subpoena turns up instead."
           }
         ]
       },
@@ -1657,8 +1783,8 @@
           "misconceptionCode": "judge_picks_the_charge"
         }
       ],
-      "hint": "Being arrested and being charged are two separate steps.",
-      "principle": "In Michigan police bring a warrant request to the prosecuting attorney, who decides what to charge and whether to charge at all. This means people get arrested and never charged, and people get charged with something different from what an officer said at the scene. Officers can issue tickets directly for smaller things, so the split is not perfect, but for anything serious the prosecutor decides.",
+      "hint": "Getting arrested and getting charged are two steps.",
+      "principle": "In Michigan the police ask a prosecutor for a charge. The prosecutor decides what to file, or whether to file at all. So people get arrested and never charged. Others get charged with something else. Police can write tickets for small things. For anything big, the prosecutor decides.",
       "keyPhrase": {
         "quote": "Arrested and charged are two steps.",
         "gloss": "The charge is real when it gets filed."
@@ -1667,15 +1793,22 @@
         "setup": "Kitchen table. Your uncle got a ticket last night.",
         "lines": [
           {
-            "label": "UNCLE",
-            "text": "The officer said what I'm being charged with."
+            "label": "YOU",
+            "text": "So that's what you're charged with?"
           },
           {
-            "label": "YOU",
-            "text": "Is that definitely it?"
+            "label": "UNCLE",
+            "text": "Not yet. A prosecutor decides that part."
+          },
+          {
+            "label": "YES",
+            "text": "He waits for the arraignment before deciding anything."
+          },
+          {
+            "label": "NO",
+            "text": "He tells everyone the wrong charge for three days."
           }
-        ],
-        "note": "Being arrested and being charged are two separate steps, made by two different people."
+        ]
       },
       "setting": "vehicle",
       "questionType": "standard"
@@ -1696,29 +1829,29 @@
           "id": "court.01.030.b",
           "text": "The governor appoints them.",
           "isCorrect": false,
-          "explanation": "Michigan county prosecutors are elected, not appointed by the state.",
+          "explanation": "Michigan votes for county prosecutors. The state does not pick them.",
           "misconceptionCode": "governor_appoints_prosecutors"
         },
         {
           "id": "court.01.030.c",
           "text": "The judges in that county pick them.",
           "isCorrect": false,
-          "explanation": "Judges decide cases. They do not choose who brings them.",
+          "explanation": "Judges decide cases. They do not pick who brings them.",
           "misconceptionCode": "judges_pick_prosecutors"
         },
         {
           "id": "court.01.030.d",
           "text": "The police department hires them.",
           "isCorrect": false,
-          "explanation": "Police investigate and prosecutors charge. The prosecutor's office is separate and elected.",
+          "explanation": "Police look into things. Prosecutors charge. The office is separate, and elected.",
           "misconceptionCode": "prosecutor_works_for_police"
         }
       ],
       "hint": "The person deciding who gets charged is on a ballot.",
-      "principle": "Every Michigan county elects its prosecuting attorney, the same way it elects a sheriff. The person who decides who gets charged, who gets a deal, and who gets left alone is somebody voters put there, and can vote out. Most states elect prosecutors and a handful appoint them instead, so this is another place where where you live matters. The assistants in that office are hired, not elected.",
+      "principle": "Every Michigan county votes for its prosecutor, like it votes for a sheriff. The person who decides who gets charged is on a ballot, and can be voted out. Most states elect prosecutors. A few appoint them. The assistants in that office are hired, not elected.",
       "keyPhrase": {
-        "quote": "Your county's prosecutor is elected.",
-        "gloss": "The charging power belongs to somebody on a ballot."
+        "quote": "Your county votes for its prosecutor.",
+        "gloss": "That power sits with somebody on a ballot."
       },
       "scenario": {
         "setup": "A sample ballot on the kitchen table before an election.",
