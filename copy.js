@@ -16,10 +16,6 @@ export const R = {
     subtitle: "Real situations. What you can say, what you can refuse, what the law actually is. Three lives per round, and four lifelines if you need help."
   },
   playLabel: "Play",
-  // The walkthrough is due a rework into something interactive. What changed
-  // here is only subtraction: the four slides about lifelines and points
-  // described features that no longer exist, and a tutorial that teaches a
-  // thing the game does not do is worse than no tutorial. Six slides now.
   // The walkthrough is now ONE screen: the safety brief. Everything that used
   // to be a card after it (the ladder, the questions, the cards, the points,
   // the shop) is a step in the real game now, pointed at the real button. A
@@ -118,8 +114,10 @@ export const R = {
     skipConfirmPrimary: "Skip anyway",
     skipConfirmSecondary: "Keep reading"
   },
-  // Shown once per session, on the pre-round screen, above that chapter's own
-  // safety note. Session-scoped because nothing is ever stored on the device.
+  // Retained but currently unused. This was the pre-round disclaimer screen's
+  // copy. Its replacement is R.district.notice, which says the same thing in
+  // fewer, plainer words on the district screen. Kept because a beat between
+  // picking a chapter and question one may come back, and this is what it said.
   disclaimer: {
     title: "BEFORE YOU START",
     lines: [
@@ -132,36 +130,69 @@ export const R = {
   // ---------------------------------------------------------------------------
   // The district screen
   // ---------------------------------------------------------------------------
-  // Everything on the screen that opens when somebody picks a district. It
-  // replaced the chapter list that used to drop down inside the map, which put
-  // a settings-style list in the middle of a grid of cards and looked like a
-  // different product.
+  // The page has ONE job: make the next chapter obvious, and let everything else
+  // be found rather than shown. Two folds (what the topic covers, the full
+  // chapter list) and one loud card between them.
   //
-  // The order copy is the load-bearing part. Chapters are NOT locked, because
-  // nothing is saved and a locked chapter 2 would be locked for every new
-  // player forever. So the wording has to do the work that a lock would: it
-  // says plainly that the chapters build on each other, recommends the earlier
-  // one, and then gets out of the way. Nobody is ever refused.
+  // The order copy is load-bearing. Chapters are NOT locked, because nothing is
+  // saved and a locked chapter 2 would be locked for every new player forever.
+  // So the wording does the work a lock would: the next chapter is the only
+  // thing with a filled button, the list underneath is quiet, and somebody who
+  // jumps ahead gets advice rather than a refusal.
   district: {
     backLabel: "\u2190 Back to the map",
+
+    // The two folds. Both use the same handle, so learning one teaches the other.
+    foldOpen: "TAP TO OPEN",
+    foldClose: "TAP TO CLOSE",
     coversLabel: "WHAT THIS COVERS",
-    chaptersLabel: "CHAPTERS",
-    progressLabel: "CHAPTERS CLEARED",
-    startHereLabel: "START HERE",
-    playLabel: "Start the round \u2192",
-    closeLabel: "Close",
-    soonLabel: "SOON",
-    soonBody: "The questions for this chapter are being written and attorney reviewed.",
+    coversHint: (n) => `The ${n} things you learn in this topic`,
+    allChaptersLabel: "ALL CHAPTERS",
+    // Reads the session, so it says something true rather than a fixed line.
+    allChaptersHint: (total, cleared) => cleared === 0
+      ? `${total} chapters, none cleared yet. Jump to any of them.`
+      : cleared >= total
+        ? `All ${total} cleared. Play any of them again.`
+        : `${cleared} of ${total} cleared. Jump to any of them.`,
+
+    // The notice. The headline IS the point, rather than announcing that a
+    // notice follows: "before you start" tells a reader nothing and teaches
+    // them to skip. The body gives a real reason, in words a 13-year-old
+    // follows, because a reason gets read and a formula does not.
+    notice: {
+      title: "This is not legal advice",
+      body: "A game can teach you how things usually work. It cannot know the details of anything real that is happening to you, and some of these rules change from state to state.",
+      emphasis: "If something real is happening, talk to a lawyer about your own situation."
+    },
+
+    // The gold card: the one thing to do on this page.
+    nextLabel: "YOUR NEXT CHAPTER",
+    nextCounter: (n, of) => `${n} OF ${of}`,
+    playLabel: "Play now",
+    playMeta: (questions, lives) => `${questions} questions \u00B7 ${lives} lives`,
+
+    // Shown in place of the gold card once every live chapter is cleared. A
+    // player who finished should be told so, not shown a fourth invitation.
+    doneLabel: "TOPIC COMPLETE",
+    doneTitle: "You cleared every chapter here",
+    doneBody: "Open the list below to play any of them again, or head back to the map for another topic.",
+
+    // The chapter list inside the fold.
+    chapterPlayLabel: "Play \u2192",
+    notPlayedLabel: "NOT PLAYED YET",
     clearedLabel: "CLEARED",
-    noteHeading: "ABOUT THIS CHAPTER",
-    noteLoading: "Loading\u2026",
-    noteFailed: "This chapter's notes could not be loaded, and you can still play it.",
-    notPlayedLabel: "Not played yet",
     attemptsLabel: (n) => (n === 1 ? "1 try" : `${n} tries`),
     bestLabel: (n, of) => `best ${n} of ${of}`,
-    // Said once, at the bottom, rather than next to every number. A player who
-    // sees "0 tries" after a refresh should be able to find out why.
+    soonLabel: "SOON",
+    soonBody: "Being written and attorney reviewed.",
+
+    // Said once, at the bottom. Somebody who sees "not played yet" after a
+    // refresh should be able to find out why without guessing.
     sessionNote: "Scores on this screen last until you refresh or close the page. Nothing about you is saved.",
+
+    // The out-of-order nudge. Fires on Play, never on opening the fold, so
+    // browsing the list can never trigger it. The primary action is playing
+    // anyway, because that is what the player asked for and this is advice.
     orderTitle: "That one comes later",
     orderBody: (name) => `The chapters build on each other, and you have not finished ${name} this session. Starting there will make more sense.`,
     orderPrimary: "Play this one anyway",
