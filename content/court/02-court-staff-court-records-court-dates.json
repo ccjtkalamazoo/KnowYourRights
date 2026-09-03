@@ -609,11 +609,11 @@
         "gloss": "Neutral counts for more than handy."
       },
       "scenario": {
-        "setup": "A neighbor is going to court as a witness and is worried about the language.",
+        "setup": "Your grandmother is going to court as a witness and is worried about the language.",
         "lines": [
           {
-            "label": "NEIGHBOR",
-            "text": "My daughter can come and translate for me."
+            "label": "COUSIN",
+            "text": "I can come and translate for her. I've done it at the doctor."
           },
           {
             "label": "YOU",
@@ -681,7 +681,7 @@
           },
           {
             "label": "STAFF",
-            "text": "In a criminal case the court pays. Ask for one."
+            "text": "In a criminal case it costs you nothing. Ask for one."
           },
           {
             "label": "YES",
@@ -922,7 +922,7 @@
         "gloss": "Nobody else is responsible for it."
       },
       "scenario": {
-        "setup": "Your friend has court in the morning and nobody can reach anyone.",
+        "setup": "Your friend has court in the morning and the bondsman is not picking up.",
         "lines": [
           {
             "label": "FRIEND",
@@ -938,7 +938,7 @@
           },
           {
             "label": "IF SHE DOESN'T",
-            "text": "Nobody goes, and there is a warrant by lunchtime."
+            "text": "She misses it, and there is a warrant by lunchtime."
           }
         ]
       },
@@ -1043,14 +1043,14 @@
         "gloss": "You can walk in and watch."
       },
       "scenario": {
-        "setup": "Your friend has a hearing next week.",
+        "setup": "Your cousin has a hearing next week.",
         "lines": [
           {
             "label": "YOU",
             "text": "Can I come watch, or do I need permission?"
           },
           {
-            "label": "FRIEND",
+            "label": "COUSIN",
             "text": "Just turn up. Court's open."
           },
           {
@@ -1438,11 +1438,11 @@
             "text": "Not since 2021 you can't."
           },
           {
-            "label": "TRUE",
+            "label": "IF IT STOPS THERE",
             "text": "Nobody panics about something that is not findable."
           },
           {
-            "label": "FALSE",
+            "label": "IF IT DOESN'T",
             "text": "A rumor about an old rule follows somebody around for years."
           }
         ]
@@ -1872,7 +1872,7 @@
         "lines": [
           {
             "label": "FRIEND",
-            "text": "They kept the bond money. My mum had put that up."
+            "text": "They kept the bond money. My mom had put that up."
           },
           {
             "label": "YOU",
