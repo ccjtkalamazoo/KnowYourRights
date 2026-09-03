@@ -922,7 +922,7 @@
         "gloss": "Nobody else is responsible for it."
       },
       "scenario": {
-        "setup": "Your cousin has court in the morning and nobody can reach anyone.",
+        "setup": "Your friend has court in the morning and nobody can reach anyone.",
         "lines": [
           {
             "label": "FRIEND",
@@ -934,7 +934,7 @@
           },
           {
             "label": "YES",
-            "text": "He is there in the morning."
+            "text": "She is there in the morning."
           },
           {
             "label": "NO",
@@ -1043,7 +1043,7 @@
         "gloss": "You can walk in and watch."
       },
       "scenario": {
-        "setup": "Your cousin has a hearing next week.",
+        "setup": "Your friend has a hearing next week.",
         "lines": [
           {
             "label": "YOU",
@@ -1683,11 +1683,11 @@
         "gloss": "A missed hearing is recorded the moment it is missed."
       },
       "scenario": {
-        "setup": "A phone call two days before your cousin's hearing.",
+        "setup": "A phone call two days before your friend's hearing.",
         "lines": [
           {
             "label": "LAWYER",
-            "text": "It's just scheduling, he doesn't need to come."
+            "text": "It's just scheduling, you don't need to come."
           },
           {
             "label": "FRIEND",
@@ -1699,7 +1699,7 @@
           },
           {
             "label": "NO",
-            "text": "He skips it and it is logged as a failure to appear."
+            "text": "She skips it and it is logged as a failure to appear."
           }
         ]
       },
