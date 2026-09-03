@@ -241,8 +241,8 @@
       "properties": {
         "label": {
           "type": "string",
-          "maxLength": 12,
-          "description": "Speaker, in caps, or YES or NO for the two outcome lines. The UI gives an avatar and colour to labels matching: YOU; OFFICER, POLICE, DEPUTY, TROOPER, SRO; MOM, DAD, PARENT, GUARDIAN, AUNT, UNCLE, GRANDMA, GRANDPA; FRIEND, COUSIN, BROTHER, SISTER, SIBLING; TEACHER, PRINCIPAL, COACH, STAFF, DEAN, COUNSELOR; LAWYER, ATTORNEY, JUDGE. Anything else (911, WORKER, DRIVER, STRANGER, THEM) renders with the default speech bubble, which is fine but plainer."
+          "maxLength": 20,
+          "description": "Speaker, in caps, or an outcome label. Outcome labels are YES, NO, TRUE, FALSE, RIGHT, WRONG, EITHER WAY, or anything starting with IF (IF SHE ANSWERS, IF HE DOESN'T). Pick the pair that fits the scene: TRUE/FALSE for a myth, IF X / IF NOT X for a choice with a deadline, YES/NO only when the scene really is a yes or no. An IF label renders green unless it carries a negation, so IF SHE ANSWERS is green and IF SHE DOESN'T is terra. The UI gives an avatar to speaker labels matching: YOU; OFFICER, POLICE, DEPUTY, TROOPER, SRO; MOM, DAD, PARENT, GUARDIAN, AUNT, UNCLE, GRANDMA, GRANDPA; FRIEND, COUSIN, BROTHER, SISTER, SIBLING; TEACHER, PRINCIPAL, COACH, STAFF, DEAN, COUNSELOR; LAWYER, ATTORNEY, JUDGE. Anything else renders with a plain speech bubble."
         },
         "text": {
           "type": "string",
