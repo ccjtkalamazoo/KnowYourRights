@@ -1756,8 +1756,23 @@ function FacePhrase({ question }) {
 function FaceRealLife({ question }) {
   const sc = question.scenario || { lines: [] };
   const lines = sc.lines || [];
-  const outcomes = lines.filter((l) => /YES|NO/i.test(l.label));
-  const exchange = lines.filter((l) => !/YES|NO/i.test(l.label));
+  // Outcome labels are not always YES and NO. A scene about a deadline reads better
+  // as IF SHE ANSWERS / IF SHE DOESN'T, and a myth as TRUE / FALSE. Anything in the
+  // fixed list below, or any label starting with IF, is an outcome. The rest are
+  // speakers. The old test was /YES|NO/, which also caught a speaker labelled NOW.
+  const isOutcome = (label) =>
+    /^(YES|NO|TRUE|FALSE|RIGHT|WRONG|EITHER WAY)$/i.test(String(label).trim()) ||
+    /^IF\b/i.test(String(label).trim());
+  // Which half of the pair is the good one. An IF label is negative when it carries
+  // a negation, so IF SHE DOESN'T reads terra and IF SHE ANSWERS reads green.
+  const isPositive = (label) => {
+    const L = String(label).trim().toUpperCase();
+    if (/^(YES|TRUE|RIGHT)$/.test(L)) return true;
+    if (/^(NO|FALSE|WRONG)$/.test(L)) return false;
+    return !/\b(NOT|NO|NEVER|DOESN'T|DON'T|WON'T|CAN'T|ISN'T|DIDN'T|NOBODY|NOTHING)\b/.test(L);
+  };
+  const outcomes = lines.filter((l) => isOutcome(l.label));
+  const exchange = lines.filter((l) => !isOutcome(l.label));
   const isYou = (label) => /^YOU/i.test(label);
   const speakerFor = (label) => {
     const L = String(label).toUpperCase();
@@ -1779,7 +1794,7 @@ function FaceRealLife({ question }) {
       c.jsx("div", { style: { fontFamily: C.body, fontSize: 14.5, lineHeight: 1.4, color: u.text, fontWeight: 600, background: isYou(l.label) ? u.brandSoft : u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "8px 12px" }, children: l.text })
     ] }, i)) }),
     outcomes.length > 0 && c.jsx("div", { className: "ts-scenario-outcomes", style: { display: "grid", gridTemplateColumns: outcomes.length > 1 ? "1fr 1fr" : "1fr", gap: 10 }, children: outcomes.map((l, i) => {
-      const yes = /YES/i.test(l.label);
+      const yes = isPositive(l.label);
       return c.jsxs("div", { style: { background: yes ? "#e5f0e6" : u.terraSoft, border: `2px solid ${yes ? u.green : u.terra}`, borderRadius: 8, padding: "10px 14px" }, children: [
         c.jsx("div", { style: { fontFamily: C.display, fontSize: 15, color: yes ? u.green : u.terra, marginBottom: 4, letterSpacing: 0.5 }, children: l.label }),
         c.jsx("div", { style: { fontFamily: C.body, fontSize: 13.5, lineHeight: 1.4, color: u.text, fontWeight: 500 }, children: l.text })
