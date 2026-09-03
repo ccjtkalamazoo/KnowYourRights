@@ -933,11 +933,11 @@
             "text": "Yeah. It's your date either way."
           },
           {
-            "label": "YES",
+            "label": "IF SHE GOES",
             "text": "She is there in the morning."
           },
           {
-            "label": "NO",
+            "label": "IF SHE DOESN'T",
             "text": "Nobody goes, and there is a warrant by lunchtime."
           }
         ]
@@ -1054,11 +1054,11 @@
             "text": "Just turn up. Court's open."
           },
           {
-            "label": "YES",
+            "label": "IF YOU GO",
             "text": "You are in the room when it happens."
           },
           {
-            "label": "NO",
+            "label": "IF YOU DON'T",
             "text": "Nobody comes, because everybody assumed they were not allowed."
           }
         ]
@@ -1118,11 +1118,11 @@
             "text": "The hearing's open. It's the records that aren't."
           },
           {
-            "label": "YES",
+            "label": "IF THEY GO IN",
             "text": "The family is in the room for the hearing."
           },
           {
-            "label": "NO",
+            "label": "IF THEY DON'T",
             "text": "The family waits outside and misses the hearing."
           }
         ]
@@ -1438,11 +1438,11 @@
             "text": "Not since 2021 you can't."
           },
           {
-            "label": "YES",
+            "label": "TRUE",
             "text": "Nobody panics about something that is not findable."
           },
           {
-            "label": "NO",
+            "label": "FALSE",
             "text": "A rumor about an old rule follows somebody around for years."
           }
         ]
@@ -1630,11 +1630,11 @@
             "text": "It says court on it. You go."
           },
           {
-            "label": "YES",
+            "label": "IF YOU GO",
             "text": "You turn up and it takes an hour."
           },
           {
-            "label": "NO",
+            "label": "IF YOU DON'T",
             "text": "You skip it and the court comes looking for you."
           }
         ]
@@ -1694,11 +1694,11 @@
             "text": "Can you clear that with the court before Thursday?"
           },
           {
-            "label": "YES",
+            "label": "IF IT IS CLEARED",
             "text": "It is handled in advance and nothing goes on the record."
           },
           {
-            "label": "NO",
+            "label": "IF IT IS NOT",
             "text": "She skips it and it is logged as a failure to appear."
           }
         ]
@@ -1758,11 +1758,11 @@
             "text": "Call your lawyer now. There's probably a warrant already."
           },
           {
-            "label": "YES",
+            "label": "IF HE CALLS TODAY",
             "text": "He deals with it the same day."
           },
           {
-            "label": "NO",
+            "label": "IF HE DOESN'T",
             "text": "A warrant sits there for years and turns up at the worst moment."
           }
         ]
