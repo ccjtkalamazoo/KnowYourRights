@@ -15,12 +15,14 @@
     {
       "id": "court.01",
       "name": "THE JUDGE, THE JURY, AND THE LAWYERS",
+      "summary": "Who decides what, whose side each person is on, and how a free lawyer works.",
       "file": "01-the-judge-the-jury-and-the-lawyers.json",
       "live": true
     },
     {
       "id": "court.02",
       "name": "COURT STAFF, COURT RECORDS, COURT DATES",
+      "summary": "Clerks, bailiffs, probation officers and interpreters, plus court dates and what happens if you miss one.",
       "file": "02-court-staff-court-records-court-dates.json",
       "live": true
     }
