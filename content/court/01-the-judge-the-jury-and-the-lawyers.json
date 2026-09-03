@@ -56,16 +56,9 @@
           {
             "label": "YOU",
             "text": "So when does he find out how long?"
-          },
-          {
-            "label": "YES",
-            "text": "You know a second hearing is coming and who runs it."
-          },
-          {
-            "label": "NO",
-            "text": "You think the whole thing was decided this morning."
           }
-        ]
+        ],
+        "note": "The verdict and the sentence happen on two different days, decided by two different people."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -120,16 +113,9 @@
           {
             "label": "YOU",
             "text": "Who settles that?"
-          },
-          {
-            "label": "YES",
-            "text": "She explains the jury sends the judge a written question."
-          },
-          {
-            "label": "NO",
-            "text": "You picture twelve people arguing it out with nobody to ask."
           }
-        ]
+        ],
+        "note": "A jury that gets stuck on the law writes to the judge. Not to either lawyer."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -184,16 +170,9 @@
           {
             "label": "COUSIN",
             "text": "There isn't one. She picked to have the judge decide it."
-          },
-          {
-            "label": "YES",
-            "text": "You follow what is happening instead of waiting for a jury."
-          },
-          {
-            "label": "NO",
-            "text": "You spend the morning thinking the real trial has not started."
           }
-        ]
+        ],
+        "note": "A trial without a jury is called a bench trial, and the judge does both jobs."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -248,16 +227,9 @@
           {
             "label": "YOU",
             "text": "No. That part's the judge."
-          },
-          {
-            "label": "YES",
-            "text": "He turns up knowing what he is actually being asked to decide."
-          },
-          {
-            "label": "NO",
-            "text": "He spends the week worrying about a decision that was never his."
           }
-        ]
+        ],
+        "note": "A jury answers one question, and it is a question about what happened."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -312,16 +284,9 @@
           {
             "label": "YOU",
             "text": "Why can't he just tell her outside?"
-          },
-          {
-            "label": "YES",
-            "text": "You understand it is a rule, not the judge being difficult."
-          },
-          {
-            "label": "NO",
-            "text": "It looks like the judge refusing to listen."
           }
-        ]
+        ],
+        "note": "A judge cannot hear one side alone. That is why it waits for the courtroom."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -376,16 +341,9 @@
           {
             "label": "LAWYER",
             "text": "No objection."
-          },
-          {
-            "label": "YES",
-            "text": "Everybody heard it, and nobody finds out later."
-          },
-          {
-            "label": "NO",
-            "text": "It comes out afterward and the whole hearing is in doubt."
           }
-        ]
+        ],
+        "note": "Anything a judge hears about a case, both sides get to hear too."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -440,16 +398,9 @@
           {
             "label": "TEACHER",
             "text": "That's not the judge's job. Both lawyers do that part."
-          },
-          {
-            "label": "YES",
-            "text": "You know who to watch for the actual argument."
-          },
-          {
-            "label": "NO",
-            "text": "You wait all morning for the judge to dig into it."
           }
-        ]
+        ],
+        "note": "The judge runs the rules. The arguing is somebody else's job."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -504,16 +455,9 @@
           {
             "label": "COUSIN",
             "text": "No, she's the other side. She's just polite."
-          },
-          {
-            "label": "YES",
-            "text": "You can tell being decent apart from being on your side."
-          },
-          {
-            "label": "NO",
-            "text": "You read good manners as a signal about the case."
           }
-        ]
+        ],
+        "note": "A prosecutor can be perfectly decent to you and still be the other side."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -568,16 +512,9 @@
           {
             "label": "PROSECUTOR",
             "text": "No. I represent the state. You're a witness, and you can speak at sentencing."
-          },
-          {
-            "label": "YES",
-            "text": "You know what to expect and what to ask for."
-          },
-          {
-            "label": "NO",
-            "text": "You think you have a lawyer, and later find out nobody was yours."
           }
-        ]
+        ],
+        "note": "A crime is treated as something done to everybody, so the state brings the case."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -632,16 +569,9 @@
           {
             "label": "CLERK",
             "text": "I can tell you what the box means. I can't tell you what to pick."
-          },
-          {
-            "label": "YES",
-            "text": "You know that is a rule, not a brush-off, and you find a lawyer."
-          },
-          {
-            "label": "NO",
-            "text": "You take a guess on a form that matters."
           }
-        ]
+        ],
+        "note": "Court staff can explain what a form is. They are not allowed to tell you what to put on it."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -696,16 +626,9 @@
           {
             "label": "YOU",
             "text": "Wait, is she helping him?"
-          },
-          {
-            "label": "YES",
-            "text": "You understand a prosecutor is meant to be fair, and is still the other side."
-          },
-          {
-            "label": "NO",
-            "text": "You read one fair comment as the sides changing."
           }
-        ]
+        ],
+        "note": "A prosecutor is supposed to be fair, which sometimes looks like help."
       },
       "setting": "facility",
       "questionType": "judging_a_claim"
@@ -760,16 +683,9 @@
           {
             "label": "YOU",
             "text": "His. That part doesn't change."
-          },
-          {
-            "label": "YES",
-            "text": "The family stops second-guessing the lawyer and starts helping."
-          },
-          {
-            "label": "NO",
-            "text": "Everybody treats the lawyer as an outsider."
           }
-        ]
+        ],
+        "note": "An appointed lawyer is employed by the county and works for the client."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -824,16 +740,9 @@
           {
             "label": "YOU",
             "text": "They passed the same bar exam as everybody else."
-          },
-          {
-            "label": "YES",
-            "text": "Your friend stops repeating it as if it were true."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody who needs one goes in already convinced it is hopeless."
           }
-        ]
+        ],
+        "note": "Appointed lawyers hold the same licence as any other lawyer."
       },
       "setting": "school",
       "questionType": "standard"
@@ -888,16 +797,9 @@
           {
             "label": "YOU",
             "text": "Did anybody tell the court why?"
-          },
-          {
-            "label": "YES",
-            "text": "She learns you have to give the court a reason, not just ask."
-          },
-          {
-            "label": "NO",
-            "text": "The family stays unhappy and nobody ever raises it properly."
           }
-        ]
+        ],
+        "note": "You can ask the court for a different lawyer. You have to give a reason."
       },
       "setting": "home",
       "questionType": "standard"
@@ -952,16 +854,9 @@
           {
             "label": "TEACHER",
             "text": "The one sitting next to him."
-          },
-          {
-            "label": "YES",
-            "text": "You know where to look and who does what."
-          },
-          {
-            "label": "NO",
-            "text": "Every person in the room looks equally official."
           }
-        ]
+        ],
+        "note": "One person in that room argues your side. Everybody else has a different job."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1016,16 +911,9 @@
           {
             "label": "YOU",
             "text": "And you can't. So what happened?"
-          },
-          {
-            "label": "YES",
-            "text": "He explains the court appointed one before anything else happened."
-          },
-          {
-            "label": "NO",
-            "text": "You assume no money means going in alone."
           }
-        ]
+        ],
+        "note": "In Michigan, if jail is possible, a lawyer is available whether or not you can pay."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1144,16 +1032,9 @@
           {
             "label": "YOU",
             "text": "That's the first thing they ask?"
-          },
-          {
-            "label": "YES",
-            "text": "You know the earliest moment somebody can ask."
-          },
-          {
-            "label": "NO",
-            "text": "You think a lawyer only turns up nearer a trial."
           }
-        ]
+        ],
+        "note": "The court is supposed to ask at the first hearing. You can ask then too."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1272,16 +1153,9 @@
           {
             "label": "AUNT",
             "text": "Not in real life. That one's the client's call."
-          },
-          {
-            "label": "YES",
-            "text": "You know which decisions belong to the person, not the lawyer."
-          },
-          {
-            "label": "NO",
-            "text": "You take the television version as how it works."
           }
-        ]
+        ],
+        "note": "The plea belongs to the client, even when the lawyer disagrees out loud."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1336,16 +1210,9 @@
           {
             "label": "YOU",
             "text": "Might be on purpose. That part's the lawyer's call."
-          },
-          {
-            "label": "YES",
-            "text": "You know a missing question is not automatically a mistake."
-          },
-          {
-            "label": "NO",
-            "text": "You spend the hearing sure the lawyer forgot something."
           }
-        ]
+        ],
+        "note": "Which questions get asked is the lawyer's judgment. Asking why is fair."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1400,16 +1267,9 @@
           {
             "label": "YOU",
             "text": "So the lawyer couldn't just decide?"
-          },
-          {
-            "label": "YES",
-            "text": "You know which calls belong to the person, not the lawyer."
-          },
-          {
-            "label": "NO",
-            "text": "You assume the lawyer runs everything."
           }
-        ]
+        ],
+        "note": "Three decisions belong to the client: the plea, the jury, and whether to testify."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1464,16 +1324,9 @@
           {
             "label": "AUNT",
             "text": "Not with a plea. That one's the client's call, even if the lawyer hates it."
-          },
-          {
-            "label": "YES",
-            "text": "You know disagreeing and overruling are different things."
-          },
-          {
-            "label": "NO",
-            "text": "You take the film version as how it works."
           }
-        ]
+        ],
+        "note": "A lawyer can disagree on the record and still has to enter the plea the client chose."
       },
       "setting": "phone",
       "questionType": "standard"
@@ -1528,16 +1381,9 @@
           {
             "label": "LAWYER",
             "text": "Nobody, unless they say so. Not the judge, not the prosecutor, not their parents."
-          },
-          {
-            "label": "YES",
-            "text": "You know what a lawyer is actually for."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody holds back from the one person on their side."
           }
-        ]
+        ],
+        "note": "What you tell your own lawyer stays there, including if you are under 18."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1592,16 +1438,9 @@
           {
             "label": "YOU",
             "text": "Even to family?"
-          },
-          {
-            "label": "YES",
-            "text": "You know the difference between a lawyer call and any other one."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody assumes talking to family is private and it is not."
           }
-        ]
+        ],
+        "note": "Calls out of a jail are recorded. Calls with your lawyer are treated differently."
       },
       "setting": "phone",
       "questionType": "standard"
@@ -1656,16 +1495,9 @@
           {
             "label": "YOU",
             "text": "If it ever mattered, they could just ask you."
-          },
-          {
-            "label": "YES",
-            "text": "Your friend is never put in that position."
-          },
-          {
-            "label": "NO",
-            "text": "Your friend means it and gets asked anyway."
           }
-        ]
+        ],
+        "note": "Confidentiality comes from who you are talking to, not how quiet the room is."
       },
       "setting": "school",
       "questionType": "standard"
@@ -1720,16 +1552,9 @@
           {
             "label": "YOU",
             "text": "That's the job. The state still has to prove it."
-          },
-          {
-            "label": "YES",
-            "text": "You understand what a defence lawyer is actually for."
-          },
-          {
-            "label": "NO",
-            "text": "You assume a lawyer would walk out on the spot."
           }
-        ]
+        ],
+        "note": "A defence lawyer's job is the state's proof, not deciding who is guilty."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1848,16 +1673,9 @@
           {
             "label": "YOU",
             "text": "Is that definitely it?"
-          },
-          {
-            "label": "YES",
-            "text": "He waits for the prosecutor's decision instead of panicking early."
-          },
-          {
-            "label": "NO",
-            "text": "He spends three days certain of a charge that may change."
           }
-        ]
+        ],
+        "note": "Being arrested and being charged are two separate steps, made by two different people."
       },
       "setting": "vehicle",
       "questionType": "standard"
@@ -1912,16 +1730,9 @@
           {
             "label": "MOM",
             "text": "Because that's the person who decides what gets charged around here."
-          },
-          {
-            "label": "YES",
-            "text": "You know who holds that power and where it comes from."
-          },
-          {
-            "label": "NO",
-            "text": "You think charging decisions come from somewhere nobody can reach."
           }
-        ]
+        ],
+        "note": "Every Michigan county elects its prosecutor, the same way it elects a sheriff."
       },
       "setting": "street",
       "questionType": "standard"
