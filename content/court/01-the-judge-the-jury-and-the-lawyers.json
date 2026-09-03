@@ -47,7 +47,7 @@
         "gloss": "Two jobs, two people."
       },
       "scenario": {
-        "setup": "Your neighbor's hearing finished this morning. His family is in the hallway.",
+        "setup": "Your neighbor's trial finished this morning. The jury said guilty. His family is in the hallway.",
         "lines": [
           {
             "label": "NEIGHBOR",
@@ -183,7 +183,7 @@
           },
           {
             "label": "MOM",
-            "text": "There isn't one. He chose to have the judge decide it."
+            "text": "There isn't one. The man on trial picked a bench trial, so the judge decides it."
           },
           {
             "label": "YES",
@@ -819,12 +819,12 @@
             "text": "They passed the same bar exam as everybody else."
           },
           {
-            "label": "TRUE",
-            "text": "Your friend stops repeating it as if it were true."
+            "label": "IF HE LISTENS",
+            "text": "He works with the lawyer the court gives him."
           },
           {
-            "label": "FALSE",
-            "text": "He turns down the lawyer and represents himself."
+            "label": "IF HE DOESN'T",
+            "text": "He turns the lawyer down and speaks for himself."
           }
         ]
       },
@@ -1310,7 +1310,7 @@
         "lines": [
           {
             "label": "FRIEND",
-            "text": "She didn't ask about the messages. He told her to."
+            "text": "The lawyer never asked about the messages. My brother told her to."
           },
           {
             "label": "YOU",
@@ -1541,11 +1541,11 @@
         "gloss": "Everything else on that phone is recorded."
       },
       "scenario": {
-        "setup": "Your uncle works at the courthouse. The family is planning a call.",
+        "setup": "A relative is in jail and the family is working out how to call.",
         "lines": [
           {
             "label": "UNCLE",
-            "text": "Every call out of that building is recorded. Don't get into the case."
+            "text": "Every call out of a jail is recorded. Don't get into the case."
           },
           {
             "label": "MOM",
@@ -1790,7 +1790,7 @@
         "gloss": "The charge is real when it gets filed."
       },
       "scenario": {
-        "setup": "Kitchen table. Your uncle got a ticket last night.",
+        "setup": "Kitchen table. Your uncle was arrested last night and let go this morning.",
         "lines": [
           {
             "label": "YOU",
@@ -1798,7 +1798,7 @@
           },
           {
             "label": "UNCLE",
-            "text": "Not yet. A prosecutor decides that part."
+            "text": "Not yet. A prosecutor still has to decide."
           },
           {
             "label": "YES",
