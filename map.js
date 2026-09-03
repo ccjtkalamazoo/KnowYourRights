@@ -15,6 +15,19 @@
 // forced replay.
 //
 // ---------------------------------------------------------------------------
+// THE MAP IS A MAP AGAIN
+// ---------------------------------------------------------------------------
+// Chapters used to open in a strip inside this grid. It spanned all four
+// columns, was wider than the card that opened it, and read like a settings
+// list dropped into a game. Picking a district now opens district.js, a whole
+// screen with room for what the topic covers, the legal notice, and the
+// chapters shown in order. This file's only job is choosing a district.
+//
+// A coming-soon district is not clickable at all. Every one of them would open
+// an empty screen, and a screen that says only "coming soon" is worse than a
+// card that already said it.
+//
+// ---------------------------------------------------------------------------
 // CURRENT STATE: SHELL, DELIBERATELY
 // ---------------------------------------------------------------------------
 // The districts below are the content roadmap. Every district that is not
@@ -25,10 +38,10 @@
 // THE RULES THE CONTENT IS BEING WRITTEN AGAINST
 // ---------------------------------------------------------------------------
 //   * 30 questions in a chapter's bank, 15 dealt per quiz. The demo deals 5.
-//   * Chapters are SEQUENTIAL inside a district: clear chapter 1 to open 2.
-//     Districts themselves are free-choice. That is why chapter order is a
-//     content constraint, not just navigation: a chapter may rely on everything
-//     before it and must assume nothing after it.
+//   * Chapters are SEQUENTIAL inside a district: chapter 1 is meant to come
+//     first. That order is shown rather than enforced (see district.js), but it
+//     is still a content constraint: a chapter may rely on everything before it
+//     and must assume nothing after it.
 //   * Three lives per round. A miss costs one and the round continues.
 //
 // COURTROOM is the first district written against the remapped curriculum. The
@@ -43,7 +56,7 @@
 
 import { c, u, C, U, useState, useEffect } from "./theme.js";
 import { Button } from "./ui.js";
-import { STATUS, newSession, chapterStatus, districtStatus, completion } from "./state.js";
+import { chapterStats, districtProgress, completion } from "./state.js";
 import { loadDistricts } from "./content.js";
 import { R } from "./copy.js";
 
@@ -164,34 +177,41 @@ const ICON_FOR = {
   after: ICONS.after,
 };
 
-// The tutorial gate in state.js is not wired up yet: nothing ever sets
-// tutorialCleared, so chapterStatus() would report every chapter LOCKED and the
-// segment bars would all render grey. Chapters are not gated on the map anyway
-// (order is shown, not enforced), so the session starts past that flag.
-const SESSION = { ...newSession(), tutorialCleared: true };
-
-// Palette for the four chapter states. Segment fill + border per state.
-function stateColors(status) {
-  switch (status) {
-    case STATUS.CLEARED:     return { fill: u.brand,       border: u.outline, text: u.textOnDark };
-    case STATUS.IN_PROGRESS: return { fill: u.mustard,     border: u.outline, text: u.text };
-    case STATUS.OPEN:        return { fill: u.surface,     border: u.brand,   text: u.brand };   // "next up"
-    default:                 return { fill: u.surfaceWarm, border: u.borderLight, text: u.textMuted }; // locked
+// Palette for the three states a chapter segment can show. LOCKED is gone from
+// this list: chapters are not locked anywhere in the product, so a grey "you
+// cannot go there" segment would describe a rule that does not exist.
+function segmentColors(state) {
+  switch (state) {
+    case "cleared":  return { fill: u.brand,       border: u.outline };
+    case "tried":    return { fill: u.mustard,     border: u.outline };
+    case "next":     return { fill: u.surface,     border: u.brand };
+    default:         return { fill: u.surfaceWarm, border: u.borderLight }; // not started
   }
 }
 
 // ---------------------------------------------------------------------------
 // ChapterBar : the row of segments under a district name, one per chapter.
 // ---------------------------------------------------------------------------
-function ChapterBar({ district }) {
+// Reads real session stats now. A segment is gold when that chapter was
+// cleared, mustard when it was tried without clearing, outlined when it is the
+// one to start next, and pale when it has not been touched.
+function ChapterBar({ district, session }) {
+  const nextIdx = district.chapters.findIndex(
+    (ch) => ch.live && !chapterStats(session, ch.id).cleared
+  );
   return c.jsx("div", {
     style: { display: "flex", gap: 3, marginTop: 10 },
     children: district.chapters.map((ch, i) => {
-      const st = stateColors(chapterStatus(SESSION, district, i));
+      const s = chapterStats(session, ch.id);
+      const state = s.cleared ? "cleared"
+        : s.attempts > 0 ? "tried"
+        : i === nextIdx ? "next"
+        : "none";
+      const col = segmentColors(state);
       return c.jsx("span", {
         style: {
           flex: 1, height: 10, borderRadius: 2,
-          background: st.fill, border: `2px solid ${st.border}`
+          background: col.fill, border: `2px solid ${col.border}`
         }
       }, ch.id);
     })
@@ -202,212 +222,141 @@ function ChapterBar({ district }) {
 // DistrictCard
 // ---------------------------------------------------------------------------
 // Printed-paper card: ink border, hard offset shadow, scene icon on top, then a
-// chapter segment bar and an X/Y count. Selecting a card (hover on desktop, tap
-// on touch) raises it AND surfaces its chapter list in the panel below the grid,
-// so the same interaction works with or without a pointer.
-function DistrictCard({ district, selected, onSelect }) {
+// chapter segment bar and an X/Y count. A live card is a button that opens that
+// district's own screen. A coming-soon card is not a button at all, because the
+// screen it would open has nothing on it.
+function DistrictCard({ district, session, onOpen }) {
   const live = district.live;
-  const dc = district.chapters.filter(
-    (_, i) => chapterStatus(SESSION, district, i) === STATUS.CLEARED
-  ).length;
+  const [hover, setHover] = useState(false);
+  const prog = districtProgress(session, district);
   const total = district.chapters.length;
-  const active = selected;
+  const lift = live && hover;
+
+  const inner = [
+    // Motif band
+    c.jsxs("div", {
+      style: {
+        position: "relative", height: 96,
+        background: live ? u.brandSofter : u.bgWarm,
+        borderBottom: `2px solid ${live ? u.outline : u.borderLight}`,
+        display: "flex", alignItems: "center", justifyContent: "center"
+      },
+      children: [
+        c.jsx("svg", {
+          viewBox: "0 0 100 100", width: 62, height: 62, "aria-hidden": true,
+          style: live ? undefined : { filter: "grayscale(0.75)", opacity: 0.6 },
+          children: district.icon()
+        }),
+        // An arrow, not a plus. A plus said "this expands here", which is not
+        // what happens anymore: the card goes somewhere.
+        live && c.jsx("div", {
+          "aria-hidden": true,
+          style: {
+            position: "absolute", top: 8, right: 8,
+            width: 22, height: 22, borderRadius: "50%",
+            background: lift ? u.brand : u.surface,
+            border: `2px solid ${u.outline}`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: C.mono, fontSize: 11, fontWeight: 700, lineHeight: 1,
+            color: lift ? u.textOnDark : u.text,
+            transition: "background 0.12s"
+          },
+          children: "\u2192"
+        }),
+        !live && c.jsx("div", {
+          style: {
+            position: "absolute", top: 8, right: 8,
+            background: u.surface, border: `2px solid ${u.borderLight}`,
+            borderRadius: 5, padding: "2px 7px",
+            fontFamily: C.mono, fontSize: 8.5, fontWeight: 700,
+            letterSpacing: 1.2, color: u.textMuted
+          },
+          children: "SOON"
+        })
+      ]
+    }),
+    // Body
+    c.jsxs("div", {
+      style: { padding: "11px 12px 12px" },
+      children: [
+        c.jsx("div", {
+          style: {
+            fontFamily: C.mono, fontSize: 11.5, fontWeight: 700,
+            letterSpacing: 0.9, color: live ? u.text : u.textDim
+          },
+          children: district.name
+        }),
+        c.jsx(ChapterBar, { district, session }),
+        c.jsxs("div", {
+          style: {
+            display: "flex", justifyContent: "space-between",
+            alignItems: "baseline", marginTop: 9
+          },
+          children: [
+            c.jsxs("span", {
+              style: {
+                fontFamily: C.mono, fontSize: 9, letterSpacing: 1.1,
+                color: u.textMuted
+              },
+              children: [String(total), " CHAPTERS"]
+            }),
+            c.jsxs("span", {
+              style: {
+                fontFamily: C.mono, fontSize: 12, fontWeight: 700,
+                letterSpacing: 1, color: prog.cleared >= total && total ? u.brand : u.text
+              },
+              children: [String(prog.cleared), " / ", String(total)]
+            })
+          ]
+        })
+      ]
+    })
+  ];
+
+  const box = {
+    textAlign: "left", padding: 0, font: "inherit",
+    background: live ? u.surface : u.surfaceWarm,
+    border: `2px solid ${live ? u.outline : u.borderLight}`,
+    borderRadius: 10,
+    boxShadow: lift ? U.lg : (live ? U.md : "none"),
+    transform: lift ? "translate(-2px, -2px)" : "translate(0, 0)",
+    transition: "transform 0.1s cubic-bezier(.34,1.3,.64,1), box-shadow 0.1s",
+    overflow: "hidden", position: "relative",
+    opacity: live ? 1 : 0.82
+  };
+
+  // Coming soon is a div, not a disabled button. A disabled button still reads
+  // as something that would normally do something, and this never will until
+  // its content exists.
+  if (!live) {
+    return c.jsxs("div", {
+      "aria-label": `${district.name}, coming soon. ${total} chapters planned. ${district.blurb}`,
+      style: { ...box, cursor: "default" },
+      children: inner
+    });
+  }
 
   return c.jsxs("button", {
-    // Selecting a district does not start a run. It reveals that district's
-    // chapters in the panel below, and a chapter is what you actually play.
-    onClick: () => onSelect(selected ? null : district.id),
-    "aria-expanded": !!selected,
-    "aria-label": live
-      ? `${district.name}. ${total} chapters. ${selected ? "Hide" : "Show"} chapters.`
-      : `${district.name}, coming soon. ${total} chapters planned. ${district.blurb}`,
-    style: {
-      textAlign: "left", padding: 0, font: "inherit",
-      background: live ? u.surface : u.surfaceWarm,
-      border: `2px solid ${live || active ? u.outline : u.borderLight}`,
-      borderRadius: 10,
-      boxShadow: active ? U.lg : (live ? U.md : "none"),
-      transform: active ? "translate(-2px, -2px)" : "translate(0, 0)",
-      transition: "transform 0.1s cubic-bezier(.34,1.3,.64,1), box-shadow 0.1s",
-      cursor: "pointer", overflow: "hidden", position: "relative",
-      opacity: live ? 1 : 0.82
-    },
-    children: [
-      // Motif band
-      c.jsxs("div", {
-        style: {
-          position: "relative", height: 96,
-          background: live ? u.brandSofter : u.bgWarm,
-          borderBottom: `2px solid ${live || active ? u.outline : u.borderLight}`,
-          display: "flex", alignItems: "center", justifyContent: "center"
-        },
-        children: [
-          c.jsx("svg", {
-            viewBox: "0 0 100 100", width: 62, height: 62, "aria-hidden": true,
-            style: live ? undefined : { filter: "grayscale(0.75)", opacity: 0.6 },
-            children: district.icon()
-          }),
-          live && c.jsx("div", {
-            "aria-hidden": true,
-            style: {
-              position: "absolute", top: 8, right: 8,
-              width: 20, height: 20, borderRadius: "50%",
-              background: active ? u.brand : u.surface,
-              border: `2px solid ${u.outline}`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: C.mono, fontSize: 10, fontWeight: 700, lineHeight: 1,
-              color: active ? u.textOnDark : u.text,
-              transition: "background 0.12s"
-            },
-            children: active ? "\u2212" : "+"
-          }),
-          !live && c.jsx("div", {
-            style: {
-              position: "absolute", top: 8, right: 8,
-              background: u.surface, border: `2px solid ${u.borderLight}`,
-              borderRadius: 5, padding: "2px 7px",
-              fontFamily: C.mono, fontSize: 8.5, fontWeight: 700,
-              letterSpacing: 1.2, color: u.textMuted
-            },
-            children: "SOON"
-          })
-        ]
-      }),
-      // Body
-      c.jsxs("div", {
-        style: { padding: "11px 12px 12px" },
-        children: [
-          c.jsx("div", {
-            style: {
-              fontFamily: C.mono, fontSize: 11.5, fontWeight: 700,
-              letterSpacing: 0.9, color: live ? u.text : u.textDim
-            },
-            children: district.name
-          }),
-          c.jsx(ChapterBar, { district }),
-          c.jsxs("div", {
-            style: {
-              display: "flex", justifyContent: "space-between",
-              alignItems: "baseline", marginTop: 9
-            },
-            children: [
-              c.jsxs("span", {
-                style: {
-                  fontFamily: C.mono, fontSize: 9, letterSpacing: 1.1,
-                  color: u.textMuted
-                },
-                children: [String(total), " CHAPTERS"]
-              }),
-              c.jsxs("span", {
-                style: {
-                  fontFamily: C.mono, fontSize: 12, fontWeight: 700,
-                  letterSpacing: 1, color: dc >= total && total ? u.brand : u.text
-                },
-                children: [String(dc), " / ", String(total)]
-              })
-            ]
-          })
-        ]
-      })
-    ]
-  });
-}
-
-// ---------------------------------------------------------------------------
-// ChapterStrip : the chapters, opened directly under the district you clicked.
-// ---------------------------------------------------------------------------
-// This used to be a panel pinned below the whole grid, which meant clicking a
-// district appeared to do nothing: the thing that actually changed was off the
-// bottom of the screen. Now it opens in place, spanning the row.
-//
-// Chapters are NOT locked. Order is shown instead of enforced, because there is
-// no saved progress: a locked chapter 2 would be locked again for every new
-// player and every refresh, which would make it unreachable in practice. So the
-// first unplayed chapter is marked START HERE and the rest are numbered and
-// quieter. The order is obvious and nothing is ever blocked.
-function ChapterStrip({ district, onPlayChapter }) {
-  const firstUnplayed = district.chapters.findIndex(
-    (_, i) => chapterStatus(SESSION, district, i) !== STATUS.CLEARED
-  );
-  return c.jsxs("div", {
-    style: {
-      gridColumn: "1 / -1",
-      background: u.surface, border: `2px solid ${u.outline}`,
-      borderRadius: 10, padding: "16px 18px", boxShadow: U.md
-    },
-    children: [
-      c.jsx("div", {
-        style: { fontFamily: C.body, fontSize: 13.5, color: u.textDim, marginBottom: 14 },
-        children: district.blurb
-      }),
-      c.jsx("div", {
-        style: { display: "flex", flexDirection: "column", gap: 8 },
-        children: district.chapters.map((ch, i) => {
-          const cleared = chapterStatus(SESSION, district, i) === STATUS.CLEARED;
-          const isStart = i === firstUnplayed;
-          const playable = ch.live;
-          const row = {
-            display: "flex", alignItems: "center", gap: 12, width: "100%",
-            textAlign: "left", font: "inherit",
-            background: isStart && playable ? u.brandSofter : u.surfaceWarm,
-            border: `2px solid ${isStart && playable ? u.brand : u.borderLight}`,
-            borderRadius: 9, padding: "12px 14px",
-            opacity: playable ? 1 : 0.6,
-            boxShadow: isStart && playable ? U.sm : "none"
-          };
-          const inner = [
-            c.jsx("span", {
-              "aria-hidden": true,
-              style: {
-                flexShrink: 0, width: 28, height: 28, borderRadius: "50%",
-                background: cleared ? u.brand : (isStart && playable ? u.brand : u.surface),
-                border: `2px solid ${u.outline}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: C.mono, fontSize: 12, fontWeight: 700, lineHeight: 1,
-                color: cleared || (isStart && playable) ? u.textOnDark : u.textMuted
-              },
-              children: cleared ? "\u2713" : String(i + 1)
-            }, "num"),
-            c.jsx("span", {
-              style: {
-                flex: 1, minWidth: 0,
-                fontFamily: C.mono, fontSize: 11, letterSpacing: 0.7,
-                fontWeight: 700, color: u.text
-              },
-              children: ch.name
-            }, "name"),
-            c.jsx("span", {
-              style: {
-                flexShrink: 0,
-                fontFamily: C.mono, fontSize: 9, letterSpacing: 1.4, fontWeight: 700,
-                color: !playable ? u.textMuted : isStart ? u.brand : u.textMuted
-              },
-              children: !playable ? "SOON" : isStart ? "START HERE \u2192" : "PLAY \u2192"
-            }, "cta")
-          ];
-          return playable
-            ? c.jsx("button", {
-                onClick: () => onPlayChapter && onPlayChapter(district, ch),
-                style: { ...row, cursor: "pointer", WebkitTapHighlightColor: "transparent" },
-                "aria-label": `Play ${ch.name}`,
-                children: inner
-              }, ch.id)
-            : c.jsx("div", { style: row, children: inner }, ch.id);
-        })
-      })
-    ]
+    onClick: () => onOpen(district),
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    "aria-label": `${district.name}. ${total} chapters. Open this topic.`,
+    style: { ...box, cursor: "pointer", WebkitTapHighlightColor: "transparent" },
+    children: inner
   });
 }
 
 // ---------------------------------------------------------------------------
 // Legend : what the segment colours mean.
 // ---------------------------------------------------------------------------
+// LOCKED came off this list with the lock itself. What is left describes states
+// a player can actually be in.
 function Legend() {
   const items = [
     ["CLEARED", u.brand, u.outline],
-    ["IN PROGRESS", u.mustard, u.outline],
+    ["TRIED", u.mustard, u.outline],
     ["NEXT UP", u.surface, u.brand],
-    ["LOCKED", u.surfaceWarm, u.borderLight]
+    ["NOT STARTED", u.surfaceWarm, u.borderLight]
   ];
   return c.jsx("div", {
     style: {
@@ -568,18 +517,26 @@ function TutorialLink({ onPlay }) {
 // loaded. The failure state matters more than it looks: content now arrives
 // over the network, so "the file is missing or malformed" is a thing a player
 // can actually hit, and a blank screen would be the worst possible answer.
-export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
+//
+// The loaded list is handed UP via onDistricts so the engine can hold it and
+// pass one district into the district screen. Without that the engine would
+// have to fetch the same JSON a second time to know what the player tapped.
+export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayTutorial, onDistricts, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
   const [districts, setDistricts] = useState(null);
   const [error, setError] = useState(null);
-  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     let alive = true;
     loadDistricts()
-      .then((list) => { if (alive) setDistricts(list.map(withIcon)); })
+      .then((list) => {
+        if (!alive) return;
+        const withIcons = list.map(withIcon);
+        setDistricts(withIcons);
+        if (onDistricts) onDistricts(withIcons);
+      })
       .catch((e) => { if (alive) setError(e.message || String(e)); });
     return () => { alive = false; };
-  }, []);
+  }, []); // eslint-disable-line
 
   const shell = (children) => c.jsx("div", {
     style: {
@@ -620,7 +577,7 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, d
   }
 
   const totalChapters = districts.reduce((n, d) => n + d.chapters.length, 0);
-  const clearedChapters = Math.round(completion(SESSION, districts) * totalChapters);
+  const clearedChapters = Math.round(completion(session, districts) * totalChapters);
   const anyLive = districts.some((d) => d.live);
 
   return shell(c.jsxs("div", {
@@ -700,20 +657,13 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, d
         ]
       }),
 
-      // District grid
+      // District grid. No inline expansion: every live card is a doorway.
       c.jsx("div", {
         className: "kyr-map-grid",
         style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 },
-        children: districts.flatMap((d) => {
-          const card = c.jsx(DistrictCard, {
-            district: d,
-            selected: selected === d.id,
-            onSelect: setSelected
-          }, d.id);
-          return selected === d.id
-            ? [card, c.jsx(ChapterStrip, { district: d, onPlayChapter }, d.id + "-strip")]
-            : [card];
-        })
+        children: districts.map((d) => c.jsx(DistrictCard, {
+          district: d, session, onOpen: onOpenDistrict
+        }, d.id))
       }),
 
       c.jsx(Legend, {}),
@@ -731,7 +681,7 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, d
               color: u.textMuted, maxWidth: 520
             },
             children: anyLive
-              ? "Each district is a moment where rights come up. Pick a chapter to play it."
+              ? "Each district is a moment where rights come up. Open one to see its chapters."
               : "Each district is a moment where rights come up. The questions for these are being written and attorney reviewed now."
           }),
           c.jsx(Button, {
@@ -744,7 +694,9 @@ export function MapScreen({ onPlayChapter, onHome, onPlayDemo, onPlayTutorial, d
   }));
 }
 
-// Attach the icon component for a district loaded from JSON.
-function withIcon(d) {
+// Attach the icon component for a district loaded from JSON. Exported because
+// the district screen renders the same icon in its header, and the join between
+// a district id and its artwork should exist in exactly one place.
+export function withIcon(d) {
   return { ...d, icon: ICON_FOR[d.id] || ICONS.allrights };
 }
