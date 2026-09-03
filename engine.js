@@ -7,13 +7,34 @@
 //   start       the title screen
 //   walkthrough the tutorial (safety brief first)
 //   map         the launcher
-//   preround    safety note before a chapter run
+//   district    one district: what it covers, the notice, its chapters
 //   playing     a question is live, waiting for a pick
 //   locking     answer locked, suspense pause before the reveal
 //   revealing   the verdict beat, then the three review cards
 //   winbig      the end-of-deck celebration + take-it-or-keep-going choice
 //   gameover    three lives gone
 //   won         the run is over (banked the prize, or cleared the bonus deck)
+//
+// ---------------------------------------------------------------------------
+// TWO KINDS OF STATE, AND WHY THEY ARE SEPARATE
+// ---------------------------------------------------------------------------
+// `session` is progress: which chapters were cleared, how many tries each one
+// took, best score. It lives for the tab and resetState() never touches it.
+// Everything else here is one round, and resetState() wipes all of it. Mixing
+// the two is how a "play again" ends up erasing the scoreboard it just wrote.
+//
+// The session shape and every function that changes it live in state.js. This
+// file calls them and holds the result; it does not know how progress is
+// stored.
+//
+// ---------------------------------------------------------------------------
+// THE PRE-ROUND SCREEN IS GONE
+// ---------------------------------------------------------------------------
+// Picking a chapter used to land on a screen with two warnings on it: a
+// legal-advice card and a red safety note that opened by saying the same thing
+// again. The district screen now carries the legal notice once, and each
+// chapter's own note shows on its card next to the Start button, which is where
+// the decision is being made. So a chapter goes straight into question one.
 //
 // ---------------------------------------------------------------------------
 // WHAT CHANGED, AND WHY
@@ -55,6 +76,8 @@ import { Shell, Button, Backdrop, ConfirmModal, Confetti, LifeIcon } from "./ui.
 import * as EV from "./events.js";
 import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
+import { DistrictScreen } from "./district.js";
+import { newSession, recordChapterRun, clearTutorial } from "./state.js";
 import { loadChapter, loadDemo, loadTutorial } from "./content.js";
 import { TourOverlay, TourBail, TourBailConfirm, injectTourStyles, activeStep } from "./tutorial.js";
 
@@ -74,7 +97,6 @@ const LOCK_PAUSE_MS = 2000;
 export function App() {
   const [phase, setPhase] = useState("start");
   const [chapter, setChapter] = useState(null);
-  const [seenDisclaimer, setSeenDisclaimer] = useState(false);
   const [loadError, setLoadError] = useState(null);
   const [walkStep, setWalkStep] = useState(0);
   const [deck, setDeck] = useState([]);
@@ -85,6 +107,14 @@ export function App() {
   const [revealWrong, setRevealWrong] = useState(false);
   const [showFloating, setShowFloating] = useState(false);
   const [streak, setStreak] = useState(0);
+  // Session progress. Survives resetState, dies with the tab. See the note at
+  // the top of this file about why it is kept apart from round state.
+  const [session, setSession] = useState(newSession);
+  // The district list from the map, and the one the player opened. Held here so
+  // the district screen does not depend on the map still being mounted, and so
+  // returning from a round lands back on the district it came from.
+  const [districts, setDistricts] = useState(null);
+  const [district, setDistrict] = useState(null);
   // The three numbers that describe a run now. `results` is one entry per
   // question answered, which is what the progress bar reads: it can show a red
   // segment mid-run without the run being over, which the old version could not.
@@ -200,6 +230,9 @@ export function App() {
     }
   };
 
+  // Wipes ONE ROUND. Never touches `session`, `districts` or `district`: those
+  // are progress and navigation, and a player who finishes a round has not
+  // stopped being somewhere or lost what they cleared.
   const resetState = () => {
     setDeck([]); setLevel(0); setSelected(null); setLocked(false);
     setRevealCorrect(false); setRevealWrong(false); setShowFloating(false);
@@ -238,15 +271,39 @@ export function App() {
   // it is now a step in the real game.
   const goWalkthrough = () => { initAudio(); sfx.current.click(); setWalkStep(0); setPhase("walkthrough"); };
 
-  const goMap = () => {
-    initAudio(); sfx.current.click(); music.current.stop();
+  // Ending whatever is running, wherever it is. Both goMap and goDistrict go
+  // through it so an abandoned run is reported exactly once and in one place.
+  const endRunIfPlaying = () => {
     if (phase === "playing" || phase === "revealing" || phase === "locking") {
       EV.trackRunEnd("abandoned", { level, mode: isDemo ? "demo" : isEndless ? "endless" : "ladder" });
       EV.flush();
     }
+  };
+
+  const goMap = () => {
+    initAudio(); sfx.current.click(); music.current.stop();
+    endRunIfPlaying();
     EV.trackNav("map"); resetState(); setPhase("map");
   };
-  const playAgain = () => { initAudio(); sfx.current.click(); goMap(); };
+
+  // Back to the district a chapter came from, which is where somebody who just
+  // finished a round most likely wants to be: the other chapters are there, and
+  // so is their score for the one they just played.
+  const goDistrict = () => {
+    if (!district) return goMap();
+    initAudio(); sfx.current.click(); music.current.stop();
+    endRunIfPlaying();
+    EV.trackNav("district"); resetState(); setPhase("district");
+  };
+
+  const openDistrict = (d) => {
+    initAudio(); sfx.current.click();
+    setDistrict(d);
+    EV.trackNav("district");
+    setPhase("district");
+  };
+
+  const playAgain = () => { district ? goDistrict() : goMap(); };
 
   const exitDemo = () => {
     initAudio(); sfx.current.click(); music.current.stop();
@@ -308,18 +365,24 @@ export function App() {
     setPhase("map");
   };
 
-  const startChapter = async (district, chapterRef) => {
+  // A chapter now goes straight into question one. The district screen showed
+  // the legal notice and this chapter's own note before Start was pressed, so
+  // there is nothing left to put on a screen in between.
+  const startChapter = async (d, chapterRef) => {
     resetState();
     setChapter(null);
     setLoadError(null);
+    setDistrict(d);
     setPhase("loading");
     try {
-      const ch = await loadChapter(district.id, chapterRef);
-      const d = buildDeck(ch, CHAPTER_DECK_SIZE);
+      const ch = await loadChapter(d.id, chapterRef);
+      const deckNow = buildDeck(ch, CHAPTER_DECK_SIZE);
       setChapter(ch);
-      setDeck(d);
-      EV.trackModeStart("chapter", d, { chapterId: ch.id, districtId: district.id, deckSize: d.length, lives: LIVES_PER_ROUND });
-      setPhase("preround");
+      setDeck(deckNow);
+      EV.trackModeStart("chapter", deckNow, { chapterId: ch.id, districtId: d.id, deckSize: deckNow.length, lives: LIVES_PER_ROUND });
+      EV.trackNav("round_start");
+      setPhase("playing");
+      setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
     } catch (err) {
       setLoadError(err.message || String(err));
       setPhase("loaderror");
@@ -365,6 +428,16 @@ export function App() {
   // the moment a run could survive a miss.
   const recordDemoRun = (right, wrong, cleared) => {
     setDemoRuns((rs) => (rs.length >= MAX_DEMO_RUNS ? rs : [...rs, { correct: right, wrong, won: !!cleared }]));
+  };
+
+  // Recording a finished CHAPTER round into session progress. `cleared` means
+  // the deck was finished with lives left, not that every answer was right.
+  // Called exactly once per round, from advance().
+  const recordChapter = (right, cleared) => {
+    if (!chapter || !district || isDemo || isTutorial || isEndless) return;
+    setSession((s) => recordChapterRun(s, district.id, chapter.id, {
+      correct: right, deckSize: deck.length, cleared
+    }));
   };
 
   const demoWon = demoRuns.some((r) => r.won);
@@ -528,6 +601,7 @@ export function App() {
       music.current.stop();
       setFinalPrize(0);
       if (isDemo) recordDemoRun(correctCount, LIVES_PER_ROUND, false);
+      else recordChapter(correctCount, false);
       EV.trackRunEnd("lost", { level, mode: runMode, correct: correctCount, wrong: LIVES_PER_ROUND });
       EV.flush();
       setPhase("gameover");
@@ -546,6 +620,7 @@ export function App() {
       EV.trackTutorialStep("completed", { level, correct: correctCount });
       EV.trackRunEnd("tutorial_done", { level, mode: "tutorial", correct: correctCount, wrong: wrongCount });
       EV.flush();
+      setSession((s) => clearTutorial(s));
       resetState();
       EV.trackNav("map");
       setPhase("map");
@@ -571,6 +646,9 @@ export function App() {
         setTimeout(() => music.current.stop(), 200);
         return;
       }
+      // A chapter finished. Recorded here rather than on the win screen so it
+      // lands whichever way the player leaves that screen.
+      recordChapter(correctCount, true);
       setPhase("winbig");
       music.current.duck(0.12, 400);
       return;
@@ -674,12 +752,19 @@ export function App() {
   };
 
   const askHome = () => {
-    if (phase === "start" || phase === "map" || phase === "gameover" || phase === "won" || phase === "winbig") return;
+    if (phase === "start" || phase === "map" || phase === "district" || phase === "gameover" || phase === "won" || phase === "winbig") return;
     sfx.current.modalOpen();
     setHomeConfirm(true);
   };
   const cancelHome = () => { sfx.current.click(); setHomeConfirm(false); };
-  const confirmHome = () => { setHomeConfirm(false); if (isDemo) exitDemo(); else goMap(); };
+  // Leaving a chapter mid-round goes back to its district, not the map: the
+  // other chapters are there and it is one fewer tap than landing on the grid.
+  const confirmHome = () => {
+    setHomeConfirm(false);
+    if (isDemo) exitDemo();
+    else if (district && !isTutorial) goDistrict();
+    else goMap();
+  };
 
   const askLogo = () => { sfx.current.modalOpen(); setLogoConfirm(true); };
   const cancelLogo = () => { sfx.current.click(); setLogoConfirm(false); };
@@ -687,14 +772,6 @@ export function App() {
     sfx.current.click();
     setLogoConfirm(false);
     try { window.open(LOGO.url, "_blank", "noopener,noreferrer"); } catch {}
-  };
-
-  const beginRound = () => {
-    sfx.current.click();
-    setSeenDisclaimer(true);
-    EV.trackNav("round_start");
-    setPhase("playing");
-    setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
   };
 
   const winTakeMoney = () => { sfx.current.click(); music.current.stop(); EV.trackRunEnd("walked", { level, mode: "endless", correct: correctCount, wrong: wrongCount }); EV.flush(); setPhase("won"); };
@@ -733,65 +810,6 @@ export function App() {
   // Screens
   // -------------------------------------------------------------------------
 
-  if (phase === "preround")
-    return c.jsx(Shell, { muted, setMuted, onLogoClick: askLogo,
-      children: c.jsx("div", {
-        style: { minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 20px" },
-        children: c.jsxs("div", { style: { width: "100%", maxWidth: 560 }, children: [
-          c.jsx("div", {
-            style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2.4, color: u.brand, marginBottom: 6 },
-            children: chapter ? chapter.name : ""
-          }),
-          !seenDisclaimer && c.jsxs("div", {
-            style: {
-              background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12,
-              boxShadow: U.md, padding: "18px 20px", marginBottom: 14
-            },
-            children: [
-              c.jsx("div", {
-                style: { fontFamily: C.display, fontSize: 17, color: u.text, marginBottom: 8 },
-                children: R.disclaimer.title
-              }),
-              ...R.disclaimer.lines.map((l, i) => c.jsx("p", {
-                style: { fontFamily: C.body, fontSize: 14, lineHeight: 1.55, color: u.textDim, margin: "0 0 6px" },
-                children: l
-              }, i))
-            ]
-          }),
-          chapter && chapter.safetyNote && c.jsxs("div", {
-            style: {
-              display: "flex", gap: 12, alignItems: "flex-start",
-              background: u.terraSoft, border: `2px solid ${u.terra}`,
-              borderRadius: 12, padding: "16px 18px", boxShadow: U.sm
-            },
-            children: [
-              c.jsx("span", { "aria-hidden": true, style: { fontSize: 20, lineHeight: 1.2, flexShrink: 0 }, children: "\u26A0" }),
-              c.jsxs("div", { children: [
-                c.jsx("div", {
-                  style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.terra, fontWeight: 700, marginBottom: 5 },
-                  children: R.safetyHeading
-                }),
-                c.jsx("p", {
-                  style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.55, color: u.text, margin: 0, fontWeight: 500 },
-                  children: chapter.safetyNote
-                })
-              ] })
-            ]
-          }),
-          // Back sits next to Start, not instead of it. Landing on the safety
-          // screen with no way out but a refresh was the one dead end left in
-          // the flow after chapters became reachable from the map.
-          c.jsxs("div", {
-            style: { display: "flex", justifyContent: "center", gap: 12, marginTop: 20, flexWrap: "wrap" },
-            children: [
-              c.jsx(Button, { onClick: goMap, variant: "ghost", children: "\u2190 Back to the map" }),
-              c.jsx(Button, { onClick: beginRound, variant: "primary", children: R.roundStart })
-            ]
-          })
-        ] })
-      })
-    });
-
   if (phase === "loading")
     return c.jsx(Shell, { muted, setMuted, onLogoClick: askLogo,
       children: c.jsx("div", {
@@ -821,7 +839,10 @@ export function App() {
               style: { fontFamily: C.body, fontSize: 14, color: u.textDim, marginBottom: 18 },
               children: "Its questions could not be fetched. Check your connection and pick it again."
             }),
-            c.jsx(Button, { onClick: goMap, variant: "primary", size: "sm", children: "Back to the map" })
+            c.jsx(Button, {
+              onClick: district ? goDistrict : goMap, variant: "primary", size: "sm",
+              children: district ? "Back" : "Back to the map"
+            })
           ]
         })
       })
@@ -842,12 +863,30 @@ export function App() {
   if (phase === "map")
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
       c.jsx(MapScreen, {
-        onPlayChapter: startChapter, onHome: () => { resetState(); setPhase("start"); },
+        session,
+        onOpenDistrict: openDistrict,
+        onDistricts: setDistricts,
+        onHome: () => { resetState(); setPhase("start"); },
         onPlayDemo: startDemo, onPlayTutorial: startTutorial,
         demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay, demoWon
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
+
+  // One district: what it covers, the legal notice once, and its chapters in
+  // order. Falling back to the map when there is somehow no district beats
+  // rendering an empty screen.
+  if (phase === "district") {
+    if (!district) { setPhase("map"); return null; }
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(DistrictScreen, {
+        district, session,
+        onPlayChapter: startChapter,
+        onBack: () => { sfx.current.click(); setPhase("map"); }
+      }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
+  }
 
   if (phase === "winbig")
     return c.jsxs(Shell, { muted, setMuted, hideSoundButton: true, onLogoClick: askLogo, children: [
@@ -885,7 +924,9 @@ export function App() {
         phase, finalPrize, bestRun, streak, isEndless,
         correctCount, wrongCount: phase === "won" ? wrongCount : LIVES_PER_ROUND,
         missedQuestions: missed,
-        onPlayAgain: playAgain, onHome: goMap
+        // Play again and Home both land on the district, which is where the
+        // other chapters are and where this round's score just appeared.
+        onPlayAgain: playAgain, onHome: district ? goDistrict : goMap
       }),
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
