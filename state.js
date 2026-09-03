@@ -1,25 +1,12 @@
 // Know Your Rights · CCJT
-// state.js : session progress. Not wired into the game yet.
+// state.js : session progress.
 //
-// This is the spine the chapters/districts system will hang on. It is written
-// now, empty, so that when we build the map there is an obvious place for the
-// progress model to live instead of it leaking into components.
-//
-// ---------------------------------------------------------------------------
-// THE DESIGN IT SERVES
-// ---------------------------------------------------------------------------
-// A tutorial district gates everything: 10 fixed questions, in a fixed order,
-// with only the A/B/C/D positions shuffled. Everyone who plays learns those ten
-// things, because you cannot reach the rest of the map without them.
-//
-// Clearing the tutorial opens the whole map. From there you travel freely
-// between districts, in any order. Inside a district, chapters unlock in
-// sequence: clear chapter 1 to open chapter 2, and so on. Districts are about
-// CHOICE (which topic do I care about); chapters are about SEQUENCE (build the
-// knowledge in order).
+// The progress model lives here so it never leaks into components. Every
+// function is pure: they take a session and return a new one, so the engine can
+// hold it in React state and nothing else has to know how it is shaped.
 //
 // ---------------------------------------------------------------------------
-// PERSISTENCE: DELIBERATELY NONE, FOR NOW
+// PERSISTENCE: DELIBERATELY NONE
 // ---------------------------------------------------------------------------
 // Progress lives in memory and dies with the tab. That is a choice, not an
 // oversight. Two reasons it works:
@@ -36,6 +23,17 @@
 // reset control. Storing "which cosmetic themes are unlocked" is about as
 // innocuous as browser storage gets. Storing "which rights this person keeps
 // getting wrong" is not, and should not be written to a shared classroom laptop.
+//
+// ---------------------------------------------------------------------------
+// ORDER IS SHOWN, NOT ENFORCED
+// ---------------------------------------------------------------------------
+// chapterStatus() below still reports LOCKED for a chapter whose predecessor is
+// unfinished, and the district screen deliberately does NOT use it for that.
+// Because nothing is saved, a locked chapter 2 would be locked again for every
+// new player and every refresh, which in practice means unreachable. So the
+// screen shows the order, marks the first unplayed chapter START HERE, and warns
+// somebody who jumps ahead. chapterStatus stays because it is the right rule for
+// a world with saved progress, and that world may still arrive.
 
 // ---------------------------------------------------------------------------
 // Status a chapter or district can be in. Drives how it renders on the map.
@@ -53,6 +51,12 @@ export function newSession() {
     tutorialCleared: false,
     // districtId -> { chaptersCleared: Set<chapterId> }
     districts: {},
+    // chapterId -> { attempts, bestCorrect, deckSize, cleared }
+    //
+    // One row per chapter actually played this session. Absent means never
+    // played, which is why every reader below goes through chapterStats() and
+    // gets a zeroed row rather than undefined.
+    chapters: {},
     // Stats for the end-of-session scorecard. Session-scoped, never persisted.
     stats: {
       questionsAnswered: 0,
@@ -73,7 +77,8 @@ export function districtStatus(session, district) {
   return STATUS.IN_PROGRESS;
 }
 
-// Whether a chapter can be played. Chapters go in order inside their district.
+// Whether a chapter can be played, in a world with saved progress. See the note
+// at the top of this file about why the district screen does not gate on it.
 export function chapterStatus(session, district, chapterIndex) {
   if (!session.tutorialCleared) return STATUS.LOCKED;
   const cleared = session.districts[district.id]?.chaptersCleared ?? new Set();
@@ -83,6 +88,46 @@ export function chapterStatus(session, district, chapterIndex) {
   if (chapterIndex === 0) return STATUS.OPEN;
   const prev = district.chapters[chapterIndex - 1];
   return cleared.has(prev.id) ? STATUS.OPEN : STATUS.LOCKED;
+}
+
+// ---------------------------------------------------------------------------
+// Per-chapter session stats
+// ---------------------------------------------------------------------------
+// Always returns a row, so callers never branch on undefined. A chapter nobody
+// has touched reads as zero attempts, which is exactly what should render.
+export function chapterStats(session, chapterId) {
+  const row = session.chapters?.[chapterId];
+  return {
+    attempts: row?.attempts ?? 0,
+    bestCorrect: row?.bestCorrect ?? 0,
+    deckSize: row?.deckSize ?? 0,
+    cleared: !!row?.cleared
+  };
+}
+
+// Record a finished round. Called once per round that ends, win or lose.
+//
+// `cleared` means the player reached the end of the deck with lives left. It
+// does NOT mean every answer was right, which is the rule lives introduced: a
+// finished round is a finished round. Returns a NEW session.
+export function recordChapterRun(session, districtId, chapterId, { correct = 0, deckSize = 0, cleared = false } = {}) {
+  const prev = chapterStats(session, chapterId);
+  const next = {
+    attempts: prev.attempts + 1,
+    bestCorrect: Math.max(prev.bestCorrect, correct),
+    // The last deck size wins. It only changes if the deck rules change
+    // mid-session, and showing a best score against a stale total would be
+    // worse than showing it against the current one.
+    deckSize: deckSize || prev.deckSize,
+    cleared: prev.cleared || !!cleared
+  };
+  const withChapter = {
+    ...session,
+    chapters: { ...(session.chapters ?? {}), [chapterId]: next }
+  };
+  // Clearing a chapter is also a district-level fact, so the two stay in step
+  // rather than the map and the district screen disagreeing about progress.
+  return cleared ? clearChapter(withChapter, districtId, chapterId) : withChapter;
 }
 
 // Record a cleared chapter. Returns a NEW session object (never mutates).
@@ -101,6 +146,51 @@ export function clearChapter(session, districtId, chapterId) {
 
 export function clearTutorial(session) {
   return { ...session, tutorialCleared: true };
+}
+
+// ---------------------------------------------------------------------------
+// District-level numbers for the district screen header.
+// ---------------------------------------------------------------------------
+// `attempted` counts chapters started at all, cleared or not, so a screen can
+// say "1 of 2 chapters cleared, 2 tried" without doing arithmetic itself.
+// `percent` is over LIVE chapters only: counting coming-soon chapters in the
+// denominator would cap a player at a number they cannot move.
+export function districtProgress(session, district) {
+  const live = district.chapters.filter((ch) => ch.live);
+  const total = live.length;
+  let cleared = 0, attempted = 0, attempts = 0;
+  live.forEach((ch) => {
+    const s = chapterStats(session, ch.id);
+    if (s.cleared) cleared += 1;
+    if (s.attempts > 0) attempted += 1;
+    attempts += s.attempts;
+  });
+  return {
+    total,
+    cleared,
+    attempted,
+    attempts,
+    percent: total === 0 ? 0 : Math.round((cleared / total) * 100)
+  };
+}
+
+// The chapter to point somebody at: the first live one they have not cleared.
+// Returns -1 when everything live is done, which the screen reads as "nothing
+// left to start" rather than defaulting to chapter 1 again.
+export function firstUnclearedIndex(session, district) {
+  return district.chapters.findIndex(
+    (ch) => ch.live && !chapterStats(session, ch.id).cleared
+  );
+}
+
+// Is there an uncleared live chapter BEFORE this one? This is the whole basis
+// of the out-of-order nudge. It answers "has this player skipped something",
+// and it ignores coming-soon chapters, because a gap the content has not filled
+// yet is not the player skipping anything.
+export function hasUnclearedBefore(session, district, chapterIndex) {
+  return district.chapters
+    .slice(0, chapterIndex)
+    .some((ch) => ch.live && !chapterStats(session, ch.id).cleared);
 }
 
 // Overall completion, 0..1. This is what the map's gray-to-color fill reads from.
