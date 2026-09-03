@@ -2,6 +2,14 @@
   "districtId": "court",
   "name": "THE COURTHOUSE",
   "blurb": "Who everybody in a courthouse is, who they work for, and what you can do in that building.",
+  "covers": [
+    "Who is on your side, who is on the state's side, and who is on nobody's side",
+    "What a judge decides, what a jury decides, and what neither one does",
+    "Free lawyers: who gets one, what they are, and what your lawyer keeps private",
+    "Which decisions in your case are yours and not your lawyer's",
+    "Court staff, probation officers, interpreters, and bail bondsmen",
+    "Court dates, missed dates, warrants, and which records the public can see"
+  ],
   "live": true,
   "chapters": [
     {
