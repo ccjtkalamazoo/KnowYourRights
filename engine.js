@@ -32,9 +32,13 @@
 // ---------------------------------------------------------------------------
 // Picking a chapter used to land on a screen with two warnings on it: a
 // legal-advice card and a red safety note that opened by saying the same thing
-// again. The district screen now carries the legal notice once, and each
-// chapter's own note shows on its card next to the Start button, which is where
-// the decision is being made. So a chapter goes straight into question one.
+// again. The district screen now carries the legal notice once, in words worth
+// reading, and each chapter's one-line summary sits on the card with the play
+// button. So a chapter goes straight into question one.
+//
+// The chapters' longer safetyNote fields are still loaded and still in the JSON.
+// Nothing renders them today. If a beat between picking and question one ever
+// comes back, that is what goes on it.
 //
 // ---------------------------------------------------------------------------
 // WHAT CHANGED, AND WHY
@@ -110,10 +114,9 @@ export function App() {
   // Session progress. Survives resetState, dies with the tab. See the note at
   // the top of this file about why it is kept apart from round state.
   const [session, setSession] = useState(newSession);
-  // The district list from the map, and the one the player opened. Held here so
-  // the district screen does not depend on the map still being mounted, and so
-  // returning from a round lands back on the district it came from.
-  const [districts, setDistricts] = useState(null);
+  // The district the player opened. Held here so the district screen does not
+  // depend on the map still being mounted, and so returning from a round lands
+  // back on the district it came from.
   const [district, setDistrict] = useState(null);
   // The three numbers that describe a run now. `results` is one entry per
   // question answered, which is what the progress bar reads: it can show a red
@@ -230,9 +233,9 @@ export function App() {
     }
   };
 
-  // Wipes ONE ROUND. Never touches `session`, `districts` or `district`: those
-  // are progress and navigation, and a player who finishes a round has not
-  // stopped being somewhere or lost what they cleared.
+  // Wipes ONE ROUND. Never touches `session` or `district`: those are progress
+  // and navigation, and a player who finishes a round has not stopped being
+  // somewhere or lost what they cleared.
   const resetState = () => {
     setDeck([]); setLevel(0); setSelected(null); setLocked(false);
     setRevealCorrect(false); setRevealWrong(false); setShowFloating(false);
@@ -365,9 +368,9 @@ export function App() {
     setPhase("map");
   };
 
-  // A chapter now goes straight into question one. The district screen showed
-  // the legal notice and this chapter's own note before Start was pressed, so
-  // there is nothing left to put on a screen in between.
+  // A chapter goes straight into question one. The district screen showed the
+  // notice and this chapter's summary before Play was pressed, so there is
+  // nothing left to put on a screen in between.
   const startChapter = async (d, chapterRef) => {
     resetState();
     setChapter(null);
@@ -806,6 +809,18 @@ export function App() {
     }, "tour-overlay")
   ];
 
+  // The map, built once here because two phases render it: `map` itself, and
+  // `district` when there is somehow no district to show. Rendering it is the
+  // right fallback; calling setPhase during a render is not, which is what the
+  // previous version did.
+  const mapScreen = c.jsx(MapScreen, {
+    session,
+    onOpenDistrict: openDistrict,
+    onHome: () => { resetState(); setPhase("start"); },
+    onPlayDemo: startDemo, onPlayTutorial: startTutorial,
+    demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay, demoWon
+  });
+
   // -------------------------------------------------------------------------
   // Screens
   // -------------------------------------------------------------------------
@@ -862,31 +877,23 @@ export function App() {
 
   if (phase === "map")
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
-      c.jsx(MapScreen, {
-        session,
-        onOpenDistrict: openDistrict,
-        onDistricts: setDistricts,
-        onHome: () => { resetState(); setPhase("start"); },
-        onPlayDemo: startDemo, onPlayTutorial: startTutorial,
-        demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay, demoWon
-      }),
+      mapScreen,
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
 
-  // One district: what it covers, the legal notice once, and its chapters in
-  // order. Falling back to the map when there is somehow no district beats
-  // rendering an empty screen.
-  if (phase === "district") {
-    if (!district) { setPhase("map"); return null; }
+  // One district: what it covers, the notice, and its chapters. With no district
+  // set there is nothing to draw, so the map renders instead of an empty screen.
+  if (phase === "district")
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
-      c.jsx(DistrictScreen, {
-        district, session,
-        onPlayChapter: startChapter,
-        onBack: () => { sfx.current.click(); setPhase("map"); }
-      }),
+      district
+        ? c.jsx(DistrictScreen, {
+            district, session,
+            onPlayChapter: startChapter,
+            onBack: () => { sfx.current.click(); setPhase("map"); }
+          })
+        : mapScreen,
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
-  }
 
   if (phase === "winbig")
     return c.jsxs(Shell, { muted, setMuted, hideSoundButton: true, onLogoClick: askLogo, children: [
@@ -1087,8 +1094,6 @@ function WalkScreen({ step, total, screen, onNext, onPrev, onSkip, isLast, canPr
 function WalkArt({ screen }) {
   if (screen.type === "safety")
     return c.jsx("div", { style: { fontFamily: C.display, fontSize: 46, lineHeight: 1, color: u.terra, textShadow: `4px 4px 0 ${u.outline}`, border: `3px solid ${u.outline}`, borderRadius: 14, background: u.surfaceHigh, padding: "18px 26px", boxShadow: U.lg }, children: "\u26A0 SAFETY FIRST" });
-  // The lives slide. Three full hearts, drawn at size, because the mechanic is
-  // simple enough that showing it is the whole explanation.
   if (screen.type === "lives")
     return c.jsx("div", { style: { display: "flex", gap: 14, padding: "16px 24px", background: u.surfaceHigh, border: `3px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg }, children: [0, 1, 2].map((i) => c.jsx(Heart, { filled: true, size: 46 }, i)) });
   if (screen.type === "ladder") {
@@ -1104,9 +1109,6 @@ function WalkArt({ screen }) {
       c.jsx("div", { style: { display: "flex", gap: 5 }, children: [0, 1, 2].map((n) => c.jsx("div", { style: { width: 16, height: 16, borderRadius: "50%", background: u.brand, border: `2px solid ${u.outline}` } }, n)) }),
       c.jsx("div", { style: { fontFamily: C.display, fontSize: 34, color: u.brand }, children: "3 PTS" })
     ] });
-  // The shop slide shows all four lifelines at once. It used to be one slide
-  // each, four slides, which was most of the walkthrough's length for the
-  // feature nobody used.
   if (screen.type === "shop")
     return c.jsx("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, maxWidth: 340 }, children: LIFELINE_KEYS.map((k) => c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, background: u.surface, border: `2px solid ${u.outline}`, padding: "10px 14px", borderRadius: 10, boxShadow: U.sm }, children: [
       c.jsx("span", { style: { display: "flex", alignItems: "center", justifyContent: "center", width: 30, height: 30, borderRadius: 7, background: u.brand, border: `2px solid ${u.outline}`, color: u.textOnDark, flexShrink: 0 }, children: c.jsx(LifeIcon, { name: k, size: 17 }) }),
@@ -1172,10 +1174,6 @@ function QuestionScreen(props) {
           })
         ] }),
 
-        // The stat row: LIVES, SHOP, WORTH. Three tiles instead of two, because
-        // lives have to be visible at all times and the shop still needs to be
-        // one tap away. Lives sit leftmost because they are the thing a player
-        // checks most often and never have to think about.
         c.jsxs("div", { className: "ts-stat-row", style: { display: "flex", gap: 12, alignItems: "stretch" }, children: [
           c.jsx(LivesBox, { lives }),
           c.jsx(ShopButton, { lifelines, points, disabled: locked, onClick: onOpenShop }),
@@ -1201,8 +1199,6 @@ function QuestionScreen(props) {
             question.hint
           ] })
         ] }, "q-" + level),
-        // Tutorial retry notice. Terra, not red: this is "go again", not "you
-        // lost something", and the tutorial never takes a life for it.
         retryNotice && c.jsxs("div", {
           style: { display: "flex", alignItems: "center", gap: 12, background: u.terraSoft, border: `2px solid ${u.terra}`, borderRadius: 10, padding: "12px 16px", boxShadow: U.sm, animation: "ts-fade-in 0.35s ease-out" },
           children: [
@@ -1224,9 +1220,6 @@ function QuestionScreen(props) {
           c.jsx("div", { className: "ts-action-bar-right", style: { display: "flex", gap: 12 }, children: c.jsx(Button, { variant: "primary", size: "md", disabled: selectedIdx === null || locked, onClick: onLockIn, "data-tour": "lock", children: "Lock It In" }) })
         })
       ] }),
-      // The money rail is hidden in the demo: it has 15 rungs and the demo is a
-      // five-question round, so showing it would be describing a game the player
-      // is not playing.
       !isDemo && c.jsxs("div", { className: "ts-ladder-col", style: { display: "flex", flexDirection: "column", gap: 12 }, children: [
         c.jsx("button", {
           onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound",
@@ -1241,9 +1234,6 @@ function QuestionScreen(props) {
   });
 }
 
-// The progress bar. One segment per question in THIS run, not a fixed 15, and
-// it reads from the results array so a red segment can sit mid-run with green
-// ones after it. Under the old one-miss rule that state was impossible.
 function ProgressDots({ level, runLength, results = [], revealCorrect, revealWrong, isEndless }) {
   const n = isEndless ? Math.max(runLength, level + 1) : runLength;
   return c.jsx("div", { className: "ts-progress-dots", "data-tour": "progress", style: { display: "flex", gap: 4, alignItems: "center" }, children: Array.from({ length: n }).map((_, i) => {
@@ -1277,8 +1267,6 @@ function AnswerButton(props) {
   });
 }
 
-// The money ladder rail down the right side. Highlights by RIGHT ANSWERS now,
-// not by questions seen, so a miss leaves the marker where it was.
 function Ladder({ rungsEarned = 0, isEndless, streak }) {
   return c.jsxs("aside", {
     className: "ts-ladder",
@@ -1302,13 +1290,6 @@ function Ladder({ rungsEarned = 0, isEndless, streak }) {
 }
 
 
-// ---------------------------------------------------------------------------
-// ShopButton : the shop, living as the middle tile of the stat row.
-// ---------------------------------------------------------------------------
-// Terra fill so it reads as a tappable tool, distinct from the neutral Lives and
-// Worth boxes either side of it. The sub-label is just the points now: the old
-// version read "12 PTS · 2 READY", which at three tiles across a phone was more
-// text than the tile could hold.
 function ShopButton({ lifelines, points, disabled, onClick }) {
   const [hover, setHover] = useState(false);
   const ready = Object.values(lifelines).filter(Boolean).length;
@@ -1354,14 +1335,8 @@ function ShopButton({ lifelines, points, disabled, onClick }) {
   });
 }
 
-// ---------------------------------------------------------------------------
-// ShopPanel : four lifelines, each in one of three states.
-// ---------------------------------------------------------------------------
-// Free-and-ready, buyable with points, or too expensive. SHIELD used to add a
-// fourth state (armed) and is gone, which makes this list shorter and the rules
-// simpler to read at a glance.
 function ShopPanel({ lifelines, points, prices, onPick, onClose }) {
-  const purchaseOnly = { skip: true }; // never starts free
+  const purchaseOnly = { skip: true };
   return c.jsx(Backdrop, { onClose, children: c.jsxs("div", {
     className: "ts-shop-panel",
     style: { background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 14, boxShadow: U.lg, padding: "22px 24px 20px", maxWidth: 480, width: "100%", maxHeight: "90dvh", overflowY: "auto", overscrollBehavior: "contain", WebkitOverflowScrolling: "touch", touchAction: "pan-y", animation: "ts-modal-in 0.18s ease-out" },
@@ -1405,7 +1380,6 @@ function ShopPanel({ lifelines, points, prices, onPick, onClose }) {
   }) });
 }
 
-// Confirmation for spending a lifeline (or buying one back with points).
 function LifelineModal({ lifelineKey, remainingAfter, available, points, price, onConfirm, onCancel }) {
   const meta = R.lifelines[lifelineKey];
   const purchaseOnly = lifelineKey === "skip";
@@ -1435,7 +1409,6 @@ function LifelineModal({ lifelineKey, remainingAfter, available, points, price, 
   });
 }
 
-// The scoreboard: which lifelines were used, points spent, points left.
 function RunBreakdown({ usage = {}, pointsSpent = 0, pointsLeft = 0 }) {
   const totalUses = LIFELINE_KEYS.reduce((n, k) => n + (usage[k] || 0), 0);
   return c.jsxs("div", { style: { width: "100%", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12, padding: "18px 20px", boxShadow: U.md, textAlign: "left" }, children: [
@@ -1461,32 +1434,14 @@ function RunBreakdown({ usage = {}, pointsSpent = 0, pointsLeft = 0 }) {
   ] });
 }
 
-// ---------------------------------------------------------------------------
-// The reveal: verdict beat, then three review cards
-// ---------------------------------------------------------------------------
-//   1. VERDICT   right or wrong, what the correct answer was, and (on a miss)
-//                what it cost.
-//   2. CARDS     three cards, one at a time: THE LAW, REMEMBER THIS, IN REAL LIFE.
-//
-// Each card has a ~2s read-gate and an "I understand" tap. That used to be a
-// Redeem button worth a point, and the point bought lifelines. The economy is
-// gone; the beat is not. The two-second gate plus a deliberate tap is what makes
-// somebody actually look at the card, and that worked. The currency did not.
-//
-// Cards show identically on a right and a wrong answer. Under the old rules a
-// wrong answer ended the run, so the explanation reached only the players who
-// already knew it. That was backwards.
 function RevealScreen(props) {
   const { question, level, runLength, isEndless, revealCorrect, selectedIdx, muted, setMuted,
     points, lives, isLastQuestion, isTutorial, onNext, onHome, onEarnCardPoint, onRevealStep,
     onFlipSound, onRevisitSound, onAckSound, onSkipReview } = props;
 
-  // Points are only earned on a correct answer. The cards themselves are
-  // identical either way, which is the part that matters and the part that used
-  // to be broken: a miss showed the cards but recorded nothing about them.
   const scoring = revealCorrect;
 
-  const [step, setStep] = useState("verdict"); // "verdict" | "cards"
+  const [step, setStep] = useState("verdict");
   const [current, setCurrent] = useState(0);
   const [seen, setSeen] = useState([false, false, false]);
   const [acked, setAcked] = useState([false, false, false]);
@@ -1497,11 +1452,8 @@ function RevealScreen(props) {
   const dwellTimer = useRef(null);
   const burstTimer = useRef(null);
 
-  const CARD_COUNT = R.cardMeta.length; // 3
+  const CARD_COUNT = R.cardMeta.length;
 
-  // Tell the parent which half of the reveal is on screen. Mount reports
-  // "verdict"; enterCards reports "cards". Without this the tour cannot tell a
-  // verdict step from a card step, since both live in phase "revealing".
   useEffect(() => { if (onRevealStep) onRevealStep("verdict"); }, []); // eslint-disable-line
 
   const cardShownAt = useRef(performance.now());
@@ -1511,9 +1463,6 @@ function RevealScreen(props) {
   }, [current]);
   const DWELL_MS = 2000;
 
-  // One event per card actually viewed, emitted on the way out of it. Fires on a
-  // right answer and a wrong one alike, which is what makes "did they read
-  // harder after missing it" a query rather than a guess.
   const emitted = useRef([false, false, false]);
   const emitCard = (idx) => {
     if (idx < 0 || idx > CARD_COUNT - 1) return;
@@ -1555,8 +1504,6 @@ function RevealScreen(props) {
     }
   };
 
-  // Safety net: a player who navigates past a card they read without tapping
-  // still keeps the point. The tap is the intended path, not a toll booth.
   const creditUnacked = () => {
     if (!scoring) return;
     const copy = acked.slice();
@@ -1611,7 +1558,6 @@ function RevealScreen(props) {
   const rightLetter = ["A", "B", "C", "D"][question.correct];
   const outOfLives = lives <= 0;
 
-  // ---------- VERDICT STEP ----------
   if (step === "verdict") {
     return c.jsxs("div", {
       className: "ts-reveal-screen",
@@ -1629,10 +1575,6 @@ function RevealScreen(props) {
             c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(38px, 8vw, 64px)", lineHeight: 1, letterSpacing: 1, color: revealCorrect ? u.green : u.red }, children: revealCorrect ? "CORRECT" : "NOT QUITE" })
           ] }),
 
-          // What the miss cost, in hearts, right where the player is looking.
-          // Getting this wrong reads as punishment; getting it right reads as a
-          // running total, which is the difference between "you failed" and
-          // "you have two left".
           !revealCorrect && c.jsxs("div", { "data-tour": "verdict-hearts", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: "ts-fade-in 0.45s ease-out" }, children: [
             c.jsx("div", { style: { display: "flex", gap: 7 }, children: Array.from({ length: LIVES_PER_ROUND }).map((_, i) => c.jsx(Heart, { filled: i < lives, size: 30 }, i)) }),
             c.jsx("div", { style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 1.4, fontWeight: 700, textTransform: "uppercase", color: outOfLives ? u.red : lives === 1 ? u.terra : u.textMuted },
@@ -1660,7 +1602,6 @@ function RevealScreen(props) {
     });
   }
 
-  // ---------- CARDS STEP ----------
   const finalLabel = outOfLives ? "See Final Result \u2192" : isLastQuestion ? "See your result \u2192" : "Next Question \u2192";
   const finalBtnEl = c.jsx("button", {
     onClick: advanceOut,
@@ -1677,12 +1618,7 @@ function RevealScreen(props) {
         c.jsx(Button, { onClick: onHome, variant: "secondary", size: "sm", style: { fontSize: 12 }, children: R.homeButton }),
         c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", justifyContent: "center" }, children: [
           c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: isEndless ? `Bonus Q${level + 1}` : `Q ${String(level + 1).padStart(2, "0")} / ${runLength}` }),
-          // Lives stay visible through the review, so the state of the round is
-          // never something the player has to remember.
           c.jsx(LivesBox, { lives, compact: true }),
-          // Three pips plus "X of 3". On a miss this is replaced by a plain
-          // line saying there are no points, so the absence is stated rather
-          // than left as a thing the player notices is missing.
           scoring
             ? c.jsxs("div", { "data-tour": "points", style: { display: "flex", alignItems: "center", gap: 10, background: earnedCount === CARD_COUNT ? u.brandSofter : u.surfaceWarm, border: `3px solid ${earnedCount === CARD_COUNT ? u.brand : u.outline}`, borderRadius: 22, padding: "6px 14px 6px 10px", boxShadow: U.sm, animation: earnedCount === CARD_COUNT ? "ts-streak-pop 0.5s ease-out" : "none" }, children: [
                 c.jsx("div", { style: { display: "flex", gap: 5 }, children: [0, 1, 2].map((r) => {
@@ -1723,9 +1659,6 @@ function RevealScreen(props) {
             : ((allSeen && allAcked) ? finalBtnEl : c.jsx(NextCardButton, { canAdvance: canAdvanceCard, ackOwed, cardRead, label: "Almost\u2026", onClick: () => {} }))
         ] }),
 
-        // No skipping the review in the tutorial. The cards are the reason the
-        // tutorial exists, and a skip link on them is an invitation to miss the
-        // one part that is not about buttons.
         !allSeen && !isTutorial && c.jsx("button", { onClick: onSkipReview, style: { background: "transparent", border: "none", fontFamily: C.mono, fontSize: 11, letterSpacing: 2, color: u.textMuted, cursor: "pointer", textTransform: "uppercase", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3, padding: "2px 10px" }, children: scoring ? R.review.skipLabelScoring : R.review.skipLabel })
       ] }),
 
@@ -1734,8 +1667,6 @@ function RevealScreen(props) {
   });
 }
 
-// The Next button between cards. Fill-bar while the read-gate runs, then prompts
-// for the acknowledgment, then unlocks.
 function NextCardButton({ canAdvance, onClick, label, ackOwed, cardRead }) {
   const readingStill = !canAdvance && !cardRead;
   const needsAck = !canAdvance && cardRead && ackOwed;
@@ -1751,7 +1682,6 @@ function NextCardButton({ canAdvance, onClick, label, ackOwed, cardRead }) {
   });
 }
 
-// A single review card. Flips in on first view, slides on revisit.
 function ComicCard({ cardIndex, meta, dir, firstView, question, scoring, acked, onAck }) {
   const anim = firstView
     ? "ts-card-flip-in 0.5s cubic-bezier(.2,.7,.2,1) both"
@@ -1769,8 +1699,6 @@ function ComicCard({ cardIndex, meta, dir, firstView, question, scoring, acked, 
           : c.jsx(FaceRealLife, { question })
         })
       }),
-      // The acknowledgment footer, in the same place the Redeem button used to
-      // sit. It shows on every card now, not just after a right answer.
       c.jsx("div", { className: "ts-comic-redeem", style: { flexShrink: 0, borderTop: `3px solid ${u.outline}`, padding: "14px 20px", background: acked ? u.brandSofter : u.surfaceWarm, display: "flex", justifyContent: "center" }, children:
         c.jsx(InCardAck, { acked, onAck, scoring })
       })
@@ -1778,8 +1706,6 @@ function ComicCard({ cardIndex, meta, dir, firstView, question, scoring, acked, 
   });
 }
 
-// The "I understand" control inside the card. Instantly tappable; the read-gate
-// lives on the Next button.
 function InCardAck({ acked, onAck, scoring }) {
   if (acked) {
     return c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10, fontFamily: C.display, fontSize: 16, letterSpacing: 1.5, color: u.brandDeep, textTransform: "uppercase" }, children: [
@@ -1787,9 +1713,6 @@ function InCardAck({ acked, onAck, scoring }) {
       c.jsx("span", { children: scoring ? R.review.acknowledgedScoringLabel : R.review.acknowledgedLabel })
     ] });
   }
-  // Same tap, same words, plus the point when there is one. The wording leads
-  // with the understanding rather than the reward, which is the right way round
-  // for a card whose job is teaching.
   return c.jsx("button", {
     onClick: onAck,
     "data-tour": "ack",
@@ -1798,7 +1721,6 @@ function InCardAck({ acked, onAck, scoring }) {
   });
 }
 
-// The three card faces.
 function FaceInfo({ question }) {
   return c.jsx("div", { className: "ts-face-fill", style: { display: "flex", alignItems: "center", minHeight: "100%" }, children:
     c.jsxs("div", { style: { width: "100%" }, children: [
@@ -1867,12 +1789,6 @@ function FaceRealLife({ question }) {
   ] });
 }
 
-// ---------------------------------------------------------------------------
-// Scorecard : right and wrong, the only two numbers an end screen needs.
-// ---------------------------------------------------------------------------
-// Replaces the old lifeline breakdown. "How far you got" stopped being the score
-// the moment a run could survive a miss, and lives remaining is a mid-round
-// mechanic that means nothing once the round is over.
 function Scorecard({ correct, wrong }) {
   return c.jsxs("div", { style: { width: "100%", maxWidth: 420, display: "flex", gap: 12, background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12, padding: "18px 20px", boxShadow: U.md }, children: [
     c.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
@@ -1887,8 +1803,6 @@ function Scorecard({ correct, wrong }) {
   ] });
 }
 
-// Every question missed this run, with its answer. With three lives there can be
-// up to three, so this is a list rather than the single card it used to be.
 function MissedList({ questions = [] }) {
   if (!questions.length) return null;
   return c.jsxs("div", { className: "ts-missed-card", style: { background: u.surface, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${u.terra}`, borderRadius: 10, padding: "20px 24px", maxWidth: 560, marginBottom: 28, boxShadow: U.md, textAlign: "left" }, children: [
@@ -1903,9 +1817,6 @@ function MissedList({ questions = [] }) {
   ] });
 }
 
-// ---------------------------------------------------------------------------
-// End screens
-// ---------------------------------------------------------------------------
 function WinBigScreen({ prize, correctCount, wrongCount, usage, pointsSpent, pointsLeft, sfx, onTakeMoney, onKeepGoing }) {
   const [display, setDisplay] = useState(0);
   const [done, setDone] = useState(false);
@@ -1982,16 +1893,6 @@ function EndScreen(props) {
   });
 }
 
-// ---------------------------------------------------------------------------
-// The demo end screen (event build)
-// ---------------------------------------------------------------------------
-// One screen covers all three endings: a round finished with rounds left, a
-// round finished with none left, and clearing the deck. The scoreboard is
-// cumulative and stays on screen, so whoever is handing out prizes reads the
-// tier off the same screen the player is already looking at.
-//
-// Every row now carries right AND wrong, because with lives "how far you got"
-// and "how many you knew" are different numbers.
 function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, deckSize = DEMO_DECK_SIZE, thisCorrect = 0, thisWrong = 0, missedQuestions = [], onTryAgain, onHome }) {
   const D = R.demo;
   const best = runs.reduce((m, r) => Math.max(m, r.correct), 0);
@@ -2020,7 +1921,6 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, deckSize = DEMO_D
         },
         children: headline
       }),
-      // The one line the player reads first: right and wrong, plainly.
       c.jsx("p", {
         style: {
           fontFamily: C.body, fontSize: 19, fontWeight: 600, color: u.textDim,
@@ -2033,8 +1933,6 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, deckSize = DEMO_D
         c.jsx(Scorecard, { correct: thisCorrect, wrong: thisWrong })
       }),
 
-      // The cumulative scoreboard. One row per round played, blanks for rounds
-      // not taken, so the player can see what is still theirs to use.
       c.jsxs("div", {
         style: {
           width: "100%", maxWidth: 460, background: u.surface,
@@ -2130,9 +2028,6 @@ function DemoEndScreen({ runs = [], maxRuns = 3, canPlay, won, deckSize = DEMO_D
   });
 }
 
-// ---------------------------------------------------------------------------
-// DemoIntroScreen : the one screen between the map and question one.
-// ---------------------------------------------------------------------------
 function DemoIntroScreen({ maxRuns = 3, onStart }) {
   const D = R.demo;
   return c.jsxs("div", {
@@ -2155,9 +2050,6 @@ function DemoIntroScreen({ maxRuns = 3, onStart }) {
         },
         children: D.introHeadline
       }),
-      // Three hearts on the intro screen, because lives are the rule that
-      // changed and a player should meet it before question one rather than
-      // discover it by losing.
       c.jsx("div", { style: { display: "flex", gap: 12 }, children: [0, 1, 2].map((i) => c.jsx(Heart, { filled: true, size: 40 }, i)) }),
       c.jsx("p", {
         style: {
