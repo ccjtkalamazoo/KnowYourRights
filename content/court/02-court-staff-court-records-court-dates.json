@@ -40,25 +40,32 @@
           "misconceptionCode": "prosecutor_holds_the_file"
         }
       ],
-      "hint": "Somebody in that building does nothing but paperwork.",
-      "principle": "The clerk's office keeps every court file, takes every filing, and collects fees. It is the front door of a courthouse. A clerk will tell you where a form goes and what a deadline is, and is not allowed to tell you what to write on it, which is a rule they work under rather than unhelpfulness.",
+      "hint": "One office in that building does nothing but files.",
+      "principle": "The clerk's office keeps every court file. It takes every filing and collects fees. It is the front door of a courthouse. A clerk will tell you where a form goes, and what a deadline is. A clerk is not allowed to tell you what to put on it.",
       "keyPhrase": {
         "quote": "The clerk's office holds the paperwork.",
         "gloss": "Every filing goes through there."
       },
       "scenario": {
-        "setup": "School trip. The class stops at a counter on the first floor.",
+        "setup": "You need a copy of a relative's court file and you are in the building.",
         "lines": [
           {
             "label": "YOU",
-            "text": "What happens here?"
+            "text": "Who do I even ask for this?"
           },
           {
-            "label": "CLERK",
-            "text": "Everything filed in this building comes through us. Every file, every deadline."
+            "label": "COUSIN",
+            "text": "First floor. Everything goes through the clerk."
+          },
+          {
+            "label": "YES",
+            "text": "You walk to the counter and leave with the copy."
+          },
+          {
+            "label": "NO",
+            "text": "You are sent from office to office and leave without the copy."
           }
-        ],
-        "note": "Every filing, file and deadline in that building runs through the clerk's office."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -98,7 +105,7 @@
         }
       ],
       "hint": "Watch what a bailiff actually does all day.",
-      "principle": "A bailiff keeps order, calls cases, handles anybody in custody, and manages the room. Not on either side and not advising anybody. Titles differ by court, and in some Michigan courtrooms a court officer does the same work under a different name.",
+      "principle": "A bailiff keeps order, calls cases, and manages the room. Not on either side, and not advising anybody. The name changes from court to court. In some Michigan courtrooms a court officer does the same work.",
       "keyPhrase": {
         "quote": "A bailiff runs the room, not the case.",
         "gloss": "Order, not sides."
@@ -111,11 +118,18 @@
             "text": "All rise."
           },
           {
-            "label": "YOU",
-            "text": "Is that a police officer?"
+            "label": "MOM",
+            "text": "Should I ask him how the case is looking?"
+          },
+          {
+            "label": "YES",
+            "text": "She asks the bailiff where to sit and the lawyer about the case."
+          },
+          {
+            "label": "NO",
+            "text": "She asks the person in uniform a question he is not allowed to answer."
           }
-        ],
-        "note": "A bailiff keeps order for the whole room, not safety for one person in it."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -155,10 +169,10 @@
         }
       ],
       "hint": "Somebody might need to know exactly what was said, months from now.",
-      "principle": "A court reporter makes a word-for-word record of what gets said. That record is what an appeal is built on and what anybody arguing about what happened has to work from. It exists so a hearing does not come down to whose memory is better.",
+      "principle": "A court reporter writes down every word said. That record is what an appeal is built on. Anybody arguing about what happened has to work from it. It is there so a hearing is not just whose memory is better.",
       "keyPhrase": {
-        "quote": "Everything said gets written down.",
-        "gloss": "The record outlives everybody's memory."
+        "quote": "It all gets written down.",
+        "gloss": "The record lasts longer than anybody's memory."
       },
       "scenario": {
         "setup": "Back row of a courtroom with your cousin, twenty minutes in.",
@@ -212,7 +226,7 @@
         }
       ],
       "hint": "Two people in a courtroom have sides. Neither one is staff.",
-      "principle": "Court staff work for the court, which means they work for the process rather than for either side. They are usually helpful and being helpful is not the same as being yours. The only person in that room whose job is your side is your defence lawyer.",
+      "principle": "Court staff work for the court. That means they work for the process, not for either side. They are usually helpful. Being helpful is not the same as being yours. Only your defense lawyer is on your side.",
       "keyPhrase": {
         "quote": "Helpful is not the same as yours.",
         "gloss": "Court staff work for the process."
@@ -221,15 +235,22 @@
         "setup": "At home afterwards, talking about who was in the room.",
         "lines": [
           {
-            "label": "YOU",
-            "text": "The clerk was really helpful. Is she on our side?"
+            "label": "MOM",
+            "text": "I liked the clerk. Can I ring her and ask what we should do?"
           },
           {
-            "label": "MOM",
-            "text": "She works for the court. That means neither side."
+            "label": "AUNT",
+            "text": "She's not allowed to answer that. She works for the court."
+          },
+          {
+            "label": "YES",
+            "text": "The family brings the real questions to the lawyer instead."
+          },
+          {
+            "label": "NO",
+            "text": "The family takes direction from somebody who cannot give it."
           }
-        ],
-        "note": "Court staff work for the process, which means they work for neither side."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -250,7 +271,7 @@
           "id": "court.02.005.b",
           "text": "Helping you find a job and stay on track.",
           "isCorrect": false,
-          "explanation": "A probation officer may genuinely want you to succeed. The job is still checking and reporting.",
+          "explanation": "A probation officer may want you to do well. The job is still checking and reporting.",
           "misconceptionCode": "probation_officer_is_support"
         },
         {
@@ -269,7 +290,7 @@
         }
       ],
       "hint": "The word probation comes with a list attached.",
-      "principle": "Probation is a court order with conditions on it, and a probation officer's job is to check whether those conditions are being followed and to report to the court. Many are decent people who genuinely want somebody to succeed. That does not change who they report to.",
+      "principle": "Probation is a court order with rules attached. A probation officer checks if those rules are being kept, and reports to the court. Many are decent people who want you to do well. That does not change who they report to.",
       "keyPhrase": {
         "quote": "A probation officer checks and reports.",
         "gloss": "Kind is not the same as on your side."
@@ -283,10 +304,10 @@
           },
           {
             "label": "YOU",
-            "text": "So not, like, a support worker."
+            "text": "So not a support worker."
           }
         ],
-        "note": "A probation officer checks whether a court order is being followed, and reports."
+        "note": "A probation officer checks whether a court order is being followed, and reports to the court."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -325,14 +346,14 @@
           "misconceptionCode": "it_stays_in_the_file"
         }
       ],
-      "hint": "Ask who the probation officer answers to.",
-      "principle": "A probation officer reports to the court. What you say gets written down and can end up in a report a judge reads. There is no confidentiality here, and that is the difference between a probation officer and a lawyer: one keeps what you say, one passes it on.",
+      "hint": "Who does a probation officer report to?",
+      "principle": "A probation officer reports to the court. What you say gets written down. It can end up in a report a judge reads. Nothing is private here. That is the difference between an officer and a lawyer. One keeps what you say. One passes it on.",
       "keyPhrase": {
         "quote": "Nothing you tell a probation officer is private.",
         "gloss": "It goes to the court."
       },
       "scenario": {
-        "setup": "A youth worker at the community centre is answering questions.",
+        "setup": "A youth worker at the community centre is taking questions.",
         "lines": [
           {
             "label": "YOU",
@@ -340,10 +361,17 @@
           },
           {
             "label": "STAFF",
-            "text": "Into a report the judge can read. That's what the job is."
+            "text": "Into a report the judge reads. That's the job."
+          },
+          {
+            "label": "YES",
+            "text": "Nobody in that room walks in expecting a private chat."
+          },
+          {
+            "label": "NO",
+            "text": "Somebody says something they meant privately and reads it back at a hearing."
           }
-        ],
-        "note": "Nothing said to a probation officer is private. Reporting is the job."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -383,7 +411,7 @@
         }
       ],
       "hint": "Who wrote the conditions in the first place?",
-      "principle": "Probation conditions come from a court order, so only the court changes them. A probation officer can decide how to handle day-to-day things and cannot rewrite the order. If something needs to change for real, it goes back to the judge. Conditions do get changed, and probation does get ended early, through the court.",
+      "principle": "Probation rules come from a court order. So only the court can change them. An officer can decide small day to day things. An officer cannot rewrite the order. Real changes go back to the judge. Rules do get changed, and probation does get ended early, through the court.",
       "keyPhrase": {
         "quote": "Only the court changes a court order.",
         "gloss": "Everything else is somebody's say-so."
@@ -393,14 +421,21 @@
         "lines": [
           {
             "label": "UNCLE",
-            "text": "His officer told him to skip a month. He got it in writing anyway."
+            "text": "His officer said skip a month. He asked for it in writing."
           },
           {
             "label": "YOU",
             "text": "Why bother?"
+          },
+          {
+            "label": "YES",
+            "text": "There is something to point at when the court asks."
+          },
+          {
+            "label": "NO",
+            "text": "A missed meeting becomes a violation and nobody remembers the phone call."
           }
-        ],
-        "note": "Only the court changes a court order. Everything else is somebody's say-so."
+        ]
       },
       "setting": "phone",
       "questionType": "standard"
@@ -421,7 +456,7 @@
           "id": "court.02.008.b",
           "text": "Yes, the same as with a lawyer.",
           "isCorrect": false,
-          "explanation": "Your lawyer has a duty to keep what you say. A probation officer has a duty to report it.",
+          "explanation": "Your lawyer has to keep what you say. A probation officer has to pass it on.",
           "misconceptionCode": "assigned_means_confidential"
         },
         {
@@ -440,7 +475,7 @@
         }
       ],
       "hint": "One person in this system has a duty to keep your secrets, and it is not this one.",
-      "principle": "Nothing you say to a probation officer is confidential. That is not a trick or a failure on their part. Their job is to report to the court, and reporting is the opposite of keeping. Your lawyer is the only person in the process with a duty to keep what you say.",
+      "principle": "Nothing you say to a probation officer is private. That is not a trick. Their job is to report to the court, and reporting is the opposite of keeping. Your lawyer is the only person who has to keep what you say.",
       "keyPhrase": {
         "quote": "Only your lawyer keeps what you say.",
         "gloss": "A probation officer's job is to pass it on."
@@ -450,14 +485,21 @@
         "lines": [
           {
             "label": "FRIEND",
-            "text": "Can you tell a probation officer something off the record?"
+            "text": "He wants to tell his probation officer something off the record."
           },
           {
             "label": "YOU",
-            "text": "No. That's what a lawyer's for."
+            "text": "There isn't one. That's what a lawyer's for."
+          },
+          {
+            "label": "YES",
+            "text": "It goes to a lawyer, where it stays."
+          },
+          {
+            "label": "NO",
+            "text": "He says it to the one person whose job is passing it on."
           }
-        ],
-        "note": "Your own lawyer is the only person in the process who has to keep what you say."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -478,7 +520,7 @@
           "id": "court.02.009.b",
           "text": "Nothing. She brings somebody herself.",
           "isCorrect": false,
-          "explanation": "Courts appoint interpreters. Nobody is expected to arrive with one.",
+          "explanation": "Courts get the interpreter. Nobody has to bring one.",
           "misconceptionCode": "you_bring_your_own"
         },
         {
@@ -497,7 +539,7 @@
         }
       ],
       "hint": "She has to be able to follow it to take part in it.",
-      "principle": "Courts appoint an interpreter when somebody asks for one or when the court decides one is needed for that person to take part meaningfully. It covers parties, witnesses, and other people with a real interest in the case. Sign language interpreting runs under separate rules.",
+      "principle": "Courts get an interpreter when somebody asks, or when the court decides one is needed. It covers people in the case, witnesses, and others with a real reason to be there. Sign language has its own rules.",
       "keyPhrase": {
         "quote": "The court provides an interpreter.",
         "gloss": "Asking for one is normal."
@@ -512,9 +554,16 @@
           {
             "label": "CLERK",
             "text": "Tell the judge. We'll get an interpreter."
+          },
+          {
+            "label": "YES",
+            "text": "Somebody asks, and she can follow her own hearing."
+          },
+          {
+            "label": "NO",
+            "text": "She sits through a hearing about something she saw and follows none of it."
           }
-        ],
-        "note": "Courts appoint an interpreter when somebody cannot follow the hearing in English."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -535,7 +584,7 @@
           "id": "court.02.010.b",
           "text": "Yes. Family can always help.",
           "isCorrect": false,
-          "explanation": "Interpreting at a doctor's office and interpreting in court are different things with different rules.",
+          "explanation": "Helping at a doctor's office and doing it in court are not the same thing.",
           "misconceptionCode": "family_can_just_interpret"
         },
         {
@@ -553,25 +602,32 @@
           "misconceptionCode": "family_barred_outright"
         }
       ],
-      "hint": "Somebody has to decide, and it is not the family.",
-      "principle": "The court decides who interprets. Michigan courts appoint a certified interpreter whenever practicable, then a qualified one, and only if neither is available may the court appoint somebody it decides is capable. So a family member is not barred outright and is not the default either. The reason is that an interpreter has to be neutral, and family rarely is.",
+      "hint": "Somebody has to pick. It is not the family.",
+      "principle": "The court picks the interpreter. Michigan courts use a trained one when they can. If none is free, they use a qualified one. Only if neither exists can the court pick somebody else. So family is not banned, and family is not the first choice. An interpreter has to be neutral, and family rarely is.",
       "keyPhrase": {
         "quote": "The court picks the interpreter.",
-        "gloss": "Neutral matters more than convenient."
+        "gloss": "Neutral counts for more than handy."
       },
       "scenario": {
-        "setup": "A neighbour is going to court as a witness and is worried about the language.",
+        "setup": "A neighbor is going to court as a witness and is worried about the language.",
         "lines": [
           {
-            "label": "NEIGHBOUR",
+            "label": "NEIGHBOR",
             "text": "My daughter can come and translate for me."
           },
           {
             "label": "YOU",
             "text": "I think the court picks who does that."
+          },
+          {
+            "label": "YES",
+            "text": "Somebody trained does it and nothing gets softened by accident."
+          },
+          {
+            "label": "NO",
+            "text": "Every answer runs through a family member who cares how it sounds."
           }
-        ],
-        "note": "The court decides who interprets, because an interpreter has to be neutral."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -592,7 +648,7 @@
           "id": "court.02.011.b",
           "text": "Whoever needs one.",
           "isCorrect": false,
-          "explanation": "In a Michigan criminal case nobody is charged for an interpreter, including the person who needs one.",
+          "explanation": "In a Michigan criminal case nobody pays, not even the person who needs one.",
           "misconceptionCode": "you_pay_for_your_own"
         },
         {
@@ -611,7 +667,7 @@
         }
       ],
       "hint": "Being able to follow your own case is not a thing you buy.",
-      "principle": "In a Michigan criminal case the court pays and cannot make a party pay it back. That has been true since a court rule change in November 2025. In civil cases a court can still order a party to cover some or all of an interpreter's cost, which is one more place where criminal and civil work differently.",
+      "principle": "In a Michigan criminal case the court pays. It cannot make you pay it back. That has been true since a rule change in late 2025. In civil cases a court can still make a side pay some of the cost. It is one more place where criminal and civil differ.",
       "keyPhrase": {
         "quote": "In a criminal case it costs you nothing.",
         "gloss": "Civil cases can work differently."
@@ -620,20 +676,20 @@
         "setup": "A community meeting about going to court. Somebody puts a hand up.",
         "lines": [
           {
-            "label": "NEIGHBOUR",
-            "text": "What does an interpreter cost?"
+            "label": "NEIGHBOR",
+            "text": "I can't afford an interpreter, so I'll manage."
           },
           {
             "label": "STAFF",
-            "text": "In a criminal case, nothing. The court covers it."
+            "text": "In a criminal case the court pays. Ask for one."
           },
           {
             "label": "YES",
-            "text": "Nobody skips asking for an interpreter over money."
+            "text": "She asks, and it costs her nothing."
           },
           {
             "label": "NO",
-            "text": "Somebody goes without because the family was scared of a bill."
+            "text": "She goes without because she was afraid of a bill that was never coming."
           }
         ]
       },
@@ -656,7 +712,7 @@
           "id": "court.02.012.b",
           "text": "Explaining what the words mean.",
           "isCorrect": false,
-          "explanation": "An interpreter repeats what was said. Explaining would be adding something nobody said.",
+          "explanation": "An interpreter repeats it. Explaining would add words nobody said.",
           "misconceptionCode": "interpreter_explains"
         },
         {
@@ -674,14 +730,14 @@
           "misconceptionCode": "interpreter_summarises"
         }
       ],
-      "hint": "Ask what would go wrong if an interpreter improved somebody's answer.",
-      "principle": "An interpreter has to render what was said completely and accurately, adding nothing and leaving nothing out, and is an impartial officer of the court. Not on either side, not explaining, not smoothing anything over. The point is to put somebody in the same position as an English speaker in the same seat, which means the same words and not better ones.",
+      "hint": "What would go wrong if an interpreter made an answer better?",
+      "principle": "An interpreter has to say exactly what was said. Nothing added. Nothing left out. They work for the court, not for either side. The point is to put somebody in the same spot as an English speaker. That means the same words, not better ones.",
       "keyPhrase": {
         "quote": "An interpreter says it, and does not improve it.",
         "gloss": "Nothing added, nothing left out."
       },
       "scenario": {
-        "setup": "Watching a hearing where a witness is speaking through an interpreter.",
+        "setup": "Watching a hearing where a witness speaks through an interpreter.",
         "lines": [
           {
             "label": "YOU",
@@ -692,7 +748,7 @@
             "text": "They have to say it exactly. Nothing added, nothing cut."
           }
         ],
-        "note": "An interpreter says it exactly. Nothing added, nothing left out, nothing improved."
+        "note": "An interpreter renders it exactly. Nothing added, nothing left out, nothing improved."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -732,24 +788,31 @@
         }
       ],
       "hint": "Ask who makes money when somebody uses one.",
-      "principle": "A bail bondsman is a private business. It posts a bond so somebody can get out, and it charges a fee for doing that. Nobody in the courthouse works for a bondsman and no bondsman works for the courthouse. Whether to use one is a decision a family makes, the way any other money decision gets made.",
+      "principle": "A bail bondsman is a private business. It puts up a bond so somebody can get out, and charges a fee for it. Nobody at the courthouse works for a bondsman. No bondsman works for the courthouse. Using one is a money choice a family makes.",
       "keyPhrase": {
         "quote": "A bondsman is a business.",
         "gloss": "Not part of the court, not on anybody's side."
       },
       "scenario": {
-        "setup": "An advert on a bus stop bench near the courthouse.",
+        "setup": "An advert on a bench outside the courthouse.",
         "lines": [
           {
             "label": "YOU",
-            "text": "Is that a court thing?"
+            "text": "Is that a court office?"
           },
           {
             "label": "MOM",
-            "text": "No. That's a company. They charge to post it for you."
+            "text": "No. It's a company. They charge a fee to post it."
+          },
+          {
+            "label": "YES",
+            "text": "The family treats it as a money decision and asks the price first."
+          },
+          {
+            "label": "NO",
+            "text": "Somebody signs assuming the court sent them."
           }
-        ],
-        "note": "A bail bondsman is a private business, not part of the court."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -789,7 +852,7 @@
         }
       ],
       "hint": "A fee is a price for a service, not a deposit.",
-      "principle": "A bondsman's fee is what the business charges. It is not a deposit and it does not come back, even if the case is dropped and even if every hearing gets attended. That is different from bond money paid to the court directly, which can come back at the end after anything owed is taken out of it.",
+      "principle": "A bondsman's fee is what the business charges. It is not a deposit and it does not come back. Not if the case is dropped. Not if every hearing is kept. Bond money paid to the court is different. That can come back at the end.",
       "keyPhrase": {
         "quote": "A fee is not a deposit.",
         "gloss": "It does not come back."
@@ -798,15 +861,22 @@
         "setup": "Kitchen table, months after a relative's case finished.",
         "lines": [
           {
-            "label": "MOM",
+            "label": "YOU",
             "text": "So when do we get the fee back?"
           },
           {
-            "label": "YOU",
+            "label": "MOM",
             "text": "We don't. That part was the price."
+          },
+          {
+            "label": "YES",
+            "text": "Nobody was counting on that money coming back."
+          },
+          {
+            "label": "NO",
+            "text": "The family budgets around money that is not coming back."
           }
-        ],
-        "note": "A bondsman's fee is a price for a service. It does not come back."
+        ]
       },
       "setting": "home",
       "questionType": "standard"
@@ -846,7 +916,7 @@
         }
       ],
       "hint": "Ask whose name is on the order to appear.",
-      "principle": "The order to appear is on you. A bondsman has a financial interest in you turning up and may call or come looking, and that is the business protecting its money rather than a duty owed to you. If nobody calls and nobody reminds you, the court date is still yours.",
+      "principle": "The order to show up is on you. A bondsman has money riding on it, so they may call or come looking. That is the business guarding its money, not a duty to you. If nobody calls, the court date is still yours.",
       "keyPhrase": {
         "quote": "Showing up is yours.",
         "gloss": "Nobody else is responsible for it."
@@ -855,7 +925,7 @@
         "setup": "Your cousin has court in the morning and nobody can reach anyone.",
         "lines": [
           {
-            "label": "COUSIN",
+            "label": "FRIEND",
             "text": "Nobody's answering. Do I still go?"
           },
           {
@@ -868,7 +938,7 @@
           },
           {
             "label": "NO",
-            "text": "He waits for a phone call instead of turning up."
+            "text": "Nobody goes, and there is a warrant by lunchtime."
           }
         ]
       },
@@ -909,8 +979,8 @@
           "misconceptionCode": "jail_sets_the_bond"
         }
       ],
-      "hint": "Somebody with authority over the case sets it, not somebody selling a service.",
-      "principle": "A judge sets bond, and in Michigan a district court magistrate can set it too for certain offences when the chief judge has authorised it. A magistrate is not a judge and does a specific list of things a chief judge signs off on. A bondsman only decides what to charge for posting whatever number the court already set.",
+      "hint": "The court sets the number. A business does not.",
+      "principle": "A judge sets bond. In Michigan a magistrate can too, for some charges, if the chief judge says so. A magistrate is not a judge. A magistrate does a set list of things. A bondsman only picks what to charge for posting the number the court already set.",
       "keyPhrase": {
         "quote": "The court sets the amount. The bondsman sets the fee.",
         "gloss": "Two different numbers from two different people."
@@ -924,10 +994,10 @@
           },
           {
             "label": "YOU",
-            "text": "Who is that? That's not the judge."
+            "text": "That's not the judge, is it?"
           }
         ],
-        "note": "A judge sets bond, and in Michigan a magistrate can too for certain offences."
+        "note": "A judge sets bond, and in Michigan a magistrate can too, for certain offenses."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -967,7 +1037,7 @@
         }
       ],
       "hint": "Ask who court is being held in front of.",
-      "principle": "Court is held in public. You can walk into a courthouse, go through security, and sit in on a hearing you have nothing to do with. Some things are closed, and they are exceptions rather than the rule. That openness is not a courtesy. It is how everybody gets to see whether the system does what it says.",
+      "principle": "Court is held in public. You can walk into a courthouse, go through security, and watch a hearing you have nothing to do with. A few things are closed, and those are the exception. That is not a favor. It is how everybody gets to see if the system does what it says.",
       "keyPhrase": {
         "quote": "Court happens in public.",
         "gloss": "You can walk in and watch."
@@ -980,7 +1050,7 @@
             "text": "Can I come watch, or do I need permission?"
           },
           {
-            "label": "COUSIN",
+            "label": "FRIEND",
             "text": "Just turn up. Court's open."
           },
           {
@@ -989,7 +1059,7 @@
           },
           {
             "label": "NO",
-            "text": "Nobody goes, because everybody assumed they were not allowed."
+            "text": "Nobody comes, because everybody assumed they were not allowed."
           }
         ]
       },
@@ -1030,22 +1100,22 @@
           "misconceptionCode": "age_decides_openness"
         }
       ],
-      "hint": "This surprises most people, including most adults.",
-      "principle": "Michigan juvenile proceedings on the formal calendar and preliminary hearings are open to the public. Anybody can sit in the gallery. Most people assume the opposite because juvenile **records** are closed here, and those are two different things. The hearing is open. The file is not.",
+      "hint": "This one surprises most grown ups too.",
+      "principle": "In Michigan most juvenile hearings are open to the public. Anybody can sit in the back. Most people think the opposite, because juvenile records are closed here. Those are two different things. The hearing is open. The file is not.",
       "keyPhrase": {
         "quote": "The hearing is open. The file is not.",
         "gloss": "Two different questions with two different answers."
       },
       "scenario": {
-        "setup": "The family arguing about it in the car outside.",
+        "setup": "The family arguing in the car outside the courthouse.",
         "lines": [
           {
-            "label": "MOM",
-            "text": "They won't let us in, it's a juvenile thing."
+            "label": "YOU",
+            "text": "Can we even go in? It's a juvenile hearing."
           },
           {
-            "label": "YOU",
-            "text": "I think we can go in. It's the records that are private."
+            "label": "AUNT",
+            "text": "The hearing's open. It's the records that aren't."
           },
           {
             "label": "YES",
@@ -1053,7 +1123,7 @@
           },
           {
             "label": "NO",
-            "text": "Everybody waits in the car park for no reason."
+            "text": "The family waits outside and misses the hearing."
           }
         ]
       },
@@ -1094,8 +1164,8 @@
           "misconceptionCode": "seriousness_closes_it"
         }
       ],
-      "hint": "The exception is about protecting one person while they speak.",
-      "principle": "A Michigan court can close part of a juvenile hearing while a child or a victim testifies, on a motion from a party or the victim, to protect that person. The judge weighs the nature of the proceeding and what that witness wants. It is a narrow exception for a stretch of testimony, not a way to close a whole hearing.",
+      "hint": "The reason is about one person while they speak.",
+      "principle": "A Michigan court can close part of a juvenile hearing while a child or a victim speaks. A side or the victim has to ask. The judge weighs what the hearing is, and what that witness wants. It covers a stretch of testimony, not the whole hearing.",
       "keyPhrase": {
         "quote": "Closing is narrow and it is about testimony.",
         "gloss": "The rest of the hearing stays open."
@@ -1108,11 +1178,18 @@
             "text": "I'm clearing the room for this witness. We'll bring everybody back after."
           },
           {
-            "label": "YOU",
-            "text": "Are we done?"
+            "label": "MOM",
+            "text": "Well, that's us done then."
+          },
+          {
+            "label": "YES",
+            "text": "The family waits in the hall and comes back in."
+          },
+          {
+            "label": "NO",
+            "text": "Everybody goes home halfway through their own relative's hearing."
           }
-        ],
-        "note": "A judge can close part of a juvenile hearing while a child or a victim testifies."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1152,7 +1229,7 @@
         }
       ],
       "hint": "Open means you can be there. It does not mean you are taking part.",
-      "principle": "Watching is not taking part. From the gallery you sit, listen and leave. Speaking out can get you removed and can be treated as contempt. Rules about phones, recording and what you can bring in vary courthouse to courthouse, and the safe assumption is that recording is not allowed unless somebody says it is.",
+      "principle": "Watching is not taking part. From the back you sit, listen, and leave. Speaking out can get you removed, and can count as contempt. Rules about phones and bags change from courthouse to courthouse. Assume you cannot record unless somebody says you can.",
       "keyPhrase": {
         "quote": "You can be there. You are not taking part.",
         "gloss": "Watch, listen, stay quiet."
@@ -1170,7 +1247,7 @@
           },
           {
             "label": "YES",
-            "text": "You save it for the hallway afterward."
+            "text": "You save it for the lawyer in the hallway."
           },
           {
             "label": "NO",
@@ -1216,7 +1293,7 @@
         }
       ],
       "hint": "Court is public, and so is most of the paperwork.",
-      "principle": "Adult criminal case files are mostly public. You can go to the clerk's office and ask to see one. Some things inside a file are sealed, and the file as a whole is open. This is the same principle as an open courtroom, applied to paper.",
+      "principle": "Adult criminal files are mostly public. You can go to the clerk's office and ask to see one. Some things inside a file are sealed. The file itself is open. It is the same idea as an open courtroom, put on paper.",
       "keyPhrase": {
         "quote": "Adult case files are mostly public.",
         "gloss": "You do not need a reason."
@@ -1231,9 +1308,16 @@
           {
             "label": "CLERK",
             "text": "No. Have a seat and I'll pull it."
+          },
+          {
+            "label": "YES",
+            "text": "You read it yourself instead of relying on what somebody told you."
+          },
+          {
+            "label": "NO",
+            "text": "You never ask, assuming you would have to justify it."
           }
-        ],
-        "note": "Adult criminal files are mostly public, and you do not need a reason to read one."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1272,25 +1356,32 @@
           "misconceptionCode": "juvenile_records_are_sealed_absolutely"
         }
       ],
-      "hint": "It is narrower than adult files and wider than nobody.",
-      "principle": "Michigan juvenile case records are open only to people the court finds have a legitimate interest. That list includes the young person, a parent, a lawyer, the court, police, and a prosecutor, and it is not closed. When somebody else asks, the court weighs the nature of the case, public safety, and the young person's interest.",
+      "hint": "Fewer than for an adult file. More than nobody.",
+      "principle": "Michigan juvenile records are open only to people the court says have a real reason. That list takes in the young person, a parent, a lawyer, the court, police, and a prosecutor. It is not a closed list. When anybody else asks, the court weighs the case. It weighs public safety. It weighs what is fair to the young person.",
       "keyPhrase": {
         "quote": "Juvenile records need a real reason.",
-        "gloss": "Not open to everybody, not closed to everybody."
+        "gloss": "Not open to all, not shut to all."
       },
       "scenario": {
         "setup": "A form at school asking about court history.",
         "lines": [
           {
             "label": "YOU",
-            "text": "Can they just look it up?"
+            "text": "Should I put down the juvenile thing? They'll find it anyway."
           },
           {
-            "label": "TEACHER",
-            "text": "Not in Michigan. Not for a juvenile case."
+            "label": "COUNSELOR",
+            "text": "Not in Michigan. Not a juvenile case."
+          },
+          {
+            "label": "YES",
+            "text": "You answer what is actually being asked."
+          },
+          {
+            "label": "NO",
+            "text": "You volunteer something nobody could have found."
           }
-        ],
-        "note": "Michigan juvenile records are open only to people the court decides have a real reason."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1330,7 +1421,7 @@
         }
       ],
       "hint": "This changed recently, and a lot of adults have not caught up.",
-      "principle": "Michigan used to be one of a handful of states where juvenile court records were public and searchable. A law signed in January 2021 changed that, and since March 2021 only people with a legitimate interest can get at them. Plenty of adults still believe the old rule, which is why somebody may tell you they looked something up and be describing a world that no longer exists.",
+      "principle": "Michigan used to be one of a few states where juvenile records were public. A law signed in 2021 changed that. Now only people with a real reason can get them. Plenty of adults still think the old rule holds. So somebody may tell you they looked something up, and be talking about a world that is gone.",
       "keyPhrase": {
         "quote": "Michigan closed juvenile records in 2021.",
         "gloss": "What was true before is not true now."
@@ -1345,9 +1436,16 @@
           {
             "label": "YOU",
             "text": "Not since 2021 you can't."
+          },
+          {
+            "label": "YES",
+            "text": "Nobody panics about something that is not findable."
+          },
+          {
+            "label": "NO",
+            "text": "A rumor about an old rule follows somebody around for years."
           }
-        ],
-        "note": "Michigan closed juvenile records in 2021. What was true before is not true now."
+        ]
       },
       "setting": "phone",
       "questionType": "standard"
@@ -1368,7 +1466,7 @@
           "id": "court.02.024.b",
           "text": "Ask the clerk for a printout.",
           "isCorrect": false,
-          "explanation": "A clerk can pull a file. Turning a recording into a written transcript is separate work somebody has to do.",
+          "explanation": "A clerk can pull a file. Making a written copy is separate work somebody gets paid for.",
           "misconceptionCode": "record_prints_on_demand"
         },
         {
@@ -1387,24 +1485,31 @@
         }
       ],
       "hint": "The record exists. Getting a copy is a separate thing.",
-      "principle": "Everything said gets recorded, and turning that into a written transcript is work somebody has to do and get paid for. In Michigan the rate is set by law: $3.75 per original page since April 2025, with a $50 minimum. A short hearing can therefore cost fifty dollars and a long one considerably more. The record is public. The copy is not free.",
+      "principle": "Everything said gets recorded. Turning that into a written copy is work somebody has to be paid for. Michigan sets the price by law. It is $3.75 a page, with a $50 floor. So a short hearing costs fifty dollars. A long one costs a lot more. The record is public. The copy is not free.",
       "keyPhrase": {
         "quote": "The record is public. The copy costs money.",
         "gloss": "At least fifty dollars in Michigan."
       },
       "scenario": {
-        "setup": "An argument at home about exactly what a judge said last month.",
+        "setup": "An argument at home about exactly what the judge said last month.",
         "lines": [
           {
             "label": "MOM",
-            "text": "One of us is remembering it wrong."
+            "text": "One of us is remembering it wrong. Is there a recording?"
           },
           {
-            "label": "YOU",
-            "text": "There's a transcript. It costs though."
+            "label": "AUNT",
+            "text": "There's a transcript. You order it and you pay for it."
+          },
+          {
+            "label": "YES",
+            "text": "Somebody orders it and the argument ends."
+          },
+          {
+            "label": "NO",
+            "text": "The family keeps arguing about something that was written down."
           }
-        ],
-        "note": "The record is public. A written copy costs money, at least fifty dollars in Michigan."
+        ]
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1425,7 +1530,7 @@
           "id": "court.02.025.b",
           "text": "Nobody. It is between you and the court.",
           "isCorrect": false,
-          "explanation": "Whoever posted a surety bond has money on the line, so the court has to notify them.",
+          "explanation": "Whoever put up the bond has money on the line, so the court has to tell them.",
           "misconceptionCode": "missed_date_is_private"
         },
         {
@@ -1444,24 +1549,31 @@
         }
       ],
       "hint": "Somebody put money up on the promise that you would be there.",
-      "principle": "In Michigan the court has to notify whoever posted a surety bond within seven days of a failure to appear. That is usually a bondsman, and sometimes it is a family member. Somebody put money on the line for you, and missing a date is the moment they find out. This is the part nobody warns people about.",
+      "principle": "In Michigan the court has to tell whoever put up the bond within seven days of a missed hearing. That is usually a bondsman. Sometimes it is family. Somebody put money on the line for you. A missed date is the moment they find out. This is the part nobody warns people about.",
       "keyPhrase": {
         "quote": "Missing a date is not just yours.",
         "gloss": "Whoever posted the bond gets told."
       },
       "scenario": {
-        "setup": "Your aunt posted bond for a relative and a letter arrives.",
+        "setup": "Your aunt posted bond for a relative, who has just missed a hearing.",
         "lines": [
           {
-            "label": "AUNT",
-            "text": "Why am I getting this?"
+            "label": "YOU",
+            "text": "Does anybody have to tell her?"
           },
           {
-            "label": "YOU",
-            "text": "Because you're the one who put the money up. They have to tell you."
+            "label": "MOM",
+            "text": "Within a week. She put the money up."
+          },
+          {
+            "label": "YES",
+            "text": "Somebody rings your aunt before the letter reaches her."
+          },
+          {
+            "label": "NO",
+            "text": "She finds out from the post."
           }
-        ],
-        "note": "Whoever posted the bond has to be told within seven days of a missed hearing."
+        ]
       },
       "setting": "home",
       "questionType": "standard"
@@ -1500,14 +1612,14 @@
           "misconceptionCode": "witness_decides_relevance"
         }
       ],
-      "hint": "A subpoena is an order, not an invitation.",
-      "principle": "A subpoena is a court order to appear. Ignoring one can bring a bench warrant or a contempt finding, and a witness can be arrested for not showing. If the date is impossible, that gets sorted with the court or the lawyer who sent it, before the date rather than after.",
+      "hint": "An order, not an invite.",
+      "principle": "A subpoena is a court order to show up. Ignore one and you can get a warrant or a contempt finding. A witness can be arrested for not coming. If the date will not work, that gets sorted with the court or the lawyer who sent it. Before the date, not after.",
       "keyPhrase": {
         "quote": "A subpoena is an order.",
         "gloss": "Not an invitation, not a request."
       },
       "scenario": {
-        "setup": "An envelope with a court seal on it. You saw something at a shop.",
+        "setup": "An envelope with a court seal. You saw something at a shop.",
         "lines": [
           {
             "label": "YOU",
@@ -1523,7 +1635,7 @@
           },
           {
             "label": "NO",
-            "text": "You skip it and the court comes looking."
+            "text": "You skip it and the court comes looking for you."
           }
         ]
       },
@@ -1565,7 +1677,7 @@
         }
       ],
       "hint": "A missed hearing is recorded the moment it is missed.",
-      "principle": "The court sets who has to be there. A lawyer can appear alone for some routine matters and a lawyer's advice about it is worth having, and the court is what decides. Anything worked out afterward is an explanation for something already on the record, which is why it gets sorted before the date rather than after.",
+      "principle": "The court sets who has to be there. A lawyer can go alone for some routine things, and a lawyer's advice is worth having. The court still decides. Anything sorted afterward is an excuse for something already on the record.",
       "keyPhrase": {
         "quote": "Sort it before, not after.",
         "gloss": "A missed hearing is recorded the moment it is missed."
@@ -1578,7 +1690,7 @@
             "text": "It's just scheduling, he doesn't need to come."
           },
           {
-            "label": "COUSIN",
+            "label": "FRIEND",
             "text": "Can you clear that with the court before Thursday?"
           },
           {
@@ -1629,29 +1741,29 @@
         }
       ],
       "hint": "The court has one tool for making somebody appear.",
-      "principle": "Missing a court date usually produces a bench warrant, which is an order for police to arrest you and bring you in. It is called a bench warrant because it comes from the bench rather than from a police investigation. It does not expire on its own and it does not go away because time passed.",
+      "principle": "Missing court usually means a bench warrant. That is an order for police to arrest you and bring you in. It is called a bench warrant because it comes from the bench, not from a police case. It does not run out on its own. It does not go away because time passed.",
       "keyPhrase": {
         "quote": "Missing court gets a warrant.",
         "gloss": "Not a reminder, not a new date."
       },
       "scenario": {
-        "setup": "Your cousin rings at eleven in the morning.",
+        "setup": "Your neighbor rings at eleven in the morning.",
         "lines": [
           {
-            "label": "COUSIN",
-            "text": "Court was at nine. I slept through it."
+            "label": "NEIGHBOR",
+            "text": "Court was at nine. I slept through it. Do I just go tomorrow?"
           },
           {
             "label": "YOU",
-            "text": "Call the lawyer now, not tomorrow."
+            "text": "Call your lawyer now. There's probably a warrant already."
           },
           {
             "label": "YES",
-            "text": "Somebody deals with it the same day."
+            "text": "He deals with it the same day."
           },
           {
             "label": "NO",
-            "text": "It sits there for years until it turns up at the worst moment."
+            "text": "A warrant sits there for years and turns up at the worst moment."
           }
         ]
       },
@@ -1693,7 +1805,7 @@
         }
       ],
       "hint": "Think about the last time somebody ran a name.",
-      "principle": "A bench warrant sits in a system every officer can search. A traffic stop, a routine check, an application that runs a background search: any of those can surface it. Warrants do not expire on their own, and people are picked up on ones from years back all the time, usually at the worst possible moment.",
+      "principle": "A bench warrant sits in a system every officer can search. A traffic stop can find it. So can a routine check, or a background search. Warrants do not run out. People get picked up on ones from years back all the time, usually at the worst moment.",
       "keyPhrase": {
         "quote": "A warrant does not expire.",
         "gloss": "It waits for somebody to run your name."
@@ -1703,7 +1815,7 @@
         "lines": [
           {
             "label": "UNCLE",
-            "text": "It doesn't expire. It just sits there till somebody runs your name."
+            "text": "It doesn't expire. It sits there till somebody runs your name."
           },
           {
             "label": "YOU",
@@ -1749,18 +1861,18 @@
           "misconceptionCode": "lawyer_removed_on_missing"
         }
       ],
-      "hint": "Somebody's money is riding on you being there.",
-      "principle": "A Michigan court can revoke release and declare the bond money forfeited when somebody fails to appear. That money is gone, and it is often a family member's. Only a judge can sign that order, not a magistrate. If the person turns up within a set window there is a process for arguing it back, which is one reason dealing with a missed date fast matters.",
+      "hint": "Somebody put money down on you being there.",
+      "principle": "A Michigan court can take back release and keep the bond money when somebody misses a hearing. That money is gone, and it is often a family member's. Only a judge can sign that order. A magistrate cannot. If the person turns up soon after, there is a way to argue for it back. That is one reason dealing with a missed date fast matters.",
       "keyPhrase": {
         "quote": "Missing a hearing can cost the bond money.",
-        "gloss": "Usually somebody else's money."
+        "gloss": "Often somebody else's money."
       },
       "scenario": {
         "setup": "A friend's older brother missed a court date last year.",
         "lines": [
           {
             "label": "FRIEND",
-            "text": "They took the bond money back. My mum had put it up."
+            "text": "They kept the bond money. My mum had put that up."
           },
           {
             "label": "YOU",
