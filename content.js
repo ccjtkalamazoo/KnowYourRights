@@ -51,6 +51,11 @@ export async function loadDistricts() {
     id: m.districtId,
     name: m.name,
     blurb: m.blurb,
+    // What the topic teaches, in the district's own words. Authored in
+    // meta.json rather than derived from the chapters, because "what is in
+    // here" is a summary somebody writes, not a list a machine can assemble.
+    // Optional: a district without one simply does not show the section.
+    covers: Array.isArray(m.covers) ? m.covers : [],
     // A district is playable only if it says so AND has at least one live
     // chapter. Two gates because a district can be held back deliberately even
     // once its first chapter passes review.
@@ -83,6 +88,21 @@ export async function loadChapter(districtId, chapter) {
   }
   chapters.set(chapter.id, runtime);
   return runtime;
+}
+
+// ---------------------------------------------------------------------------
+// A chapter's safety note, without its questions.
+// ---------------------------------------------------------------------------
+// The district screen shows each chapter's note on the chapter card, before
+// anybody has picked anything. Fetching all 30 questions to read one string
+// would mean downloading every chapter in a district just to draw the screen,
+// so this reads the note and throws the rest away. getJSON's cache means that
+// if the player then plays the chapter, loadChapter reuses the same fetch.
+export async function loadChapterNote(districtId, chapter) {
+  const cached = chapters.get(chapter.id);
+  if (cached) return cached.safetyNote;
+  const raw = await getJSON(`content/${districtId}/${chapter.file}`);
+  return raw.safetyNote || null;
 }
 
 // Authoring shape -> runtime shape. The correct answer is authored at index 0;
