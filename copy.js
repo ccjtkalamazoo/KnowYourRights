@@ -129,6 +129,44 @@ export const R = {
     ],
     button: "Got it"
   },
+  // ---------------------------------------------------------------------------
+  // The district screen
+  // ---------------------------------------------------------------------------
+  // Everything on the screen that opens when somebody picks a district. It
+  // replaced the chapter list that used to drop down inside the map, which put
+  // a settings-style list in the middle of a grid of cards and looked like a
+  // different product.
+  //
+  // The order copy is the load-bearing part. Chapters are NOT locked, because
+  // nothing is saved and a locked chapter 2 would be locked for every new
+  // player forever. So the wording has to do the work that a lock would: it
+  // says plainly that the chapters build on each other, recommends the earlier
+  // one, and then gets out of the way. Nobody is ever refused.
+  district: {
+    backLabel: "\u2190 Back to the map",
+    coversLabel: "WHAT THIS COVERS",
+    chaptersLabel: "CHAPTERS",
+    progressLabel: "CHAPTERS CLEARED",
+    startHereLabel: "START HERE",
+    playLabel: "Start the round \u2192",
+    closeLabel: "Close",
+    soonLabel: "SOON",
+    soonBody: "The questions for this chapter are being written and attorney reviewed.",
+    clearedLabel: "CLEARED",
+    noteHeading: "ABOUT THIS CHAPTER",
+    noteLoading: "Loading\u2026",
+    noteFailed: "This chapter's notes could not be loaded, and you can still play it.",
+    notPlayedLabel: "Not played yet",
+    attemptsLabel: (n) => (n === 1 ? "1 try" : `${n} tries`),
+    bestLabel: (n, of) => `best ${n} of ${of}`,
+    // Said once, at the bottom, rather than next to every number. A player who
+    // sees "0 tries" after a refresh should be able to find out why.
+    sessionNote: "Scores on this screen last until you refresh or close the page. Nothing about you is saved.",
+    orderTitle: "That one comes later",
+    orderBody: (name) => `The chapters build on each other, and you have not finished ${name} this session. Starting there will make more sense.`,
+    orderPrimary: "Play this one anyway",
+    orderSecondary: "Go there instead"
+  },
   // The demo. Everything a player sees in the event build lives here.
   // No safety note and no pre-round screen: the walkthrough's first slide is
   // the safety brief, and repeating it at a table where somebody is standing
