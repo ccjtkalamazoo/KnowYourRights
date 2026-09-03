@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ccjtkalamazoo.org/kyr/schema/chapter.schema.json",
   "title": "Know Your Rights chapter",
-  "description": "One chapter: 30 questions. See docs/CONTENT.md for the authoring rules behind these constraints.",
+  "description": "One chapter: at least 30 questions. See docs/CONTENT.md for the authoring rules behind these constraints.",
   "type": "object",
   "required": [
     "chapterId",
@@ -54,8 +54,7 @@
     "questions": {
       "type": "array",
       "minItems": 30,
-      "maxItems": 30,
-      "description": "Exactly 30. The game deals 15 at random.",
+      "description": "At least 30. A larger pool is fine and dealing only part of it is acceptable. The game deals 15 at random.",
       "items": {
         "$ref": "#/$defs/question"
       }
@@ -79,7 +78,7 @@
         "id": {
           "type": "string",
           "pattern": "^[a-z]+\\.[0-9]{2}\\.[0-9]{3}$",
-          "description": "Permanent. Never reused, even after retirement. e.g. stop.03.007"
+          "description": "Permanent once a chapter has gathered data. While a chapter is still being authored and has never collected a response, cut questions may be removed and the rest renumbered so ids stay contiguous."
         },
         "version": {
           "type": "integer",
@@ -93,13 +92,13 @@
           "not": {
             "pattern": "\\u2014"
           },
-          "description": "The question. No em dashes."
+          "description": "The question. Must read like something a person would ask out loud. No passive or abstract framings such as 'how is that treated' or 'what is that sentence'. Carries its own situation, since the shuffle means any question can be a player's first. No em dashes."
         },
         "options": {
           "type": "array",
           "minItems": 4,
           "maxItems": 4,
-          "description": "Exactly four. Index 0 is ALWAYS the correct answer; the game shuffles display order.",
+          "description": "Exactly four. Index 0 is ALWAYS the correct answer; the game shuffles display order. All four share a shape and a rough length so the correct one is not guessable, and wrong answers are worded in parallel with the correct one rather than restructured. Every option must answer the question the stem actually asks, read alone.",
           "items": {
             "$ref": "#/$defs/option"
           }
@@ -120,7 +119,7 @@
           "not": {
             "pattern": "\\u2014"
           },
-          "description": "The law in plain language. Lead with the rule, then the case."
+          "description": "The law in plain language. States how something works. Does not tell the player what to choose. Definitions and roles are taught here, at the question where they first matter."
         },
         "safetyNote": {
           "type": "string",
@@ -129,7 +128,7 @@
           "not": {
             "pattern": "\\u2014"
           },
-          "description": "Optional. Safety framing shown under the law on card 1, styled as a warning rather than law. Use where knowing a right and safely using it can come apart: getting home safe outranks winning the moment."
+          "description": "Optional and normally unused, since safety notes are chapter level. Available where knowing a right and safely using it can come apart."
         },
         "keyPhrase": {
           "type": "object",
@@ -138,6 +137,7 @@
             "gloss"
           ],
           "additionalProperties": false,
+          "description": "The one thing worth carrying out of this question. May be words a person could say, or a plain statement of the thing to remember, whichever fits the question. Never phrased as an instruction to the player.",
           "properties": {
             "quote": {
               "type": "string",
@@ -146,7 +146,7 @@
               "not": {
                 "pattern": "\\u2014"
               },
-              "description": "The words to say out loud. Short enough to recall under stress."
+              "description": "The thing to remember. Renders as the centrepiece of card 2: large display type, capped around 16 characters per line, with no quotation marks added by the UI. So a plain fact reads correctly here, not just a spoken line. Can be a sentence someone might say (\"I want a lawyer\") or a plain fact (\"You can always say no\"). Keep it short: long entries wrap badly at that size. Not an instruction."
             },
             "gloss": {
               "type": "string",
@@ -154,24 +154,46 @@
               "maxLength": 160,
               "not": {
                 "pattern": "\\u2014"
-              }
+              },
+              "description": "One line expanding the quote. States how something works rather than what to do."
             }
           }
         },
         "scenario": {
           "type": "object",
           "required": [
-            "setup"
+            "setup",
+            "lines"
           ],
-          "additionalProperties": true,
+          "additionalProperties": false,
+          "description": "Card 3. An actual scene with people in it, rendered as an exchange. Never commentary on the question, the options, the lesson, or the chapter, and never a reference to the multiple choice options.",
           "properties": {
             "setup": {
               "type": "string",
               "minLength": 15,
+              "maxLength": 220,
               "not": {
                 "pattern": "\\u2014"
               },
-              "description": "A concrete situation. Specific beats abstract."
+              "description": "A concrete situation. Specific beats abstract. One sentence."
+            },
+            "lines": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 7,
+              "description": "Speaker lines, at least two, rendered as a two-column grid of panels with an avatar per speaker. A YES and a NO line may follow ONLY where somebody in the scene actually decides something; they render below as green and terra outcome boxes. Most scenes are somebody learning how a thing works rather than choosing between two paths, and a YES/NO pair on one of those is the lesson restated twice with a colour on it. Use the note field for those instead.",
+              "items": {
+                "$ref": "#/$defs/scenarioLine"
+              }
+            },
+            "note": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 240,
+              "not": {
+                "pattern": "\\u2014"
+              },
+              "description": "Optional. Renders as an italic footnote under the outcome boxes, prefixed with an arrow. A caveat or a note about how the scene usually goes, not a restatement of the lesson."
             }
           }
         },
@@ -179,6 +201,56 @@
           "type": "boolean",
           "default": false,
           "description": "Retired questions keep their ID forever so analytics stay interpretable."
+        },
+        "setting": {
+          "type": "string",
+          "enum": [
+            "street",
+            "school",
+            "home",
+            "vehicle",
+            "phone",
+            "facility",
+            "store",
+            "work",
+            "online"
+          ],
+          "description": "Optional. Where the scenario takes place. Lets the auditor check that a chapter spreads across settings instead of over pulling toward interrogation rooms."
+        },
+        "questionType": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "line",
+            "your_words",
+            "who_is_doing_it",
+            "judging_a_claim",
+            "afterward"
+          ],
+          "description": "Optional. Which kind of question this is, for the authoring quota: standard (the standard), line (the line), your_words (your words), who_is_doing_it (who is doing it), judging_a_claim (judging a claim), afterward. Lets the auditor check the spread across a chapter, and lets analytics compare performance across question kinds."
+        }
+      }
+    },
+    "scenarioLine": {
+      "type": "object",
+      "required": [
+        "label",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "maxLength": 12,
+          "description": "Speaker, in caps, or YES or NO for the two outcome lines. The UI gives an avatar and colour to labels matching: YOU; OFFICER, POLICE, DEPUTY, TROOPER, SRO; MOM, DAD, PARENT, GUARDIAN, AUNT, UNCLE, GRANDMA, GRANDPA; FRIEND, COUSIN, BROTHER, SISTER, SIBLING; TEACHER, PRINCIPAL, COACH, STAFF, DEAN, COUNSELOR; LAWYER, ATTORNEY, JUDGE. Anything else (911, WORKER, DRIVER, STRANGER, THEM) renders with the default speech bubble, which is fine but plainer."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160,
+          "not": {
+            "pattern": "\\u2014"
+          }
         }
       }
     },
@@ -202,7 +274,8 @@
           "maxLength": 180,
           "not": {
             "pattern": "\\u2014"
-          }
+          },
+          "description": "Short. A word or a short phrase beats a sentence. The correct option states how something works, never what the player should choose."
         },
         "isCorrect": {
           "type": "boolean"
@@ -213,7 +286,7 @@
             "null"
           ],
           "maxLength": 500,
-          "description": "Null for the correct option, required for every wrong one. This is where most of the teaching happens."
+          "description": "Null for the correct option, required for every wrong one. This is where most of the teaching happens. A wrong option must be FACTUALLY wrong, so this explains what is untrue about it. An option is never wrong merely because the player talked or answered."
         },
         "misconceptionCode": {
           "type": [
@@ -221,7 +294,7 @@
             "null"
           ],
           "pattern": "^[a-z][a-z0-9_]*$",
-          "description": "Names the false belief this distractor tests. Null for the correct option, required for every wrong one. Must exist in misconceptions.json."
+          "description": "Names the false belief this distractor tests. Null for the correct option, required for every wrong one. Must exist in misconceptions.json. Reuse across questions is expected and capped at 10 uses."
         }
       },
       "allOf": [
@@ -241,7 +314,10 @@
             "properties": {
               "explanation": {
                 "type": "string",
-                "minLength": 15
+                "minLength": 15,
+                "not": {
+                  "pattern": "\\u2014"
+                }
               },
               "misconceptionCode": {
                 "type": "string",
