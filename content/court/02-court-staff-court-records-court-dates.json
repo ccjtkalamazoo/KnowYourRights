@@ -56,16 +56,9 @@
           {
             "label": "CLERK",
             "text": "Everything filed in this building comes through us. Every file, every deadline."
-          },
-          {
-            "label": "YES",
-            "text": "You know where paperwork actually lives."
-          },
-          {
-            "label": "NO",
-            "text": "You picture the judge keeping the files in an office somewhere."
           }
-        ]
+        ],
+        "note": "Every filing, file and deadline in that building runs through the clerk's office."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -120,16 +113,9 @@
           {
             "label": "YOU",
             "text": "Is that a police officer?"
-          },
-          {
-            "label": "YES",
-            "text": "You know who to ask where to sit, and who not to ask about a case."
-          },
-          {
-            "label": "NO",
-            "text": "You assume the person in uniform is there about somebody in particular."
           }
-        ]
+        ],
+        "note": "A bailiff keeps order for the whole room, not safety for one person in it."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -184,16 +170,9 @@
           {
             "label": "COUSIN",
             "text": "So there's a record. If anybody appeals, that's what they use."
-          },
-          {
-            "label": "YES",
-            "text": "You understand what the typing is for and why it matters later."
-          },
-          {
-            "label": "NO",
-            "text": "You assume it is note-taking and nothing is being kept."
           }
-        ]
+        ],
+        "note": "Everything said gets written down, and that record is what an appeal is built from."
       },
       "setting": "facility",
       "questionType": "judging_a_claim"
@@ -248,16 +227,9 @@
           {
             "label": "MOM",
             "text": "She works for the court. That means neither side."
-          },
-          {
-            "label": "YES",
-            "text": "You know helpful and on-your-side are different things."
-          },
-          {
-            "label": "NO",
-            "text": "You read ordinary politeness as somebody backing you."
           }
-        ]
+        ],
+        "note": "Court staff work for the process, which means they work for neither side."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -312,16 +284,9 @@
           {
             "label": "YOU",
             "text": "So not, like, a support worker."
-          },
-          {
-            "label": "YES",
-            "text": "You know what the role actually is before you ever meet one."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody treats a probation officer as a friend and is surprised later."
           }
-        ]
+        ],
+        "note": "A probation officer checks whether a court order is being followed, and reports."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -376,16 +341,9 @@
           {
             "label": "STAFF",
             "text": "Into a report the judge can read. That's what the job is."
-          },
-          {
-            "label": "YES",
-            "text": "You know where anything said in that room ends up."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody expects a private chat and reads about it at a hearing."
           }
-        ]
+        ],
+        "note": "Nothing said to a probation officer is private. Reporting is the job."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -440,16 +398,9 @@
           {
             "label": "YOU",
             "text": "Why bother?"
-          },
-          {
-            "label": "YES",
-            "text": "You know only the court can actually change the order."
-          },
-          {
-            "label": "NO",
-            "text": "A missed meeting shows up as a violation and nobody remembers the conversation."
           }
-        ]
+        ],
+        "note": "Only the court changes a court order. Everything else is somebody's say-so."
       },
       "setting": "phone",
       "questionType": "standard"
@@ -504,16 +455,9 @@
           {
             "label": "YOU",
             "text": "No. That's what a lawyer's for."
-          },
-          {
-            "label": "YES",
-            "text": "She passes on something worth knowing."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody says something they meant privately and it goes in a report."
           }
-        ]
+        ],
+        "note": "Your own lawyer is the only person in the process who has to keep what you say."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -568,16 +512,9 @@
           {
             "label": "CLERK",
             "text": "Tell the judge. We'll get an interpreter."
-          },
-          {
-            "label": "YES",
-            "text": "Somebody asks, and she can follow her own hearing."
-          },
-          {
-            "label": "NO",
-            "text": "She sits through a hearing about something she saw and understands none of it."
           }
-        ]
+        ],
+        "note": "Courts appoint an interpreter when somebody cannot follow the hearing in English."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -632,16 +569,9 @@
           {
             "label": "YOU",
             "text": "I think the court picks who does that."
-          },
-          {
-            "label": "YES",
-            "text": "Somebody trained does it and nothing gets softened by accident."
-          },
-          {
-            "label": "NO",
-            "text": "Every answer runs through somebody who cares how it sounds."
           }
-        ]
+        ],
+        "note": "The court decides who interprets, because an interpreter has to be neutral."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -760,16 +690,9 @@
           {
             "label": "COUSIN",
             "text": "They have to say it exactly. Nothing added, nothing cut."
-          },
-          {
-            "label": "YES",
-            "text": "You trust that what came across is what was said."
-          },
-          {
-            "label": "NO",
-            "text": "You assume something got lost and start doubting the whole thing."
           }
-        ]
+        ],
+        "note": "An interpreter says it exactly. Nothing added, nothing left out, nothing improved."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -824,16 +747,9 @@
           {
             "label": "MOM",
             "text": "No. That's a company. They charge to post it for you."
-          },
-          {
-            "label": "YES",
-            "text": "You read it as a business, which is what it is."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody calls assuming the court sent them."
           }
-        ]
+        ],
+        "note": "A bail bondsman is a private business, not part of the court."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -888,16 +804,9 @@
           {
             "label": "YOU",
             "text": "We don't. That part was the price."
-          },
-          {
-            "label": "YES",
-            "text": "The family knew going in what the money was."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody counts on money that was never coming back."
           }
-        ]
+        ],
+        "note": "A bondsman's fee is a price for a service. It does not come back."
       },
       "setting": "home",
       "questionType": "standard"
@@ -1016,16 +925,9 @@
           {
             "label": "YOU",
             "text": "Who is that? That's not the judge."
-          },
-          {
-            "label": "YES",
-            "text": "You learn a magistrate can do some of what a judge does."
-          },
-          {
-            "label": "NO",
-            "text": "Every person on a bench looks the same to you."
           }
-        ]
+        ],
+        "note": "A judge sets bond, and in Michigan a magistrate can too for certain offences."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1208,16 +1110,9 @@
           {
             "label": "YOU",
             "text": "Are we done?"
-          },
-          {
-            "label": "YES",
-            "text": "You wait in the hall and come back in."
-          },
-          {
-            "label": "NO",
-            "text": "You leave thinking the hearing is over."
           }
-        ]
+        ],
+        "note": "A judge can close part of a juvenile hearing while a child or a victim testifies."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1336,16 +1231,9 @@
           {
             "label": "CLERK",
             "text": "No. Have a seat and I'll pull it."
-          },
-          {
-            "label": "YES",
-            "text": "You read it yourself instead of relying on what somebody told you."
-          },
-          {
-            "label": "NO",
-            "text": "You never ask, assuming you would have to justify it."
           }
-        ]
+        ],
+        "note": "Adult criminal files are mostly public, and you do not need a reason to read one."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1400,16 +1288,9 @@
           {
             "label": "TEACHER",
             "text": "Not in Michigan. Not for a juvenile case."
-          },
-          {
-            "label": "YES",
-            "text": "You know what somebody can and cannot find on their own."
-          },
-          {
-            "label": "NO",
-            "text": "You assume it is all out there and answer a question nobody asked."
           }
-        ]
+        ],
+        "note": "Michigan juvenile records are open only to people the court decides have a real reason."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1464,16 +1345,9 @@
           {
             "label": "YOU",
             "text": "Not since 2021 you can't."
-          },
-          {
-            "label": "YES",
-            "text": "Nobody panics about something that is not findable."
-          },
-          {
-            "label": "NO",
-            "text": "A rumour about an old rule follows somebody around for years."
           }
-        ]
+        ],
+        "note": "Michigan closed juvenile records in 2021. What was true before is not true now."
       },
       "setting": "phone",
       "questionType": "standard"
@@ -1528,16 +1402,9 @@
           {
             "label": "YOU",
             "text": "There's a transcript. It costs though."
-          },
-          {
-            "label": "YES",
-            "text": "The family knows what it costs before deciding they need it."
-          },
-          {
-            "label": "NO",
-            "text": "Everybody keeps arguing about something written down."
           }
-        ]
+        ],
+        "note": "The record is public. A written copy costs money, at least fifty dollars in Michigan."
       },
       "setting": "facility",
       "questionType": "standard"
@@ -1592,16 +1459,9 @@
           {
             "label": "YOU",
             "text": "Because you're the one who put the money up. They have to tell you."
-          },
-          {
-            "label": "YES",
-            "text": "Everybody knew that letter could come."
-          },
-          {
-            "label": "NO",
-            "text": "The person who helped finds out from the post."
           }
-        ]
+        ],
+        "note": "Whoever posted the bond has to be told within seven days of a missed hearing."
       },
       "setting": "home",
       "questionType": "standard"
@@ -1848,16 +1708,9 @@
           {
             "label": "YOU",
             "text": "Even years later?"
-          },
-          {
-            "label": "YES",
-            "text": "You know why dealing with it quickly matters."
-          },
-          {
-            "label": "NO",
-            "text": "Somebody assumes it goes away on its own."
           }
-        ]
+        ],
+        "note": "A bench warrant does not expire. It waits for somebody to run your name."
       },
       "setting": "street",
       "questionType": "standard"
@@ -1912,16 +1765,9 @@
           {
             "label": "YOU",
             "text": "That's why they wanted him there."
-          },
-          {
-            "label": "YES",
-            "text": "You know what a missed morning can cost somebody else."
-          },
-          {
-            "label": "NO",
-            "text": "You think a warrant is the only thing that happens."
           }
-        ]
+        ],
+        "note": "Missing a hearing can cost the bond money, and it is often somebody else's."
       },
       "setting": "facility",
       "questionType": "standard"
