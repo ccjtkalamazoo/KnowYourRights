@@ -61,7 +61,15 @@ export async function loadDistricts() {
     // once its first chapter passes review.
     live: !!m.live && m.chapters.some((c) => c.live),
     chapters: m.chapters.map((c) => ({
-      id: c.id, name: c.name, file: c.file, live: !!c.live
+      id: c.id,
+      name: c.name,
+      // One line describing the chapter, shown on the district screen. It is
+      // NOT the chapter's safety note: the note is written for somebody about
+      // to answer questions, this is written for somebody deciding whether to.
+      // Optional, and the screen simply omits the line when it is missing.
+      summary: c.summary || null,
+      file: c.file,
+      live: !!c.live
     }))
   }));
 }
@@ -76,9 +84,11 @@ export async function loadChapter(districtId, chapter) {
     id: raw.chapterId,
     districtId: raw.districtId,
     name: raw.name,
-    // One safety note per chapter, shown before the round rather than on every
-    // question. The risk of using a right differs by setting, so it is chapter
-    // level and not global.
+    // Still read, still carried, currently shown nowhere. The district screen
+    // replaced it with the shorter meta.json summary, and the pre-round screen
+    // it used to appear on is gone. Kept because it is authored content that
+    // passed attorney review, and because a future beat before question one is
+    // the obvious place for it to come back.
     safetyNote: raw.safetyNote || null,
     reviewedBy: raw.reviewedBy || null,
     questions: (raw.questions || []).map(toRuntime)
@@ -88,21 +98,6 @@ export async function loadChapter(districtId, chapter) {
   }
   chapters.set(chapter.id, runtime);
   return runtime;
-}
-
-// ---------------------------------------------------------------------------
-// A chapter's safety note, without its questions.
-// ---------------------------------------------------------------------------
-// The district screen shows each chapter's note on the chapter card, before
-// anybody has picked anything. Fetching all 30 questions to read one string
-// would mean downloading every chapter in a district just to draw the screen,
-// so this reads the note and throws the rest away. getJSON's cache means that
-// if the player then plays the chapter, loadChapter reuses the same fetch.
-export async function loadChapterNote(districtId, chapter) {
-  const cached = chapters.get(chapter.id);
-  if (cached) return cached.safetyNote;
-  const raw = await getJSON(`content/${districtId}/${chapter.file}`);
-  return raw.safetyNote || null;
 }
 
 // Authoring shape -> runtime shape. The correct answer is authored at index 0;
