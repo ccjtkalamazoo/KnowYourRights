@@ -4,7 +4,7 @@
   "name": "TUTORIAL",
   "reviewedBy": null,
   "reviewedAt": null,
-  "_note": "Options are NEVER shuffled in tutorial mode, and the deck is never reshuffled. The step scripts below address answers by their position in this file, so reordering an options array silently breaks the tour. The correct answer is deliberately in a different slot in each question so nobody learns that the answer is always A.",
+  "_note": "Options are NEVER shuffled in tutorial mode, and the deck is never reshuffled. The step scripts below address answers by their position in this file, so reordering an options array silently breaks the tour. The correct answer is deliberately in a different slot in each question so nobody learns that the answer is always A. The scenario fields are left over from the removed IN REAL LIFE card and are not shown.",
   "questions": [
     {
       "id": "tutorial.01.001",
@@ -119,8 +119,8 @@
           "id": "s1.card",
           "phase": "cards",
           "target": "card",
-          "title": "THREE CARDS",
-          "body": "The law behind it, a phrase to remember, and how it plays out in real life. These come up after every single answer.",
+          "title": "TWO CARDS",
+          "body": "The law behind it, and a phrase to remember. These come up after every single answer.",
           "action": "next"
         },
         {
@@ -136,7 +136,7 @@
           "phase": "cards",
           "target": "points",
           "title": "THAT'S A POINT",
-          "body": "You just earned one. Each card is worth a point when you got the question RIGHT, three per question. Points are the only way to buy help.",
+          "body": "You just earned one. Each card is worth a point when you got the question RIGHT, two per question. Points are the only way to buy help.",
           "action": "next"
         },
         {
@@ -144,7 +144,7 @@
           "phase": "cards",
           "target": "next-card",
           "title": "NEXT CARD",
-          "body": "Read all three. Then you move on.",
+          "body": "Read both. Then you move on.",
           "action": "tap"
         }
       ]
@@ -212,7 +212,7 @@
           "phase": "playing",
           "target": "shop",
           "title": "YOU HAVE POINTS",
-          "body": "Those three cards you just read earned you three points. This is where you spend them.",
+          "body": "Those two cards you just read earned you two points. This is where you spend them.",
           "action": "next"
         },
         {
@@ -373,7 +373,7 @@
           "phase": "cards",
           "target": "card",
           "title": "NO POINTS THIS TIME",
-          "body": "Same three cards, same everything. You just do not earn from them when the answer was wrong.",
+          "body": "Same two cards, same everything. You just do not earn from them when the answer was wrong.",
           "action": "next"
         }
       ]
@@ -594,7 +594,7 @@
           "phase": "cards",
           "target": "card",
           "title": "THAT'S THE WHOLE GAME",
-          "body": "Read these three, then you are out on the map playing for real.",
+          "body": "Read these two, then you are out on the map playing for real.",
           "action": "next"
         }
       ],
