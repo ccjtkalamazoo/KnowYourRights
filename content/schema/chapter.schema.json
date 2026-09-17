@@ -70,8 +70,7 @@
         "options",
         "hint",
         "principle",
-        "keyPhrase",
-        "scenario"
+        "keyPhrase"
       ],
       "additionalProperties": false,
       "properties": {
@@ -119,7 +118,7 @@
           "not": {
             "pattern": "\\u2014"
           },
-          "description": "The law in plain language. States how something works. Does not tell the player what to choose. Definitions and roles are taught here, at the question where they first matter."
+          "description": "Card 1, THE LAW. The law in plain language. States how something works. Does not tell the player what to choose. Definitions and roles are taught here, at the question where they first matter."
         },
         "safetyNote": {
           "type": "string",
@@ -137,7 +136,7 @@
             "gloss"
           ],
           "additionalProperties": false,
-          "description": "The one thing worth carrying out of this question. May be words a person could say, or a plain statement of the thing to remember, whichever fits the question. Never phrased as an instruction to the player.",
+          "description": "Card 2, REMEMBER THIS. The one thing worth carrying out of this question. May be words a person could say, or a plain statement of the thing to remember, whichever fits the question. Never phrased as an instruction to the player.",
           "properties": {
             "quote": {
               "type": "string",
@@ -166,7 +165,7 @@
             "lines"
           ],
           "additionalProperties": false,
-          "description": "Card 3. An actual scene with people in it, rendered as an exchange. Never commentary on the question, the options, the lesson, or the chapter, and never a reference to the multiple choice options.",
+          "description": "RETIRED 2026-09-17. This was card 3, IN REAL LIFE, which was removed from the game. Optional and not shown anywhere. Existing entries may stay until they are cleaned out, but do not write new ones.",
           "properties": {
             "setup": {
               "type": "string",
@@ -181,7 +180,7 @@
               "type": "array",
               "minItems": 2,
               "maxItems": 7,
-              "description": "Speaker lines, at least two, rendered as a two-column grid of panels with an avatar per speaker. A YES and a NO line may follow ONLY where somebody in the scene actually decides something; they render below as green and terra outcome boxes. Most scenes are somebody learning how a thing works rather than choosing between two paths, and a YES/NO pair on one of those is the lesson restated twice with a colour on it. Use the note field for those instead.",
+              "description": "Speaker lines, at least two.",
               "items": {
                 "$ref": "#/$defs/scenarioLine"
               }
@@ -193,7 +192,7 @@
               "not": {
                 "pattern": "\\u2014"
               },
-              "description": "Optional. Renders as an italic footnote under the outcome boxes, prefixed with an arrow. A caveat or a note about how the scene usually goes, not a restatement of the lesson."
+              "description": "Optional footnote."
             }
           }
         },
@@ -215,7 +214,7 @@
             "work",
             "online"
           ],
-          "description": "Optional. Where the scenario takes place. Lets the auditor check that a chapter spreads across settings instead of over pulling toward interrogation rooms."
+          "description": "Optional. Where the question takes place. Lets the auditor check that a chapter spreads across settings instead of over pulling toward interrogation rooms."
         },
         "questionType": {
           "type": "string",
@@ -238,11 +237,11 @@
         "text"
       ],
       "additionalProperties": false,
+      "description": "Part of the retired scenario field. Kept only so existing entries still validate.",
       "properties": {
         "label": {
           "type": "string",
-          "maxLength": 20,
-          "description": "Speaker, in caps, or an outcome label. Outcome labels are YES, NO, TRUE, FALSE, RIGHT, WRONG, EITHER WAY, or anything starting with IF (IF SHE ANSWERS, IF HE DOESN'T). Pick the pair that fits the scene: TRUE/FALSE for a myth, IF X / IF NOT X for a choice with a deadline, YES/NO only when the scene really is a yes or no. An IF label renders green unless it carries a negation, so IF SHE ANSWERS is green and IF SHE DOESN'T is terra. The UI gives an avatar to speaker labels matching: YOU; OFFICER, POLICE, DEPUTY, TROOPER, SRO; MOM, DAD, PARENT, GUARDIAN, AUNT, UNCLE, GRANDMA, GRANDPA; FRIEND, COUSIN, BROTHER, SISTER, SIBLING; TEACHER, PRINCIPAL, COACH, STAFF, DEAN, COUNSELOR; LAWYER, ATTORNEY, JUDGE. Anything else renders with a plain speech bubble."
+          "maxLength": 20
         },
         "text": {
           "type": "string",
