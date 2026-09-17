@@ -1,4 +1,4 @@
-# Know Your Rights — Design Decisions
+# Know Your Rights: Design Decisions
 
 Everything below was decided deliberately. Where something is still open it says
 so. Where a decision has a reason that is not obvious, the reason is written
@@ -44,7 +44,7 @@ moments in a process, and each owns something.
 
 **Why JUVENILE is a district and not a chapter.** It duplicates topics found in
 COURTHOUSE, JAIL, and AFTER THE CHARGE. That is accepted: the district is about
-the *transitions* — what applies today vs at 17 vs charged as an adult — which
+the *transitions* (what applies today vs at 17 vs charged as an adult), which
 is a genuinely different question from "what is bail." Making the overlap
 distinct is an authoring responsibility.
 
@@ -62,7 +62,7 @@ distinct is an authoring responsibility.
 
 ### Difficulty is deleted
 
-Not "unused" — **gone**. There is no easy/medium/hard tier, no per-question
+Not "unused" but **gone**. There is no easy/medium/hard tier, no per-question
 difficulty field, no difficulty metadata for analytics. A quiz pulls 15 random
 from the chapter's 30. Rationale: who is to say what a given person finds easy.
 
@@ -112,7 +112,7 @@ content/
   stop/
   ...
 src/
-  questions/copy.js              R — all UI text. Stays code.
+  questions/copy.js              R: all UI text. Stays code.
   questions/loader.js            fetch + validate + cache
 ```
 
@@ -175,31 +175,31 @@ Per answer:
   (reading time and deciding time are different signals)
 - number of selection changes before lock-in
 
-Per question, the **full ordered lifeline sequence** — which lifeline, at what
+Per question, the **full ordered lifeline sequence**: which lifeline, at what
 point in the question, and what it revealed. Not a flag. Rationale: "used
 COUNSEL and got it right" is much weaker than "used 50/50, waited, then COUNSEL,
-then answered correctly." For 50/50, *which two options were removed* matters —
+then answered correctly." For 50/50, *which two options were removed* matters:
 if 50/50 usually leaves the correct answer beside the same wrong option, that
 wrong option is the strongest misconception in the bank and probably deserves its
 own question.
 
 Also:
 - shop actions (buying a lifeline reveals how a player values them)
-- review card dwell time, and skips — the points system assumes the cards get
-  read; this measures whether that is true
+- review card dwell time, and skips (the points system assumes the cards get
+  read; this measures whether that is true)
 - abandonment point: which question, and whether mid-question or mid-review
 - walkthrough abandonment
-- chapter and district selection order — which districts young people pick first
-  is itself a finding
+- chapter and district selection order (which districts young people pick first
+  is itself a finding)
 - replays
 - session shape: runs per session, duration, completion rate, ladder rung reached
-- viewport / device class — tells you whether the no-scroll rule holds on real
+- viewport / device class: tells you whether the no-scroll rule holds on real
   devices
 - sound on/off
 
 **Event schema carries a `version` stamp** so that when event types are added
 later, old data stays interpretable. This is the actual answer to "I wish I had
-tracked this six months ago" — not tracking everything now, but making the record
+tracked this six months ago": not tracking everything now, but making the record
 extensible.
 
 ### Deliberately not tracked
@@ -212,26 +212,26 @@ Anything approaching a device fingerprint. Any free-text field.
 
 ### Three layers
 
-1. **Raw events** — append-only, never edited, never public. Where privacy risk
+1. **Raw events:** append-only, never edited, never public. Where privacy risk
    concentrates.
-2. **Aggregates** — generated on a schedule from raw. Per-question response
+2. **Aggregates:** generated on a schedule from raw. Per-question response
    distributions, per-misconception rates, per-chapter completion. Small and safe.
-3. **Published datasets** — aggregates plus documentation: the question, what each
-   option represented, response count, period, caveats. CSV and JSON, versioned,
+3. **Published datasets:** aggregates plus documentation (the question, what each
+   option represented, response count, period, caveats). CSV and JSON, versioned,
    with a data dictionary.
 
 The sharing story stays clean because raw is never published and the safe artifact
 is the one already being generated for gameplay.
 
 **Suppression floor:** 100 responses. Same number as the in-game display
-threshold. Below it, nothing is published — standard practice in education data,
-and it prevents a single classroom's aggregate from describing a specific group of
-kids.
+threshold. Below it, nothing is published. This is standard practice in education
+data, and it prevents a single classroom's aggregate from describing a specific
+group of kids.
 
 ### In-game feedback
 
-After a player **locks in** — never before — they see how their answer compared to
-everyone else's.
+After a player **locks in**, and never before, they see how their answer compared
+to everyone else's.
 
 **Why after, not before.** Showing the distribution first would influence the
 choice, and the data would start measuring "what people were told others picked"
@@ -241,7 +241,7 @@ feedback alongside the law, the phrase, and the scenario.
 
 **Below 100 responses:** show synthetic percentages, unlabeled. Decided
 deliberately. **Implementation requirement:** the fake distribution must be
-seeded from the question ID so it is stable per question — otherwise a replaying
+seeded from the question ID so it is stable per question. Otherwise a replaying
 player sees different numbers for the same question and it reads as broken.
 
 This also replaces `simulateJury()`, which is currently fake and whose own comment
@@ -255,22 +255,22 @@ weighted average rather than a raw count.
 
 **Keep these axes separate. Do not collapse them into one number.**
 
-**Axis 1 — Category (which pool).** Not a penalty. A hinted answer is perfectly
+**Axis 1: Category (which pool).** Not a penalty. A hinted answer is perfectly
 trustworthy data about "what people pick with a hint"; it is only untrustworthy as
 data about "what people believe cold."
 
 - unaided
-- hint-assisted (COUNSEL or JURY — still a four-way choice)
-- reduced-field (50/50 — a two-way choice, mechanically not comparable)
+- hint-assisted (COUNSEL or JURY, still a four-way choice)
+- reduced-field (50/50, a two-way choice, mechanically not comparable)
 
 Public percentages come from unaided + hint-assisted. Reduced-field is kept
 separate, because two options were literally unpickable and their shares would be
 artificially depressed.
 
-**Axis 2 — Trust.** "Do I doubt this reflects a real belief." This is where the
+**Axis 2: Trust.** "Do I doubt this reflects a real belief." This is where the
 cheating signals live.
 
-**Axis 3 — Session influence.** Representativeness: no single player should speak
+**Axis 3: Session influence.** Representativeness: no single player should speak
 for the population more than a little. A session's influence decays as it extends,
 asymptoting toward a ceiling, so a 500-question marathon does not get 5× the
 influence of a 100-question session.
@@ -283,7 +283,7 @@ anomalous. TRAINING GROUND is designed for long sessions and is excluded anyway
 (section 6).
 
 **Replay decay** is its own thing: first play and third play of the same chapter
-are not independent. Likely decaying rather than fixed — second play ~0.5, fifth
+are not independent. Likely decaying rather than fixed: second play ~0.5, fifth
 near zero.
 
 ### Two cautions
@@ -307,7 +307,7 @@ correct answer, impossible throughput.
 
 **Framing matters.** There is no prize, no leaderboard, no grade. A kid who
 googles "do police have to read Miranda at arrest" has just learned the thing the
-game teaches — that is the best-case outcome, not a cheater. The only thing
+game teaches. That is the best-case outcome, not a cheater. The only thing
 "cheating" corrupts is the data. So this is data-quality weighting, it stays
 internal, and it is not called cheating in the schema or the UI.
 
@@ -322,7 +322,7 @@ submission without any behavioral inference at all.
 
 ## 6. Two modes
 
-### Districts — the measurement stream
+### Districts: the measurement stream
 
 Pure random selection, 15 from 30. This is the clean data and it stays clean.
 Adaptive selection would contaminate it: per-question percentages would stop
@@ -331,7 +331,7 @@ to people it had already flagged as struggling." You cannot publish a
 misconception rate for a question that was preferentially shown to people likely
 to hold that misconception.
 
-### TRAINING GROUND — the practice mode
+### TRAINING GROUND: the practice mode
 
 Replaces the ALL RIGHTS placeholder. Not a stand-in for districts; a permanent
 feature with its own reason to exist.
@@ -342,7 +342,7 @@ feature with its own reason to exist.
 - Adaptive selection allowed, because nothing here feeds public aggregates.
 
 Data is still captured, flagged as adaptive-mode, analyzed separately. That
-separate stream is what answers whether the algorithm actually works — comparing
+separate stream is what answers whether the algorithm actually works. Comparing
 session length, return rate, and improvement between the two modes is an
 experiment the architecture supports for free.
 
@@ -356,7 +356,7 @@ flashcards no matter how well balanced.
 
 ---
 
-## 7. The adaptive algorithm (PINNED — not being built yet)
+## 7. The adaptive algorithm (PINNED, not being built yet)
 
 Recorded so the reasoning is not lost.
 
@@ -376,10 +376,10 @@ the game.
 
 **Explore/exploit:** ~80% serve what the model believes works, ~20% try something
 new. The explore arm must be **genuinely random**, not "explore near what already
-works" — otherwise the system gets very good at a local optimum and never finds a
+works." Otherwise the system gets very good at a local optimum and never finds a
 better one.
 
-### Guardrails — the important part
+### Guardrails: the important part
 
 **Do not optimize for playtime.** If the reward is "what makes sessions longer,"
 the system will discover that easy questions feel good and hard ones make people
@@ -387,8 +387,8 @@ quit, and it will drift toward a comfortable feed that maximizes minutes and
 teaches nothing. Self-learning finds these exploits faster than a human tuning
 weights would.
 
-Reward function should be **learning** — movement on misconceptions, concept
-coverage — with playtime as a *constraint* that keeps them present long enough to
+Reward function should be **learning** (movement on misconceptions, concept
+coverage), with playtime as a *constraint* that keeps them present long enough to
 learn, not the thing being maximized.
 
 For a CCJT product: "our practice algorithm optimizes for learning, stays within
@@ -417,14 +417,14 @@ files) + a scheduled Worker to aggregate. One vendor, generous free tier, and R2
 has no egress fees, which matters if datasets get downloaded. The R2 aggregate
 files serve both gameplay and publication.
 
-**Real-time is not wanted — frequent-batch is.** The instinct is that a kid's
+**Real-time is not wanted; frequent-batch is.** The instinct is that a kid's
 answer should immediately affect the percentage the next kid sees. But once a
 question has real volume, one more answer moves the number by less than a point.
 Nobody can perceive the difference between live data and hour-old data.
 
 So: scheduled regeneration writes static JSON to R2; the game fetches those files,
 cached at the edge. Writes are appends, reads are static files. **No live queries
-during gameplay** — that is the thing that would cost money and break under a busy
+during gameplay.** That is the thing that would cost money and break under a busy
 classroom.
 
 **Load reality check.** 30 kids answering once a minute is 0.5 requests/second.
@@ -447,16 +447,16 @@ look at the data.
 1. **The tutorial's ten questions.** Unwritten. `state.js` gates the entire map
    behind them. Highest-stakes content decision in the project, because it is the
    only thing every single player is guaranteed to see. Also the thing JUVENILE
-   leans on — that district teaches by contrast against a baseline, so either the
+   leans on: that district teaches by contrast against a baseline, so either the
    tutorial carries the baseline or JUVENILE chapter 1 does.
 2. **The ladder.** $100 → $1M across 15 rungs was designed around escalating
    difficulty, which no longer exists. Does prize escalation still make sense?
-3. **Where the foundational invocation questions live** — silence, counsel, am I
+3. **Where the foundational invocation questions live:** silence, counsel, am I
    free to leave. They apply in every district. If they live only in WHAT YOU SAY,
    most players never see them. If duplicated, they are maintained in six places.
    Third option: they are the tutorial's ten, which resolves it cleanly and is the
    current leaning.
-4. **Question schema specifics** — exact ID format, required fields, misconception
+4. **Question schema specifics:** exact ID format, required fields, misconception
    code naming and who maintains the list.
 5. **Whether flags stack multiplicatively** in the weighting model (section 5).
 6. **TRAINING GROUND progression hook** (section 6).
@@ -477,3 +477,62 @@ Flow: start → walkthrough → map → playing. All end states return to the ma
 When a district goes live: tag its questions, add a chapter deck builder to
 `rules.js`, flip `live: true`, wire `state.js`. The card component already handles
 the live state.
+
+---
+
+## 11. The map screen (decided 2026-09-17)
+
+The old map put the event demo in a big banner at the top and every district in
+one grid. The one playable district looked the same as the seven that were not,
+so it was not obvious that THE COURTHOUSE was the thing to click, and new players
+were sent to the demo instead. The map is now split by what a player can do.
+
+### Layout: two shelves and a side column
+
+**Ready to play.** Districts whose own `live` flag is on and that have at least
+one live chapter. This is the same rule the loader uses for "playable," so the
+shelf a card sits on always matches whether it can actually be played.
+
+- **One ready district:** a single wide card showing its blurb and chapter names.
+- **Two or more:** two-per-row cards showing only the name, the chapter progress
+  bar, and a button. No blurb or chapter list, so a 7-chapter district fits as
+  easily as a 2-chapter one.
+- **UP NEXT:** one card at a time carries this tag and a filled button (START if
+  untouched, CONTINUE if started). Rule: the first ready district, in map order,
+  that still has a live chapter not cleared.
+- **DONE:** a district with every live chapter cleared shows this tag and a
+  quieter "Play again."
+- The whole card is the tap target, not just the button.
+
+**Coming soon.** Small muted tiles, not clickable, since they would open an empty
+screen. The shelf shrinks as districts go live and disappears when none are left.
+
+**Side column.** How to play, and a small event demo box. The demo keeps its
+three-try rules but is no longer the loudest thing on the page.
+
+### Details
+
+**The chapters cleared counter counts live chapters only.** Counting unwritten
+chapters made every new player start at 0 of 45.
+
+**The color key** (cleared, tried, next up, not started) only shows once two or
+more districts are ready, since the single wide card has no progress bar.
+
+**Small screens.** The side column drops below the shelves, ready cards go to one
+per row, and the coming soon tiles wrap.
+
+**Moving a district between shelves needs no code.** Flipping `live` flags in
+`meta.json` is enough.
+
+**Map copy lives in `R.map`** in `copy.js`. The old demo banner copy stays in
+`R.demo`, which the demo's own screens still use.
+
+**Mockups** for one, three, and all eight districts live are in the "KYR Map
+Screen Drafts" design canvas:
+https://claude.ai/artifact/E5AqFvyptgBAdDHYy5zwM2
+
+Two other layouts were drafted and not chosen: THE COURTHOUSE taking over the top
+banner, and keeping the 4 by 2 grid with a louder COURTHOUSE card.
+
+**Still open:** whether UP NEXT should follow a recommended order instead of map
+order.
