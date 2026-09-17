@@ -10,7 +10,7 @@
 //   district    one district: what it covers, the notice, its chapters
 //   playing     a question is live, waiting for a pick
 //   locking     answer locked, suspense pause before the reveal
-//   revealing   the verdict beat, then the three review cards
+//   revealing   the verdict beat, then the two review cards
 //   winbig      the end-of-deck celebration + take-it-or-keep-going choice
 //   gameover    three lives gone
 //   won         the run is over (banked the prize, or cleared the bonus deck)
@@ -41,6 +41,14 @@
 // comes back, that is what goes on it.
 //
 // ---------------------------------------------------------------------------
+// TWO REVIEW CARDS, NOT THREE (2026-09-17)
+// ---------------------------------------------------------------------------
+// The third card, IN REAL LIFE, was removed because it was too hard to write
+// well. Every place that counts cards reads R.cardMeta.length, so the number of
+// cards is set in copy.js and nowhere else. The scenario field can still sit in
+// the question files; nothing renders it.
+//
+// ---------------------------------------------------------------------------
 // WHAT CHANGED, AND WHY
 // ---------------------------------------------------------------------------
 // Three changes, all of them from watching kids play at the first event rather
@@ -54,13 +62,16 @@
 //
 //   THE SHOP, REBUILT.  Eight lifeline uses across 453 answers said the old one
 //   was not working. It is back with SHIELD removed, because SHIELD survived one
-//   wrong answer and lives now do that three times for free. Four lifelines, same
-//   prices. Points still come only from reading cards after a RIGHT answer, which
-//   is a known weakness worth watching: a player on a cold streak earns nothing
-//   and cannot buy the help that would break the streak. Lives soften it, since a
-//   struggling player now survives to see more cards instead of going out at
-//   question one, but if the next event shows the same near-zero usage, the thing
-//   to try is a small per-round floor rather than another redesign.
+//   wrong answer and lives now do that three times for free. Four lifelines.
+//   Prices were cut by about a third when the third review card went away, so
+//   a right answer now earns 2 points instead of 3 and help stays reachable at
+//   the same pace. Points still come only from reading cards after a RIGHT
+//   answer, which is a known weakness worth watching: a player on a cold streak
+//   earns nothing and cannot buy the help that would break the streak. Lives
+//   soften it, since a struggling player now survives to see more cards instead
+//   of going out at question one, but if the next event shows the same near-zero
+//   usage, the thing to try is a small per-round floor rather than another
+//   redesign.
 //
 //   FIVE QUESTIONS IN THE DEMO.  Fifteen is a five-minute commitment from a
 //   stranger at a table with a line behind them. The demo exists to show how the
@@ -94,6 +105,10 @@ const MAX_DEMO_RUNS = 3;
 
 // How long the game holds on a locked answer before the reveal, in ms.
 const LOCK_PAUSE_MS = 2000;
+
+// How many review cards follow every answer. Set by copy.js.
+const CARD_COUNT = R.cardMeta.length;
+const noCards = () => Array.from({ length: CARD_COUNT }, () => false);
 
 // ===========================================================================
 // App : all game state lives here.
@@ -1106,8 +1121,8 @@ function WalkArt({ screen }) {
     return c.jsx("div", { style: { display: "flex", gap: 8, perspective: 600 }, children: R.cardMeta.map((m, i) => c.jsx("div", { style: { width: 58, height: 78, background: i === 0 ? u.surfaceHigh : u.cardBack, border: `2px solid ${u.outline}`, borderRadius: 7, boxShadow: U.sm, display: "flex", alignItems: "center", justifyContent: "center", transform: `rotateY(${i === 0 ? 0 : -22}deg)`, color: i === 0 ? u.brand : u.brandSoft, fontFamily: C.display, fontSize: 20 }, children: i === 0 ? m.icon : "?" }, i)) });
   if (screen.type === "points")
     return c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 14 }, children: [
-      c.jsx("div", { style: { display: "flex", gap: 5 }, children: [0, 1, 2].map((n) => c.jsx("div", { style: { width: 16, height: 16, borderRadius: "50%", background: u.brand, border: `2px solid ${u.outline}` } }, n)) }),
-      c.jsx("div", { style: { fontFamily: C.display, fontSize: 34, color: u.brand }, children: "3 PTS" })
+      c.jsx("div", { style: { display: "flex", gap: 5 }, children: R.cardMeta.map((_, n) => c.jsx("div", { style: { width: 16, height: 16, borderRadius: "50%", background: u.brand, border: `2px solid ${u.outline}` } }, n)) }),
+      c.jsx("div", { style: { fontFamily: C.display, fontSize: 34, color: u.brand }, children: `${CARD_COUNT} PTS` })
     ] });
   if (screen.type === "shop")
     return c.jsx("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, maxWidth: 340 }, children: LIFELINE_KEYS.map((k) => c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, background: u.surface, border: `2px solid ${u.outline}`, padding: "10px 14px", borderRadius: 10, boxShadow: U.sm }, children: [
@@ -1441,18 +1456,18 @@ function RevealScreen(props) {
 
   const scoring = revealCorrect;
 
+  // Every per-card array is sized from CARD_COUNT, so changing the number of
+  // cards in copy.js is the only edit needed.
   const [step, setStep] = useState("verdict");
   const [current, setCurrent] = useState(0);
-  const [seen, setSeen] = useState([false, false, false]);
-  const [acked, setAcked] = useState([false, false, false]);
+  const [seen, setSeen] = useState(noCards);
+  const [acked, setAcked] = useState(noCards);
   const [dir, setDir] = useState(1);
   const [firstView, setFirstView] = useState(true);
   const [dwellDone, setDwellDone] = useState(false);
   const [pointBurst, setPointBurst] = useState(0);
   const dwellTimer = useRef(null);
   const burstTimer = useRef(null);
-
-  const CARD_COUNT = R.cardMeta.length;
 
   useEffect(() => { if (onRevealStep) onRevealStep("verdict"); }, []); // eslint-disable-line
 
@@ -1463,7 +1478,7 @@ function RevealScreen(props) {
   }, [current]);
   const DWELL_MS = 2000;
 
-  const emitted = useRef([false, false, false]);
+  const emitted = useRef(noCards());
   const emitCard = (idx) => {
     if (idx < 0 || idx > CARD_COUNT - 1) return;
     if (emitted.current[idx]) return;
@@ -1621,7 +1636,7 @@ function RevealScreen(props) {
           c.jsx(LivesBox, { lives, compact: true }),
           scoring
             ? c.jsxs("div", { "data-tour": "points", style: { display: "flex", alignItems: "center", gap: 10, background: earnedCount === CARD_COUNT ? u.brandSofter : u.surfaceWarm, border: `3px solid ${earnedCount === CARD_COUNT ? u.brand : u.outline}`, borderRadius: 22, padding: "6px 14px 6px 10px", boxShadow: U.sm, animation: earnedCount === CARD_COUNT ? "ts-streak-pop 0.5s ease-out" : "none" }, children: [
-                c.jsx("div", { style: { display: "flex", gap: 5 }, children: [0, 1, 2].map((r) => {
+                c.jsx("div", { style: { display: "flex", gap: 5 }, children: R.cardMeta.map((_, r) => {
                   const filled = r < earnedCount;
                   return c.jsx("div", { style: { width: 20, height: 20, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: filled ? u.brand : u.surface, border: `2.5px solid ${filled ? u.brand : u.borderLight}`, boxShadow: filled ? U.sm : "none", animation: r === earnedCount - 1 ? "ts-pip-pop 0.4s ease-out" : "none" }, children: filled ? c.jsx("span", { style: { color: u.textOnDark, fontSize: 11, fontFamily: C.display, lineHeight: 1 }, children: "\u2605" }) : null }, r);
                 }) }),
@@ -1642,7 +1657,7 @@ function RevealScreen(props) {
         }, "card-" + current + "-" + (firstView ? "f" : "s")),
         pointBurst > 0 && c.jsxs("div", { "aria-hidden": true, style: { position: "absolute", left: "50%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 20, pointerEvents: "none", textAlign: "center", animation: "ts-point-burst 1.2s cubic-bezier(.2,.8,.2,1.1) forwards" }, children: [
           c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(48px, 11vw, 92px)", color: u.brand, textShadow: `4px 4px 0 ${u.outline}`, lineHeight: 0.9 }, children: "+1" }),
-          c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(16px, 3.5vw, 26px)", letterSpacing: 3, color: u.brandDeep, marginTop: 2 }, children: allEarned ? "POINT \u00B7 ALL 3!" : "POINT" })
+          c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(16px, 3.5vw, 26px)", letterSpacing: 3, color: u.brandDeep, marginTop: 2 }, children: allEarned ? `POINT \u00B7 ALL ${CARD_COUNT}!` : "POINT" })
         ] })
       ] }),
 
@@ -1682,6 +1697,8 @@ function NextCardButton({ canAdvance, onClick, label, ackOwed, cardRead }) {
   });
 }
 
+// The two review cards: THE LAW (FaceInfo) and REMEMBER THIS (FacePhrase).
+// IN REAL LIFE was removed on 2026-09-17.
 function ComicCard({ cardIndex, meta, dir, firstView, question, scoring, acked, onAck }) {
   const anim = firstView
     ? "ts-card-flip-in 0.5s cubic-bezier(.2,.7,.2,1) both"
@@ -1690,13 +1707,11 @@ function ComicCard({ cardIndex, meta, dir, firstView, question, scoring, acked, 
     c.jsxs("div", { className: "ts-comic-card", "data-tour": "card", style: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0, background: u.surfaceHigh, border: `3px solid ${u.outline}`, borderRadius: 12, boxShadow: U.lg, overflow: "hidden", transformStyle: "preserve-3d", animation: anim }, children: [
       c.jsxs("div", { className: "ts-comic-header", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 20px", background: u.brand, color: u.textOnDark, borderBottom: `3px solid ${u.outline}`, fontFamily: C.display, fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: 1, flexShrink: 0 }, children: [
         c.jsx("span", { children: meta.label }),
-        c.jsx("span", { style: { fontFamily: C.mono, fontSize: 12, letterSpacing: 1, opacity: 0.85, fontWeight: 700 }, children: `${cardIndex + 1} / ${R.cardMeta.length}` })
+        c.jsx("span", { style: { fontFamily: C.mono, fontSize: 12, letterSpacing: 1, opacity: 0.85, fontWeight: 700 }, children: `${cardIndex + 1} / ${CARD_COUNT}` })
       ] }),
       c.jsx("div", { className: "ts-comic-body ts-halftone", style: { flex: 1, minHeight: 0, overflowY: "auto", padding: "20px 22px", background: u.surfaceHigh, display: "flex", flexDirection: "column", justifyContent: "center" }, children:
         c.jsx("div", { style: { width: "100%" }, children:
-          meta.key === "info" ? c.jsx(FaceInfo, { question })
-          : meta.key === "phrase" ? c.jsx(FacePhrase, { question })
-          : c.jsx(FaceRealLife, { question })
+          meta.key === "info" ? c.jsx(FaceInfo, { question }) : c.jsx(FacePhrase, { question })
         })
       }),
       c.jsx("div", { className: "ts-comic-redeem", style: { flexShrink: 0, borderTop: `3px solid ${u.outline}`, padding: "14px 20px", background: acked ? u.brandSofter : u.surfaceWarm, display: "flex", justifyContent: "center" }, children:
@@ -1750,57 +1765,6 @@ function FacePhrase({ question }) {
   return c.jsxs("div", { className: "ts-face-fill", style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", minHeight: "100%", gap: 16 }, children: [
     c.jsx("div", { className: "ts-phrase-quote", style: { fontFamily: C.display, fontSize: "clamp(28px, 5.5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.01em", color: u.text, textShadow: `2px 2px 0 ${u.brandBright}`, animation: "ts-phrase-in 0.6s cubic-bezier(.2,.8,.2,1.2) both", maxWidth: "16ch" }, children: kp.quote }),
     kp.gloss && c.jsx("p", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.55, color: u.textDim, margin: 0, fontWeight: 500, maxWidth: 460 }, children: kp.gloss })
-  ] });
-}
-
-function FaceRealLife({ question }) {
-  const sc = question.scenario || { lines: [] };
-  const lines = sc.lines || [];
-  // Outcome labels are not always YES and NO. A scene about a deadline reads better
-  // as IF SHE ANSWERS / IF SHE DOESN'T, and a myth as TRUE / FALSE. Anything in the
-  // fixed list below, or any label starting with IF, is an outcome. The rest are
-  // speakers. The old test was /YES|NO/, which also caught a speaker labelled NOW.
-  const isOutcome = (label) =>
-    /^(YES|NO|TRUE|FALSE|RIGHT|WRONG|EITHER WAY)$/i.test(String(label).trim()) ||
-    /^IF\b/i.test(String(label).trim());
-  // Which half of the pair is the good one. An IF label is negative when it carries
-  // a negation, so IF SHE DOESN'T reads terra and IF SHE ANSWERS reads green.
-  const isPositive = (label) => {
-    const L = String(label).trim().toUpperCase();
-    if (/^(YES|TRUE|RIGHT)$/.test(L)) return true;
-    if (/^(NO|FALSE|WRONG)$/.test(L)) return false;
-    return !/\b(NOT|NO|NEVER|DOESN'T|DON'T|WON'T|CAN'T|ISN'T|DIDN'T|NOBODY|NOTHING)\b/.test(L);
-  };
-  const outcomes = lines.filter((l) => isOutcome(l.label));
-  const exchange = lines.filter((l) => !isOutcome(l.label));
-  const isYou = (label) => /^YOU/i.test(label);
-  const speakerFor = (label) => {
-    const L = String(label).toUpperCase();
-    if (/^YOU/.test(L)) return { icon: "\uD83E\uDDD1", bg: u.brandBright };
-    if (/OFFICER|POLICE|DEPUTY|TROOPER|SRO/.test(L)) return { icon: "\uD83D\uDC6E", bg: u.blue };
-    if (/MOM|DAD|PARENT|GUARDIAN|AUNT|UNCLE|GRANDMA|GRANDPA/.test(L)) return { icon: "\uD83D\uDC64", bg: u.mustard };
-    if (/FRIEND|COUSIN|BROTHER|SISTER|SIBLING/.test(L)) return { icon: "\uD83D\uDCAC", bg: u.mustard };
-    if (/TEACHER|PRINCIPAL|COACH|STAFF|DEAN|COUNSELOR/.test(L)) return { icon: "\uD83C\uDFEB", bg: u.surfaceWarm };
-    if (/LAWYER|ATTORNEY|JUDGE/.test(L)) return { icon: "\u2696", bg: u.surfaceWarm };
-    return { icon: "\uD83D\uDCAC", bg: u.surfaceWarm };
-  };
-  return c.jsxs("div", { children: [
-    sc.setup && c.jsx("div", { style: { fontFamily: C.body, fontStyle: "italic", fontWeight: 700, fontSize: 15, color: u.text, marginBottom: 14, lineHeight: 1.45, borderLeft: `4px solid ${u.brand}`, paddingLeft: 12 }, children: sc.setup }),
-    c.jsx("div", { className: "ts-scenario-panels", style: { display: "grid", gridTemplateColumns: exchange.length > 1 ? "1fr 1fr" : "1fr", gap: 12, marginBottom: outcomes.length ? 14 : 0 }, children: exchange.map((l, i) => c.jsxs("div", { style: { background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, padding: "12px 14px", boxShadow: U.sm, animation: `ts-bubble-in 0.4s ease-out ${i * 0.08}s both` }, children: [
-      c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }, children: [
-        c.jsx("div", { style: { width: 30, height: 30, borderRadius: "50%", background: speakerFor(l.label).bg, border: `2px solid ${u.outline}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, flexShrink: 0 }, children: speakerFor(l.label).icon }),
-        c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: l.label })
-      ] }),
-      c.jsx("div", { style: { fontFamily: C.body, fontSize: 14.5, lineHeight: 1.4, color: u.text, fontWeight: 600, background: isYou(l.label) ? u.brandSoft : u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 8, padding: "8px 12px" }, children: l.text })
-    ] }, i)) }),
-    outcomes.length > 0 && c.jsx("div", { className: "ts-scenario-outcomes", style: { display: "grid", gridTemplateColumns: outcomes.length > 1 ? "1fr 1fr" : "1fr", gap: 10 }, children: outcomes.map((l, i) => {
-      const yes = isPositive(l.label);
-      return c.jsxs("div", { style: { background: yes ? "#e5f0e6" : u.terraSoft, border: `2px solid ${yes ? u.green : u.terra}`, borderRadius: 8, padding: "10px 14px" }, children: [
-        c.jsx("div", { style: { fontFamily: C.display, fontSize: 15, color: yes ? u.green : u.terra, marginBottom: 4, letterSpacing: 0.5 }, children: l.label }),
-        c.jsx("div", { style: { fontFamily: C.body, fontSize: 13.5, lineHeight: 1.4, color: u.text, fontWeight: 500 }, children: l.text })
-      ] }, i);
-    }) }),
-    sc.note && c.jsxs("p", { style: { fontFamily: C.body, fontSize: 13, lineHeight: 1.45, color: u.textDim, margin: "12px 0 0", fontStyle: "italic", fontWeight: 500 }, children: ["\u2192 ", sc.note] })
   ] });
 }
 
