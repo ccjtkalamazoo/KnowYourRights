@@ -86,10 +86,12 @@ export const R = {
     footerNote: "Each run pulls a fresh set of questions",
     bonusStreakLabel: "Bonus streak"
   },
+  // The review cards shown after every answer, in order. The game counts cards
+  // from this list, so it is the one place that sets how many there are and how
+  // many points a right answer can earn. IN REAL LIFE was removed on 2026-09-17.
   cardMeta: [
     { key: "info", label: "THE LAW", icon: "\u2696" },
-    { key: "phrase", label: "REMEMBER THIS", icon: "\u201C \u201D" },
-    { key: "reallife", label: "IN REAL LIFE", icon: "\uD83D\uDCAC" }
+    { key: "phrase", label: "REMEMBER THIS", icon: "\u201C \u201D" }
   ],
   // The review cards. The acknowledgment beat survives from the no-points
   // version because the pause is what makes somebody look at the card. What
