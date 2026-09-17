@@ -15,24 +15,30 @@
 // forced replay.
 //
 // ---------------------------------------------------------------------------
-// THE MAP IS A MAP AGAIN
+// THE LAYOUT: TWO SHELVES AND A SIDE COLUMN (chosen 2026-09-17)
 // ---------------------------------------------------------------------------
-// Chapters used to open in a strip inside this grid. It spanned all four
-// columns, was wider than the card that opened it, and read like a settings
-// list dropped into a game. Picking a district now opens district.js, a whole
-// screen with room for what the topic covers, the legal notice, and the
-// chapters shown in order. This file's only job is choosing a district.
+// The old map put the event demo in a huge banner at the top and every district
+// in one grid, so the one district that was actually playable looked like the
+// seven that were not. The page is now split by what a player can DO:
 //
-// A coming-soon district is not clickable at all. Every one of them would open
-// an empty screen, and a screen that says only "coming soon" is worse than a
-// card that already said it.
+//   READY TO PLAY   Districts that are live with at least one live chapter.
+//                   One of them: a single wide card that also lists its
+//                   chapter names. Two or more: two-per-row cards with just a
+//                   name, progress bar and button, so a 7-chapter district fits
+//                   as easily as a 2-chapter one. One card at a time carries UP
+//                   NEXT (the first ready district, in map order, with a live
+//                   chapter not yet cleared). A fully cleared one shows DONE.
+//   COMING SOON     Small muted tiles, not clickable. The shelf shrinks as
+//                   districts go live and disappears once none are left.
+//   SIDE COLUMN     How to play, and a small event demo box. The demo is still
+//                   reachable but no longer the loudest thing on the page.
 //
-// ---------------------------------------------------------------------------
-// CURRENT STATE: SHELL, DELIBERATELY
-// ---------------------------------------------------------------------------
-// The districts below are the content roadmap. Every district that is not
-// marked live in its meta.json ships as COMING SOON. The demo banner above them
-// is the one thing on this screen that is actually playable today.
+// The chapters-cleared counter counts live chapters only. Counting chapters
+// that do not exist yet made every new player start at 0 of 45.
+//
+// Picking a district opens district.js, a whole screen with room for what the
+// topic covers, the legal notice, and the chapters in order. This file's only
+// job is choosing a district.
 //
 // ---------------------------------------------------------------------------
 // THE RULES THE CONTENT IS BEING WRITTEN AGAINST
@@ -52,11 +58,11 @@
 //   2. Get it attorney reviewed and fill in reviewedBy / reviewedAt.
 //   3. Set that chapter's "live": true in the district's meta.json, and the
 //      district's own "live": true once you want it reachable.
-// The map reads all of that at runtime.
+// The map reads all of that at runtime, and the district moves shelves on its own.
 
 import { c, u, C, U, useState, useEffect } from "./theme.js";
 import { Button } from "./ui.js";
-import { chapterStats, districtProgress, completion } from "./state.js";
+import { chapterStats } from "./state.js";
 import { loadDistricts } from "./content.js";
 import { R } from "./copy.js";
 
@@ -219,134 +225,6 @@ function ChapterBar({ district, session }) {
 }
 
 // ---------------------------------------------------------------------------
-// DistrictCard
-// ---------------------------------------------------------------------------
-// Printed-paper card: ink border, hard offset shadow, scene icon on top, then a
-// chapter segment bar and an X/Y count. A live card is a button that opens that
-// district's own screen. A coming-soon card is not a button at all, because the
-// screen it would open has nothing on it.
-function DistrictCard({ district, session, onOpen }) {
-  const live = district.live;
-  const [hover, setHover] = useState(false);
-  const prog = districtProgress(session, district);
-  const total = district.chapters.length;
-  const lift = live && hover;
-
-  const inner = [
-    // Motif band
-    c.jsxs("div", {
-      style: {
-        position: "relative", height: 96,
-        background: live ? u.brandSofter : u.bgWarm,
-        borderBottom: `2px solid ${live ? u.outline : u.borderLight}`,
-        display: "flex", alignItems: "center", justifyContent: "center"
-      },
-      children: [
-        c.jsx("svg", {
-          viewBox: "0 0 100 100", width: 62, height: 62, "aria-hidden": true,
-          style: live ? undefined : { filter: "grayscale(0.75)", opacity: 0.6 },
-          children: district.icon()
-        }),
-        // An arrow, not a plus. A plus said "this expands here", which is not
-        // what happens anymore: the card goes somewhere.
-        live && c.jsx("div", {
-          "aria-hidden": true,
-          style: {
-            position: "absolute", top: 8, right: 8,
-            width: 22, height: 22, borderRadius: "50%",
-            background: lift ? u.brand : u.surface,
-            border: `2px solid ${u.outline}`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: C.mono, fontSize: 11, fontWeight: 700, lineHeight: 1,
-            color: lift ? u.textOnDark : u.text,
-            transition: "background 0.12s"
-          },
-          children: "\u2192"
-        }),
-        !live && c.jsx("div", {
-          style: {
-            position: "absolute", top: 8, right: 8,
-            background: u.surface, border: `2px solid ${u.borderLight}`,
-            borderRadius: 5, padding: "2px 7px",
-            fontFamily: C.mono, fontSize: 8.5, fontWeight: 700,
-            letterSpacing: 1.2, color: u.textMuted
-          },
-          children: "SOON"
-        })
-      ]
-    }),
-    // Body
-    c.jsxs("div", {
-      style: { padding: "11px 12px 12px" },
-      children: [
-        c.jsx("div", {
-          style: {
-            fontFamily: C.mono, fontSize: 11.5, fontWeight: 700,
-            letterSpacing: 0.9, color: live ? u.text : u.textDim
-          },
-          children: district.name
-        }),
-        c.jsx(ChapterBar, { district, session }),
-        c.jsxs("div", {
-          style: {
-            display: "flex", justifyContent: "space-between",
-            alignItems: "baseline", marginTop: 9
-          },
-          children: [
-            c.jsxs("span", {
-              style: {
-                fontFamily: C.mono, fontSize: 9, letterSpacing: 1.1,
-                color: u.textMuted
-              },
-              children: [String(total), " CHAPTERS"]
-            }),
-            c.jsxs("span", {
-              style: {
-                fontFamily: C.mono, fontSize: 12, fontWeight: 700,
-                letterSpacing: 1, color: prog.cleared >= total && total ? u.brand : u.text
-              },
-              children: [String(prog.cleared), " / ", String(total)]
-            })
-          ]
-        })
-      ]
-    })
-  ];
-
-  const box = {
-    textAlign: "left", padding: 0, font: "inherit",
-    background: live ? u.surface : u.surfaceWarm,
-    border: `2px solid ${live ? u.outline : u.borderLight}`,
-    borderRadius: 10,
-    boxShadow: lift ? U.lg : (live ? U.md : "none"),
-    transform: lift ? "translate(-2px, -2px)" : "translate(0, 0)",
-    transition: "transform 0.1s cubic-bezier(.34,1.3,.64,1), box-shadow 0.1s",
-    overflow: "hidden", position: "relative",
-    opacity: live ? 1 : 0.82
-  };
-
-  // Coming soon is a div, not a disabled button. A disabled button still reads
-  // as something that would normally do something, and this never will until
-  // its content exists.
-  if (!live) {
-    return c.jsxs("div", {
-      "aria-label": `${district.name}, coming soon. ${total} chapters planned. ${district.blurb}`,
-      style: { ...box, cursor: "default" },
-      children: inner
-    });
-  }
-
-  return c.jsxs("button", {
-    onClick: () => onOpen(district),
-    onMouseEnter: () => setHover(true),
-    onMouseLeave: () => setHover(false),
-    "aria-label": `${district.name}. ${total} chapters. Open this topic.`,
-    style: { ...box, cursor: "pointer", WebkitTapHighlightColor: "transparent" },
-    children: inner
-  });
-}
-
-// ---------------------------------------------------------------------------
 // Legend : what the segment colours mean.
 // ---------------------------------------------------------------------------
 // LOCKED came off this list with the lock itself. What is left describes states
@@ -378,137 +256,370 @@ function Legend() {
   });
 }
 
+
 // ---------------------------------------------------------------------------
-// DemoBanner : the one thing on this screen that is actually playable.
+// Helpers
 // ---------------------------------------------------------------------------
-// Everything else on the map is a roadmap. This is not, so it does not look
-// like the district cards at all: full width, brand fill, the heaviest shadow
-// on the page, and the only large button. A player should not have to read
-// anything to know where to click.
-//
-// The round counter is the honest part. Three rounds per page load, and the
-// banner says how many are left rather than letting a player discover the cap
-// by being refused.
-function DemoBanner({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true, won = false }) {
-  const D = R.demo;
-  const left = Math.max(0, maxRuns - runsUsed);
+// A district is ready when its own live flag is on AND at least one chapter is
+// live. That is the same rule content.js uses to decide it is playable, so the
+// shelf a card sits on always matches whether it can actually be played.
+function isReady(d) {
+  return !!d.live && d.chapters.some((ch) => ch.live);
+}
+
+// Progress over LIVE chapters only. A district is done when every live chapter
+// is cleared; chapters still being written cannot hold that back or count
+// toward it.
+function liveProgress(session, d) {
+  const live = d.chapters.filter((ch) => ch.live);
+  const cleared = live.filter((ch) => chapterStats(session, ch.id).cleared).length;
+  const touched = live.some((ch) => chapterStats(session, ch.id).attempts > 0);
+  return { live: live.length, cleared, touched, done: live.length > 0 && cleared >= live.length };
+}
+
+function chapterName(ch) {
+  return ch.name || ch.title || ch.id;
+}
+
+// Small mono label used above each shelf.
+function ShelfLabel({ children, quiet = false }) {
   return c.jsxs("div", {
-    className: "kyr-demo-banner",
-    style: {
-      background: canPlay ? u.brand : u.surfaceWarm,
-      border: `3px solid ${u.outline}`,
-      borderRadius: 14,
-      boxShadow: U.lg,
-      padding: "22px 26px",
-      marginBottom: 14,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      gap: 22,
-      flexWrap: "wrap"
-    },
+    style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 12 },
     children: [
-      c.jsxs("div", { style: { flex: "1 1 300px", minWidth: 240 }, children: [
-        c.jsx("div", {
-          style: {
-            fontFamily: C.mono, fontSize: 10, letterSpacing: 2.6, fontWeight: 700,
-            color: canPlay ? u.textOnDark : u.textMuted, opacity: canPlay ? 0.85 : 1
-          },
-          children: canPlay ? D.eyebrow : "DEMO"
-        }),
-        c.jsx("div", {
-          style: {
-            fontFamily: C.display, fontSize: "clamp(28px, 5vw, 40px)", lineHeight: 1.02,
-            letterSpacing: -0.5, margin: "6px 0 8px",
-            color: canPlay ? u.textOnDark : u.text
-          },
-          children: canPlay ? D.title : won ? D.bannerWonTitle : D.outOfRunsHeadline
-        }),
-        c.jsx("div", {
-          style: {
-            fontFamily: C.body, fontSize: 14, lineHeight: 1.55, fontWeight: 500,
-            maxWidth: 460, color: canPlay ? u.textOnDark : u.textDim,
-            opacity: canPlay ? 0.9 : 1
-          },
-          children: canPlay ? D.blurb : won ? D.bannerWonBlurb : D.outOfRunsSub
-        })
-      ] }),
-      c.jsxs("div", {
-        style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8 },
+      c.jsx("span", {
+        style: {
+          fontFamily: C.mono, fontSize: 10.5, letterSpacing: 2.4, fontWeight: 700,
+          color: quiet ? u.textMuted : u.brand, whiteSpace: "nowrap"
+        },
+        children
+      }),
+      quiet && c.jsx("span", {
+        "aria-hidden": true,
+        style: { flex: 1, height: 2, background: u.borderLight, borderRadius: 1 }
+      })
+    ]
+  });
+}
+
+function Tag({ children, strong }) {
+  return c.jsx("span", {
+    style: {
+      flexShrink: 0, whiteSpace: "nowrap", borderRadius: 5, padding: "2px 7px",
+      fontFamily: C.mono, fontSize: 9.5, fontWeight: 700, letterSpacing: 1.2,
+      background: strong ? u.brand : u.brandSofter,
+      color: strong ? u.textOnDark : u.brand,
+      border: `2px solid ${u.brand}`
+    },
+    children
+  });
+}
+
+// The button look inside a card. The whole card is the real button, so this is
+// a span: a button inside a button is not allowed and confuses screen readers.
+function FakeButton({ children, kind, hover }) {
+  const filled = kind === "filled";
+  const quiet = kind === "quiet";
+  return c.jsx("span", {
+    "aria-hidden": true,
+    style: {
+      flexShrink: 0, whiteSpace: "nowrap", borderRadius: 8,
+      padding: quiet ? "7px 12px" : "8px 14px",
+      fontFamily: quiet ? C.mono : C.display,
+      fontSize: quiet ? 12 : 13.5, fontWeight: 700, letterSpacing: quiet ? 0.2 : 0.8,
+      background: filled ? u.brand : u.surface,
+      color: filled ? u.textOnDark : quiet ? u.textDim : u.text,
+      border: `2px solid ${quiet ? u.borderLight : u.outline}`,
+      boxShadow: hover && !quiet ? U.sm : "none",
+      transition: "box-shadow 0.12s"
+    },
+    children
+  });
+}
+
+// Shared frame for both ready card shapes: printed-paper border, hard shadow,
+// lifts on hover, whole surface is one tap target.
+function CardFrame({ onClick, label, highlight, className, children }) {
+  const [hover, setHover] = useState(false);
+  const edge = highlight ? u.brand : u.outline;
+  return c.jsx("button", {
+    onClick,
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    "aria-label": label,
+    className,
+    style: {
+      display: "flex", width: "100%", padding: 0, textAlign: "left", font: "inherit",
+      background: u.surface, border: `3px solid ${edge}`, borderRadius: 12,
+      boxShadow: hover ? U.lg : U.md,
+      transform: hover ? "translate(-2px, -2px)" : "translate(0, 0)",
+      transition: "transform 0.1s cubic-bezier(.34,1.3,.64,1), box-shadow 0.1s",
+      overflow: "hidden", cursor: "pointer", WebkitTapHighlightColor: "transparent"
+    },
+    children: children(hover, edge)
+  });
+}
+
+function IconPanel({ district, edge, width, size, className }) {
+  return c.jsx("span", {
+    className,
+    style: {
+      width, flexShrink: 0, background: u.brandSofter,
+      borderRight: `3px solid ${edge}`,
+      display: "flex", alignItems: "center", justifyContent: "center"
+    },
+    children: c.jsx("svg", {
+      viewBox: "0 0 100 100", width: size, height: size, "aria-hidden": true,
+      children: district.icon()
+    })
+  });
+}
+
+// ---------------------------------------------------------------------------
+// WideCard : the only ready district, shown big with its chapter names.
+// ---------------------------------------------------------------------------
+function WideCard({ district, session, onOpen }) {
+  const M = R.map;
+  const p = liveProgress(session, district);
+  const live = district.chapters.filter((ch) => ch.live);
+  return c.jsx(CardFrame, {
+    onClick: () => onOpen(district),
+    label: `${district.name}. ${M.clearedCount(p.cleared, p.live)}. ${M.openTopic}.`,
+    className: "kyr-wide-card",
+    children: (hover, edge) => [
+      c.jsx(IconPanel, { district, edge, width: 200, size: 104, className: "kyr-wide-icon" }, "i"),
+      c.jsxs("span", {
+        style: { flex: 1, minWidth: 0, padding: "22px 26px", display: "flex", flexDirection: "column", gap: 12 },
         children: [
-          c.jsx(Button, {
-            onClick: onPlay, variant: "secondary", size: "md", disabled: !canPlay,
-            style: { fontSize: 20, padding: "16px 34px" },
-            children: D.playLabel
+          c.jsxs("span", {
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 },
+            children: [
+              c.jsx("span", {
+                style: { fontFamily: C.display, fontSize: "clamp(26px, 4vw, 36px)", lineHeight: 1.02, color: u.text },
+                children: district.name
+              }),
+              p.done && c.jsx(Tag, { children: M.doneTag })
+            ]
           }),
-          c.jsx("div", {
+          district.blurb && c.jsx("span", {
+            style: { fontFamily: C.body, fontSize: 16, lineHeight: 1.5, color: u.textDim },
+            children: district.blurb
+          }),
+          c.jsx("span", {
             style: {
-              fontFamily: C.mono, fontSize: 10, letterSpacing: 1.6, fontWeight: 700,
-              color: canPlay ? u.textOnDark : u.textMuted, opacity: canPlay ? 0.8 : 1
+              display: "flex", flexDirection: "column", gap: 7,
+              borderTop: `2px dashed ${u.borderLight}`, paddingTop: 12
             },
-            // A winner is not out of rounds, they are finished. Never show a count
-            // that implies turns they were owed and did not get.
-            children: won ? D.wonRunsLabel : left > 0 ? `${left} of ${maxRuns} rounds left` : "no rounds left"
+            children: live.map((ch, i) => c.jsxs("span", {
+              style: { display: "flex", gap: 12, alignItems: "baseline" },
+              children: [
+                c.jsx("span", {
+                  style: { fontFamily: C.mono, fontSize: 12.5, fontWeight: 700, color: u.brand },
+                  children: String(i + 1).padStart(2, "0")
+                }),
+                c.jsx("span", {
+                  style: {
+                    fontFamily: C.mono, fontSize: 12.5, fontWeight: 600, letterSpacing: 0.6,
+                    color: chapterStats(session, ch.id).cleared ? u.textMuted : u.text
+                  },
+                  children: chapterName(ch)
+                })
+              ]
+            }, ch.id))
+          }),
+          c.jsxs("span", {
+            style: { display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", marginTop: 2 },
+            children: [
+              c.jsx(FakeButton, {
+                kind: p.done ? "quiet" : "filled", hover,
+                children: p.done ? M.playAgainLabel : p.touched ? M.continueLabel : M.openNamed(district.name)
+              }),
+              c.jsx("span", {
+                style: { fontFamily: C.mono, fontSize: 12, color: u.textMuted },
+                children: M.clearedCount(p.cleared, p.live)
+              })
+            ]
           })
         ]
+      }, "b")
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
+// ReadyCard : one of several ready districts. Compact on purpose.
+// ---------------------------------------------------------------------------
+function ReadyCard({ district, session, onOpen, upNext }) {
+  const M = R.map;
+  const p = liveProgress(session, district);
+  const label = p.done ? M.playAgainLabel : upNext ? (p.touched ? M.continueLabel : M.startLabel) : M.openLabel;
+  return c.jsx(CardFrame, {
+    onClick: () => onOpen(district),
+    label: `${district.name}. ${M.clearedCount(p.cleared, p.live)}.${upNext ? ` ${M.upNextTag}.` : ""} ${M.openTopic}.`,
+    highlight: upNext,
+    children: (hover, edge) => [
+      c.jsx(IconPanel, { district, edge, width: 92, size: 54 }, "i"),
+      c.jsxs("span", {
+        style: { flex: 1, minWidth: 0, padding: "13px 15px", display: "flex", flexDirection: "column", gap: 2 },
+        children: [
+          c.jsxs("span", {
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 },
+            children: [
+              c.jsx("span", {
+                style: { fontFamily: C.display, fontSize: 17, lineHeight: 1.1, color: u.text },
+                children: district.name
+              }),
+              p.done ? c.jsx(Tag, { children: M.doneTag })
+                : upNext ? c.jsx(Tag, { strong: true, children: M.upNextTag })
+                : null
+            ]
+          }),
+          c.jsx(ChapterBar, { district, session }),
+          c.jsxs("span", {
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginTop: 10 },
+            children: [
+              c.jsx("span", {
+                style: { fontFamily: C.mono, fontSize: 11.5, color: u.textMuted },
+                children: M.clearedCount(p.cleared, p.live)
+              }),
+              c.jsx(FakeButton, {
+                kind: p.done ? "quiet" : upNext ? "filled" : "outline", hover,
+                children: label
+              })
+            ]
+          })
+        ]
+      }, "b")
+    ]
+  });
+}
+
+// ---------------------------------------------------------------------------
+// SoonTile : a district still being written. Not a button, on purpose: it
+// would open an empty screen.
+// ---------------------------------------------------------------------------
+function SoonTile({ district }) {
+  return c.jsxs("div", {
+    "aria-label": `${district.name}, ${R.map.soonAria}`,
+    style: {
+      display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+      padding: "14px 8px", background: u.surfaceWarm,
+      border: `2px solid ${u.borderLight}`, borderRadius: 10
+    },
+    children: [
+      c.jsx("svg", {
+        viewBox: "0 0 100 100", width: 42, height: 42, "aria-hidden": true,
+        style: { filter: "grayscale(0.8)", opacity: 0.55 },
+        children: district.icon()
+      }),
+      c.jsx("div", {
+        style: {
+          fontFamily: C.mono, fontSize: 10, fontWeight: 700, letterSpacing: 0.9,
+          color: u.textMuted, textAlign: "center", lineHeight: 1.3
+        },
+        children: district.name
       })
     ]
   });
 }
 
 // ---------------------------------------------------------------------------
-// TutorialLink : a way back into the guided tour.
+// Side column boxes
 // ---------------------------------------------------------------------------
-// The tutorial normally runs once, straight after the safety brief, and then
-// nobody sees it again. This is for the two cases that leaves out: somebody who
-// tapped Skip and then wished they had not, and the second kid at the table who
-// arrived after the first one had already been through it.
-//
-// Deliberately quiet. It is a text row under the demo banner, not a second big
-// button: a player who already knows how to play should not have to read past
-// something loud to get to the game.
-function TutorialLink({ onPlay }) {
-  const [hover, setHover] = useState(false);
-  return c.jsxs("button", {
-    onClick: onPlay,
-    onMouseEnter: () => setHover(true),
-    onMouseLeave: () => setHover(false),
-    className: "kyr-tutorial-link",
-    "aria-label": `${R.tutorial.replayLabel}. ${R.tutorial.replayBlurb}`,
+function SideBox({ eyebrow, title, blurb, quiet, children }) {
+  return c.jsxs("div", {
     style: {
-      display: "flex", alignItems: "center", gap: 10, width: "100%",
-      background: hover ? u.surface : "transparent",
-      border: `2px solid ${hover ? u.outline : u.borderLight}`,
-      borderRadius: 10, padding: "10px 14px", marginBottom: 26,
-      cursor: "pointer", textAlign: "left", font: "inherit",
-      boxShadow: hover ? U.sm : "none",
-      transition: "background 0.12s, border-color 0.12s, box-shadow 0.12s",
-      WebkitTapHighlightColor: "transparent"
+      background: quiet ? u.surfaceWarm : u.surface,
+      border: `2px solid ${u.borderLight}`, borderRadius: 12, padding: 18
     },
     children: [
-      c.jsx("span", {
-        "aria-hidden": true,
+      c.jsx("div", {
         style: {
-          flexShrink: 0, width: 26, height: 26, borderRadius: "50%",
-          border: `2px solid ${u.outline}`, background: u.mustardSoft,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontFamily: C.display, fontSize: 14, color: u.text, lineHeight: 1
+          fontFamily: C.mono, fontSize: 10.5, fontWeight: 700, letterSpacing: 2,
+          color: quiet ? u.textMuted : u.brand
         },
-        children: "?"
+        children: eyebrow
       }),
-      c.jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 1, minWidth: 0 }, children: [
-        c.jsx("span", {
-          style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 1.4, fontWeight: 700, color: u.text, textTransform: "uppercase" },
-          children: R.tutorial.replayLabel
-        }),
-        c.jsx("span", {
-          style: { fontFamily: C.body, fontSize: 12.5, color: u.textMuted, fontWeight: 500 },
-          children: R.tutorial.replayBlurb
-        })
-      ] })
+      c.jsx("div", {
+        style: {
+          fontFamily: C.display, fontSize: 20, lineHeight: 1.1, margin: "6px 0",
+          color: quiet ? u.textDim : u.text, textTransform: "uppercase"
+        },
+        children: title
+      }),
+      c.jsx("div", {
+        style: { fontFamily: C.body, fontSize: 13.5, lineHeight: 1.45, color: u.textMuted, marginBottom: 12 },
+        children: blurb
+      }),
+      children
     ]
   });
 }
+
+function TutorialBox({ onPlay }) {
+  return c.jsx(SideBox, {
+    eyebrow: R.map.tutorialEyebrow,
+    title: R.tutorial.replayLabel,
+    blurb: R.tutorial.replayBlurb,
+    children: c.jsx(Button, {
+      onClick: onPlay, variant: "secondary", size: "sm",
+      style: { fontSize: 13 }, children: R.map.tutorialStart
+    })
+  });
+}
+
+// The demo keeps its three-try rules (one page load, three tries, a winner is
+// finished rather than out of tries). It just stopped being the loudest thing
+// on the page.
+function DemoBox({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true, won = false }) {
+  const M = R.map;
+  const left = Math.max(0, maxRuns - runsUsed);
+  const status = won ? R.demo.wonRunsLabel : left > 0 ? M.demoTriesLeft(left, maxRuns) : M.demoNoTries;
+  return c.jsx(SideBox, {
+    quiet: true,
+    eyebrow: M.demoEyebrow,
+    title: won ? R.demo.bannerWonTitle : M.demoTitle,
+    blurb: M.demoBlurb,
+    children: c.jsxs("div", {
+      style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6 },
+      children: [
+        canPlay && c.jsx("button", {
+          onClick: onPlay,
+          style: {
+            background: "none", border: "none", padding: "4px 0", cursor: "pointer",
+            fontFamily: C.mono, fontSize: 13, fontWeight: 700, color: u.brand,
+            textDecoration: "underline", textUnderlineOffset: 3
+          },
+          children: M.demoPlayLabel
+        }),
+        c.jsx("div", {
+          style: { fontFamily: C.mono, fontSize: 10.5, letterSpacing: 1, color: u.textMuted },
+          children: status
+        })
+      ]
+    })
+  });
+}
+
+// Layout rules that need screen-size breakpoints, which inline styles cannot do.
+const MAP_CSS = `
+.kyr-map-body { display: flex; gap: 28px; align-items: flex-start; }
+.kyr-map-main { flex: 1 1 auto; min-width: 0; }
+.kyr-map-rail { width: 250px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; padding-top: 26px; }
+.kyr-ready-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.kyr-soon-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 960px) {
+  .kyr-map-body { flex-direction: column; align-items: stretch; }
+  .kyr-map-rail { width: auto; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+  .kyr-map-rail > * { flex: 1 1 240px; }
+  .kyr-soon-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .kyr-ready-grid { grid-template-columns: minmax(0, 1fr); }
+  .kyr-soon-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kyr-wide-card { flex-direction: column; }
+  .kyr-wide-icon { width: auto !important; height: 110px; border-right: none !important; border-bottom: 3px solid ${u.outline}; }
+}
+`;
 
 // ---------------------------------------------------------------------------
 // MapScreen
@@ -521,7 +632,10 @@ function TutorialLink({ onPlay }) {
 // The loaded list is handed UP via onDistricts so the engine can hold it and
 // pass one district into the district screen. Without that the engine would
 // have to fetch the same JSON a second time to know what the player tapped.
+//
+// The props are unchanged from the old map, so engine.js needs no edit.
 export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayTutorial, onDistricts, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
+  const M = R.map;
   const [districts, setDistricts] = useState(null);
   const [error, setError] = useState(null);
 
@@ -543,7 +657,10 @@ export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayT
       flex: "1 0 auto", display: "flex", alignItems: "center",
       justifyContent: "center", padding: "48px 24px 78px"
     },
-    children: c.jsx("div", { style: { width: "100%", maxWidth: 940 }, children })
+    children: c.jsxs("div", {
+      style: { width: "100%", maxWidth: 1080 },
+      children: [c.jsx("style", { children: MAP_CSS }, "css"), c.jsx("div", { children }, "body")]
+    })
   });
 
   if (error) {
@@ -555,13 +672,13 @@ export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayT
       children: [
         c.jsx("div", {
           style: { fontFamily: C.display, fontSize: 22, color: u.text, marginBottom: 8 },
-          children: "THE MAP DID NOT LOAD"
+          children: M.loadErrorTitle
         }),
         c.jsx("div", {
           style: { fontFamily: C.body, fontSize: 14, color: u.textDim, marginBottom: 18 },
-          children: "Something went wrong fetching the districts. Check your connection and try again."
+          children: M.loadErrorBody
         }),
-        c.jsx(Button, { onClick: onHome, variant: "secondary", size: "sm", children: "\u2190 Home" })
+        c.jsx(Button, { onClick: onHome, variant: "secondary", size: "sm", children: M.homeLabel })
       ]
     }));
   }
@@ -572,13 +689,28 @@ export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayT
         fontFamily: C.mono, fontSize: 12, letterSpacing: 2, color: u.textMuted,
         textAlign: "center", padding: "40px 0"
       },
-      children: "LOADING THE MAP\u2026"
+      children: M.loadingLabel
     }));
   }
 
-  const totalChapters = districts.reduce((n, d) => n + d.chapters.length, 0);
-  const clearedChapters = Math.round(completion(session, districts) * totalChapters);
-  const anyLive = districts.some((d) => d.live);
+  const ready = districts.filter(isReady);
+  const soon = districts.filter((d) => !isReady(d));
+
+  // Counter: live chapters only.
+  let liveTotal = 0;
+  let liveCleared = 0;
+  ready.forEach((d) => {
+    const p = liveProgress(session, d);
+    liveTotal += p.live;
+    liveCleared += p.cleared;
+  });
+
+  // UP NEXT: first ready district in map order that is not finished.
+  const upNext = ready.find((d) => !liveProgress(session, d).done);
+
+  const readyHeading = ready.length === 1 ? M.readyOne
+    : soon.length === 0 ? M.readyAll(ready.length)
+    : M.readySome(ready.length);
 
   return shell(c.jsxs("div", {
     children: [
@@ -586,23 +718,23 @@ export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayT
       c.jsxs("div", {
         style: {
           display: "flex", alignItems: "flex-end", justifyContent: "space-between",
-          gap: 20, flexWrap: "wrap", marginBottom: 26
+          gap: 20, flexWrap: "wrap", marginBottom: 28
         },
         children: [
           c.jsxs("div", { children: [
             c.jsx("div", {
               style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 3, color: u.brand },
-              children: "CHOOSE WHERE TO START"
+              children: M.eyebrow
             }),
             c.jsx("h1", {
               style: {
                 fontFamily: C.display, fontSize: 40, letterSpacing: -0.5,
                 color: u.text, margin: "6px 0 0", lineHeight: 1.05
               },
-              children: "THE MAP"
+              children: M.title
             })
           ] }),
-          c.jsxs("div", {
+          liveTotal > 0 && c.jsxs("div", {
             style: {
               background: u.surface, border: `2px solid ${u.outline}`,
               borderRadius: 10, padding: "8px 16px", boxShadow: U.sm, textAlign: "center"
@@ -610,15 +742,15 @@ export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayT
             children: [
               c.jsx("div", {
                 style: { fontFamily: C.mono, fontSize: 9, letterSpacing: 1.6, color: u.brand },
-                children: "CHAPTERS CLEARED"
+                children: M.clearedLabel
               }),
               c.jsxs("div", {
                 style: { fontFamily: C.mono, fontSize: 20, fontWeight: 700, color: u.text },
                 children: [
-                  String(clearedChapters),
+                  String(liveCleared),
                   c.jsxs("span", {
                     style: { color: u.textMuted, fontSize: 13 },
-                    children: [" / ", String(totalChapters)]
+                    children: [" / ", String(liveTotal)]
                   })
                 ]
               })
@@ -627,66 +759,76 @@ export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayT
         ]
       }),
 
-      // The demo sits ABOVE the roadmap, in full colour, at full width. The
-      // districts below it are deliberately quiet. That contrast is the whole
-      // instruction: the loud thing is the thing to play, and everything else
-      // is a roadmap you are looking at, not choosing from.
-      onPlayDemo && c.jsx(DemoBanner, {
-        onPlay: onPlayDemo, runsUsed: demoRunsUsed, maxRuns: demoMaxRuns, canPlay: demoCanPlay, won: demoWon
-      }),
-
-      // Directly under it, quietly, the way back into the tutorial.
-      onPlayTutorial && c.jsx(TutorialLink, { onPlay: onPlayTutorial }),
-
-      // Roadmap divider. Wording follows the content: while nothing is live it
-      // says so plainly rather than implying the map is playable.
+      // Ready shelf plus side column
       c.jsxs("div", {
-        style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 14 },
+        className: "kyr-map-body",
+        style: { marginBottom: soon.length ? 36 : 0 },
         children: [
-          c.jsx("span", {
-            style: {
-              fontFamily: C.mono, fontSize: 10, letterSpacing: 2.4,
-              color: u.textMuted, whiteSpace: "nowrap"
-            },
-            children: anyLive ? "PICK A DISTRICT" : "QUESTIONS BEING WRITTEN"
+          c.jsxs("div", {
+            className: "kyr-map-main",
+            children: [
+              c.jsx(ShelfLabel, { children: ready.length ? readyHeading : M.noneReadyHeading }),
+              ready.length === 0
+                ? c.jsx("div", {
+                    style: {
+                      fontFamily: C.body, fontSize: 14, color: u.textMuted,
+                      background: u.surface, border: `2px dashed ${u.borderLight}`,
+                      borderRadius: 12, padding: "22px 20px"
+                    },
+                    children: M.noneReady
+                  })
+                : ready.length === 1
+                  ? c.jsx(WideCard, { district: ready[0], session, onOpen: onOpenDistrict })
+                  : c.jsx("div", {
+                      className: "kyr-ready-grid",
+                      children: ready.map((d) => c.jsx(ReadyCard, {
+                        district: d, session, onOpen: onOpenDistrict, upNext: d === upNext
+                      }, d.id))
+                    }),
+              ready.length > 1 && c.jsx(Legend, {})
+            ]
           }),
-          c.jsx("span", {
-            "aria-hidden": true,
-            style: { flex: 1, height: 2, background: u.borderLight, borderRadius: 1 }
+          (onPlayTutorial || onPlayDemo) && c.jsxs("div", {
+            className: "kyr-map-rail",
+            children: [
+              onPlayTutorial && c.jsx(TutorialBox, { onPlay: onPlayTutorial }, "t"),
+              onPlayDemo && c.jsx(DemoBox, {
+                onPlay: onPlayDemo, runsUsed: demoRunsUsed, maxRuns: demoMaxRuns,
+                canPlay: demoCanPlay, won: demoWon
+              }, "d")
+            ]
           })
         ]
       }),
 
-      // District grid. No inline expansion: every live card is a doorway.
-      c.jsx("div", {
-        className: "kyr-map-grid",
-        style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 },
-        children: districts.map((d) => c.jsx(DistrictCard, {
-          district: d, session, onOpen: onOpenDistrict
-        }, d.id))
+      // Coming soon shelf. Gone entirely once nothing is left in it.
+      soon.length > 0 && c.jsxs("div", {
+        children: [
+          c.jsx(ShelfLabel, { quiet: true, children: M.soonHeading(soon.length) }),
+          c.jsx("div", {
+            className: "kyr-soon-grid",
+            children: soon.map((d) => c.jsx(SoonTile, { district: d }, d.id))
+          })
+        ]
       }),
 
-      c.jsx(Legend, {}),
-
-      // Footer note + home
+      // Footer
       c.jsxs("div", {
         style: {
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          gap: 16, flexWrap: "wrap", marginTop: 22
+          gap: 16, flexWrap: "wrap", marginTop: 26
         },
         children: [
           c.jsx("div", {
             style: {
               fontFamily: C.body, fontSize: 12.5, lineHeight: 1.6,
-              color: u.textMuted, maxWidth: 520
+              color: u.textMuted, maxWidth: 560
             },
-            children: anyLive
-              ? "Each district is a moment where rights come up. Open one to see its chapters."
-              : "Each district is a moment where rights come up. The questions for these are being written and attorney reviewed now."
+            children: M.footer
           }),
           c.jsx(Button, {
             onClick: onHome, variant: "ghost", size: "sm",
-            style: { fontSize: 13 }, children: "\u2190 Home"
+            style: { fontSize: 13 }, children: M.homeLabel
           })
         ]
       })
