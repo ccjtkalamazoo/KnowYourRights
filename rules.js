@@ -56,7 +56,11 @@ export const musicStageFor = (e) => e < 5 ? 1 : e < 10 ? 2 : 3;
 // FIFTY, POLL and HINT start free once each. SKIP never does, so it is the one
 // thing points alone can buy, and it is priced cheapest because it is the least
 // powerful: it trades a question you do not know for one you might not either.
-export const LIFELINE_PRICES = { skip: 4, hint: 6, poll: 10, fifty: 16 };
+//
+// PRICES CUT ON 2026-09-17. The third review card was removed, so a right answer
+// now earns 2 points instead of 3. Every price dropped by about a third (from
+// skip 4, hint 6, poll 10, fifty 16) so help is reachable at the same pace.
+export const LIFELINE_PRICES = { skip: 3, hint: 4, poll: 7, fifty: 11 };
 export const LIFELINE_KEYS = ["fifty", "poll", "hint", "skip"];
 // Which ones you get one free use of at the start of a run.
 export const FREE_LIFELINES = { fifty: true, poll: true, hint: true, skip: false };
