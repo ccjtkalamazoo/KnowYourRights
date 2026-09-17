@@ -248,6 +248,54 @@ export const R = {
     loadErrorTitle: "THE DEMO DID NOT LOAD",
     loadErrorBody: "Its questions could not be fetched. Check the connection and try again."
   },
+  // ---------------------------------------------------------------------------
+  // The map screen
+  // ---------------------------------------------------------------------------
+  // Two shelves (ready to play, coming soon) and a side column (how to play,
+  // the event demo). The demo copy that used to fill a banner at the top of
+  // the map lives in R.demo and is still used by the demo's own screens.
+  map: {
+    eyebrow: "CHOOSE WHERE TO START",
+    title: "THE MAP",
+    clearedLabel: "CHAPTERS CLEARED",
+    loadingLabel: "LOADING THE MAP\u2026",
+    loadErrorTitle: "THE MAP DID NOT LOAD",
+    loadErrorBody: "Something went wrong fetching the topics. Check your connection and try again.",
+    homeLabel: "\u2190 Home",
+
+    // Shelf headings.
+    readyOne: "READY TO PLAY",
+    readySome: (n) => `READY TO PLAY \u00B7 ${n} TOPICS`,
+    readyAll: (n) => `READY TO PLAY \u00B7 ALL ${n} TOPICS`,
+    noneReadyHeading: "READY TO PLAY",
+    noneReady: "The first topics are being written and attorney reviewed now. Check back soon.",
+    soonHeading: (n) => n === 1 ? "COMING SOON \u00B7 1 MORE TOPIC" : `COMING SOON \u00B7 ${n} MORE TOPICS`,
+    soonAria: "coming soon. Being written and attorney reviewed.",
+
+    // Card buttons and tags. Buttons are in the display font, so they are
+    // written in capitals here; "Play again" is quieter on purpose.
+    openLabel: "OPEN \u2192",
+    openNamed: (name) => `OPEN ${name} \u2192`,
+    startLabel: "START \u2192",
+    continueLabel: "CONTINUE \u2192",
+    playAgainLabel: "Play again",
+    openTopic: "Open this topic",
+    upNextTag: "UP NEXT",
+    doneTag: "DONE",
+    clearedCount: (n, of) => `${n} of ${of} cleared`,
+
+    // Side column.
+    tutorialEyebrow: "NEW HERE?",
+    tutorialStart: "Start tutorial",
+    demoEyebrow: "AT AN EVENT?",
+    demoTitle: "QUICK DEMO",
+    demoBlurb: "Five questions, three tries. Your best round counts.",
+    demoPlayLabel: "Play the demo \u2192",
+    demoTriesLeft: (left, of) => `${left} of ${of} tries left`,
+    demoNoTries: "no tries left",
+
+    footer: "Each topic is a moment where rights come up. Open one to see its chapters."
+  },
   // The tutorial. Copy for the tour steps themselves lives with the questions
   // in content/tutorial/questions.json, so a wording change there is a content
   // edit rather than a code change.
