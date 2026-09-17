@@ -130,9 +130,10 @@ export const R = {
   // ---------------------------------------------------------------------------
   // The district screen
   // ---------------------------------------------------------------------------
-  // The page has ONE job: make the next chapter obvious, and let everything else
-  // be found rather than shown. Two folds (what the topic covers, the full
-  // chapter list) and one loud card between them.
+  // Two columns (chosen 2026-09-17): the numbered chapter path on the left with
+  // the next chapter as the one loud card, and on the right a WHAT THIS COVERS
+  // dropdown, the legal note, and the session note. The ALL CHAPTERS fold and
+  // its labels below are no longer shown, kept in case they come back.
   //
   // The order copy is load-bearing. Chapters are NOT locked, because nothing is
   // saved and a locked chapter 2 would be locked for every new player forever.
@@ -140,13 +141,16 @@ export const R = {
   // thing with a filled button, the list underneath is quiet, and somebody who
   // jumps ahead gets advice rather than a refusal.
   district: {
-    backLabel: "\u2190 Back to the map",
+    backLabel: "\u2190 The map",
 
     // The two folds. Both use the same handle, so learning one teaches the other.
     foldOpen: "TAP TO OPEN",
     foldClose: "TAP TO CLOSE",
     coversLabel: "WHAT THIS COVERS",
     coversHint: (n) => `The ${n} things you learn in this topic`,
+    coversCloseHint: "Tap to close",
+    // Heading over the numbered chapter path.
+    pathLabel: (cleared, total) => `YOUR PATH \u00B7 ${cleared} OF ${total} CLEARED`,
     allChaptersLabel: "ALL CHAPTERS",
     // Reads the session, so it says something true rather than a fixed line.
     allChaptersHint: (total, cleared) => cleared === 0
@@ -160,22 +164,22 @@ export const R = {
     // them to skip. The body gives a real reason, in words a 13-year-old
     // follows, because a reason gets read and a formula does not.
     notice: {
-      title: "This is not legal advice",
-      body: "A game can teach you how things usually work. It cannot know the details of anything real that is happening to you, and some of these rules change from state to state.",
-      emphasis: "If something real is happening, talk to a lawyer about your own situation."
+      title: "Not legal advice",
+      body: "Rules can change from state to state.",
+      emphasis: "If something real is happening, talk to a lawyer."
     },
 
     // The gold card: the one thing to do on this page.
-    nextLabel: "YOUR NEXT CHAPTER",
-    nextCounter: (n, of) => `${n} OF ${of}`,
-    playLabel: "Play now",
+    nextLabel: "UP NEXT",
+    nextCounter: (n, of) => `CHAPTER ${n} OF ${of}`,
+    playLabel: "PLAY",
     playMeta: (questions, lives) => `${questions} questions \u00B7 ${lives} lives`,
 
     // Shown in place of the gold card once every live chapter is cleared. A
     // player who finished should be told so, not shown a fourth invitation.
     doneLabel: "TOPIC COMPLETE",
     doneTitle: "You cleared every chapter here",
-    doneBody: "Open the list below to play any of them again, or head back to the map for another topic.",
+    doneBody: "Play any chapter below again, or head back to the map for another topic.",
 
     // The chapter list inside the fold.
     chapterPlayLabel: "Play \u2192",
