@@ -11,7 +11,8 @@ they take away is one sentence, not a paragraph.
 
 ## The hard rules
 
-These are enforced by `schema/question.schema.json` and checked in CI. A file
+These are enforced by `content/schema/chapter.schema.json` and checked in CI
+(`tools/validate_content.py`). A file
 that breaks one of them does not merge.
 
 1. **Exactly four options.**
@@ -22,7 +23,7 @@ that breaks one of them does not merge.
    is `null`. A wrong answer with no explanation is a wasted teaching moment,
    which is where most of the learning in this game actually happens.
 4. **No em dashes.** Anywhere. Use a comma, a period, or a colon.
-5. **Reading level: 8th grade or below.** Short sentences. Common words. If a
+5. **Reading level: 6th grade or below.** Short sentences. Common words. If a
    legal term is unavoidable, define it in the same sentence.
 6. **Every question has a stable `id` that is never reused.** See below.
 7. **Every option has a stable `id`.** See below.
