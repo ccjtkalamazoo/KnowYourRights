@@ -8,7 +8,8 @@
     "Free lawyers: who gets one, what they are, and what your lawyer keeps private",
     "Which decisions in your case are yours and not your lawyer's",
     "Court staff, probation officers, interpreters, and bail bondsmen",
-    "Court dates, missed dates, warrants, and which records the public can see"
+    "Court dates, missed dates, warrants, and which records the public can see",
+    "Jury duty: who gets called, getting excused, your job, and how a verdict works"
   ],
   "live": true,
   "chapters": [
@@ -24,6 +25,13 @@
       "name": "COURT STAFF, COURT RECORDS, COURT DATES",
       "summary": "Clerks, bailiffs, probation officers and interpreters, plus court dates and what happens if you miss one.",
       "file": "02-court-staff-court-records-court-dates.json",
+      "live": true
+    },
+    {
+      "id": "court.03",
+      "name": "JURY DUTY",
+      "summary": "Who gets called, who can be excused, your job and pay, jury scams, and how a jury reaches a verdict.",
+      "file": "03-jury-duty.json",
       "live": true
     }
   ]
