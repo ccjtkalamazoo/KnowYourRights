@@ -1,0 +1,1300 @@
+{
+  "chapterId": "court.03",
+  "districtId": "court",
+  "name": "JURY DUTY",
+  "safetyNote": "Only adults 18 and older serve on juries. Real jury letters come from a court in the mail. A call or text that demands money for missed jury duty is a scam.",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "questions": [
+    {
+      "id": "court.03.001",
+      "version": 1,
+      "q": "You just turned 18 in Michigan. Where does your county court get the names it sends jury letters to?",
+      "options": [
+        {
+          "id": "court.03.001.a",
+          "text": "From the state's list of driver's licenses and state IDs.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.001.b",
+          "text": "From the list of people registered to vote.",
+          "isCorrect": false,
+          "explanation": "Michigan state courts use the license and state ID list, not voter lists. Skipping voter registration does not keep anyone off the jury list.",
+          "misconceptionCode": "jurors_come_from_voter_list"
+        },
+        {
+          "id": "court.03.001.c",
+          "text": "From a list of people who volunteered to serve.",
+          "isCorrect": false,
+          "explanation": "Nobody signs up. The court draws names from the license and state ID list.",
+          "misconceptionCode": "jury_duty_is_opt_in"
+        },
+        {
+          "id": "court.03.001.d",
+          "text": "From records of people who have been to court before.",
+          "isCorrect": false,
+          "explanation": "Time in court has nothing to do with it. Any adult with a license or state ID can be on the list.",
+          "misconceptionCode": "only_court_goers_get_called"
+        }
+      ],
+      "hint": "The Michigan Secretary of State sends the courts this list.",
+      "principle": "Michigan law tells each county's jury board to pick names from one combined list of driver's licenses and state ID cards. The Secretary of State sends that list to the courts. Voter lists are not used in state court. Federal court is different: the federal court that covers Kalamazoo also uses voter registration.",
+      "keyPhrase": {
+        "quote": "A Michigan license or state ID puts your name on the jury list.",
+        "gloss": "State courts do not use voter lists to find jurors."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.002",
+      "version": 1,
+      "q": "Your aunt gets a jury letter, but nobody else on the street does. How did the court choose your aunt's name?",
+      "options": [
+        {
+          "id": "court.03.002.a",
+          "text": "The court drew the name at random from a list.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.002.b",
+          "text": "The judge chose people the judge already knows.",
+          "isCorrect": false,
+          "explanation": "Judges do not choose names. Michigan requires a random process, and knowing someone in a case is a reason to be removed from it.",
+          "misconceptionCode": "judge_hand_picks_jurors"
+        },
+        {
+          "id": "court.03.002.c",
+          "text": "The court picked people with past traffic tickets.",
+          "isCorrect": false,
+          "explanation": "A jury letter is not a punishment or a sign of trouble. Names are drawn at random.",
+          "misconceptionCode": "jury_letter_means_trouble"
+        },
+        {
+          "id": "court.03.002.d",
+          "text": "The court looked for people with jobs that fit a case.",
+          "isCorrect": false,
+          "explanation": "A job does not put anyone on the list. Lawyers ask about jobs later, during jury selection.",
+          "misconceptionCode": "jurors_picked_for_expertise"
+        }
+      ],
+      "hint": "Michigan wants juries that look like the whole community.",
+      "principle": "Michigan requires a random selection process. A computer draws names from the county's license and state ID list. The goal is a jury that reflects the whole community, not people anyone chose on purpose.",
+      "keyPhrase": {
+        "quote": "Jury names are drawn at random.",
+        "gloss": "A computer draws the names, so nobody picks the jury on purpose."
+      },
+      "setting": "home",
+      "questionType": "who_is_doing_it"
+    },
+    {
+      "id": "court.03.003",
+      "version": 1,
+      "q": "A juror questionnaire shows up in the mail for your dad. What is the questionnaire for?",
+      "options": [
+        {
+          "id": "court.03.003.a",
+          "text": "It helps the court check who qualifies to serve.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.003.b",
+          "text": "It orders your dad to report to court tomorrow.",
+          "isCorrect": false,
+          "explanation": "A questionnaire is a screening step. A summons is what says when and where to report.",
+          "misconceptionCode": "questionnaire_means_report_now"
+        },
+        {
+          "id": "court.03.003.c",
+          "text": "It is a survey your dad can choose to skip.",
+          "isCorrect": false,
+          "explanation": "Answering is required by law. Refusing to answer can be punished as contempt of court.",
+          "misconceptionCode": "questionnaire_is_optional"
+        },
+        {
+          "id": "court.03.003.d",
+          "text": "It picks your dad to sit on a trial.",
+          "isCorrect": false,
+          "explanation": "Nobody is on a trial yet. Jurors for a trial are chosen later, in the courtroom.",
+          "misconceptionCode": "questionnaire_means_seated"
+        }
+      ],
+      "hint": "Not everyone on the jury list is allowed to serve.",
+      "principle": "Michigan courts use a juror qualification questionnaire to check the basics, like age, citizenship, and where a person lives. Answers must be truthful. Refusing to answer, or lying, can be punished as contempt of court. Some counties, including Kalamazoo, have people fill it out online after a summons arrives.",
+      "keyPhrase": {
+        "quote": "The jury questionnaire is required, not a survey.",
+        "gloss": "Answering is required, and the court uses the answers to check who qualifies."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.004",
+      "version": 1,
+      "q": "In Michigan, you are 17 and a high school senior. How old do you have to be to serve on a jury?",
+      "options": [
+        {
+          "id": "court.03.004.a",
+          "text": "18, for every kind of case.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.004.b",
+          "text": "16, with a parent's written permission.",
+          "isCorrect": false,
+          "explanation": "A parent cannot change the law. Every juror must be at least 18.",
+          "misconceptionCode": "parent_can_permit_young_juror"
+        },
+        {
+          "id": "court.03.004.c",
+          "text": "21, the same age as buying alcohol.",
+          "isCorrect": false,
+          "explanation": "The jury age is 18, not 21. The two rules come from different laws.",
+          "misconceptionCode": "jury_age_is_21"
+        },
+        {
+          "id": "court.03.004.d",
+          "text": "18 for adult court, any age for juvenile court.",
+          "isCorrect": false,
+          "explanation": "The same qualifications apply to every juror. Juvenile court does not use teen jurors.",
+          "misconceptionCode": "juvenile_court_uses_teen_jurors"
+        }
+      ],
+      "hint": "The same birthday unlocks other adult rights.",
+      "principle": "To serve on a Michigan jury, a person must be a U.S. citizen, at least 18, living in the county, able to communicate in English, and able to do the job of a juror.",
+      "keyPhrase": {
+        "quote": "Jurors are 18 or older.",
+        "gloss": "The age is the same for every kind of case, including juvenile court."
+      },
+      "setting": "school",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.005",
+      "version": 1,
+      "q": "In Michigan, your neighbor has a driver's license but is not a U.S. citizen. A jury letter comes for your neighbor anyway. Why?",
+      "options": [
+        {
+          "id": "court.03.005.a",
+          "text": "The letter came from a list of all license holders.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.005.b",
+          "text": "The court already decided your neighbor qualifies.",
+          "isCorrect": false,
+          "explanation": "Only U.S. citizens can serve. The letter comes first, and the court checks who qualifies after.",
+          "misconceptionCode": "summons_means_eligible"
+        },
+        {
+          "id": "court.03.005.c",
+          "text": "Someone signed your neighbor up for jury duty.",
+          "isCorrect": false,
+          "explanation": "Nobody signs anyone up. The letter came because the name was on the license list.",
+          "misconceptionCode": "jury_duty_is_opt_in"
+        },
+        {
+          "id": "court.03.005.d",
+          "text": "Your neighbor is in trouble with the court.",
+          "isCorrect": false,
+          "explanation": "A jury letter is not about trouble. It goes out to names drawn at random.",
+          "misconceptionCode": "jury_letter_means_trouble"
+        }
+      ],
+      "hint": "Think back to where jury names come from.",
+      "principle": "The jury list comes from all Michigan driver's licenses and state IDs, including license holders who are not citizens. Only U.S. citizens can serve. In Kalamazoo County, a person who is not a citizen sends the court a copy of a green card, passport, or visa to be excused.",
+      "keyPhrase": {
+        "quote": "Getting a jury letter does not mean you qualify.",
+        "gloss": "The court checks citizenship and the other rules after the letter goes out."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.006",
+      "version": 1,
+      "q": "Your uncle would like to serve on a jury someday. In Michigan, which of these would keep your uncle off a jury?",
+      "options": [
+        {
+          "id": "court.03.006.a",
+          "text": "A felony conviction, even one from long ago.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.006.b",
+          "text": "A misdemeanor conviction from last year.",
+          "isCorrect": false,
+          "explanation": "Only a felony conviction keeps someone off a jury. A misdemeanor does not.",
+          "misconceptionCode": "misdemeanor_bars_jury"
+        },
+        {
+          "id": "court.03.006.c",
+          "text": "A speeding ticket from last month.",
+          "isCorrect": false,
+          "explanation": "A traffic ticket has no effect on jury service.",
+          "misconceptionCode": "ticket_bars_jury"
+        },
+        {
+          "id": "court.03.006.d",
+          "text": "A felony conviction, but only a recent one.",
+          "isCorrect": false,
+          "explanation": "The law has no time limit. An old felony counts the same as a new one.",
+          "misconceptionCode": "old_felony_drops_off"
+        }
+      ],
+      "hint": "Think about how serious a crime has to be.",
+      "principle": "Michigan bars anyone convicted of a felony from serving on a jury, no matter how long ago. A felony is a crime that can be punished by more than one year in prison. Misdemeanors and traffic tickets do not count.",
+      "keyPhrase": {
+        "quote": "A felony conviction, however old, keeps a person off Michigan juries.",
+        "gloss": "The rule has no time limit. Misdemeanors and tickets do not count."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.007",
+      "version": 1,
+      "q": "In Michigan, your mom served on a jury this spring. How soon could your mom serve on another jury?",
+      "options": [
+        {
+          "id": "court.03.007.a",
+          "text": "Not until at least 12 months later.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.007.b",
+          "text": "Never again, since once is enough.",
+          "isCorrect": false,
+          "explanation": "People can be called more than once in a lifetime. The law only requires a break between.",
+          "misconceptionCode": "jury_service_is_once_in_life"
+        },
+        {
+          "id": "court.03.007.c",
+          "text": "Right away, as soon as another letter comes.",
+          "isCorrect": false,
+          "explanation": "Someone paid for jury service in the last 12 months does not qualify again yet.",
+          "misconceptionCode": "no_rest_between_jury_service"
+        },
+        {
+          "id": "court.03.007.d",
+          "text": "Whenever a judge approves it.",
+          "isCorrect": false,
+          "explanation": "No permission is needed. Once 12 months pass, the person can simply be called again.",
+          "misconceptionCode": "serving_again_needs_permission"
+        }
+      ],
+      "hint": "Michigan counts the break from the last time a person was paid for jury service.",
+      "principle": "Michigan law says a person paid for jury service in the last 12 months does not qualify again yet. After that, the person can be called again. Some courts wait longer: Grand Traverse County's circuit court will not call someone again within 3 years of reporting.",
+      "keyPhrase": {
+        "quote": "The law gives at least a 12-month break after serving.",
+        "gloss": "After 12 months a person can be called again. Some courts wait longer."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.008",
+      "version": 1,
+      "q": "You are 19, and a jury summons arrives with your name on it. What is a jury summons?",
+      "options": [
+        {
+          "id": "court.03.008.a",
+          "text": "An official court order to show up.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.008.b",
+          "text": "An invitation you can ignore if busy.",
+          "isCorrect": false,
+          "explanation": "A summons is not optional. Being busy is a reason to ask for a new date, not to ignore it.",
+          "misconceptionCode": "summons_is_optional"
+        },
+        {
+          "id": "court.03.008.c",
+          "text": "A notice that you are being sued.",
+          "isCorrect": false,
+          "explanation": "A jury summons calls you to help decide a case, not to be part of one.",
+          "misconceptionCode": "summons_means_sued"
+        },
+        {
+          "id": "court.03.008.d",
+          "text": "A bill for court fees you owe.",
+          "isCorrect": false,
+          "explanation": "Jurors do not pay the court. The court pays jurors a small amount.",
+          "misconceptionCode": "summons_is_a_bill"
+        }
+      ],
+      "hint": "Courts can punish people who ignore one.",
+      "principle": "A jury summons is an official court order. Kalamazoo County says anyone who gets one must follow it. Being busy does not cancel it, but people can ask to move the date.",
+      "keyPhrase": {
+        "quote": "A jury summons is a court order, not an invitation.",
+        "gloss": "Being busy does not cancel a summons, but the date can be moved."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.009",
+      "version": 1,
+      "q": "In Michigan, your cousin got a jury summons, threw it away, and never went. What can the court do?",
+      "options": [
+        {
+          "id": "court.03.009.a",
+          "text": "Fine your cousin or send your cousin to jail.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.009.b",
+          "text": "Nothing, since jury service is voluntary.",
+          "isCorrect": false,
+          "explanation": "Jury service is required. Skipping it without an excuse breaks a court order.",
+          "misconceptionCode": "summons_is_optional"
+        },
+        {
+          "id": "court.03.009.c",
+          "text": "Charge your cousin with a felony.",
+          "isCorrect": false,
+          "explanation": "Skipping jury duty is handled as contempt of court, not as a felony charge.",
+          "misconceptionCode": "skipping_jury_is_felony"
+        },
+        {
+          "id": "court.03.009.d",
+          "text": "Take away your cousin's right to vote.",
+          "isCorrect": false,
+          "explanation": "Missing jury duty has nothing to do with voting rights.",
+          "misconceptionCode": "skipping_jury_costs_vote"
+        }
+      ],
+      "hint": "The court has its own power to punish this.",
+      "principle": "Michigan law lists missing jury service without being excused as contempt of court. The court can fine a person, jail a person, or both. A phone call demanding payment for missed jury duty is a scam, not the court.",
+      "keyPhrase": {
+        "quote": "Ignoring a jury summons is contempt of court.",
+        "gloss": "The court can fine a person, jail a person, or both."
+      },
+      "setting": "home",
+      "questionType": "afterward"
+    },
+    {
+      "id": "court.03.010",
+      "version": 1,
+      "q": "In Michigan, your older brother moved to a new county, but a jury summons from the old county still comes. Where can your brother serve on a jury now?",
+      "options": [
+        {
+          "id": "court.03.010.a",
+          "text": "Only in the county where your brother lives now.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.010.b",
+          "text": "Only in the county that sent the summons.",
+          "isCorrect": false,
+          "explanation": "A juror must live in the county that sends the summons, so a person who moved away no longer qualifies there.",
+          "misconceptionCode": "must_serve_where_summoned"
+        },
+        {
+          "id": "court.03.010.c",
+          "text": "In any Michigan county your brother chooses.",
+          "isCorrect": false,
+          "explanation": "Nobody picks a county. A juror serves only in the county where the juror lives.",
+          "misconceptionCode": "jury_county_is_a_choice"
+        },
+        {
+          "id": "court.03.010.d",
+          "text": "In the county where your brother works.",
+          "isCorrect": false,
+          "explanation": "Where a person works does not matter. Jurors must live in the county.",
+          "misconceptionCode": "work_county_counts"
+        }
+      ],
+      "hint": "Each county's jury list comes from the addresses on licenses.",
+      "principle": "A Michigan juror must live in the county that sends the summons. Kalamazoo County asks for a copy of your driver's license or state ID, front and back, showing the new address. Without that proof, the court treats you as qualified to serve.",
+      "keyPhrase": {
+        "quote": "You can only serve on a jury in the county you live in.",
+        "gloss": "A person who moves sends the court proof of the new address."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.011",
+      "version": 1,
+      "q": "You got a jury summons, but the reporting date on it lands on a family trip planned months ago. What does the court expect you to do?",
+      "options": [
+        {
+          "id": "court.03.011.a",
+          "text": "Contact the jury office before your reporting date to ask for a new one.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.011.b",
+          "text": "Skip your reporting date and explain after the trip.",
+          "isCorrect": false,
+          "explanation": "Courts expect people to appear unless an excuse or new date was approved first.",
+          "misconceptionCode": "excuse_after_the_fact"
+        },
+        {
+          "id": "court.03.011.c",
+          "text": "Do nothing, since a planned trip excuses you on its own.",
+          "isCorrect": false,
+          "explanation": "No plan excuses anyone automatically. The request has to go to the court.",
+          "misconceptionCode": "plans_excuse_automatically"
+        },
+        {
+          "id": "court.03.011.d",
+          "text": "Wait for the court to call you with a new reporting date.",
+          "isCorrect": false,
+          "explanation": "The court does not know about the trip. Asking for a new date is the juror's job.",
+          "misconceptionCode": "court_will_reach_out"
+        }
+      ],
+      "hint": "Jury offices reschedule reporting dates all the time.",
+      "principle": "Courts let people move a jury reporting date, but the request comes first. Kalamazoo County lets people reschedule online the first time; after that, a call to the jury office decides it. Allegan County says a person must appear unless an excuse was approved. Rules differ by county.",
+      "keyPhrase": {
+        "quote": "Ask for a new reporting date before the one on your summons.",
+        "gloss": "Courts move dates when asked ahead of time. Rules differ by county."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.012",
+      "version": 1,
+      "q": "Your grandma just turned 71. What changes about jury duty for people over 70 in Michigan?",
+      "options": [
+        {
+          "id": "court.03.012.a",
+          "text": "A person can ask to skip it, and the court must agree.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.012.b",
+          "text": "A person can no longer serve on a jury at all.",
+          "isCorrect": false,
+          "explanation": "Age never disqualifies anyone. People over 70 can still choose to serve.",
+          "misconceptionCode": "seniors_barred_from_juries"
+        },
+        {
+          "id": "court.03.012.c",
+          "text": "Jury pay goes up for older jurors.",
+          "isCorrect": false,
+          "explanation": "Juror pay is the same at every age. The change is that people over 70 can ask to be excused.",
+          "misconceptionCode": "age_raises_juror_pay"
+        },
+        {
+          "id": "court.03.012.d",
+          "text": "A person can skip it only with a doctor's note.",
+          "isCorrect": false,
+          "explanation": "The age exemption needs no note. Asking is enough.",
+          "misconceptionCode": "excuse_needs_doctor_note"
+        }
+      ],
+      "hint": "Kalamazoo County still lets people over 70 serve.",
+      "principle": "A Michigan resident over 70 can ask to be exempt from jury service, and the court must say yes. The choice belongs to the person. Kalamazoo County lets people over 70 serve by choice.",
+      "keyPhrase": {
+        "quote": "Over 70? Serving is a choice.",
+        "gloss": "The court must agree when a person over 70 asks. Serving is still allowed."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.013",
+      "version": 1,
+      "q": "In Michigan, your mom owns a small bakery and gets a jury summons during a busy month. What does owning a business change about your mom's jury duty?",
+      "options": [
+        {
+          "id": "court.03.013.a",
+          "text": "Nothing, since no job excuses anyone from serving.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.013.b",
+          "text": "Business owners are always excused.",
+          "isCorrect": false,
+          "explanation": "Michigan has no exemption for business owners.",
+          "misconceptionCode": "owners_are_exempt"
+        },
+        {
+          "id": "court.03.013.c",
+          "text": "Owners with fewer than 10 workers are excused.",
+          "isCorrect": false,
+          "explanation": "Business size does not matter. No job category is excused in Michigan courts.",
+          "misconceptionCode": "small_business_exempt"
+        },
+        {
+          "id": "court.03.013.d",
+          "text": "Full-time workers like your mom are excused.",
+          "isCorrect": false,
+          "explanation": "Working full-time does not excuse anyone. A person with a hard month can ask for a new date.",
+          "misconceptionCode": "full_time_workers_exempt"
+        }
+      ],
+      "hint": "Almost every adult has a job, and courts still need jurors.",
+      "principle": "Michigan's exemptions are narrow: people over 70, nursing mothers, active-duty service members and some military spouses, and people in the state's address confidentiality program. No job is on that list. Federal court is different and exempts police officers, firefighters, and elected officials.",
+      "keyPhrase": {
+        "quote": "A job is not an exemption.",
+        "gloss": "No job is on Michigan's exemption list, but the date can be moved."
+      },
+      "setting": "work",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.014",
+      "version": 1,
+      "q": "Your cousin is on active duty in the Army and gets a jury summons. What does Michigan law say about that summons?",
+      "options": [
+        {
+          "id": "court.03.014.a",
+          "text": "Your cousin can ask to be excused by sending a copy of the orders.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.014.b",
+          "text": "Your cousin has no way out and must come home to serve.",
+          "isCorrect": false,
+          "explanation": "There is a way out. Active-duty service members can claim an exemption, though serving is still allowed.",
+          "misconceptionCode": "military_must_serve"
+        },
+        {
+          "id": "court.03.014.c",
+          "text": "Your cousin is skipped automatically without asking.",
+          "isCorrect": false,
+          "explanation": "The exemption is not automatic. The service member has to ask and send the orders.",
+          "misconceptionCode": "military_auto_exempt"
+        },
+        {
+          "id": "court.03.014.d",
+          "text": "Your cousin's commander has to cancel it with the court.",
+          "isCorrect": false,
+          "explanation": "The request comes from the service member, with a copy of the orders.",
+          "misconceptionCode": "commander_handles_summons"
+        }
+      ],
+      "hint": "The law treats active duty differently from other jobs.",
+      "principle": "A service member on active duty can claim an exemption from Michigan jury service. The court must grant it once the person asks and sends a copy of the orders. Kalamazoo County takes the orders through its online juror portal, by fax, or by email.",
+      "keyPhrase": {
+        "quote": "Active duty plus a copy of the orders means exempt.",
+        "gloss": "The exemption is not automatic. Serving is still allowed."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.015",
+      "version": 1,
+      "q": "The court agrees to postpone your jury service. What does postponed mean for you?",
+      "options": [
+        {
+          "id": "court.03.015.a",
+          "text": "You still serve, just on a later date.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.015.b",
+          "text": "You are done with jury service for good.",
+          "isCorrect": false,
+          "explanation": "A postponement moves the date. It does not cancel the service.",
+          "misconceptionCode": "postponed_means_excused"
+        },
+        {
+          "id": "court.03.015.c",
+          "text": "You are off the jury list for five years.",
+          "isCorrect": false,
+          "explanation": "A postponement is a new date, not years off the list.",
+          "misconceptionCode": "postponed_means_long_break"
+        },
+        {
+          "id": "court.03.015.d",
+          "text": "You pay a fee to get the new date.",
+          "isCorrect": false,
+          "explanation": "Moving a jury date does not cost anything.",
+          "misconceptionCode": "rescheduling_costs_money"
+        }
+      ],
+      "hint": "A postponement and an excuse are two different things.",
+      "principle": "A postponement moves jury service to a later date. Kalamazoo County lets people move service to a time after returning to town. College students are not exempt, but Kalamazoo County lets students move service to a school break.",
+      "keyPhrase": {
+        "quote": "Postponed means later, not never.",
+        "gloss": "A postponement moves the date. It does not cancel the service."
+      },
+      "setting": "home",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.016",
+      "version": 1,
+      "q": "In Michigan, your dad's boss fires your dad for missing work during jury duty. What can happen to the boss?",
+      "options": [
+        {
+          "id": "court.03.016.a",
+          "text": "The boss can be charged with a crime.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.016.b",
+          "text": "Nothing, since a boss can fire workers for any reason.",
+          "isCorrect": false,
+          "explanation": "Michigan law makes firing someone over jury duty a crime, so that reason is not allowed.",
+          "misconceptionCode": "at_will_covers_jury_duty"
+        },
+        {
+          "id": "court.03.016.c",
+          "text": "No penalty, unless the business has over 50 workers.",
+          "isCorrect": false,
+          "explanation": "The law has no exception for small businesses.",
+          "misconceptionCode": "small_employers_exempt"
+        },
+        {
+          "id": "court.03.016.d",
+          "text": "The boss gets a warning letter, and nothing more.",
+          "isCorrect": false,
+          "explanation": "The law treats it as a misdemeanor, and the court can also hold the boss in contempt.",
+          "misconceptionCode": "boss_gets_warning_only"
+        }
+      ],
+      "hint": "Think about how seriously Michigan treats this.",
+      "principle": "In Michigan, an employer who threatens, fires, or punishes a person for being summoned or serving on a jury commits a misdemeanor and can be held in contempt of court. The law has no exception for small businesses or long trials.",
+      "keyPhrase": {
+        "quote": "Firing someone over jury duty is a crime in Michigan.",
+        "gloss": "It is a misdemeanor, and the court can also hold the boss in contempt."
+      },
+      "setting": "work",
+      "questionType": "afterward"
+    },
+    {
+      "id": "court.03.017",
+      "version": 1,
+      "q": "Your mom will miss a week of work for jury duty. What does Michigan law say about your mom's paycheck for that week?",
+      "options": [
+        {
+          "id": "court.03.017.a",
+          "text": "The employer does not have to pay wages for jury days.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.017.b",
+          "text": "The employer must pay full wages for every jury day.",
+          "isCorrect": false,
+          "explanation": "Michigan does not require private employers to pay wages during jury service.",
+          "misconceptionCode": "employer_must_pay_full"
+        },
+        {
+          "id": "court.03.017.c",
+          "text": "Half wages are required for every jury day.",
+          "isCorrect": false,
+          "explanation": "No part of the wages is required by law.",
+          "misconceptionCode": "employer_must_pay_half"
+        },
+        {
+          "id": "court.03.017.d",
+          "text": "The court pays the employer to keep wages going.",
+          "isCorrect": false,
+          "explanation": "The court pays the juror a small amount directly. It does not pay employers.",
+          "misconceptionCode": "court_reimburses_employer"
+        }
+      ],
+      "hint": "Protecting a job and paying for time off are two different rules.",
+      "principle": "Michigan protects a juror's job but does not require private employers to pay wages during jury service. Many employers choose to pay anyway, some because of a union contract, so it is worth asking. The court also pays jurors a small daily amount.",
+      "keyPhrase": {
+        "quote": "Your job is protected; your pay may not be.",
+        "gloss": "Many employers pay anyway, but Michigan law does not require it."
+      },
+      "setting": "work",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.018",
+      "version": 1,
+      "q": "You spend a full day at the courthouse for jury duty. Who pays you for that day?",
+      "options": [
+        {
+          "id": "court.03.018.a",
+          "text": "The court, a small daily amount plus mileage.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.018.b",
+          "text": "Nobody, since jury service is unpaid.",
+          "isCorrect": false,
+          "explanation": "Michigan law requires courts to pay jurors for each day or half day.",
+          "misconceptionCode": "jury_service_unpaid"
+        },
+        {
+          "id": "court.03.018.c",
+          "text": "The police department that made the arrest.",
+          "isCorrect": false,
+          "explanation": "Police have no role in paying jurors, and many jury cases are not about an arrest.",
+          "misconceptionCode": "police_pay_jurors"
+        },
+        {
+          "id": "court.03.018.d",
+          "text": "The lawyers on both sides of the case.",
+          "isCorrect": false,
+          "explanation": "Jurors must stay neutral, so lawyers never pay jurors.",
+          "misconceptionCode": "lawyers_pay_jurors"
+        }
+      ],
+      "hint": "Jurors do get something back for a day in court.",
+      "principle": "Michigan law sets a minimum daily pay for jurors, plus mileage for the drive to court and back. Each county sets its own rate at or above that minimum, and the first day pays less than later days. The amount is small and is not meant to replace a paycheck.",
+      "keyPhrase": {
+        "quote": "The court pays jurors a small amount plus mileage.",
+        "gloss": "Each county sets the rate, and it is not meant to replace a paycheck."
+      },
+      "setting": "facility",
+      "questionType": "who_is_doing_it"
+    },
+    {
+      "id": "court.03.019",
+      "version": 1,
+      "q": "Your aunt just got a jury summons. When does Michigan law start protecting your aunt's job?",
+      "options": [
+        {
+          "id": "court.03.019.a",
+          "text": "As soon as the summons arrives.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.019.b",
+          "text": "Once your aunt is picked for a trial.",
+          "isCorrect": false,
+          "explanation": "The protection starts with the summons, whether or not a person is picked.",
+          "misconceptionCode": "protection_only_if_seated"
+        },
+        {
+          "id": "court.03.019.c",
+          "text": "After a full week of jury service.",
+          "isCorrect": false,
+          "explanation": "No amount of time is required. The protection starts with the summons.",
+          "misconceptionCode": "protection_needs_long_service"
+        },
+        {
+          "id": "court.03.019.d",
+          "text": "Once a judge signs a note for your aunt's boss.",
+          "isCorrect": false,
+          "explanation": "No note is needed. The protection comes from the law itself.",
+          "misconceptionCode": "protection_needs_judge_note"
+        }
+      ],
+      "hint": "The law protects more people than just the ones who sit on a trial.",
+      "principle": "Michigan's protection covers three moments: being summoned, serving, and having served. A boss cannot threaten or punish a person at any of those points. Courts suggest telling your employer as soon as a summons arrives.",
+      "keyPhrase": {
+        "quote": "Being summoned is enough to be protected.",
+        "gloss": "The law covers being summoned, serving, and having served."
+      },
+      "setting": "work",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.020",
+      "version": 1,
+      "q": "A caller tells your grandpa that a warrant is out for missed jury duty and a gift card payment will clear it. What is true about this call?",
+      "options": [
+        {
+          "id": "court.03.020.a",
+          "text": "Courts never demand payment over the phone.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.020.b",
+          "text": "Paying right away is the only way to stop an arrest.",
+          "isCorrect": false,
+          "explanation": "Courts do not collect fines by phone, so paying stops nothing. The money goes to a scammer.",
+          "misconceptionCode": "pay_to_stop_arrest"
+        },
+        {
+          "id": "court.03.020.c",
+          "text": "A partial payment will hold off the warrant.",
+          "isCorrect": false,
+          "explanation": "Any payment on a call like this goes to a scammer, not the court.",
+          "misconceptionCode": "partial_payment_delays_arrest"
+        },
+        {
+          "id": "court.03.020.d",
+          "text": "Hanging up will send police to the house.",
+          "isCorrect": false,
+          "explanation": "Real officers do not call to threaten arrest, and hanging up on a scam call changes nothing.",
+          "misconceptionCode": "hanging_up_triggers_arrest"
+        }
+      ],
+      "hint": "Think about which payment methods real courts use.",
+      "principle": "The FTC warns that jury duty scams often start with a call from someone claiming to be a U.S. Marshal or a local police officer. Courts never demand payment over the phone, and only scammers insist on gift cards, crypto, payment apps, or wire transfers. Kalamazoo County Jury Services says it will never call to demand a fine.",
+      "keyPhrase": {
+        "quote": "A call demanding money for jury duty is a scam.",
+        "gloss": "Courts never take payment by gift card, crypto, or wire transfer."
+      },
+      "setting": "phone",
+      "questionType": "judging_a_claim"
+    },
+    {
+      "id": "court.03.021",
+      "version": 1,
+      "q": "You get a text with a picture of an arrest warrant for missed jury duty. What is true about that text?",
+      "options": [
+        {
+          "id": "court.03.021.a",
+          "text": "Real arrest warrants are not sent by text or email.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.021.b",
+          "text": "Courts now send warrants by text to save time.",
+          "isCorrect": false,
+          "explanation": "Real law enforcement never texts or emails an arrest warrant.",
+          "misconceptionCode": "courts_text_warrants"
+        },
+        {
+          "id": "court.03.021.c",
+          "text": "Replying within an hour will clear the warrant.",
+          "isCorrect": false,
+          "explanation": "The warrant is fake. Replying only tells the scammer the number works.",
+          "misconceptionCode": "reply_clears_warrant"
+        },
+        {
+          "id": "court.03.021.d",
+          "text": "The court's name on the picture proves the text is real.",
+          "isCorrect": false,
+          "explanation": "Scammers copy real court names and make fake documents that look official.",
+          "misconceptionCode": "official_look_proves_real"
+        }
+      ],
+      "hint": "Think about how real courts reach people.",
+      "principle": "Scammers now text or email fake warrants that look official, sometimes with a real court's name on them. The FTC says real law enforcement will never text or email you an arrest warrant. Courts send jury summonses by mail.",
+      "keyPhrase": {
+        "quote": "Arrest warrants do not arrive by text.",
+        "gloss": "Scammers copy real court names. Courts send jury summonses by mail."
+      },
+      "setting": "phone",
+      "questionType": "judging_a_claim"
+    },
+    {
+      "id": "court.03.022",
+      "version": 1,
+      "q": "Your mom gets a call demanding money for missed jury duty. Where can a call like that be reported?",
+      "options": [
+        {
+          "id": "court.03.022.a",
+          "text": "To the FTC, the police, or the court the caller named.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.022.b",
+          "text": "Nowhere, since scam calls are not against the law.",
+          "isCorrect": false,
+          "explanation": "Pretending to be a court official is a crime.",
+          "misconceptionCode": "impersonating_court_is_legal"
+        },
+        {
+          "id": "court.03.022.c",
+          "text": "To the phone company, and nowhere else.",
+          "isCorrect": false,
+          "explanation": "The FTC, the police, and the court all take these reports.",
+          "misconceptionCode": "only_phone_company_handles_scams"
+        },
+        {
+          "id": "court.03.022.d",
+          "text": "Back to the number the caller left.",
+          "isCorrect": false,
+          "explanation": "That number belongs to the scammer, not to any court.",
+          "misconceptionCode": "call_back_scammer_number"
+        }
+      ],
+      "hint": "Faking a court official is a crime of its own.",
+      "principle": "The FTC collects scam reports at ReportFraud.ftc.gov. Michigan's courts say to report jury scam calls to the police and to the court the caller said the call came from. Pretending to be a court official is a crime.",
+      "keyPhrase": {
+        "quote": "Report jury scam calls to the FTC, police, or court.",
+        "gloss": "Pretending to be a court official is a crime."
+      },
+      "setting": "phone",
+      "questionType": "afterward"
+    },
+    {
+      "id": "court.03.023",
+      "version": 1,
+      "q": "You are 20 and waiting in a courtroom for jury selection. Before any questions start, what does every possible juror promise?",
+      "options": [
+        {
+          "id": "court.03.023.a",
+          "text": "To answer every question truthfully and completely.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.023.b",
+          "text": "To side with the prosecutor when the evidence is close.",
+          "isCorrect": false,
+          "explanation": "Jurors promise to be truthful, not to favor either side.",
+          "misconceptionCode": "jurors_favor_prosecution"
+        },
+        {
+          "id": "court.03.023.c",
+          "text": "To stay on the jury no matter what comes up.",
+          "isCorrect": false,
+          "explanation": "The first promise is only about honest answers. Many people are sent home after the questions.",
+          "misconceptionCode": "juror_oath_locks_you_in"
+        },
+        {
+          "id": "court.03.023.d",
+          "text": "To never speak about the case for the rest of your life.",
+          "isCorrect": false,
+          "explanation": "The first promise covers honest answers during selection, not lifelong silence.",
+          "misconceptionCode": "jury_secrecy_is_forever"
+        }
+      ],
+      "hint": "The first promise comes before anyone knows who will be picked.",
+      "principle": "Before jury selection, Michigan judges have every possible juror swear or affirm to answer all questions about serving truthfully and completely. A person with religious beliefs against oaths can affirm instead of swearing.",
+      "keyPhrase": {
+        "quote": "Jury selection starts with a promise to tell the truth.",
+        "gloss": "A person with religious beliefs against oaths can affirm instead."
+      },
+      "setting": "facility",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.024",
+      "version": 1,
+      "q": "You are watching jury selection on a class trip. One possible juror turns out to be the defendant's cousin. What can happen to that possible juror?",
+      "options": [
+        {
+          "id": "court.03.024.a",
+          "text": "The judge can send that person home.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.024.b",
+          "text": "The juror stays, since the court already sent the letter.",
+          "isCorrect": false,
+          "explanation": "A summons only brings someone to selection. Being related to someone in the case is a reason to be removed.",
+          "misconceptionCode": "summoned_means_seated"
+        },
+        {
+          "id": "court.03.024.c",
+          "text": "The whole trial gets canceled and starts over later.",
+          "isCorrect": false,
+          "explanation": "Only that one juror is removed. Selection keeps going with the next person.",
+          "misconceptionCode": "conflict_cancels_trial"
+        },
+        {
+          "id": "court.03.024.d",
+          "text": "The cousin gets a fine for coming to court.",
+          "isCorrect": false,
+          "explanation": "Being related is not wrong. The court only makes sure a relative does not decide the case.",
+          "misconceptionCode": "related_juror_is_punished"
+        }
+      ],
+      "hint": "Ask whether a relative could judge the case fairly.",
+      "principle": "In Michigan, being related to a party or a lawyer in the case is a reason to remove a juror \"for cause.\" Other causes include a fixed opinion about the case, bias for or against one side, or being a witness in the case. The judge rules on each challenge.",
+      "keyPhrase": {
+        "quote": "A relative of someone in the case can be removed for cause.",
+        "gloss": "Being related to someone in the case is a reason for removal."
+      },
+      "setting": "facility",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.025",
+      "version": 1,
+      "q": "During jury selection, a lawyer sends your dad home and gives no reason. How many jurors can each side excuse this way?",
+      "options": [
+        {
+          "id": "court.03.025.a",
+          "text": "A small number set by court rules.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.025.b",
+          "text": "As many as each side wants.",
+          "isCorrect": false,
+          "explanation": "The number is limited. In most Michigan criminal cases, a defendant gets five.",
+          "misconceptionCode": "unlimited_peremptories"
+        },
+        {
+          "id": "court.03.025.c",
+          "text": "None, since only the judge can excuse jurors.",
+          "isCorrect": false,
+          "explanation": "Lawyers on each side can excuse a few jurors without the judge ruling on it.",
+          "misconceptionCode": "only_judge_excuses"
+        },
+        {
+          "id": "court.03.025.d",
+          "text": "Just one for each side.",
+          "isCorrect": false,
+          "explanation": "Each side gets more than one. Most Michigan criminal defendants get five.",
+          "misconceptionCode": "single_peremptory"
+        }
+      ],
+      "hint": "A defendant facing life in prison gets more of these than usual.",
+      "principle": "Each side gets a set number of peremptory challenges, which excuse a juror with no reason given. In most Michigan criminal cases, a defendant gets five. Michigan's jury instructions tell people who are excused not to feel bad or take it personally. Lawyers cannot use these challenges to remove jurors because of race.",
+      "keyPhrase": {
+        "quote": "Being excused without a reason is normal, not personal.",
+        "gloss": "Each side gets a few of these, and race can never be the reason."
+      },
+      "setting": "facility",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.026",
+      "version": 1,
+      "q": "During jury selection, the judge and lawyers ask you questions about your life. Why do the judge and lawyers ask these questions?",
+      "options": [
+        {
+          "id": "court.03.026.a",
+          "text": "To find anything that could keep a juror from being fair.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.026.b",
+          "text": "To test how much you know about the law.",
+          "isCorrect": false,
+          "explanation": "Jurors do not need to know the law. The judge explains the law during the trial.",
+          "misconceptionCode": "jurors_need_legal_knowledge"
+        },
+        {
+          "id": "court.03.026.c",
+          "text": "To find the smartest people in the room.",
+          "isCorrect": false,
+          "explanation": "The questions look for fairness, not intelligence.",
+          "misconceptionCode": "jurors_picked_for_smarts"
+        },
+        {
+          "id": "court.03.026.d",
+          "text": "To see who wants to be on the jury the most.",
+          "isCorrect": false,
+          "explanation": "Wanting to serve is not the test. The goal is a jury that can be fair.",
+          "misconceptionCode": "jurors_picked_for_eagerness"
+        }
+      ],
+      "hint": "The questions are about opinions and life experiences.",
+      "principle": "Jury selection is also called voir dire. The questions look for bias, opinions about the case, or experiences that could push a juror toward one side. Michigan's jury instructions say the questions are not meant to pry into private life; the law needs the answers to pick a fair jury. A judge can let a person answer away from the other jurors.",
+      "keyPhrase": {
+        "quote": "Jury selection questions look for fairness, not smarts.",
+        "gloss": "The questions look for anything that could push a juror to one side."
+      },
+      "setting": "facility",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.027",
+      "version": 1,
+      "q": "You are on a jury, and the trial breaks for the night. What does the judge's rule say about looking up the case online at home?",
+      "options": [
+        {
+          "id": "court.03.027.a",
+          "text": "Research of any kind waits until jury service ends.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.027.b",
+          "text": "Research at home is fine, just not in court.",
+          "isCorrect": false,
+          "explanation": "The rule covers everywhere, including home, until jury service is over.",
+          "misconceptionCode": "home_research_allowed"
+        },
+        {
+          "id": "court.03.027.c",
+          "text": "Reading the news is fine, just not social media.",
+          "isCorrect": false,
+          "explanation": "News reports about the case are off limits too.",
+          "misconceptionCode": "news_is_ok_for_jurors"
+        },
+        {
+          "id": "court.03.027.d",
+          "text": "Looking things up is fine after the first day.",
+          "isCorrect": false,
+          "explanation": "The rule lasts the whole trial, not just the first day.",
+          "misconceptionCode": "research_ok_after_day_one"
+        }
+      ],
+      "hint": "Each side needs a chance to respond to every piece of evidence.",
+      "principle": "Michigan judges tell jurors not to research anything about the case, online or any other way, including the people, lawyers, and topics involved. Jurors also cannot talk about the case with anyone, even family, until jury service ends. Evidence has to come out in court, where both sides can answer it.",
+      "keyPhrase": {
+        "quote": "Jurors decide only on evidence heard in court.",
+        "gloss": "That includes the news, social media, and talking with family."
+      },
+      "setting": "home",
+      "questionType": "line"
+    },
+    {
+      "id": "court.03.028",
+      "version": 1,
+      "q": "Your cousin is on a jury and has a question for a witness. How can the question get asked?",
+      "options": [
+        {
+          "id": "court.03.028.a",
+          "text": "Your cousin can write it down, and the judge may ask it.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.028.b",
+          "text": "Your cousin can call it out from the jury box.",
+          "isCorrect": false,
+          "explanation": "Jurors never speak to witnesses directly. Questions go through the judge.",
+          "misconceptionCode": "jurors_question_aloud"
+        },
+        {
+          "id": "court.03.028.c",
+          "text": "Your cousin can never ask a witness anything.",
+          "isCorrect": false,
+          "explanation": "Michigan judges may allow juror questions, as long as the judge asks them.",
+          "misconceptionCode": "jurors_never_ask"
+        },
+        {
+          "id": "court.03.028.d",
+          "text": "Your cousin can ask a lawyer to add it at the break.",
+          "isCorrect": false,
+          "explanation": "Jurors cannot talk with the lawyers about the case. Questions go through the judge.",
+          "misconceptionCode": "juror_can_talk_to_lawyers"
+        }
+      ],
+      "hint": "Jurors never speak directly to witnesses.",
+      "principle": "Michigan judges may let jurors ask witnesses questions. When allowed, jurors wait until both sides finish, write the question down, and the judge reads it after the lawyers get a chance to object. If a question is not asked, the judge decided the law did not allow it. Judges may also let jurors take notes.",
+      "keyPhrase": {
+        "quote": "Juror questions go through the judge.",
+        "gloss": "The lawyers get a chance to object before the judge asks."
+      },
+      "setting": "facility",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.029",
+      "version": 1,
+      "q": "In Michigan, you are watching the end of a criminal trial with 12 jurors. How many jurors must agree on the verdict?",
+      "options": [
+        {
+          "id": "court.03.029.a",
+          "text": "All 12 of the jurors.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.029.b",
+          "text": "A majority, 7 of the 12.",
+          "isCorrect": false,
+          "explanation": "A simple majority is never enough for a criminal verdict in Michigan.",
+          "misconceptionCode": "majority_verdict"
+        },
+        {
+          "id": "court.03.029.c",
+          "text": "10 of the 12 jurors.",
+          "isCorrect": false,
+          "explanation": "Criminal verdicts must be unanimous. Split verdicts like 10 to 2 are not allowed.",
+          "misconceptionCode": "ten_of_twelve_verdict"
+        },
+        {
+          "id": "court.03.029.d",
+          "text": "Two thirds, 8 of the 12.",
+          "isCorrect": false,
+          "explanation": "Every juror has to agree, whether the verdict is guilty or not guilty.",
+          "misconceptionCode": "two_thirds_verdict"
+        }
+      ],
+      "hint": "Think about how sure a criminal jury has to be.",
+      "principle": "Michigan criminal verdicts must be unanimous, whether guilty or not guilty. Felony juries have 12 people and misdemeanor juries have 6. Civil cases work differently: 6 jurors, and 5 must agree.",
+      "keyPhrase": {
+        "quote": "Criminal verdicts need every juror.",
+        "gloss": "Felony juries have 12 people, and every one has to agree."
+      },
+      "setting": "facility",
+      "questionType": "standard"
+    },
+    {
+      "id": "court.03.030",
+      "version": 1,
+      "q": "The jury in a family friend's trial cannot agree on a verdict, no matter how long the jury talks. What happens next?",
+      "options": [
+        {
+          "id": "court.03.030.a",
+          "text": "The trial ends, and the case may be tried again.",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "court.03.030.b",
+          "text": "A not guilty verdict, and the case ends.",
+          "isCorrect": false,
+          "explanation": "A jury that cannot agree has reached no verdict at all, guilty or not guilty.",
+          "misconceptionCode": "hung_jury_means_acquittal"
+        },
+        {
+          "id": "court.03.030.c",
+          "text": "A verdict decided by the judge alone.",
+          "isCorrect": false,
+          "explanation": "The judge does not take over the jury's decision. The judge can end the trial instead.",
+          "misconceptionCode": "judge_breaks_deadlock"
+        },
+        {
+          "id": "court.03.030.d",
+          "text": "A verdict for the side with more votes.",
+          "isCorrect": false,
+          "explanation": "Criminal verdicts must be unanimous, so more votes on one side does not decide anything.",
+          "misconceptionCode": "majority_wins_deadlock"
+        }
+      ],
+      "hint": "Think about what a criminal verdict needs from every juror.",
+      "principle": "A jury that cannot agree is called a hung jury. The judge can declare a mistrial, and the case can be tried again with a new jury. Michigan courts treat a hung jury as a clear reason for a mistrial, and a new trial after one does not count as being tried twice for the same crime.",
+      "keyPhrase": {
+        "quote": "A hung jury means no verdict, not a win.",
+        "gloss": "A new jury can hear the case again."
+      },
+      "setting": "facility",
+      "questionType": "afterward"
+    }
+  ]
+}
