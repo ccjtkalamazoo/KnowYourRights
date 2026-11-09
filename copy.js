@@ -271,7 +271,7 @@ export const R = {
     eyebrow: "SPECIAL TOPIC",
     title: "RESISTING AND OBSTRUCTING",
     intro: "15 questions about Michigan's resisting and obstructing law.",
-    introNote: "Anonymous. Your answers help CCJT learn what people in our community know about this law.",
+    introNote: "Anonymous. Your answers help us learn what people in our community know about this law.",
     safetyTitle: "BEFORE YOU START",
     safetyBody: "Knowing your rights and following lawful orders go together. If you disagree with a stop, a search, or an arrest, the place to challenge it is in court, not on the street.",
     noticeBody: "This is not legal advice. If something real is happening, talk to a lawyer.",
