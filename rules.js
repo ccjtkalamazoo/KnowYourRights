@@ -96,7 +96,12 @@ export const buildDeck = (chapter, size = CHAPTER_DECK_SIZE) =>
 // Source data always puts the correct answer at index 0 so authors don't have to
 // think about placement; this is what makes that safe.
 export const shuffleOptions = (e) => {
-  const t = shuffle([0, 1, 2, 3]);
+  // A pinned option (e.g. "All of the above") is held in the last slot and
+  // only the other three are shuffled. Questions without one are unaffected.
+  const pin = Number.isInteger(e.pinned) && e.pinned >= 0 ? e.pinned : -1;
+  const t = pin < 0
+    ? shuffle([0, 1, 2, 3])
+    : [...shuffle([0, 1, 2, 3].filter((i) => i !== pin)), pin];
   const pick = (arr) => (arr ? t.map((i) => arr[i]) : null);
   // Every per-option array is permuted by the SAME order, so text, explanation,
   // permanent id, and misconception code stay attached to each other. Because
