@@ -93,7 +93,7 @@ import { SfxEngine, MusicEngine } from "./audio.js";
 import { MapScreen } from "./map.js";
 import { DistrictScreen } from "./district.js";
 import { newSession, recordChapterRun, clearTutorial } from "./state.js";
-import { loadChapter, loadDemo, loadTutorial } from "./content.js";
+import { loadChapter, loadDemo, loadTutorial, loadSpecial } from "./content.js";
 import { TourOverlay, TourBail, TourBailConfirm, injectTourStyles, activeStep } from "./tutorial.js";
 
 // ---------------------------------------------------------------------------
@@ -102,6 +102,26 @@ import { TourOverlay, TourBail, TourBailConfirm, injectTourStyles, activeStep } 
 // Three rounds per page load, then it stops. The cap is deliberately in memory
 // and nowhere else: a refresh clears it, which is exactly how the table is run.
 const MAX_DEMO_RUNS = 3;
+
+// ---------------------------------------------------------------------------
+// Special topic (resisting and obstructing)
+// ---------------------------------------------------------------------------
+// A standalone topic that doubles as a community survey. Everyone gets the
+// same questions in a shuffled order: no lives, no lifelines, no ladder, and a
+// required 1 to 10 self-rating before the first question and after the last.
+//
+// It can be opened two ways: the banner on the map, or the direct link
+// knowyourrights.ccjtkalamazoo.org/ro, which redirects to ?play=ro and lands
+// straight on the topic's first screen, skipping the title screen, the
+// walkthrough and the map. That screen carries its own safety note and legal
+// notice, since a link player never sees the walkthrough's.
+const SPECIAL_TOPIC = "ro";
+const linkedSpecial = () => {
+  try {
+    if (typeof window === "undefined") return null;
+    return new URLSearchParams(window.location.search).get("play") === SPECIAL_TOPIC ? SPECIAL_TOPIC : null;
+  } catch { return null; }
+};
 
 // How long the game holds on a locked answer before the reveal, in ms.
 const LOCK_PAUSE_MS = 2000;
@@ -114,7 +134,9 @@ const noCards = () => Array.from({ length: CARD_COUNT }, () => false);
 // App : all game state lives here.
 // ===========================================================================
 export function App() {
-  const [phase, setPhase] = useState("start");
+  // A direct link to the special topic opens on its first screen instead of
+  // the title screen.
+  const [phase, setPhase] = useState(() => (linkedSpecial() ? "rointro" : "start"));
   const [chapter, setChapter] = useState(null);
   const [loadError, setLoadError] = useState(null);
   const [walkStep, setWalkStep] = useState(0);
@@ -181,6 +203,20 @@ export function App() {
   // RevealScreen owns whether it is showing the verdict or the cards, and the
   // tour needs to know which. It reports up rather than the engine guessing.
   const [revealStep, setRevealStep] = useState("verdict");
+  // Special topic. `specialEntry` records how the player got here ("link" or
+  // "map") so the data can tell the two apart. The two ratings are 1 to 10,
+  // null until picked, and both are required.
+  const [isSpecial, setIsSpecial] = useState(false);
+  const [specialEntry, setSpecialEntry] = useState(() => (linkedSpecial() ? "link" : null));
+  const [ratingPre, setRatingPre] = useState(null);
+  const [ratingPost, setRatingPost] = useState(null);
+  // Which of the four opening screens is showing (0 to 3), and which of the
+  // three closing screens ("score", "review", "done").
+  const [roStep, setRoStep] = useState(0);
+  const [roEndStep, setRoEndStep] = useState("score");
+  // What the player picked on each question, by position in the deck, so the
+  // review screen can show "you picked" against "right answer".
+  const [picks, setPicks] = useState([]);
 
   const sfx = useRef(null);
   const music = useRef(null);
@@ -198,7 +234,17 @@ export function App() {
 
   useEffect(() => {
     if (typeof window !== "undefined") window.scrollTo(0, 0);
-  }, [phase, walkStep, level]);
+  }, [phase, walkStep, level, roStep, roEndStep]);
+
+  // Special topic screen views, recorded as nav events so the data shows how
+  // many people arrive, how far into the opening screens they get, and how many
+  // read their answers at the end. The first one fires the moment a link
+  // player lands, which is what makes people who leave before starting visible.
+  useEffect(() => {
+    if (phase === "rointro") EV.track("nav", { where: `ro_intro_${roStep + 1}`, entry: specialEntry || "map" });
+    else if (phase === "ropost") EV.track("nav", { where: "ro_rating_after" });
+    else if (phase === "roend") EV.track("nav", { where: `ro_${roEndStep}` });
+  }, [phase, roStep, roEndStep]); // eslint-disable-line
 
   // Per-question measurement (events.js). Reset each time a question is shown.
   const qMeter = useRef({ exposure: 1, shownAt: 0, firstSelectAt: null, changes: 0, lifelines: [] });
@@ -265,6 +311,7 @@ export function App() {
     setIsEndless(false); setFinalPrize(0); setIsDemo(false);
     setIsTutorial(false); setTourIdx(0); setRevealStep("verdict");
     setRetryNotice(false); setBailConfirm(false);
+    setIsSpecial(false); setPicks([]);
   };
 
   // Per-round reset for the demo. Same as resetState minus the deck and minus
@@ -293,7 +340,7 @@ export function App() {
   // through it so an abandoned run is reported exactly once and in one place.
   const endRunIfPlaying = () => {
     if (phase === "playing" || phase === "revealing" || phase === "locking") {
-      EV.trackRunEnd("abandoned", { level, mode: isDemo ? "demo" : isEndless ? "endless" : "ladder" });
+      EV.trackRunEnd("abandoned", { level, mode: isSpecial ? "special" : isDemo ? "demo" : isEndless ? "endless" : "ladder" });
       EV.flush();
     }
   };
@@ -333,6 +380,105 @@ export function App() {
     setChapter(null);
     setWalkStep(0);
     setPhase("start");
+  };
+
+  // -------------------------------------------------------------------------
+  // The special topic
+  // -------------------------------------------------------------------------
+  // From the map banner: the topic's first screen, where the "before" rating
+  // is picked. The direct link lands on the same screen at page load.
+  const openSpecial = () => {
+    initAudio(); sfx.current.click();
+    setSpecialEntry("map");
+    setRatingPre(null); setRatingPost(null);
+    setRoStep(0);
+    setPhase("rointro");
+  };
+
+  // Start pressed with a rating picked. Every question in the topic is dealt,
+  // in a fresh random order; the dealt order is recorded in deck_dealt, which
+  // is what lets the data show how answers change across related questions.
+  const startSpecial = async () => {
+    if (ratingPre == null) return;
+    initAudio(); sfx.current.click();
+    resetState();
+    setChapter(null);
+    setLoadError(null);
+    setRatingPost(null);
+    setPhase("loading");
+    try {
+      const pool = await loadSpecial(SPECIAL_TOPIC);
+      const d = buildDeck(pool, pool.questions.length);
+      setChapter(pool);
+      setDeck(d);
+      setIsSpecial(true);
+      EV.trackModeStart("special", d, {
+        topicId: pool.topicId, chapterId: pool.id, deckSize: d.length,
+        lives: 0, entry: specialEntry || "map"
+      });
+      EV.track("self_rating", { topicId: pool.topicId, when: "before", rating: ratingPre });
+      EV.trackNav("round_start");
+      setPhase("playing");
+      setTimeout(() => { music.current.start(); music.current.setStage(1); }, 200);
+    } catch (err) {
+      setLoadError(err.message || String(err));
+      setPhase("loaderror");
+    }
+  };
+
+  // The "after" rating, then the score. Sent with the score so the before,
+  // the after and the result sit together in the data.
+  const finishSpecial = () => {
+    if (ratingPost == null) return;
+    sfx.current.click();
+    EV.track("self_rating", {
+      topicId: SPECIAL_TOPIC, when: "after", rating: ratingPost,
+      correct: correctCount, deckSize: deck.length
+    });
+    EV.flush();
+    setRoEndStep("score");
+    setPhase("roend");
+    setTimeout(() => sfx.current.win(), 200);
+  };
+
+  // Shared devices. The session id is made once per page load, so on a tablet
+  // passed from person to person every player after the first would be
+  // counted as the same person. Reloading the page is what starts a genuinely
+  // new session, so that is all this does, after getting the data out.
+  const newPlayer = () => {
+    sfx.current.click();
+    EV.track("nav", { where: "ro_new_player" });
+    EV.flush(true);
+    try {
+      window.location.href = window.location.pathname + "?play=" + SPECIAL_TOPIC;
+    } catch {}
+  };
+
+  // Leaving the topic. Goes to the title screen, which is the front door of
+  // the rest of the game. The ?play=ro is dropped from the address so a
+  // refresh after leaving does not throw the player back into the topic.
+  const exitSpecial = () => {
+    initAudio(); sfx.current.click(); music.current.stop();
+    if (phase === "playing" || phase === "revealing" || phase === "locking") {
+      EV.trackRunEnd("abandoned", { level, mode: "special" }); EV.flush();
+    }
+    try {
+      if (typeof window !== "undefined" && window.location.search) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    } catch {}
+    EV.trackNav("home");
+    resetState();
+    setChapter(null);
+    setWalkStep(0);
+    setPhase("start");
+  };
+
+  // Back from the topic's first screen: to the map if that is where the player
+  // came from, otherwise to the title screen.
+  const backFromSpecial = () => {
+    if (specialEntry === "map") goMap();
+    else exitSpecial();
   };
 
   // -------------------------------------------------------------------------
@@ -557,6 +703,7 @@ export function App() {
     sfx.current.lockIn(s);
     sfx.current.duck(0.4, 200);
     music.current.duck(s === 1 ? 0.18 : s === 2 ? 0.3 : 0.4, 200);
+    if (isSpecial) setPicks((p) => { const copy = p.slice(); copy[level] = selected; return copy; });
     setLocked(true);
     setPhase("locking");
     setResults((r) => { const copy = r.slice(); copy[level] = wasRight; return copy; });
@@ -592,8 +739,9 @@ export function App() {
         music.current.unduck(600);
       } else {
         // A miss costs a life. It does NOT end the run unless that was the last
-        // one, which is the whole point of the change.
-        setLives((v) => v - 1);
+        // one, which is the whole point of the change. The special topic has
+        // no lives: a miss is recorded and the round carries on.
+        if (!isSpecial) setLives((v) => v - 1);
         setStreak(0);
         setMissed((m) => [...m, currentQ]);
         setRevealWrong(true);
@@ -610,7 +758,7 @@ export function App() {
 
   const advance = () => {
     sfx.current.click();
-    const runMode = isDemo ? "demo" : isEndless ? "endless" : "ladder";
+    const runMode = isSpecial ? "special" : isDemo ? "demo" : isEndless ? "endless" : "ladder";
 
     // Out of lives ends the run wherever it is. Never in the tutorial: the
     // script spends exactly one life on purpose and a tutorial that can be
@@ -642,6 +790,16 @@ export function App() {
       resetState();
       EV.trackNav("map");
       setPhase("map");
+      return;
+    }
+
+    // The special topic ends on the "after" rating, then its own score screen.
+    // No prize, no win screen, no bonus round.
+    if (isSpecial && next >= deck.length) {
+      music.current.stop();
+      EV.trackRunEnd("finished", { level, mode: "special", correct: correctCount, wrong: deck.length - correctCount });
+      EV.flush();
+      setPhase("ropost");
       return;
     }
 
@@ -770,7 +928,7 @@ export function App() {
   };
 
   const askHome = () => {
-    if (phase === "start" || phase === "map" || phase === "district" || phase === "gameover" || phase === "won" || phase === "winbig") return;
+    if (phase === "start" || phase === "map" || phase === "district" || phase === "gameover" || phase === "won" || phase === "winbig" || phase === "rointro" || phase === "ropost" || phase === "roend") return;
     sfx.current.modalOpen();
     setHomeConfirm(true);
   };
@@ -779,7 +937,8 @@ export function App() {
   // other chapters are there and it is one fewer tap than landing on the grid.
   const confirmHome = () => {
     setHomeConfirm(false);
-    if (isDemo) exitDemo();
+    if (isSpecial) exitSpecial();
+    else if (isDemo) exitDemo();
     else if (district && !isTutorial) goDistrict();
     else goMap();
   };
@@ -832,7 +991,7 @@ export function App() {
     session,
     onOpenDistrict: openDistrict,
     onHome: () => { resetState(); setPhase("start"); },
-    onPlayDemo: startDemo, onPlayTutorial: startTutorial,
+    onPlayDemo: startDemo, onPlayTutorial: startTutorial, onPlaySpecial: openSpecial,
     demoRunsUsed, demoMaxRuns: MAX_DEMO_RUNS, demoCanPlay, demoWon
   });
 
@@ -920,6 +1079,46 @@ export function App() {
       logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
     ] });
 
+  if (phase === "rointro")
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(RoIntroScreen, {
+        step: roStep, rating: ratingPre,
+        onRate: (n) => { sfx.current.select(); setRatingPre(n); },
+        onNext: () => { initAudio(); sfx.current.click(); setRoStep((n) => Math.min(3, n + 1)); },
+        onBack: () => { sfx.current.click(); if (roStep > 0) setRoStep(roStep - 1); else backFromSpecial(); },
+        onStart: startSpecial
+      }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
+
+  if (phase === "ropost")
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      c.jsx(RoPostScreen, {
+        rating: ratingPost,
+        onRate: (n) => { sfx.current.select(); setRatingPost(n); },
+        onDone: finishSpecial
+      }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
+
+  if (phase === "roend")
+    return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
+      roEndStep === "review"
+        ? c.jsx(RoReviewScreen, {
+            deck, picks,
+            onOpen: (q) => EV.track("nav", { where: "ro_review_open", qid: EV.questionId(q) }),
+            onDone: () => { sfx.current.click(); setRoEndStep("done"); }
+          })
+        : roEndStep === "done"
+          ? c.jsx(RoDoneScreen, { onExplore: exitSpecial, onNewPlayer: newPlayer })
+          : c.jsx(RoScoreScreen, {
+              correct: correctCount, total: deck.length,
+              before: ratingPre, after: ratingPost,
+              onReview: () => { sfx.current.click(); setRoEndStep("review"); }
+            }),
+      logoConfirm && c.jsx(LogoConfirm, { onGo: confirmLogo, onCancel: cancelLogo })
+    ] });
+
   if (phase === "demointro") {
     return c.jsxs(Shell, { muted, setMuted, onLogoClick: askLogo, children: [
       c.jsx(DemoIntroScreen, { maxRuns: MAX_DEMO_RUNS, onStart: () => { sfx.current.click(); setPhase("playing"); } }),
@@ -959,7 +1158,7 @@ export function App() {
       c.jsx(RevealScreen, {
         question: currentQ, level, runLength, isEndless, streak,
         revealCorrect, selectedIdx: selected, muted, setMuted, points,
-        lives, isLastQuestion: level + 1 >= deck.length, isTutorial,
+        lives, isLastQuestion: level + 1 >= deck.length, isTutorial, isSpecial,
         onNext: advance, onHome: askHome,
         onEarnCardPoint: (seg) => earnCardPoint(seg),
         onRevealStep: setRevealStep,
@@ -969,7 +1168,7 @@ export function App() {
         onSkipReview: openSkipConfirm
       }),
       homeConfirm && c.jsx(ConfirmModal, { title: R.homeConfirm.title, body: R.homeConfirm.body, primaryLabel: R.homeConfirm.leaveLabel, secondaryLabel: R.homeConfirm.stayLabel, primaryVariant: "danger", onPrimary: confirmHome, onSecondary: cancelHome }),
-      skipConfirm && c.jsx(ConfirmModal, { title: R.review.skipConfirmTitle, body: R.review.skipConfirmBody, primaryLabel: R.review.skipConfirmPrimary, secondaryLabel: R.review.skipConfirmSecondary, primaryVariant: "danger", onPrimary: doSkip, onSecondary: cancelSkip }),
+      skipConfirm && c.jsx(ConfirmModal, { title: R.review.skipConfirmTitle, body: isSpecial ? R.ro.skipConfirmBody : R.review.skipConfirmBody, primaryLabel: R.review.skipConfirmPrimary, secondaryLabel: R.review.skipConfirmSecondary, primaryVariant: "danger", onPrimary: doSkip, onSecondary: cancelSkip }),
       ...tutorialLayer
     ] });
   }
@@ -979,7 +1178,7 @@ export function App() {
     c.jsx(QuestionScreen, {
       question: currentQ, level, runLength, rung, stage, streak, selectedIdx: selected,
       locked, revealCorrect, revealWrong, showFloating, phase, results,
-      lives, muted, setMuted, isEndless, isDemo, correctCount,
+      lives, muted, setMuted, isEndless, isDemo, isSpecial, correctCount,
       removedAnswers, juryResults, hintShown, lifelines, points, retryNotice,
       onSelect, onLockIn, onHome: askHome, onOpenShop: openShop
     }),
@@ -1172,7 +1371,7 @@ function FitText({ children, max = 40, min = 16, style }) {
 function QuestionScreen(props) {
   const { question, level, runLength, rung, stage, streak, selectedIdx, locked, revealCorrect,
     revealWrong, showFloating, phase, results, lives, muted,
-    setMuted, isEndless, isDemo, removedAnswers = [], juryResults, hintShown, lifelines,
+    setMuted, isEndless, isDemo, isSpecial, removedAnswers = [], juryResults, hintShown, lifelines,
     points, retryNotice, onSelect, onLockIn, onHome, onOpenShop } = props;
   return c.jsxs("div", {
     style: { maxWidth: 1280, margin: "0 auto", padding: "24px 24px 24px", display: "flex", gap: 28, alignItems: "flex-start", flex: "1 0 auto", width: "100%", boxSizing: "border-box" },
@@ -1189,7 +1388,9 @@ function QuestionScreen(props) {
           })
         ] }),
 
-        c.jsxs("div", { className: "ts-stat-row", style: { display: "flex", gap: 12, alignItems: "stretch" }, children: [
+        // The special topic has no lives, no shop and no prize, so the whole
+        // stat row goes. The progress bar below still shows right and wrong.
+        !isSpecial && c.jsxs("div", { className: "ts-stat-row", style: { display: "flex", gap: 12, alignItems: "stretch" }, children: [
           c.jsx(LivesBox, { lives }),
           c.jsx(ShopButton, { lifelines, points, disabled: locked, onClick: onOpenShop }),
           c.jsxs("div", { className: "ts-stat-money", "data-tour": "worth", style: { flex: "1.6 1 0", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3, padding: "12px 16px", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 10, boxShadow: U.md }, children: [
@@ -1235,7 +1436,7 @@ function QuestionScreen(props) {
           c.jsx("div", { className: "ts-action-bar-right", style: { display: "flex", gap: 12 }, children: c.jsx(Button, { variant: "primary", size: "md", disabled: selectedIdx === null || locked, onClick: onLockIn, "data-tour": "lock", children: "Lock It In" }) })
         })
       ] }),
-      !isDemo && c.jsxs("div", { className: "ts-ladder-col", style: { display: "flex", flexDirection: "column", gap: 12 }, children: [
+      !isDemo && !isSpecial && c.jsxs("div", { className: "ts-ladder-col", style: { display: "flex", flexDirection: "column", gap: 12 }, children: [
         c.jsx("button", {
           onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute sound" : "Mute sound",
           className: "ts-music-btn ts-music-ladder",
@@ -1451,10 +1652,11 @@ function RunBreakdown({ usage = {}, pointsSpent = 0, pointsLeft = 0 }) {
 
 function RevealScreen(props) {
   const { question, level, runLength, isEndless, revealCorrect, selectedIdx, muted, setMuted,
-    points, lives, isLastQuestion, isTutorial, onNext, onHome, onEarnCardPoint, onRevealStep,
+    points, lives, isLastQuestion, isTutorial, isSpecial, onNext, onHome, onEarnCardPoint, onRevealStep,
     onFlipSound, onRevisitSound, onAckSound, onSkipReview } = props;
 
-  const scoring = revealCorrect;
+  // No points in the special topic: there is no shop to spend them in.
+  const scoring = revealCorrect && !isSpecial;
 
   // Every per-card array is sized from CARD_COUNT, so changing the number of
   // cards in copy.js is the only edit needed.
@@ -1590,13 +1792,15 @@ function RevealScreen(props) {
             c.jsx("div", { style: { fontFamily: C.display, fontSize: "clamp(38px, 8vw, 64px)", lineHeight: 1, letterSpacing: 1, color: revealCorrect ? u.green : u.red }, children: revealCorrect ? "CORRECT" : "NOT QUITE" })
           ] }),
 
-          !revealCorrect && c.jsxs("div", { "data-tour": "verdict-hearts", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: "ts-fade-in 0.45s ease-out" }, children: [
+          !revealCorrect && !isSpecial && c.jsxs("div", { "data-tour": "verdict-hearts", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: "ts-fade-in 0.45s ease-out" }, children: [
             c.jsx("div", { style: { display: "flex", gap: 7 }, children: Array.from({ length: LIVES_PER_ROUND }).map((_, i) => c.jsx(Heart, { filled: i < lives, size: 30 }, i)) }),
             c.jsx("div", { style: { fontFamily: C.mono, fontSize: 11, letterSpacing: 1.4, fontWeight: 700, textTransform: "uppercase", color: outOfLives ? u.red : lives === 1 ? u.terra : u.textMuted },
               children: outOfLives ? R.lives.outOfLives : lives === 1 ? R.lives.lastOne : R.lives.lostOne })
           ] }),
 
-          c.jsxs("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 10, animation: "ts-fade-in 0.4s ease-out" }, children: [
+          isSpecial
+            ? c.jsx(SpecialAnswerList, { question, selectedIdx })
+            : c.jsxs("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 10, animation: "ts-fade-in 0.4s ease-out" }, children: [
             !revealCorrect && yourLetter != null && c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12, background: u.surface, border: `2px solid ${u.borderLight}`, borderRadius: 10, padding: "12px 16px", textAlign: "left" }, children: [
               c.jsx("span", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", flexShrink: 0 }, children: "You picked" }),
               c.jsxs("span", { style: { fontFamily: C.display, color: u.textMuted, fontSize: 17, flexShrink: 0 }, children: [yourLetter, "."] }),
@@ -1633,7 +1837,7 @@ function RevealScreen(props) {
         c.jsx(Button, { onClick: onHome, variant: "secondary", size: "sm", style: { fontSize: 12 }, children: R.homeButton }),
         c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", justifyContent: "center" }, children: [
           c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 2, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: isEndless ? `Bonus Q${level + 1}` : `Q ${String(level + 1).padStart(2, "0")} / ${runLength}` }),
-          c.jsx(LivesBox, { lives, compact: true }),
+          !isSpecial && c.jsx(LivesBox, { lives, compact: true }),
           scoring
             ? c.jsxs("div", { "data-tour": "points", style: { display: "flex", alignItems: "center", gap: 10, background: earnedCount === CARD_COUNT ? u.brandSofter : u.surfaceWarm, border: `3px solid ${earnedCount === CARD_COUNT ? u.brand : u.outline}`, borderRadius: 22, padding: "6px 14px 6px 10px", boxShadow: U.sm, animation: earnedCount === CARD_COUNT ? "ts-streak-pop 0.5s ease-out" : "none" }, children: [
                 c.jsx("div", { style: { display: "flex", gap: 5 }, children: R.cardMeta.map((_, r) => {
@@ -1645,7 +1849,7 @@ function RevealScreen(props) {
                   c.jsx("div", { style: { fontFamily: C.mono, fontSize: 8, letterSpacing: 1.5, color: u.brandDeep, fontWeight: 700, textTransform: "uppercase", marginTop: 2 }, children: earnedCount === CARD_COUNT ? R.review.allEarnedLabel : R.review.pointsLabel })
                 ] })
               ] })
-            : c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: R.review.noPointsNote })
+            : !isSpecial && c.jsx("div", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1, color: u.textMuted, fontWeight: 700, textTransform: "uppercase" }, children: R.review.noPointsNote })
         ] }),
         c.jsx("button", { onClick: () => setMuted((m) => !m), "aria-label": muted ? "Unmute" : "Mute", className: "ts-sound-btn", style: { background: muted ? "transparent" : u.surface, border: `2px solid ${u.outline}`, color: muted ? u.textMuted : u.text, padding: "6px 10px", borderRadius: 6, cursor: "pointer", fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, fontWeight: 700 }, children: muted ? "OFF" : "ON" })
       ] }),
@@ -1762,8 +1966,10 @@ function FaceInfo({ question }) {
 
 function FacePhrase({ question }) {
   const kp = question.keyPhrase || { quote: "", gloss: "" };
+  // Special-topic lines are full sentences, so they are set smaller and wider.
+  const long = !!question.longPhrase;
   return c.jsxs("div", { className: "ts-face-fill", style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", minHeight: "100%", gap: 16 }, children: [
-    c.jsx("div", { className: "ts-phrase-quote", style: { fontFamily: C.display, fontSize: "clamp(28px, 5.5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.01em", color: u.text, textShadow: `2px 2px 0 ${u.brandBright}`, animation: "ts-phrase-in 0.6s cubic-bezier(.2,.8,.2,1.2) both", maxWidth: "16ch" }, children: kp.quote }),
+    c.jsx("div", { className: "ts-phrase-quote", style: { fontFamily: C.display, fontSize: long ? "clamp(22px, 3.6vw, 34px)" : "clamp(28px, 5.5vw, 46px)", lineHeight: long ? 1.15 : 1.05, letterSpacing: "-0.01em", color: u.text, textShadow: `2px 2px 0 ${u.brandBright}`, animation: "ts-phrase-in 0.6s cubic-bezier(.2,.8,.2,1.2) both", maxWidth: long ? "26ch" : "16ch" }, children: kp.quote }),
     kp.gloss && c.jsx("p", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.55, color: u.textDim, margin: 0, fontWeight: 500, maxWidth: 460 }, children: kp.gloss })
   ] });
 }
@@ -2039,5 +2245,292 @@ function DemoIntroScreen({ maxRuns = 3, onStart }) {
       }),
       c.jsx(Button, { onClick: onStart, variant: "primary", size: "lg", children: D.introStartLabel })
     ]
+  });
+}
+
+// ===========================================================================
+// Special topic screens
+// ===========================================================================
+
+// Shared box style for the special-topic screens, matching the walkthrough card.
+const roCard = {
+  maxWidth: 640, width: "100%", background: u.surface, border: `2px solid ${u.outline}`,
+  borderRadius: 14, boxShadow: U.lg, padding: "30px 32px 28px", boxSizing: "border-box",
+  animation: "ts-fade-in 0.35s ease-out"
+};
+
+// The 1 to 10 self-rating. Ten buttons in two rows of five, so it fits a
+// phone without scrolling sideways. Labels at both ends say what 1 and 10 mean.
+function RatingScale({ value, onPick }) {
+  const T = R.ro;
+  return c.jsxs("div", { style: { width: "100%" }, children: [
+    c.jsx("div", {
+      role: "radiogroup", "aria-label": T.ratingQuestion,
+      style: { display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 10 },
+      children: Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
+        const on = value === n;
+        return c.jsx("button", {
+          role: "radio", "aria-checked": on, onClick: () => onPick(n),
+          style: {
+            fontFamily: C.display, fontSize: 24, lineHeight: 1, padding: "14px 0", minHeight: 54,
+            background: on ? u.brand : u.surfaceHigh, color: on ? u.textOnDark : u.text,
+            border: `2px solid ${u.outline}`, borderRadius: 10, cursor: "pointer",
+            boxShadow: on ? "none" : U.sm, transform: on ? "translate(2px, 2px)" : "none",
+            transition: "background 0.12s, transform 0.12s", WebkitTapHighlightColor: "transparent"
+          },
+          children: String(n)
+        }, n);
+      })
+    }),
+    c.jsxs("div", {
+      style: { display: "flex", justifyContent: "space-between", gap: 12, marginTop: 10, fontFamily: C.mono, fontSize: 13, letterSpacing: 0.5, fontWeight: 700, color: u.textDim },
+      children: [c.jsx("span", { children: T.ratingLow }), c.jsx("span", { children: T.ratingHigh })]
+    })
+  ] });
+}
+
+// The opening: four short screens, one idea each, so each gets read rather
+// than skimmed. 1 what this is, 2 the safety note and legal notice, 3 how to
+// answer (link players skip the tutorial, so this is where they learn the
+// two taps), 4 the "before" rating, which is required.
+//
+// Sizes on every special-topic screen are set for reading, not decoration:
+// body text 16px and up, labels 12px and up in the darker text color, and
+// buttons at least 48px tall.
+const RO_STEPS = 4;
+function RoIntroScreen({ step, rating, onRate, onNext, onBack, onStart }) {
+  const T = R.ro;
+  const h2 = (text) => c.jsx("h2", { style: { fontFamily: C.display, fontSize: "clamp(28px, 6vw, 42px)", lineHeight: 1, letterSpacing: "-0.01em", margin: "0 0 20px", color: u.text, textShadow: `3px 3px 0 ${u.brand}`, textAlign: "center" }, children: text });
+  let body;
+  if (step === 0) {
+    body = c.jsxs("div", { style: { textAlign: "center" }, children: [
+      c.jsx("div", { style: { fontFamily: C.mono, fontSize: 13, letterSpacing: 3, color: u.brandDeep, fontWeight: 700 }, children: T.eyebrow }),
+      c.jsx("h1", { style: { fontFamily: C.display, fontSize: "clamp(34px, 7vw, 54px)", lineHeight: 0.98, letterSpacing: "-0.01em", margin: "10px 0 22px", color: u.text, textShadow: `4px 4px 0 ${u.brand}` }, children: T.title }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 20, lineHeight: 1.5, color: u.text, fontWeight: 600, margin: "0 0 16px" }, children: T.intro }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 16, lineHeight: 1.55, color: u.textDim, fontWeight: 500, margin: 0 }, children: T.introNote })
+    ] });
+  } else if (step === 1) {
+    body = c.jsxs("div", { children: [
+      h2(T.safetyTitle),
+      c.jsx("div", { style: { background: u.terraSoft, border: `3px solid ${u.terra}`, borderRadius: 12, padding: "18px 20px", marginBottom: 18 }, children:
+        c.jsx("p", { style: { fontFamily: C.body, fontSize: 19, lineHeight: 1.55, color: u.text, fontWeight: 600, margin: 0 }, children: T.safetyBody })
+      }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 16, lineHeight: 1.55, color: u.textDim, fontWeight: 500, margin: 0, textAlign: "center" }, children: T.noticeBody })
+    ] });
+  } else if (step === 2) {
+    body = c.jsxs("div", { children: [
+      h2(T.howTitle),
+      c.jsx("ol", { style: { listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 14 }, children: T.howLines.map((line, i) => c.jsxs("li", {
+        style: { display: "flex", alignItems: "center", gap: 14, background: u.surfaceHigh, border: `2px solid ${u.outline}`, borderRadius: 12, padding: "14px 16px", boxShadow: U.sm },
+        children: [
+          c.jsx("span", { "aria-hidden": true, style: { flexShrink: 0, width: 38, height: 38, borderRadius: 8, background: u.brand, color: u.textOnDark, border: `2px solid ${u.outline}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: C.display, fontSize: 18 }, children: String(i + 1) }),
+          c.jsx("span", { style: { fontFamily: C.body, fontSize: 18, lineHeight: 1.4, color: u.text, fontWeight: 600 }, children: line })
+        ]
+      }, i)) })
+    ] });
+  } else {
+    body = c.jsxs("div", { children: [
+      h2(T.ratingTitle),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 19, lineHeight: 1.45, color: u.text, fontWeight: 700, margin: "0 0 18px", textAlign: "center" }, children: T.ratingQuestion }),
+      c.jsx(RatingScale, { value: rating, onPick: onRate })
+    ] });
+  }
+  const last = step === RO_STEPS - 1;
+  return c.jsx("div", {
+    style: { flex: "1 0 auto", display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 16px 56px" },
+    children: c.jsxs("div", { style: { ...roCard, display: "flex", flexDirection: "column", gap: 24 }, children: [
+      c.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }, children: [
+        c.jsx("div", { style: { display: "flex", gap: 6 }, "aria-hidden": true, children: Array.from({ length: RO_STEPS }, (_, i) => c.jsx("span", { style: { width: i === step ? 26 : 12, height: 12, borderRadius: 6, border: `2px solid ${u.outline}`, background: i <= step ? u.brand : u.surface, transition: "width 0.2s" } }, i)) }),
+        c.jsx("span", { style: { fontFamily: C.mono, fontSize: 13, fontWeight: 700, color: u.textDim, letterSpacing: 1 }, children: T.stepLabel(step + 1, RO_STEPS) })
+      ] }),
+      c.jsx("div", { style: { animation: "ts-fade-in 0.3s ease-out" }, children: body }, "step-" + step),
+      c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }, children: [
+        // On the last screen Start is the one action, so it leads and Back
+        // sits under it; elsewhere Back and Next share a row.
+        last
+          ? c.jsxs(c.Fragment, { children: [
+              c.jsx(Button, { onClick: onStart, variant: "primary", size: "md", disabled: rating == null, style: { minHeight: 50 }, children: T.startLabel }),
+              rating == null && c.jsx("div", { style: { fontFamily: C.mono, fontSize: 13, letterSpacing: 1, color: u.textDim, fontWeight: 700 }, children: T.ratingPick }),
+              c.jsx(Button, { onClick: onBack, variant: "ghost", size: "sm", style: { minHeight: 44, marginTop: 4 }, children: T.backLabel })
+            ] })
+          : c.jsxs("div", { style: { display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }, children: [
+              c.jsx(Button, { onClick: onBack, variant: "secondary", size: "md", style: { minHeight: 50 }, children: T.backLabel }),
+              c.jsx(Button, { onClick: onNext, variant: "primary", size: "md", style: { minHeight: 50 }, children: T.nextLabel })
+            ] })
+      ] })
+    ] })
+  });
+}
+
+// After the last question: the same rating, asked again, before the score.
+// Required, and shown before the score so the score cannot sway it.
+function RoPostScreen({ rating, onRate, onDone }) {
+  const T = R.ro;
+  return c.jsx("div", {
+    style: { flex: "1 0 auto", display: "flex", alignItems: "center", justifyContent: "center", padding: "36px 18px 56px" },
+    children: c.jsxs("div", { style: roCard, children: [
+      c.jsx("div", { style: { fontFamily: C.mono, fontSize: 13, letterSpacing: 3, color: u.brandDeep, fontWeight: 700, textAlign: "center" }, children: T.postEyebrow }),
+      c.jsx("h1", { style: { fontFamily: C.display, fontSize: "clamp(28px, 5.5vw, 44px)", lineHeight: 0.98, margin: "8px 0 6px", color: u.text, textShadow: `4px 4px 0 ${u.brand}`, textAlign: "center" }, children: T.postTitle }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 17, color: u.textDim, fontWeight: 500, margin: "0 0 20px", textAlign: "center" }, children: T.postSub }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 19, lineHeight: 1.45, color: u.text, fontWeight: 700, margin: "0 0 18px", textAlign: "center" }, children: T.ratingQuestion }),
+      c.jsx(RatingScale, { value: rating, onPick: onRate }),
+      c.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginTop: 24 }, children: [
+        c.jsx(Button, { onClick: onDone, variant: "primary", size: "md", disabled: rating == null, style: { minHeight: 50 }, children: T.postLabel }),
+        rating == null && c.jsx("div", { style: { fontFamily: C.mono, fontSize: 13, letterSpacing: 1, color: u.textDim, fontWeight: 700 }, children: T.ratingPick })
+      ] })
+    ] })
+  });
+}
+
+// The score: the number, right and wrong, the two ratings side by side, and
+// the takeaway. One button on to the answers.
+function RoScoreScreen({ correct, total, before, after, onReview }) {
+  const T = R.ro;
+  const rateBox = (label, n) => c.jsxs("div", { style: { flex: 1, textAlign: "center" }, children: [
+    c.jsx("div", { style: { fontFamily: C.display, fontSize: 44, color: u.brandDeep, lineHeight: 1 }, children: n == null ? "-" : String(n) }),
+    c.jsx("div", { style: { fontFamily: C.mono, fontSize: 13, letterSpacing: 1, color: u.textDim, fontWeight: 700, textTransform: "uppercase", marginTop: 6 }, children: label })
+  ] });
+  return c.jsxs("div", {
+    className: "ts-end-screen",
+    style: { flex: "1 0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "44px 16px 64px", textAlign: "center" },
+    children: [
+      correct === total && c.jsx(Confetti, { intensity: "high" }),
+      c.jsx("div", { style: { fontFamily: C.mono, fontSize: 14, letterSpacing: 3, color: u.brandDeep, fontWeight: 700 }, children: T.endEyebrow }),
+      c.jsx("h1", { className: "ts-end-headline", style: { fontFamily: C.display, fontSize: "clamp(52px, 12vw, 120px)", lineHeight: 0.92, letterSpacing: "-0.02em", margin: "8px 0 0", color: u.brand, textShadow: `5px 5px 0 ${u.outline}` }, children: T.scoreLine(correct, total) }),
+      c.jsx("div", { style: { display: "flex", justifyContent: "center", margin: "26px 0 18px", width: "100%" }, children: c.jsx(Scorecard, { correct, wrong: total - correct }) }),
+      c.jsxs("div", { style: { width: "100%", maxWidth: 420, background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12, padding: "16px 20px 18px", boxShadow: U.md, marginBottom: 18 }, children: [
+        c.jsx("div", { style: { fontFamily: C.body, fontSize: 15, color: u.textDim, fontWeight: 600, marginBottom: 12 }, children: T.ratingCompareTitle }),
+        c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
+          rateBox(T.ratingBeforeLabel, before),
+          c.jsx("div", { "aria-hidden": true, style: { fontFamily: C.display, fontSize: 28, color: u.textDim }, children: "→" }),
+          rateBox(T.ratingAfterLabel, after)
+        ] })
+      ] }),
+      c.jsxs("div", { style: { width: "100%", maxWidth: 560, background: u.mustardSoft, border: `2px solid ${u.outline}`, borderRadius: 12, padding: "18px 22px", boxShadow: U.md, marginBottom: 28, textAlign: "left" }, children: [
+        c.jsx("div", { style: { fontFamily: C.mono, fontSize: 13, letterSpacing: 1.6, color: u.brandDeep, fontWeight: 700, marginBottom: 8 }, children: T.takeawayTitle }),
+        c.jsx("p", { style: { fontFamily: C.body, fontSize: 17, lineHeight: 1.55, color: u.text, fontWeight: 600, margin: 0 }, children: T.takeaway })
+      ] }),
+      c.jsx(Button, { onClick: onReview, variant: "primary", size: "md", style: { minHeight: 50 }, children: T.seeAnswersLabel })
+    ]
+  });
+}
+
+// Every question in the order it was played, marked right or wrong, each one
+// tap-to-open. Open, a wrong one shows what was picked and why it was wrong,
+// the right answer, then both review cards; a right one shows the answer and
+// both cards. Collapsed by default so the page reads as a list, not a wall.
+function RoReviewScreen({ deck = [], picks = [], onOpen, onDone }) {
+  const T = R.ro;
+  const [open, setOpen] = useState(() => deck.map(() => false));
+  const toggle = (i) => {
+    setOpen((o) => { const copy = o.slice(); copy[i] = !copy[i]; return copy; });
+    if (!open[i] && onOpen) onOpen(deck[i]);
+  };
+  const answerBox = (label, text, color, why) => c.jsxs("div", { style: { border: `2px solid ${color}`, borderRadius: 10, padding: "12px 14px", background: u.surfaceHigh }, children: [
+    c.jsx("div", { style: { fontFamily: C.mono, fontSize: 12, letterSpacing: 1.2, color, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }, children: label }),
+    c.jsx("div", { style: { fontFamily: C.body, fontSize: 16, lineHeight: 1.45, color: u.text, fontWeight: 700 }, children: text }),
+    why && c.jsxs("div", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.5, color: u.textDim, fontWeight: 500, marginTop: 6 }, children: [
+      c.jsx("span", { style: { fontWeight: 700, color: u.red, marginRight: 5 }, children: T.whyNotLabel }), why
+    ] })
+  ] });
+  const cardLabel = (text) => c.jsx("div", { style: { fontFamily: C.mono, fontSize: 12, letterSpacing: 1.4, color: u.brandDeep, fontWeight: 700, marginBottom: 6 }, children: text });
+  return c.jsx("div", {
+    style: { flex: "1 0 auto", display: "flex", justifyContent: "center", padding: "36px 16px 64px" },
+    children: c.jsxs("div", { style: { width: "100%", maxWidth: 720 }, children: [
+      c.jsx("h1", { style: { fontFamily: C.display, fontSize: "clamp(32px, 7vw, 52px)", lineHeight: 1, margin: 0, color: u.text, textShadow: `3px 3px 0 ${u.brand}`, textAlign: "center" }, children: T.reviewTitle }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 17, color: u.textDim, fontWeight: 500, margin: "12px 0 24px", textAlign: "center" }, children: T.reviewSub }),
+      c.jsx("div", { style: { display: "flex", flexDirection: "column", gap: 12 }, children: deck.map((q, i) => {
+        const pick = picks[i];
+        const right = pick === q.correct;
+        const isOpen = !!open[i];
+        const panelId = "ro-review-" + i;
+        return c.jsxs("div", { style: { background: u.surface, border: `2px solid ${u.outline}`, borderLeft: `8px solid ${right ? u.green : u.red}`, borderRadius: 12, boxShadow: U.sm, overflow: "hidden" }, children: [
+          c.jsxs("button", {
+            onClick: () => toggle(i), "aria-expanded": isOpen, "aria-controls": panelId,
+            style: { width: "100%", minHeight: 56, display: "flex", alignItems: "flex-start", gap: 12, padding: "14px 16px", background: "transparent", border: "none", cursor: "pointer", textAlign: "left", WebkitTapHighlightColor: "transparent" },
+            children: [
+              c.jsx("span", { style: { flexShrink: 0, fontFamily: C.mono, fontSize: 12, fontWeight: 700, letterSpacing: 1, color: u.textOnDark, background: right ? u.green : u.red, borderRadius: 5, padding: "4px 8px", marginTop: 2 }, children: right ? T.rightTag : T.wrongTag }),
+              c.jsxs("span", { style: { flex: 1, minWidth: 0, fontFamily: C.body, fontSize: 16, lineHeight: 1.45, fontWeight: 600, color: u.text }, children: [String(i + 1), ". ", q.q] }),
+              c.jsx("span", { style: { flexShrink: 0, fontFamily: C.mono, fontSize: 13, fontWeight: 700, color: u.brandDeep, marginTop: 2, textDecoration: "underline", textUnderlineOffset: 3 }, children: isOpen ? T.closeLabel : T.openLabel })
+            ]
+          }),
+          isOpen && c.jsxs("div", { id: panelId, style: { padding: "4px 16px 18px", display: "flex", flexDirection: "column", gap: 12, animation: "ts-fade-in 0.25s ease-out" }, children: [
+            right
+              ? answerBox(T.yourAnswerLabel, q.options[q.correct], u.green)
+              : c.jsxs(c.Fragment, { children: [
+                  pick != null && answerBox(T.youPickedLabel, q.options[pick], u.red, q.optionExplanations ? q.optionExplanations[pick] : null),
+                  answerBox(T.rightAnswerLabel, q.options[q.correct], u.green)
+                ] }),
+            c.jsxs("div", { style: { background: u.mustardSoft, border: `2px solid ${u.outline}`, borderRadius: 10, padding: "12px 14px" }, children: [
+              cardLabel(T.lawLabel),
+              c.jsx("p", { style: { fontFamily: C.body, fontSize: 16, lineHeight: 1.6, color: u.text, fontWeight: 500, margin: 0 }, children: q.principle })
+            ] }),
+            c.jsxs("div", { style: { background: u.brandSofter, border: `2px solid ${u.outline}`, borderRadius: 10, padding: "12px 14px" }, children: [
+              cardLabel(T.rememberLabel),
+              c.jsx("p", { style: { fontFamily: C.body, fontSize: 18, lineHeight: 1.45, color: u.text, fontWeight: 700, margin: 0 }, children: (q.keyPhrase && q.keyPhrase.quote) || "" })
+            ] })
+          ] })
+        ] }, q.id || i);
+      }) }),
+      c.jsx("div", { style: { display: "flex", justifyContent: "center", marginTop: 28 }, children: c.jsx(Button, { onClick: onDone, variant: "primary", size: "md", style: { minHeight: 50 }, children: T.reviewDoneLabel }) })
+    ] })
+  });
+}
+
+// The last screen. Two clear ways out: the rest of the game, or a clean start
+// for the next person on a shared device, which reloads the page so their
+// answers get their own session.
+function RoDoneScreen({ onExplore, onNewPlayer }) {
+  const T = R.ro;
+  return c.jsx("div", {
+    style: { flex: "1 0 auto", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 16px 64px" },
+    children: c.jsxs("div", { style: { width: "100%", maxWidth: 560, display: "flex", flexDirection: "column", alignItems: "center", gap: 22, textAlign: "center" }, children: [
+      c.jsx("h1", { style: { fontFamily: C.display, fontSize: "clamp(36px, 8vw, 64px)", lineHeight: 0.95, margin: 0, color: u.brand, textShadow: `4px 4px 0 ${u.outline}` }, children: T.doneTitle }),
+      c.jsx("p", { style: { fontFamily: C.body, fontSize: 18, lineHeight: 1.55, color: u.text, fontWeight: 600, margin: 0 }, children: T.thanks }),
+      c.jsx(Button, { onClick: onExplore, variant: "primary", size: "md", style: { minHeight: 50 }, children: T.exploreLabel }),
+      c.jsxs("div", { style: { width: "100%", background: u.surface, border: `2px solid ${u.outline}`, borderRadius: 12, padding: "20px 22px", boxShadow: U.md, marginTop: 10 }, children: [
+        c.jsx("div", { style: { fontFamily: C.display, fontSize: 20, lineHeight: 1.2, color: u.text, marginBottom: 6 }, children: T.sharedTitle }),
+        c.jsx("p", { style: { fontFamily: C.body, fontSize: 16, lineHeight: 1.5, color: u.textDim, fontWeight: 500, margin: "0 0 16px" }, children: T.sharedBody }),
+        c.jsx(Button, { onClick: onNewPlayer, variant: "secondary", size: "md", style: { minHeight: 50 }, children: T.sharedLabel })
+      ] })
+    ] })
+  });
+}
+
+// The verdict screen's answer list in the special topic: all four options in
+// the order the player saw them, the right one marked, the player's pick
+// marked, and a "Why not" line under every wrong one.
+function SpecialAnswerList({ question, selectedIdx }) {
+  const T = R.ro;
+  return c.jsx("div", {
+    style: { width: "100%", display: "flex", flexDirection: "column", gap: 8, animation: "ts-fade-in 0.4s ease-out", textAlign: "left" },
+    children: question.options.map((opt, i) => {
+      const right = i === question.correct;
+      const picked = i === selectedIdx;
+      const why = !right && question.optionExplanations ? question.optionExplanations[i] : null;
+      return c.jsxs("div", {
+        style: {
+          display: "flex", gap: 12, alignItems: "flex-start", padding: "11px 14px", borderRadius: 10,
+          background: right ? u.brandSoft : u.surface,
+          border: `2px solid ${right ? u.green : picked ? u.red : u.borderLight}`
+        },
+        children: [
+          c.jsx("span", { style: { fontFamily: C.display, fontSize: 17, color: right ? u.green : u.textDim, flexShrink: 0, lineHeight: 1.4 }, children: ["A", "B", "C", "D"][i] + "." }),
+          c.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
+            c.jsxs("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }, children: [
+              c.jsx("span", { style: { fontFamily: C.body, fontSize: 16, fontWeight: right ? 700 : 600, color: u.text, lineHeight: 1.4 }, children: opt }),
+              (right || picked) && c.jsx("span", {
+                style: { flexShrink: 0, fontFamily: C.mono, fontSize: 12, letterSpacing: 1, fontWeight: 700, color: u.textOnDark, background: right ? u.green : u.red, borderRadius: 4, padding: "3px 7px", marginTop: 1 },
+                children: right ? T.correctTag : T.youPickedTag
+              })
+            ] }),
+            why && c.jsxs("div", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.5, color: u.textDim, fontWeight: 500, marginTop: 5 }, children: [
+              c.jsx("span", { style: { fontWeight: 700, color: u.red, marginRight: 5 }, children: T.whyNotLabel }),
+              why
+            ] })
+          ] })
+        ]
+      }, i);
+    })
   });
 }
