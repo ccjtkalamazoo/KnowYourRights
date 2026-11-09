@@ -120,6 +120,10 @@ function toRuntime(q) {
     // can report what was chosen without depending on display position.
     optionIds: opts.map((o) => o.id),
     misconceptions: opts.map((o) => o.misconceptionCode),
+    // Authored index of an option that must always be shown LAST, or -1. Used
+    // for "All of the above", which only makes sense in the bottom slot.
+    // rules.shuffleOptions reads it; every existing question has none.
+    pinned: opts.findIndex((o) => o.pinLast),
     hint: q.hint,
     principle: q.principle,
     safetyNote: q.safetyNote,
@@ -242,9 +246,47 @@ export async function loadTutorial() {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Special topics
+// ---------------------------------------------------------------------------
+// A special topic is a standalone set of questions with its own rules, built
+// to collect data for a CCJT study. It lives at content/<topicId>/questions.json
+// and sits outside the district map. The first one is "ro", Michigan's
+// resisting and obstructing law.
+//
+// Same chapter shape as everything else, so the question screens take it as
+// is. `isSpecial` is what switches the engine to the special rules: every
+// question dealt, no lives, no lifelines, a self-rating before and after.
+const specialCache = new Map();
+
+export async function loadSpecial(topicId) {
+  if (specialCache.has(topicId)) return specialCache.get(topicId);
+  const raw = await getJSON(`content/${topicId}/questions.json`);
+  const questions = (raw.questions || []).map((q) => ({
+    ...toRuntime(q),
+    // REMEMBER THIS lines in a special topic are full sentences, so the card
+    // sets them smaller than a chapter's short key phrase.
+    longPhrase: true
+  }));
+  if (questions.length === 0) throw new Error(`Special topic ${topicId} has no questions`);
+  const pool = {
+    id: raw.chapterId || topicId,
+    districtId: raw.districtId || topicId,
+    name: raw.name || topicId.toUpperCase(),
+    safetyNote: null,
+    reviewedBy: raw.reviewedBy || null,
+    isSpecial: true,
+    topicId,
+    questions
+  };
+  specialCache.set(topicId, pool);
+  return pool;
+}
+
 // Testing aid: drop caches so a reload picks up edited JSON.
 export function clearContentCache() {
   cache.clear();
   chapters.clear();
+  specialCache.clear();
   demoCache = null;
 }
