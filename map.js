@@ -600,6 +600,42 @@ function DemoBox({ onPlay, runsUsed = 0, maxRuns = 3, canPlay = true, won = fals
   });
 }
 
+// The special topic banner. Full width, above the shelves, because the topic
+// is the thing CCJT most wants played right now: it doubles as the survey for
+// the resisting and obstructing study. Opens the topic's own first screen.
+function SpecialBanner({ onPlay }) {
+  const T = R.ro;
+  return c.jsxs("div", {
+    className: "kyr-special-banner",
+    style: {
+      display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap",
+      background: u.mustardSoft, border: `3px solid ${u.outline}`, borderRadius: 14,
+      boxShadow: U.lg, padding: "20px 24px", marginBottom: 30
+    },
+    children: [
+      c.jsxs("div", { style: { flex: "1 1 320px", minWidth: 0 }, children: [
+        c.jsx("div", {
+          style: { fontFamily: C.mono, fontSize: 11, fontWeight: 700, letterSpacing: 2.4, color: u.terra },
+          children: T.bannerEyebrow
+        }),
+        c.jsx("div", {
+          style: { fontFamily: C.display, fontSize: "clamp(24px, 4vw, 32px)", lineHeight: 1.05, margin: "6px 0 8px", color: u.text, textTransform: "uppercase" },
+          children: T.bannerTitle
+        }),
+        c.jsx("div", {
+          style: { fontFamily: C.body, fontSize: 14.5, lineHeight: 1.5, color: u.textDim, fontWeight: 500 },
+          children: T.bannerBlurb
+        }),
+        c.jsx("div", {
+          style: { fontFamily: C.mono, fontSize: 10.5, letterSpacing: 1.2, color: u.textMuted, fontWeight: 700, marginTop: 8, textTransform: "uppercase" },
+          children: T.bannerMeta
+        })
+      ] }),
+      c.jsx(Button, { onClick: onPlay, variant: "primary", size: "md", children: T.bannerPlay })
+    ]
+  });
+}
+
 // Layout rules that need screen-size breakpoints, which inline styles cannot do.
 const MAP_CSS = `
 .kyr-map-body { display: flex; gap: 28px; align-items: flex-start; }
@@ -634,7 +670,7 @@ const MAP_CSS = `
 // have to fetch the same JSON a second time to know what the player tapped.
 //
 // The props are unchanged from the old map, so engine.js needs no edit.
-export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayTutorial, onDistricts, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
+export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayTutorial, onPlaySpecial, onDistricts, demoRunsUsed = 0, demoMaxRuns = 3, demoCanPlay = true, demoWon = false }) {
   const M = R.map;
   const [districts, setDistricts] = useState(null);
   const [error, setError] = useState(null);
@@ -758,6 +794,9 @@ export function MapScreen({ session, onOpenDistrict, onHome, onPlayDemo, onPlayT
           })
         ]
       }),
+
+      // Special topic banner, when the engine offers one.
+      onPlaySpecial && c.jsx(SpecialBanner, { onPlay: onPlaySpecial }),
 
       // Ready shelf plus side column
       c.jsxs("div", {
