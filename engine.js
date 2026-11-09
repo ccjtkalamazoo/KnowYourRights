@@ -1798,14 +1798,18 @@ function RevealScreen(props) {
               children: outOfLives ? R.lives.outOfLives : lives === 1 ? R.lives.lastOne : R.lives.lostOne })
           ] }),
 
-          isSpecial
-            ? c.jsx(SpecialAnswerList, { question, selectedIdx })
-            : c.jsxs("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 10, animation: "ts-fade-in 0.4s ease-out" }, children: [
+          c.jsxs("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 10, animation: "ts-fade-in 0.4s ease-out" }, children: [
             !revealCorrect && yourLetter != null && c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12, background: u.surface, border: `2px solid ${u.borderLight}`, borderRadius: 10, padding: "12px 16px", textAlign: "left" }, children: [
               c.jsx("span", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.textMuted, fontWeight: 700, textTransform: "uppercase", flexShrink: 0 }, children: "You picked" }),
               c.jsxs("span", { style: { fontFamily: C.display, color: u.textMuted, fontSize: 17, flexShrink: 0 }, children: [yourLetter, "."] }),
               c.jsx("span", { style: { fontFamily: C.body, fontSize: 15, fontWeight: 600, color: u.textDim }, children: question.options[selectedIdx] })
             ] }),
+            // Special topic only: the "Why not" line for the option the
+            // player picked, right under it.
+            !revealCorrect && isSpecial && yourLetter != null && question.optionExplanations && question.optionExplanations[selectedIdx] && c.jsxs("div", {
+              style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.5, color: u.textDim, fontWeight: 500, textAlign: "left", padding: "0 4px" },
+              children: [c.jsx("span", { style: { fontWeight: 700, color: u.red, marginRight: 5 }, children: R.ro.whyNotLabel }), question.optionExplanations[selectedIdx]]
+            }),
             c.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12, background: u.brandSoft, border: `2px solid ${u.outline}`, borderRadius: 10, padding: "12px 16px", textAlign: "left" }, children: [
               c.jsx("span", { style: { fontFamily: C.mono, fontSize: 10, letterSpacing: 1.5, color: u.brand, fontWeight: 700, textTransform: "uppercase", flexShrink: 0 }, children: revealCorrect ? "Your answer" : "Correct answer" }),
               c.jsxs("span", { style: { fontFamily: C.display, color: u.brand, fontSize: 17, flexShrink: 0 }, children: [rightLetter, "."] }),
@@ -2494,43 +2498,5 @@ function RoDoneScreen({ onExplore, onNewPlayer }) {
         c.jsx(Button, { onClick: onNewPlayer, variant: "secondary", size: "md", style: { minHeight: 50 }, children: T.sharedLabel })
       ] })
     ] })
-  });
-}
-
-// The verdict screen's answer list in the special topic: all four options in
-// the order the player saw them, the right one marked, the player's pick
-// marked, and a "Why not" line under every wrong one.
-function SpecialAnswerList({ question, selectedIdx }) {
-  const T = R.ro;
-  return c.jsx("div", {
-    style: { width: "100%", display: "flex", flexDirection: "column", gap: 8, animation: "ts-fade-in 0.4s ease-out", textAlign: "left" },
-    children: question.options.map((opt, i) => {
-      const right = i === question.correct;
-      const picked = i === selectedIdx;
-      const why = !right && question.optionExplanations ? question.optionExplanations[i] : null;
-      return c.jsxs("div", {
-        style: {
-          display: "flex", gap: 12, alignItems: "flex-start", padding: "11px 14px", borderRadius: 10,
-          background: right ? u.brandSoft : u.surface,
-          border: `2px solid ${right ? u.green : picked ? u.red : u.borderLight}`
-        },
-        children: [
-          c.jsx("span", { style: { fontFamily: C.display, fontSize: 17, color: right ? u.green : u.textDim, flexShrink: 0, lineHeight: 1.4 }, children: ["A", "B", "C", "D"][i] + "." }),
-          c.jsxs("div", { style: { flex: 1, minWidth: 0 }, children: [
-            c.jsxs("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }, children: [
-              c.jsx("span", { style: { fontFamily: C.body, fontSize: 16, fontWeight: right ? 700 : 600, color: u.text, lineHeight: 1.4 }, children: opt }),
-              (right || picked) && c.jsx("span", {
-                style: { flexShrink: 0, fontFamily: C.mono, fontSize: 12, letterSpacing: 1, fontWeight: 700, color: u.textOnDark, background: right ? u.green : u.red, borderRadius: 4, padding: "3px 7px", marginTop: 1 },
-                children: right ? T.correctTag : T.youPickedTag
-              })
-            ] }),
-            why && c.jsxs("div", { style: { fontFamily: C.body, fontSize: 15, lineHeight: 1.5, color: u.textDim, fontWeight: 500, marginTop: 5 }, children: [
-              c.jsx("span", { style: { fontWeight: 700, color: u.red, marginRight: 5 }, children: T.whyNotLabel }),
-              why
-            ] })
-          ] })
-        ]
-      }, i);
-    })
   });
 }
