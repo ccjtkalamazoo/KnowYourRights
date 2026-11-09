@@ -1,0 +1,610 @@
+{
+  "chapterId": "ro.01",
+  "districtId": "ro",
+  "name": "RESISTING AND OBSTRUCTING",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "questions": [
+    {
+      "id": "ro.01.001",
+      "version": 1,
+      "q": "In Michigan, what is the maximum penalty for resisting and obstructing an officer when nobody gets hurt?",
+      "options": [
+        {
+          "id": "ro.01.001.a",
+          "text": "A felony, with up to 2 years in prison",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.001.b",
+          "text": "A misdemeanor, with up to 93 days in jail",
+          "isCorrect": false,
+          "explanation": "It is a felony, not a misdemeanor. The lesser charge, attempted resisting and obstructing, is the misdemeanor.",
+          "misconceptionCode": "ro_thinks_misdemeanor"
+        },
+        {
+          "id": "ro.01.001.c",
+          "text": "A ticket, with only a fine",
+          "isCorrect": false,
+          "explanation": "It is a crime that can bring prison time, not just a fine.",
+          "misconceptionCode": "ro_thinks_ticket_only"
+        },
+        {
+          "id": "ro.01.001.d",
+          "text": "A felony, with up to 10 years in prison",
+          "isCorrect": false,
+          "explanation": "Higher penalties only apply when someone gets hurt. With no injury, the maximum is 2 years.",
+          "misconceptionCode": "ro_overstates_base_penalty"
+        }
+      ],
+      "principle": "In Michigan, resisting and obstructing is a felony, even when nobody gets hurt. It can mean up to 2 years in prison, a $2,000 fine, or both. The maximum goes up only if someone is injured. There is also a lesser charge, attempted resisting and obstructing. That one is a misdemeanor, with up to 1 year in jail.",
+      "keyPhrase": {
+        "quote": "Resisting and obstructing is a felony, even with no injury.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.002",
+      "version": 1,
+      "q": "In Michigan, can resisting and obstructing be the only charge a person gets?",
+      "options": [
+        {
+          "id": "ro.01.002.a",
+          "text": "Yes, no other crime is needed",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.002.b",
+          "text": "No, there must be another crime too",
+          "isCorrect": false,
+          "explanation": "Resisting and obstructing is a crime on its own.",
+          "misconceptionCode": "ro_needs_underlying_crime"
+        },
+        {
+          "id": "ro.01.002.c",
+          "text": "No, not unless someone gets hurt",
+          "isCorrect": false,
+          "explanation": "No injury is needed for the charge.",
+          "misconceptionCode": "ro_needs_injury"
+        },
+        {
+          "id": "ro.01.002.d",
+          "text": "Yes, but only as a misdemeanor",
+          "isCorrect": false,
+          "explanation": "Charged alone, it is still a felony.",
+          "misconceptionCode": "ro_alone_is_misdemeanor"
+        }
+      ],
+      "principle": "Resisting and obstructing does not need another crime to go with it. A person can be arrested, charged, and convicted for resisting and obstructing alone.",
+      "keyPhrase": {
+        "quote": "Resisting and obstructing can be the only charge.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.003",
+      "version": 1,
+      "q": "Police pull you over for a broken taillight. The officer tells you to step out of the car, and you stay in your seat. In Michigan, what can staying in your seat count as?",
+      "options": [
+        {
+          "id": "ro.01.003.a",
+          "text": "Resisting and obstructing",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.003.b",
+          "text": "A separate traffic ticket",
+          "isCorrect": false,
+          "explanation": "Ignoring a lawful order is a crime, not a ticket.",
+          "misconceptionCode": "ro_refusal_is_ticket"
+        },
+        {
+          "id": "ro.01.003.c",
+          "text": "Your right to stay in your own car",
+          "isCorrect": false,
+          "explanation": "During a lawful traffic stop, an officer is allowed to order a driver out of the car.",
+          "misconceptionCode": "ro_right_to_stay_in_car"
+        },
+        {
+          "id": "ro.01.003.d",
+          "text": "Nothing, as long as you stay calm",
+          "isCorrect": false,
+          "explanation": "Staying calm does not change it. Ignoring the order is what counts.",
+          "misconceptionCode": "ro_calm_refusal_ok"
+        }
+      ],
+      "principle": "During a lawful traffic stop, an officer is allowed to order a driver, and passengers, out of the car. In Michigan, knowingly ignoring a lawful order from an officer counts as obstructing. No pushing or force is needed. If asked, drivers also have to show their license, registration, and proof of insurance.",
+      "keyPhrase": {
+        "quote": "Not following a lawful order can be resisting and obstructing.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.004",
+      "version": 1,
+      "q": "Police are looking for someone who stole from a store. An officer stops you in the parking lot because you match the description. You know it wasn't you. The officer tells you to wait while they check. In Michigan, what is true?",
+      "options": [
+        {
+          "id": "ro.01.004.a",
+          "text": "You still have to wait, and walking away can be a felony",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.004.b",
+          "text": "You can leave, since you didn't do anything wrong",
+          "isCorrect": false,
+          "explanation": "Being innocent doesn't cancel a lawful order. An officer can briefly hold you if they have a good reason to suspect you.",
+          "misconceptionCode": "ro_innocence_cancels_order"
+        },
+        {
+          "id": "ro.01.004.c",
+          "text": "You can leave once you tell the officer it wasn't you",
+          "isCorrect": false,
+          "explanation": "Saying it wasn't you doesn't end the stop. The officer can still check.",
+          "misconceptionCode": "ro_denial_ends_stop"
+        },
+        {
+          "id": "ro.01.004.d",
+          "text": "You have to wait, but walking away is only a ticket",
+          "isCorrect": false,
+          "explanation": "Walking away from a lawful order can be felony resisting and obstructing.",
+          "misconceptionCode": "ro_walking_away_is_ticket"
+        }
+      ],
+      "principle": "In Michigan, an officer can briefly hold you if they have a good reason to suspect you, like matching a description, even if you turn out to be innocent. Being right doesn't cancel a lawful order. Walking away can be resisting and obstructing, a felony with up to 2 years in prison. If the stop was wrong, you can challenge it later, in court.",
+      "keyPhrase": {
+        "quote": "Follow lawful orders now. Prove you're right later.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.005",
+      "version": 1,
+      "q": "During a lawful arrest, you pull your arms away while being handcuffed, but you never hit anyone. In Michigan, can pulling your arms away be resisting and obstructing?",
+      "options": [
+        {
+          "id": "ro.01.005.a",
+          "text": "Yes, even with no hit or kick",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.005.b",
+          "text": "No, not unless you hit or kick",
+          "isCorrect": false,
+          "explanation": "No hit or kick is needed.",
+          "misconceptionCode": "ro_needs_strike"
+        },
+        {
+          "id": "ro.01.005.c",
+          "text": "No, not unless the officer gets hurt",
+          "isCorrect": false,
+          "explanation": "An injury makes the penalty bigger. It is not needed for the charge.",
+          "misconceptionCode": "ro_needs_officer_injury"
+        },
+        {
+          "id": "ro.01.005.d",
+          "text": "Yes, but only if you break free",
+          "isCorrect": false,
+          "explanation": "Pulling away can count even if the officer still gets the cuffs on.",
+          "misconceptionCode": "ro_needs_escape"
+        }
+      ],
+      "principle": "Michigan courts have upheld resisting and obstructing convictions where a person tensed up or pulled away during handcuffing. No punch, kick, or injury is needed.",
+      "keyPhrase": {
+        "quote": "Pulling away from cuffs can be resisting and obstructing.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.006",
+      "version": 1,
+      "q": "In Michigan, can threatening to hit an officer on duty be resisting and obstructing?",
+      "options": [
+        {
+          "id": "ro.01.006.a",
+          "text": "Yes, even with no touching",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.006.b",
+          "text": "No, words alone never count",
+          "isCorrect": false,
+          "explanation": "Arguing or swearing alone is not enough, but Michigan's law also covers saying you will hit, push, or fight an officer. A real threat like that can count, even with no touching.",
+          "misconceptionCode": "ro_words_never_count"
+        },
+        {
+          "id": "ro.01.006.c",
+          "text": "No, a threat is protected free speech",
+          "isCorrect": false,
+          "explanation": "Free speech does not cover real threats of violence.",
+          "misconceptionCode": "ro_threats_protected_speech"
+        },
+        {
+          "id": "ro.01.006.d",
+          "text": "Yes, but only if you are already under arrest",
+          "isCorrect": false,
+          "explanation": "The law covers officers doing their job, during an arrest or not.",
+          "misconceptionCode": "ro_only_during_arrest"
+        }
+      ],
+      "principle": "Michigan's law covers more than physical actions. Saying you will hit, push, or fight an officer can also count. A real threat like that can be resisting and obstructing, even if nobody is touched. Free speech does not protect real threats of violence.",
+      "keyPhrase": {
+        "quote": "Threatening to hit an officer can be resisting and obstructing.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.007",
+      "version": 1,
+      "q": "An officer is writing you a ticket. You argue and swear at the officer, but you follow every order. In Michigan, can the arguing be resisting and obstructing?",
+      "options": [
+        {
+          "id": "ro.01.007.a",
+          "text": "No, words of disagreement alone are not enough",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.007.b",
+          "text": "Yes, swearing at an officer counts",
+          "isCorrect": false,
+          "explanation": "Swearing alone, while following orders, is not resisting and obstructing.",
+          "misconceptionCode": "ro_swearing_is_ro"
+        },
+        {
+          "id": "ro.01.007.c",
+          "text": "Yes, raising your voice counts",
+          "isCorrect": false,
+          "explanation": "How loud you are does not make it resisting and obstructing.",
+          "misconceptionCode": "ro_loudness_is_ro"
+        },
+        {
+          "id": "ro.01.007.d",
+          "text": "No, unless the officer feels disrespected",
+          "isCorrect": false,
+          "explanation": "The law looks at what you do, not how the officer feels.",
+          "misconceptionCode": "ro_officer_feelings_decide"
+        }
+      ],
+      "principle": "Michigan courts have said obstructing takes some physical refusal, not just words of disagreement. Arguing or swearing while still following orders is not resisting and obstructing. Arguing can still lead to an arrest, and if it turns into not following orders, like refusing to step back, it can become resisting and obstructing. You still have to follow lawful orders while you disagree, and other laws, like disturbing the peace, can apply in some cases.",
+      "keyPhrase": {
+        "quote": "Arguing alone is not the crime, but it can quickly cross the line.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.008",
+      "version": 1,
+      "q": "During a traffic stop, an officer asks, \"Mind if I search your car?\" You say no. In Michigan, what does saying no count as?",
+      "options": [
+        {
+          "id": "ro.01.008.a",
+          "text": "Your right to turn down a search request",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.008.b",
+          "text": "Resisting and obstructing the officer",
+          "isCorrect": false,
+          "explanation": "A request is not an order. Saying no to a request is not resisting and obstructing.",
+          "misconceptionCode": "ro_declining_search_is_ro"
+        },
+        {
+          "id": "ro.01.008.c",
+          "text": "A reason to arrest you on the spot",
+          "isCorrect": false,
+          "explanation": "Saying no, by itself, is not a reason to hold or arrest you.",
+          "misconceptionCode": "ro_declining_search_justifies_arrest"
+        },
+        {
+          "id": "ro.01.008.d",
+          "text": "A promise your car will not be searched",
+          "isCorrect": false,
+          "explanation": "Police can still search with a warrant or another legal reason.",
+          "misconceptionCode": "ro_declining_search_blocks_search"
+        }
+      ],
+      "principle": "Police can ask to search your car, and you can say no. A request and an order are different: \"Mind if I search your car?\" is a request, but \"Step out of the car\" is an order, and refusing an order can be resisting and obstructing. Saying no to a request is not resisting and obstructing, and by itself it is not a reason to hold you. Police can still search if they have a warrant or another legal reason. Say no with words only. Physically blocking a search can be resisting and obstructing, and a court decides later whether the search was legal.",
+      "keyPhrase": {
+        "quote": "Say no with words. Never block a search.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.009",
+      "version": 1,
+      "q": "An officer stops you on the sidewalk and asks where you were tonight. You stand still and say, \"I don't want to answer questions.\" In Michigan, is staying quiet resisting and obstructing?",
+      "options": [
+        {
+          "id": "ro.01.009.a",
+          "text": "No, staying quiet is not resisting and obstructing",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.009.b",
+          "text": "Yes, refusing to answer is disobeying an order",
+          "isCorrect": false,
+          "explanation": "A question is not an order. No Michigan law makes you answer these questions.",
+          "misconceptionCode": "ro_questions_are_orders"
+        },
+        {
+          "id": "ro.01.009.c",
+          "text": "Yes, once the officer warns you to answer",
+          "isCorrect": false,
+          "explanation": "A warning does not turn staying quiet into a crime.",
+          "misconceptionCode": "ro_warning_makes_silence_crime"
+        },
+        {
+          "id": "ro.01.009.d",
+          "text": "No, but only if the officer read you your rights first",
+          "isCorrect": false,
+          "explanation": "Your right to stay quiet exists before any warning is read.",
+          "misconceptionCode": "ro_silence_needs_miranda"
+        }
+      ],
+      "principle": "You do not have to answer an officer's questions about where you were or what you were doing, and staying quiet is not resisting and obstructing. Staying quiet is about answering questions, not about orders. You still have to follow lawful orders, like staying where you are, and drivers must show a license when asked.",
+      "keyPhrase": {
+        "quote": "You can stay quiet. You still have to follow lawful orders.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.010",
+      "version": 1,
+      "q": "You are arrested and charged with resisting and obstructing. In Michigan, does it matter whether the officer was acting lawfully?",
+      "options": [
+        {
+          "id": "ro.01.010.a",
+          "text": "Yes, the prosecutor must prove the officer acted lawfully",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.010.b",
+          "text": "No, any order an officer gives counts as lawful",
+          "isCorrect": false,
+          "explanation": "The officer's actions must be lawful, and Michigan courts have thrown out charges when they were not.",
+          "misconceptionCode": "ro_all_orders_lawful"
+        },
+        {
+          "id": "ro.01.010.c",
+          "text": "Yes, if you believed it was illegal, you were free to resist",
+          "isCorrect": false,
+          "explanation": "What you believed is not the test. A court decides later whether the officer's actions were actually lawful.",
+          "misconceptionCode": "ro_belief_justifies_resisting"
+        },
+        {
+          "id": "ro.01.010.d",
+          "text": "No, the officer decides that on the scene",
+          "isCorrect": false,
+          "explanation": "A judge or jury decides it, not the officer.",
+          "misconceptionCode": "ro_officer_decides_lawfulness"
+        }
+      ],
+      "principle": "To win a resisting and obstructing case, the prosecutor must prove the officer was acting lawfully, and a judge or jury decides that later, in court. You usually cannot know in the moment whether an order is lawful. Even if the officer turns out to be wrong, you can still be arrested and charged first, and it can take months for a court to decide.",
+      "keyPhrase": {
+        "quote": "Lawful or not gets decided in court, not on the street.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.011",
+      "version": 1,
+      "q": "Under Michigan's resisting and obstructing law, MCL 750.81d, who is protected besides police?",
+      "options": [
+        {
+          "id": "ro.01.011.a",
+          "text": "Firefighters and EMS workers",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.011.b",
+          "text": "No one else, only police",
+          "isCorrect": false,
+          "explanation": "The law also protects firefighters, EMS workers, sheriff's deputies, conservation officers, and search and rescue crews.",
+          "misconceptionCode": "ro_only_police_protected"
+        },
+        {
+          "id": "ro.01.011.c",
+          "text": "Bouncers and store workers",
+          "isCorrect": false,
+          "explanation": "They are not on this law's list. Shoving one can still be a different crime, like assault.",
+          "misconceptionCode": "ro_private_security_protected"
+        },
+        {
+          "id": "ro.01.011.d",
+          "text": "Only workers who can make arrests",
+          "isCorrect": false,
+          "explanation": "Firefighters and EMS workers cannot make arrests, and the law still protects them.",
+          "misconceptionCode": "ro_needs_arrest_power"
+        }
+      ],
+      "principle": "Michigan's resisting and obstructing law, MCL 750.81d, protects a set list of public safety workers while they are doing their jobs: police, sheriff's deputies, conservation officers, firefighters, EMS workers, and search and rescue crews. A uniform is not required. What matters is that you know, or have good reason to know, who they are. Other workers, like nurses, school bus drivers, bouncers, and other government workers, are not on this list, but other Michigan laws can still apply if someone attacks or interferes with them. A separate Michigan law also covers judges, court officers, and probation officers.",
+      "keyPhrase": {
+        "quote": "Firefighters and EMS workers are protected, not just police.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.012",
+      "version": 1,
+      "q": "Police are lawfully arresting your friend at a party. You pull your friend away from the officer. In Michigan, what can you be charged with?",
+      "options": [
+        {
+          "id": "ro.01.012.a",
+          "text": "Resisting and obstructing, even though you weren't being arrested",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.012.b",
+          "text": "Nothing, if you only touched your friend",
+          "isCorrect": false,
+          "explanation": "Pulling the person away gets in the officer's way.",
+          "misconceptionCode": "ro_touching_arrestee_ok"
+        },
+        {
+          "id": "ro.01.012.c",
+          "text": "Nothing, unless the officer warned you first",
+          "isCorrect": false,
+          "explanation": "No warning is needed. Pulling someone away from a lawful arrest can be charged right away.",
+          "misconceptionCode": "ro_bystander_needs_warning"
+        },
+        {
+          "id": "ro.01.012.d",
+          "text": "Just a ticket for causing a scene",
+          "isCorrect": false,
+          "explanation": "Getting in the way of an arrest can be a felony.",
+          "misconceptionCode": "ro_interference_is_ticket"
+        }
+      ],
+      "principle": "Michigan's resisting and obstructing law covers anyone who physically gets in the way of an officer doing the job, not just the person being arrested. Even if you think your friend's arrest is wrong, pulling your friend away can be charged. Whether the arrest was lawful gets decided later, in court.",
+      "keyPhrase": {
+        "quote": "Getting in the way of someone else's arrest can be resisting and obstructing.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.013",
+      "version": 1,
+      "q": "You are filming a traffic stop on your street from the sidewalk. An officer tells you to move back. In Michigan, what is true?",
+      "options": [
+        {
+          "id": "ro.01.013.a",
+          "text": "You can keep filming, but you have to move back",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.013.b",
+          "text": "You can stay where you are, since filming is your right",
+          "isCorrect": false,
+          "explanation": "Filming is protected, but a lawful order to move back still applies.",
+          "misconceptionCode": "ro_filming_overrides_orders"
+        },
+        {
+          "id": "ro.01.013.c",
+          "text": "You have to stop filming and leave the area",
+          "isCorrect": false,
+          "explanation": "You can film police in public. The order was about where you stand, not about filming.",
+          "misconceptionCode": "ro_no_right_to_film"
+        },
+        {
+          "id": "ro.01.013.d",
+          "text": "You only have to move if the officer tells you why",
+          "isCorrect": false,
+          "explanation": "An officer does not have to explain a lawful order before you follow it.",
+          "misconceptionCode": "ro_orders_need_reason"
+        }
+      ],
+      "principle": "You have the right to film police doing their job in public. Officers can still give lawful orders about where you stand, like telling you to move back. In a 2026 Michigan case, a person filming a traffic stop was convicted of resisting and obstructing for moving closer after being told to stay back. Filming was not the problem. Ignoring the order was.",
+      "keyPhrase": {
+        "quote": "Keep filming if you want. Follow orders about where to stand.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.014",
+      "version": 1,
+      "q": "The prosecutor files a felony resisting and obstructing charge against you. In Michigan, who can agree to lower it to attempted resisting and obstructing, a misdemeanor?",
+      "options": [
+        {
+          "id": "ro.01.014.a",
+          "text": "The prosecutor, with the judge's approval",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null
+        },
+        {
+          "id": "ro.01.014.b",
+          "text": "The arresting officer, at the scene",
+          "isCorrect": false,
+          "explanation": "Officers decide whether to arrest and what charges to ask for. Once the prosecutor files a charge, the officer cannot lower it.",
+          "misconceptionCode": "ro_officer_lowers_charge"
+        },
+        {
+          "id": "ro.01.014.c",
+          "text": "Your defense lawyer",
+          "isCorrect": false,
+          "explanation": "Your lawyer can push for a lower charge, but cannot lower it alone. The prosecutor has to agree, and the judge has to accept it.",
+          "misconceptionCode": "ro_lawyer_lowers_charge"
+        },
+        {
+          "id": "ro.01.014.d",
+          "text": "Nobody, once the felony is filed",
+          "isCorrect": false,
+          "explanation": "Charges can be lowered, for example in a plea deal.",
+          "misconceptionCode": "ro_charges_cannot_drop"
+        }
+      ],
+      "principle": "In Michigan, officers make the arrest and send a charging request. The prosecutor decides what to charge. A felony resisting and obstructing charge can be lowered to attempted resisting and obstructing through a plea deal the prosecutor agrees to and the judge accepts. The attempted charge is a misdemeanor with up to 1 year in jail and a fine up to $1,000, compared with up to 2 years for the full charge.",
+      "keyPhrase": {
+        "quote": "Officers arrest. Prosecutors decide the charge.",
+        "gloss": ""
+      }
+    },
+    {
+      "id": "ro.01.015",
+      "version": 1,
+      "q": "You serve the full 2 years in prison for your felony resisting and obstructing charge. Once your sentence is done, what can the felony still affect?",
+      "options": [
+        {
+          "id": "ro.01.015.a",
+          "text": "All of the above",
+          "isCorrect": true,
+          "explanation": null,
+          "misconceptionCode": null,
+          "pinLast": true
+        },
+        {
+          "id": "ro.01.015.b",
+          "text": "Getting a job and renting a home",
+          "isCorrect": false,
+          "explanation": "True, but that is only part of it. A felony can also limit gun rights, jury service, and more.",
+          "misconceptionCode": "ro_felony_hits_jobs_housing_only"
+        },
+        {
+          "id": "ro.01.015.c",
+          "text": "Owning a gun and serving on a jury",
+          "isCorrect": false,
+          "explanation": "True, but that is only part of it. A felony also shows up for employers and landlords.",
+          "misconceptionCode": "ro_felony_hits_guns_jury_only"
+        },
+        {
+          "id": "ro.01.015.d",
+          "text": "Showing up on background checks and working in a school",
+          "isCorrect": false,
+          "explanation": "True, but that is only part of it. A felony can also affect jobs, housing, gun rights, and jury service.",
+          "misconceptionCode": "ro_felony_hits_record_only"
+        }
+      ],
+      "principle": "A felony stays on your record after your sentence ends. Employers and landlords can see it on background checks, which can make it harder to get a job or a place to live. In Michigan, it also means you cannot serve on a jury, you cannot have a gun for at least 3 years after your sentence, and you need special approval to work in a K-12 school. It does not clear on its own. You can apply to clear it after 5 years.",
+      "keyPhrase": {
+        "quote": "A felony can follow you for years. It can make jobs, housing, and everyday life harder, long after your sentence is over.",
+        "gloss": ""
+      }
+    }
+  ]
+}
