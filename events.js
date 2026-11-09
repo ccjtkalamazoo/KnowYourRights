@@ -329,9 +329,12 @@ export function trackReviewCard(q, cardIndex, { dwellMs, redeemed, skipped, corr
   });
 }
 
-export function trackRunEnd(outcome, { level, mode }) {
-  // outcome: "won" | "lost" | "walked" | "abandoned"
-  track("run_end", { outcome, level, mode });
+export function trackRunEnd(outcome, { level, mode, ...extra } = {}) {
+  // outcome: "won" | "lost" | "walked" | "abandoned" | "finished" (special topic)
+  // `extra` carries the round's right and wrong counts. Every caller already
+  // passed them, but this used to keep only level and mode, so the counts were
+  // silently dropped from every run_end row.
+  track("run_end", { outcome, level, mode, ...extra });
 }
 
 export function trackNav(where) {
