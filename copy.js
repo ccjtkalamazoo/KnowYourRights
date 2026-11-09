@@ -255,6 +255,94 @@ export const R = {
     loadErrorBody: "Its questions could not be fetched. Check the connection and try again."
   },
   // ---------------------------------------------------------------------------
+  // Special topic: resisting and obstructing
+  // ---------------------------------------------------------------------------
+  // A standalone 15-question topic that doubles as a community survey for
+  // CCJT's resisting and obstructing study. Reached from the map banner or the
+  // direct link (knowyourrights.ccjtkalamazoo.org/ro). Every player gets the
+  // same 15 questions in a shuffled order, with no lives and no lifelines, and
+  // rates their own understanding before and after.
+  ro: {
+    // The opening, split over four short screens so each one gets read:
+    // what this is, the safety note, how to answer, then the rating.
+    stepLabel: (n, of) => `${n} of ${of}`,
+    nextLabel: "Next \u2192",
+    backLabel: "\u2039 Back",
+    eyebrow: "SPECIAL TOPIC",
+    title: "RESISTING AND OBSTRUCTING",
+    intro: "15 questions about Michigan's resisting and obstructing law.",
+    introNote: "Anonymous. Your answers help CCJT learn what people in our community know about this law.",
+    safetyTitle: "BEFORE YOU START",
+    safetyBody: "Knowing your rights and following lawful orders go together. If you disagree with a stop, a search, or an arrest, the place to challenge it is in court, not on the street.",
+    noticeBody: "This is not legal advice. If something real is happening, talk to a lawyer.",
+    howTitle: "HOW IT WORKS",
+    howLines: [
+      "Tap an answer, then tap Lock It In.",
+      "After each question, see why the answer is right.",
+      "No lives and no hints. Everyone plays all 15."
+    ],
+    ratingTitle: "ONE QUICK QUESTION",
+
+    // The self-rating. Word for word the same before and after, so the two
+    // answers can be compared directly.
+    ratingQuestion: "On a scale of 1 to 10, how well do you understand Michigan's resisting and obstructing law?",
+    ratingLow: "1 = not at all",
+    ratingHigh: "10 = very well",
+    ratingPick: "Pick a number to continue",
+    startLabel: "Start the 15 questions \u2192",
+    postEyebrow: "ONE LAST QUESTION",
+    postTitle: "NOW THAT YOU HAVE PLAYED",
+    postSub: "Answer the same question again.",
+    postLabel: "See my score \u2192",
+
+    // Question screens.
+    whyNotLabel: "Why not:",
+    youPickedTag: "YOUR PICK",
+    correctTag: "CORRECT",
+    skipConfirmBody: "This is the part that explains why the answer is what it is.",
+
+    // The score screen.
+    endEyebrow: "YOUR SCORE",
+    scoreLine: (right, of) => `${right} out of ${of}`,
+    ratingBeforeLabel: "Before",
+    ratingAfterLabel: "After",
+    ratingCompareTitle: "How well you said you understand the law",
+    takeawayTitle: "THE BIG TAKEAWAY",
+    takeaway: "Resisting and obstructing is a felony in Michigan, and it does not take a fight. Refusing a lawful order can be enough. Whether a stop or arrest was lawful gets decided later, in court.",
+    seeAnswersLabel: "See your answers \u2192",
+
+    // The review screen: every question, tap to open.
+    reviewTitle: "YOUR ANSWERS",
+    reviewSub: "Tap a question to see the answer and why.",
+    rightTag: "RIGHT",
+    wrongTag: "WRONG",
+    youPickedLabel: "You picked",
+    rightAnswerLabel: "Right answer",
+    yourAnswerLabel: "Your answer",
+    lawLabel: "THE LAW",
+    rememberLabel: "REMEMBER THIS",
+    openLabel: "Show",
+    closeLabel: "Hide",
+    reviewDoneLabel: "I'm done \u2192",
+
+    // The last screen.
+    doneTitle: "THANKS FOR PLAYING",
+    thanks: "Your answers help us learn what people in our community know about this law.",
+    exploreLabel: "Explore the rest of the game \u2192",
+    sharedTitle: "Passing this device to someone else?",
+    sharedBody: "Start fresh so their answers are counted separately from yours.",
+    sharedLabel: "Start fresh for the next player",
+
+    // The map banner.
+    bannerEyebrow: "SPECIAL TOPIC \u00B7 NEW",
+    bannerTitle: "Resisting and obstructing",
+    bannerBlurb: "15 questions on Michigan's resisting and obstructing law. Your answers help CCJT's community study.",
+    bannerPlay: "PLAY \u2192",
+    bannerMeta: "15 questions \u00B7 no lives \u00B7 no hints",
+
+    loadErrorTitle: "THE QUESTIONS DID NOT LOAD"
+  },
+  // ---------------------------------------------------------------------------
   // The map screen
   // ---------------------------------------------------------------------------
   // Two shelves (ready to play, coming soon) and a side column (how to play,
